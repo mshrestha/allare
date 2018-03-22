@@ -175,7 +175,7 @@
   });
 
 	function charts(datasets, labels) {
-		console.log(datasets);
+		// console.log(datasets);
 		window.myChart = new Chart(ctx, {
 		    type: 'bar',
 		    data: datasets,
