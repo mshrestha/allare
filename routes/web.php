@@ -26,6 +26,10 @@ Route::get('/analysis', function () {
 
 Route::get('/dashboard', function () {
     return view('nutrition.dashboard');
+})->name('nutrition.dashboard');
+
+Route::get('/platform', function () {
+    return view('nutrition.platform');
 })->name('nutrition.platform');
 
 // ORGANIZATIONAL ROUTES
@@ -38,8 +42,11 @@ Route::get('/get_periods', 'Helper\PeriodController@getPeriods');
 
 // DATA ELEMENT ROUTES
 Route::get('/get_elements', 'Helper\DataElementController@getDataElements');
+Route::get('/get_elements_joint', 'Helper\DataElementController@getDataElementsJoint');
 Route::get('/get_category', 'Helper\DataElementController@getDataElementCategory');
+Route::get('/get_category_joint', 'Helper\DataElementController@getDataElementCategoryJoint');
 Route::get('/get_data_value_set', 'Helper\DataElementController@getDataValueSet');
+Route::get('/get_data_value_set_joint', 'Helper\DataElementController@getDataValueSetJoint');
 
 // DATA ELEMENT ROUTES END
 
