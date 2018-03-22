@@ -22,12 +22,14 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    @yield('styles')
   </head>
   <body>
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="/dashboard">
-        <img src="{{asset('storage\bd_logo.png')}}">
+        {{-- <img src="{{asset('storage\bd_logo.png')}}"> --}}
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -39,10 +41,10 @@
               <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="#">Platform</a>
+              <a class="nav-link" href="{{ route('nutrition.platform') }}">Platform</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="#">Nutrition Programme Areas</a>
+              <a class="nav-link" href="{{ route('nutrition.nutrition-programme-areas') }}">Nutrition Programme Areas</a>
           </li>
            
         </ul>

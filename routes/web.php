@@ -15,13 +15,18 @@ Route::get('/', function () {
     return view('nutrition.index');
 });
 
+Route::get('/nutrition-programme-areas', 'NutritionProgrammeAreasController@index')->name('nutrition.nutrition-programme-areas');
+Route::get('/load-geojson', 'NutritionProgrammeAreasController@loadGeoJson');
+Route::get('/load-organisation-unit-levels', 'NutritionProgrammeAreasController@loadOrganisationUnitLevels');
+Route::get('/load-level-based-organisation-units', 'NutritionProgrammeAreasController@loadLevelBasedOrganisationUnits');
+
 Route::get('/analysis', function () {
     return view('nutrition.analysis');
 });
 
 Route::get('/dashboard', function () {
     return view('nutrition.dashboard');
-});
+})->name('nutrition.platform');
 
 // ORGANIZATIONAL ROUTES
 Route::get('/get_org_division', 'Helper\OrganisationController@getOrganizationDivisions');
