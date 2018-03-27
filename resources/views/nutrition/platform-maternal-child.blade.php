@@ -5,15 +5,8 @@
 	<div class="row row-no-padding">
 
 		{{-- Selectors --}}
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<div class="side-filter-div">
-				<div class="input-group mb-3">
-				  <div class="input-group-prepend">
-				    <label class="input-group-text" for="division-id">Divisions</label>
-				  </div>
-				  <select class="custom-select" id="division-id">
-				  </select>
-				</div>
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
 				    <label class="input-group-text" for="period-id">Periods</label>
@@ -26,30 +19,17 @@
 				  </select>
 				</div>
 				<div class="input-group mb-3">
-				  <div class="input-group-prepend">
-				    <label class="input-group-text" for="programme-id">Programme</label>
-				  </div>
-				  <select class="custom-select" id="programme-id">
-				  </select>
-				</div>
-				<div class="input-group mb-3">
-				  <div class="input-group-prepend">
-				    <label class="input-group-text" for="affected-id">Affected</label>
-				  </div>
-				  <select class="custom-select" id="affected-id">
-				  </select>
-				</div>
-				<div class="input-group mb-3">
 				  <button type="button" class="btn btn-primary" id="submit-platform-btn">Submit</button>
 				</div>
 			</div>
 		</div>
 
 		{{-- Bargraph --}}
-		<div class="col-md-9">
+		<div class="col-md-10">
 			{{-- <ul class="bar-graph" id="platform-bar-graph-id"></ul> --}}
 			<div class="bargraph-div">
-				<canvas id="myChart" width="400" height="400"></canvas>
+				<canvas id="maternal" width="400" height="400"></canvas>
+				<canvas id="child" width="400" height="400"></canvas>
 			</div>
 		</div>
 	</div>
@@ -59,38 +39,65 @@
 @section('injavascript')
 	//<script>
 	$(document).ready(function() {  
-		$('#affected-id').parent().hide();
-    getDivisions();
+		// $('#affected-id').parent().hide();
+    // getDivisions();
     getPeriods();
-    getElements();
+    // getElements();
   });
 
 	var affectedExists = 0;
 	var Divisions = '';
 	var Programme = '';
 	var AffectedArrs = '';
-	var ctx = document.getElementById("myChart").getContext('2d');
-	ctx.height = 500;
-	var myChart;
+	var ctxMaternal = document.getElementById("maternal").getContext('2d');
+	var ctxChild = document.getElementById("child").getContext('2d');
+	// ctx.height = 500;
+	var chartMaternal, chartChild;
 	var colors = [
-                'rgba(255, 99, 132, 0.8)',
-                'rgba(54, 162, 235, 0.8)',
-                'rgba(255, 206, 86, 0.8)',
-                'rgba(75, 192, 192, 0.8)',
-                'rgba(153, 102, 255, 0.8)',
-                'rgba(255, 519, 64, 0.8)',
-                'rgba(25, 59, 64, 0.8)',
-                'rgba(55, 159, 64, 0.8)',
-                'rgba(255, 15, 64, 0.8)',
-                'rgba(255, 59, 64, 0.8)',
-                'rgba(255, 59, 4, 0.8)',
-                'rgba(255, 239, 64, 0.8)',
-                'rgba(255, 19, 124, 0.8)',
-                'rgba(55, 219, 64, 0.8)',
-                'rgba(25, 39, 114, 0.8)',
-                'rgba(215, 19, 164, 0.8)',
-                'rgba(252, 129, 64, 0.8)',
-            ]
+		                'rgba(255, 99, 132, 0.8)',
+		                'rgba(54, 162, 235, 0.8)',
+		                'rgba(255, 206, 86, 0.8)',
+		                'rgba(75, 192, 192, 0.8)',
+		                'rgba(153, 102, 255, 0.8)',
+		                'rgba(255, 519, 64, 0.8)',
+		                'rgba(25, 59, 64, 0.8)',
+		                'rgba(55, 159, 64, 0.8)',
+		                'rgba(255, 15, 64, 0.8)',
+		                'rgba(255, 59, 64, 0.8)',
+		                'rgba(255, 59, 4, 0.8)',
+		                'rgba(255, 239, 64, 0.8)',
+		                'rgba(255, 19, 124, 0.8)',
+		                'rgba(55, 219, 64, 0.8)',
+		                'rgba(25, 39, 114, 0.8)',
+		                'rgba(215, 19, 164, 0.8)',
+		                'rgba(252, 129, 64, 0.8)',
+
+		            ];
+
+
+  function getMCElements(element) {
+  	url = 'get_elements_maternal';
+  	if(element == 'maternal')
+  		url = 'get_elements_maternal';
+  	else if(element == 'child')
+  		url = 'get_elements_children';
+  	$.ajax({
+	    type: 'get',
+	    url: url,
+	    success: function (res) {
+	    	programmes = res["programmesJoint"];
+	    	Programme = res['programmes'];
+    		$('#programme-id').find('option').remove();
+	    	for(programme in programmes) {
+	    		$("#programme-id").append('<option value="'+programmes[programme].toString()+'">'+programme+'</option>');
+	    	}
+	    },
+	    error: function (res) {
+	      console.log('failed')
+	    }
+		})
+  }
+
   function getDivisions() {
   	$.ajax({
 	    type: 'get',
@@ -145,16 +152,20 @@
 		})
   }
 
-	
+	$('#platformType-id').change(function(){
+		platformType = $('#platformType-id').val();
+		getMCElements(platformType);
+	});
+
 	$('#programme-id').change(function(){
   	dataElement = ($('#programme-id').val())
   	$.ajax({
       type: 'get',
-      url: '/get_category_joint/',
+      url: '/get_category_mc/',
       data: {dataElement: dataElement},
       success: function (res) {
       	if(res.exists == "true") {
-      		$('#affected-id').find('option').remove()
+      		$('#affected-id').find('option').remove();
       		affectedArrs = res.affectedArrs;
       		AffectedArrs = affectedArrs;
       		for(affectedArr in affectedArrs) {
@@ -229,14 +240,12 @@
   		affected = $('#affected-id').val();
   	}
   	platformDiction = {division: division, period: period, programme: programme, affected: affected}
-  	
+  	console.log(platformDiction);
   	$.ajax({
       type: 'get',
-      url: '/get_data_value_set_joint/',
+      url: '/get_data_value_set_mc/',
       data: {platformDiction: platformDiction},
       success: function (res) {
-      	console.log(res)
-      	
       	periods = res.periods;
       	dataValues = res.dataValueSets;
       	dataSets = [];

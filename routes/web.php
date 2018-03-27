@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
 })->name('nutrition.dashboard');
 
 Route::get('/platform', function () {
-    return view('nutrition.platform');
+    return view('nutrition.platform-maternal-child');
 })->name('nutrition.platform');
 
 // ORGANIZATIONAL ROUTES
@@ -43,11 +43,16 @@ Route::get('/get_periods', 'Helper\PeriodController@getPeriods');
 
 // DATA ELEMENT ROUTES
 Route::get('/get_elements', 'Helper\DataElementController@getDataElements');
+Route::get('/get_elements_all', 'Helper\DataElementController@getDataElementsAll');
+Route::get('/get_elements_maternal', 'Helper\DataElementController@getDataElementsMaternal');
+Route::get('/get_elements_children', 'Helper\DataElementController@getDataElementsChildren');
 Route::get('/get_elements_joint', 'Helper\DataElementController@getDataElementsJoint');
 Route::get('/get_category', 'Helper\DataElementController@getDataElementCategory');
 Route::get('/get_category_joint', 'Helper\DataElementController@getDataElementCategoryJoint');
+// Route::get('/get_category_mc', 'Helper\DataElementController@getDataElementCategoryMC');
 Route::get('/get_data_value_set', 'Helper\DataElementController@getDataValueSet');
 Route::get('/get_data_value_set_joint', 'Helper\DataElementController@getDataValueSetJoint');
+// Route::get('/get_data_value_set_mc', 'Helper\DataElementController@getDataValueSetMC');
 
 // DATA ELEMENT ROUTES END
 
@@ -89,3 +94,7 @@ Route::get('/get_data_element/{id?}', 'AnalysisController@getDataElements');
 
 // // Route::get('/orggroup/{id?}', 'CurlController@organizationGroup');
 
+
+
+// Updating database
+Route::get('/update_anc_counsel', 'Helper\UpdateDBController@updateANCCounsel');

@@ -29,7 +29,7 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="/dashboard">
-        {{-- <img src="{{asset('storage\bd_logo.png')}}"> --}}
+         <img src="{{asset('storage\bd_logo.png')}}"> 
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -66,6 +66,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+    <script type="text/javascript" src="{{asset('js\hammer.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js\chart-plugin-zoom.min.js')}}"></script>
 
     <script>
       @yield('injavascript')
