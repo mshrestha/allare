@@ -67,6 +67,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
+    <script type="text/javascript" src="{{asset('js\hammer.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js\chart-plugin-zoom.min.js')}}"></script>
+
     <script>
       @yield('injavascript')
     </script>
