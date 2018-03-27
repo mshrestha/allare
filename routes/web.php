@@ -19,6 +19,7 @@ Route::get('/nutrition-programme-areas', 'NutritionProgrammeAreasController@inde
 Route::get('/load-geojson', 'NutritionProgrammeAreasController@loadGeoJson');
 Route::get('/load-organisation-unit-levels', 'NutritionProgrammeAreasController@loadOrganisationUnitLevels');
 Route::get('/load-level-based-organisation-units', 'NutritionProgrammeAreasController@loadLevelBasedOrganisationUnits');
+Route::get('/load-data-value-set', 'NutritionProgrammeAreasController@loadDataValueSetJoint');
 
 Route::get('/analysis', function () {
     return view('nutrition.analysis');
