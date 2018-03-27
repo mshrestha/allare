@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\CurlHelper;
 
-use App\Model\AncCounselCountry;
-use App\Model\AncCounselDivision;
+use App\Models\AncCounselCountry;
+use App\Models\AncCounselDivision;
 
 class UpdateDBController extends Controller
 {
