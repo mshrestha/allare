@@ -15,7 +15,6 @@ class ImciWastingController extends Controller
     	$data = config('data.imci_wasting');
     	for ($k=0; $k < count($data); $k++) { 
     		$currData = $data[$k];
-    		$ou = ['dNLjKwsVjod', 'R1GAfTe6Mkb','Gm10pkyQc1y','mykF7AaZv9R','Ukfjm01aMRf','PL5pZp4u3MV','Y7Hx8L3Jw51','JhD8UE2rL3c','US3ov01KbUz','pF3sVE7tZdk'];
             $save_array = [];
             $ou = config('static.organizations');
             for($j = 0; $j < count($ou); $j++) {
