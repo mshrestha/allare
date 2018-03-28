@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use App\Jobs\FetchDataValue;
 use App\Jobs\FetchDataElements;
 
-use App\DataSets;
-use App\DataElements;
-use App\OrganizationUnit;
-use App\CategoryCombos;
-use App\CategoryOptionCombos;
+use App\Models\DataSets;
+use App\Models\DataElements;
+use App\Models\OrganizationUnit;
+use App\Models\CategoryCombos;
+use App\Models\CategoryOptionCombos;
 
 class ApiController extends Controller
 {

@@ -73,25 +73,24 @@
 	ctx.height = 500;
 	var myChart;
 	var colors = [
-		                'rgba(255, 99, 132, 0.8)',
-		                'rgba(54, 162, 235, 0.8)',
-		                'rgba(255, 206, 86, 0.8)',
-		                'rgba(75, 192, 192, 0.8)',
-		                'rgba(153, 102, 255, 0.8)',
-		                'rgba(255, 519, 64, 0.8)',
-		                'rgba(25, 59, 64, 0.8)',
-		                'rgba(55, 159, 64, 0.8)',
-		                'rgba(255, 15, 64, 0.8)',
-		                'rgba(255, 59, 64, 0.8)',
-		                'rgba(255, 59, 4, 0.8)',
-		                'rgba(255, 239, 64, 0.8)',
-		                'rgba(255, 19, 124, 0.8)',
-		                'rgba(55, 219, 64, 0.8)',
-		                'rgba(25, 39, 114, 0.8)',
-		                'rgba(215, 19, 164, 0.8)',
-		                'rgba(252, 129, 64, 0.8)',
-
-		            ]
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(255, 519, 64, 0.8)',
+                'rgba(25, 59, 64, 0.8)',
+                'rgba(55, 159, 64, 0.8)',
+                'rgba(255, 15, 64, 0.8)',
+                'rgba(255, 59, 64, 0.8)',
+                'rgba(255, 59, 4, 0.8)',
+                'rgba(255, 239, 64, 0.8)',
+                'rgba(255, 19, 124, 0.8)',
+                'rgba(55, 219, 64, 0.8)',
+                'rgba(25, 39, 114, 0.8)',
+                'rgba(215, 19, 164, 0.8)',
+                'rgba(252, 129, 64, 0.8)',
+            ]
   function getDivisions() {
   	$.ajax({
 	    type: 'get',
@@ -236,6 +235,8 @@
       url: '/get_data_value_set_joint/',
       data: {platformDiction: platformDiction},
       success: function (res) {
+      	console.log(res)
+      	
       	periods = res.periods;
       	dataValues = res.dataValueSets;
       	dataSets = [];

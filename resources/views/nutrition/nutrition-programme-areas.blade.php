@@ -20,7 +20,7 @@
 				  <div class="input-group-prepend">
 				    <label class="input-group-text" for="organisation-unit-id">Organisation</label>
 				  </div>
-				  <select class="custom-select" id="organisation-unit-id" name="organisation-unit-id">
+				  <select class="custom-select" id="organisation-unit-id" name="organisation-unit-id" multiple>
 				  </select>
 				</div>
 
@@ -31,8 +31,9 @@
 				  {{-- <select class="custom-select" id="period-id" multiple>
 				  </select> --}}
 				  <select class="custom-select" id="period-id">
-				  	<option value="LAST_MONTH">1 month</option>
-				  	<option value="LAST_6_MONTHS">6 months</option>
+				  	@foreach($periods as $key => $period)
+				  		<option value="{{ $key }}">{{ $period }}</option>
+				  	@endforeach
 				  </select>
 				</div>
 				<div class="input-group mb-3">
@@ -79,19 +80,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOIfN5zpG8afvKRUIop9qiZqKIUPqw7_4&v=3.exp&sensor=false"></script>
     
     <script>
-    	$(document).ready(function() {    		
-			$.ajax({
-				type: 'GET',
-				url: 'load-organisation-unit-levels',
-				success: function (res) {
-					var data = JSON.parse(res)
-					var organisationUnitLevels = data['organisationUnitLevels']
-
-					$.each(organisationUnitLevels, function(key, org) {
-			            $("#organisation-unit-levels-id").append('<option value="'+org.level+'">'+org.name+'</option>');
-					})
-				}
-			})
+    	$(document).ready(function() { 
+    		$('#affected-id').parent().hide();
+			getOrganisationUnitLevels();
+			getElements();
     	})
 
     	$('#organisation-unit-levels-id').on('change', function() {
@@ -110,6 +102,108 @@
     			}
     		})
     	})
+
+  //   	function getPeriods() {
+		//     $.ajax({
+		//       type: 'get',
+		//       url: '/get_periods',
+		//       success: function (res) {
+		//         dataSets = res["periods"];
+		//         for(data in dataSets) {
+		//             $("#period-id").append('<option value="'+dataSets[data]+'">'+data+'</option>');
+		//         }
+		//         $('.periods_wrapper .loading').hide()
+		//       },
+		//       error: function (res) {
+		//         console.log('failed')
+		//       }
+		//     })
+		// }
+
+		function getOrganisationUnitLevels() {
+			$.ajax({
+				type: 'GET',
+				url: 'load-organisation-unit-levels',
+				success: function (res) {
+					var data = JSON.parse(res)
+					var organisationUnitLevels = data['organisationUnitLevels']
+
+					$.each(organisationUnitLevels, function(key, org) {
+			            $("#organisation-unit-levels-id").append('<option selected="selected" value="'+org.level+'">'+org.name+'</option>');
+					})
+				}
+			})
+		}
+
+		function getElements() {
+		  	$.ajax({
+			    type: 'get',
+			    url: '/get_elements',
+			    success: function (res) {
+			    	// keys = Object.keys(res);
+			    	// programmes = res["programmesJoint"];
+			    	programmes = res['programmes'];
+			    	console.log(programmes)
+			    	$.each(programmes, function(key, programme) {
+			    		$("#programme-id").append('<option value="'+key+'">'+programme+'</option>');	
+			    	})
+			    },
+			    error: function (res) {
+			      console.log('failed')
+			    }
+				})
+		}
+
+		var affectedExists = 0;
+		var Divisions = '';
+		var Programme = '';
+		var AffectedArrs = '';
+		var colors = [
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(255, 206, 86, 0.8)',
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(153, 102, 255, 0.8)',
+            'rgba(255, 519, 64, 0.8)',
+            'rgba(25, 59, 64, 0.8)',
+            'rgba(55, 159, 64, 0.8)',
+            'rgba(255, 15, 64, 0.8)',
+            'rgba(255, 59, 64, 0.8)',
+            'rgba(255, 59, 4, 0.8)',
+            'rgba(255, 239, 64, 0.8)',
+            'rgba(255, 19, 124, 0.8)',
+            'rgba(55, 219, 64, 0.8)',
+            'rgba(25, 39, 114, 0.8)',
+            'rgba(215, 19, 164, 0.8)',
+            'rgba(252, 129, 64, 0.8)',
+        ];
+
+		$('#programme-id').change(function(){
+		  	dataElement = ($('#programme-id').val())
+		  	$.ajax({
+		      type: 'get',
+		      url: '/get_category_joint/',
+		      data: {dataElement: dataElement},
+		      success: function (res) {
+		      	if(res.exists == "true") {
+		      		$('#affected-id').find('option').remove()
+		      		affectedArrs = res.affectedArrs;
+		      		AffectedArrs = affectedArrs;
+		      		for(affectedArr in affectedArrs) {
+		      			$("#affected-id").append('<option value="'+affectedArr+'">'+affectedArrs[affectedArr]+'</option>');
+		      		}
+		      		$('#affected-id').parent().show();
+		      		affectedExists = 1;
+		      	} else {
+		      		$('#affected-id').parent().hide();
+		      		affectedExists = 0;
+		      	}
+		      },
+		      error: function (res) {
+		        console.log('failed')
+		      }
+		    });
+		});
     </script>
 
     <script>
@@ -142,7 +236,7 @@
 		  // Set and apply styling to the stateLayer
 		  stateLayer.setStyle(function(feature) {
 		    return {
-		      fillColor: getColor(feature.getProperty('code')), // call function to get color for state based on the code
+		      fillColor: getColor(feature.getProperty('calc')), // call function to get color for state based on the code
 		      fillOpacity: 0.8,
 		      strokeColor: '#777',
 		      strokeWeight: 1,
@@ -167,8 +261,8 @@
 		  stateLayer.addListener('click', function(e) {
 		    console.log(e);
 		    infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
-		      e.feature.getProperty('name') + '<br> Code: ' +
-		      e.feature.getProperty('code') + '</div>');
+		      e.feature.getProperty('name') + '<br> Value: ' +
+		      e.feature.getProperty('data_value') + '</div>');
 
 		    var anchor = new google.maps.MVCObject();
 		    anchor.set("position", e.latLng);
@@ -185,20 +279,46 @@
 		    var colors = [
 		      '#d1ccad',
 		      '#c2c083',
-		      '#cbd97c',
-		      '#acd033',
-		      '#89a844',
-		      '#617536',
 		      '#4c5d27'
 		    ];
 
-		    return coli >= 60 ? colors[6] :
-		      coli > 50 ? colors[5] :
-		      coli > 40 ? colors[4] :
-		      coli > 30 ? colors[3] :
-		      coli > 20 ? colors[2] :
-		      coli > 10 ? colors[1] :
+		    // return coli >= 60 ? colors[6] :
+		    //   coli > 50 ? colors[5] :
+		    //   coli > 40 ? colors[4] :
+		    //   coli > 30 ? colors[3] :
+		    //   coli > 20 ? colors[2] :
+		    //   coli > 10 ? colors[1] :
+		    //   colors[0];
+		    
+		    return coli == 'min' ? colors[2] :
+		      coli == 'avg' ? colors[1] :
 		      colors[0];
 		  }
+    </script>
+
+    <script>
+    	$('#submit-platform-btn').click(function() {
+		  	organisation_units = $('#organisation-unit-id').val();
+		  	period = $('#period-id').val();
+		  	programme = $('#programme-id').val();
+		  	affected = -1;
+		  	if(affectedExists) {
+		  		affected = $('#affected-id').val();
+		  	}
+		  	platformDiction = {organisation_units: organisation_units, period: period, programme: programme, affected: affected}
+		  	
+		  	$.ajax({
+		      type: 'get',
+		      url: '/load-data-value-set',
+		      data: {platformDiction: platformDiction},
+		      success: function (res) {
+		      	// console.log(res)
+				stateLayer.addGeoJson(res.geocoordinates);
+		      },
+		      error: function (res) {
+		        console.log('failed')
+		      }
+		    });
+		  });
     </script>
 @endsection
