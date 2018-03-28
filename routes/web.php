@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
 })->name('nutrition.dashboard');
 
 Route::get('/platform', function () {
-    return view('nutrition.platform-maternal-child');
+    return view('nutrition.platform');
 })->name('nutrition.platform');
 
 // ORGANIZATIONAL ROUTES
