@@ -7,5 +7,7 @@ use App\Http\Controllers\Controller;
 
 class CcCrAdditionalFoodSupplimentationController extends Controller
 {
-    //
+	public function import() {
+		dd('hit');
+	}
 }
