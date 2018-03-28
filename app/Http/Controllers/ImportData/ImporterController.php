@@ -15,7 +15,7 @@ use App\Models\Data\ImciFemale;
 use App\Models\Data\CcCrAdditionalFoodSuppliment;
 use App\Models\Data\CcMrAncIfaDistribution;
 use App\Models\Data\CcMrAncNutriCounsel;
-// use App\Models\Data\CcMrCounsellingAnc;
+use App\Models\Data\CcMrCounsellingAnc;
 use App\Models\Data\CcMrWeightInKgAnc;
 use App\Models\OrganizationUnit;
 
@@ -69,11 +69,6 @@ class ImporterController extends Controller
                     $rows = $responses->rows;
                     foreach ($rows as $keyrows => $row) {
                         $unit = [];
-                        // $ouId = -1;
-                        // if($ou[$j] == 'op5gbhjVCRk') {
-                        // 	$orgUnit = OrganizationUnit::where('id','R1GAfTe6Mkb')->first();
-                        // 	$ouId = $orgUnit->id;
-                        // }
                         $unit['organisation_unit'] = $ou[$j];
                         foreach ($row as $key => $value) {
                             if($key == 0) {
@@ -95,13 +90,10 @@ class ImporterController extends Controller
                     
                 }
             }
-            // $currData['model']::unguard();
+            
+
             $model = 'App\Models\Data\\'.$currData['model'];
             $model::insert($save_array);
-            // $currData['model']::reguard();
-            // ImciWasting::unguard();
-            // ImciWasting::insert($save_array);
-            // ImciWasting::reguard();
     	}
     }
 }
