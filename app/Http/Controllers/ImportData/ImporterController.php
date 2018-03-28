@@ -15,7 +15,7 @@ use App\Models\Data\ImciFemale;
 use App\Models\Data\CcCrAdditionalFoodSuppliment;
 use App\Models\Data\CcMrAncIfaDistribution;
 use App\Models\Data\CcMrAncNutriCounsel;
-use App\Models\Data\CcMrCounsellingAnc;
+// use App\Models\Data\CcMrCounsellingAnc;
 use App\Models\Data\CcMrWeightInKgAnc;
 use App\Models\OrganizationUnit;
 
@@ -33,10 +33,10 @@ class ImporterController extends Controller
             $ou = '';
             if($currData['server'] == 'central') {
             	$ou = config('static.centralOrganisation');
-            }else fi($currData['server'] == 'community') {
+            }else if($currData['server'] == 'community') {
             	$ou = config('static.communityOrganisation');
             }
-            $ou = config('static.organizations');
+            // $ou = config('static.organizations');
             $pe = $this->getPeriods();
             $pe = $pe['years_months_string'];
             for($j = 0; $j < count($ou); $j++) {
@@ -52,7 +52,7 @@ class ImporterController extends Controller
                 
                 // https://communitydhis.mohfw.gov.bd/nationalcc/api/26/analytics.json?dimension=dx:WfrGlt9gYxW.OJd05AWCFTk&dimension=pe:LAST_MONTH&filter=ou:dNLjKwsVjod&displayProperty=NAME&outputIdScheme=NAME
 
-                dd($url);
+                // dd($url);
                 $metaData = $responses->metaData;
                 
                 $co = $metaData->dimensions->co;
@@ -69,12 +69,12 @@ class ImporterController extends Controller
                     $rows = $responses->rows;
                     foreach ($rows as $keyrows => $row) {
                         $unit = [];
-                        $ouId = -1;
-                        if($ou[$j] == 'op5gbhjVCRk') {
-                        	$orgUnit = OrganizationUnit::where('id','R1GAfTe6Mkb')->first();
-                        	$ouId = $orgUnit->id;
-                        }
-                        $unit['organisation_unit'] = $ouId;
+                        // $ouId = -1;
+                        // if($ou[$j] == 'op5gbhjVCRk') {
+                        // 	$orgUnit = OrganizationUnit::where('id','R1GAfTe6Mkb')->first();
+                        // 	$ouId = $orgUnit->id;
+                        // }
+                        $unit['organisation_unit'] = $ou[$j];
                         foreach ($row as $key => $value) {
                             if($key == 0) {
                                 $co = explode('.',$value)[1];
@@ -95,9 +95,10 @@ class ImporterController extends Controller
                     
                 }
             }
-            $currData['model']::unguard();
-            $currData['model']::insert($save_array);
-            $currData['model']::reguard();
+            // $currData['model']::unguard();
+            $model = 'App\Models\Data\\'.$currData['model'];
+            $model::insert($save_array);
+            // $currData['model']::reguard();
             // ImciWasting::unguard();
             // ImciWasting::insert($save_array);
             // ImciWasting::reguard();
