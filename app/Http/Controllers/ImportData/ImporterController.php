@@ -100,7 +100,9 @@ class ImporterController extends Controller
 	                        	}else{
 	                        		$co = NULL;
 	                        	}
+
                             	// $flag = 0;
+
                             }else{
                             	$co = NULL;
                             }
