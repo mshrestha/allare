@@ -19,6 +19,8 @@ trait PeriodHelper
 
     for ($year=14; $year <= $current_year_num; $year++) { 
       $years_months["20".$year] = [];
+      $years_months_string .= '20'. $year . ';';
+
       if($year !== (int)$current_year_num) {
         for ($month = 1; $month <= 12; $month++) { 
           (strlen($month) < 2) ? $month = 0 . $month : $month;

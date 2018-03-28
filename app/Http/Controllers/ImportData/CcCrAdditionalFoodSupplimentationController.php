@@ -25,19 +25,32 @@ class CcCrAdditionalFoodSupplimentationController extends Controller
 
 		//Fetch category combo string
 		$dx = $this->dataCategoryOptionCombo();
+		// dd($dx);
 
-		$url = "{$this->data['server']}analytics.json?dimension=dx:{$dx}&dimension=pe:{$periods}&filter=ou:dNLjKwsVjod&displayProperty=NAME&skipMeta=false&includeNumDen=true";
+		//Fetch organisation units 
+		$ou = $this->organisationUnitsString();
+
+		// $url = "{$this->data['server']}analytics.json?dimension=dx:{$dx}&dimension=pe:{$periods}&filter=ou:{$ou}&displayProperty=NAME&skipMeta=false&includeNumDen=true";
+		$url = "{$this->data['server']}analytics/dataValueSet.json?dimension=dx:{$dx}&dimension=pe:{$periods}&dimension=ou:{$ou}";
+		dd($url);
 		$response = $this->callUrl($url);
-		print_r($response);
 		$response = json_decode($response);
+		// dd($response);
 
 		$save_data = [];
-		foreach($response->rows as $key => $row) {
-			$save_data[$key]['value'] = $row[2];
-			$save_data[$key]['period'] = $row[1];
+		foreach($response->dataValues as $key => $row) {
+			// $category_combo = explode($row[0]);
+			// $category_combo = $category_combo[1];
+			
+
+			$date = date('F', strtotime($row->period));
+			dd($row->period);
+
+			$save_data[$key]['value'] = $row->value;
+			$save_data[$key]['period'] = $row->period;
 			$save_data[$key]['period_name'] = $response->metaData->$row[1];
-			$save_data[$key]['organisation_unit'] = 'dNLjKwsVjod';
-			$save_data[$key]['category_option_combo'] = $row[0];
+			$save_data[$key]['organisation_unit'] = $row->orgUnit;
+			$save_data[$key]['category_option_combo'] = $row->categoryOptionCombo;
 			$save_data[$key]['import_date'] = date('Y-m-d');
 		}
 
@@ -51,7 +64,7 @@ class CcCrAdditionalFoodSupplimentationController extends Controller
 		$response = $this->callUrl($url);
 		$response = json_decode($response);
 
-		$dx = null;
+		$dx = $this->data['api_id'] . ';';
 		foreach($response->metaData->dimensions->co as $categoryOptionCombo) {
 			$dx .= $this->data['api_id'].'.'.$categoryOptionCombo. ';';
 		}
@@ -61,7 +74,7 @@ class CcCrAdditionalFoodSupplimentationController extends Controller
 	}
 
 	private function organisationUnitsString() {
-		$organisation_units = config('static.organisations');
+		$organisation_units = config('static.organizations');
 		
 		$ou = null;
 		foreach($organisation_units as $unit) {
