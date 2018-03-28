@@ -27,63 +27,63 @@ class DataElementController extends Controller
   	return array('programmes'=>$dataElements);
   }
 
-  // public function getDataElementsAll() {
-  //   $dataElements = [];
-  //   $dataSets = array_merge(config('static.centralDataSet'),config('static.communityDataSet'));
-  //   // dd($dataSets);
-  //   for ($j=0; $j < count($dataSets); $j++) { 
-  //     if($j < 2)
-  //       $url = config('static.centralBaseUrl').config('static.datasetEP').'/'.$dataSets[$j].'.json?paging=false&fields=name,dataSetElements[dataElement[name,id]]';
-  //     else
-  //       $url = config('static.communityBaseUrl').config('static.datasetEP').'/'.$dataSets[$j].'.json?paging=false&fields=name,dataSetElements[dataElement[name,id]]';
-  //     $responses = $this->callUrl($url);
-  //     $responses = json_decode($responses);
-      
-      
-  //     $dataSetElements = $responses->dataSetElements;
-  //     $currDataSet = $responses->name;
-  //     // print_r($dataSetElements);
-  //     $dataElements[$currDataSet] = [];
-  //     sort($dataSetElements);
-  //     for ($i=0; $i < count($dataSetElements); $i++) { 
-  //       $dataElement = $dataSetElements[$i]->dataElement;
-  //       // $dataElements[$i]['id'] = $dataElement->id;
-  //       // $dataElements[$i]['name'] = $dataElement->name;
-  //       $dataElements[$currDataSet][$dataElement->id] = $dataElement->name;
-  //     }
-  //     // print_r($dataElements);
-  //   }
-  //   dd($dataElements);
-  //   return array('programmes'=>$dataElements);
-  // }
-
   public function getDataElementsAll() {
-    $dx0 = '';
-    $dx1 = '';
-    $maternalDataElements = config('static.maternalDataElements');
-    $childDataElements = config('static.childDataElements');
-    foreach ($maternalDataElements as $key => $value) {
-      if($value == 0) {
-        $dx0 .= $key.';';
-      } else if($value == 1) {
-        $dx1 .= $key.';';
+    $dataElements = [];
+    $dataSets = array_merge(config('static.centralDataSet'),config('static.communityDataSet'));
+    // dd($dataSets);
+    for ($j=0; $j < count($dataSets); $j++) { 
+      if($j < 2)
+        $url = config('static.centralBaseUrl').config('static.datasetEP').'/'.$dataSets[$j].'.json?paging=false&fields=name,dataSetElements[dataElement[name,id]]';
+      else
+        $url = config('static.communityBaseUrl').config('static.datasetEP').'/'.$dataSets[$j].'.json?paging=false&fields=name,dataSetElements[dataElement[name,id]]';
+      $responses = $this->callUrl($url);
+      $responses = json_decode($responses);
+      
+      
+      $dataSetElements = $responses->dataSetElements;
+      $currDataSet = $responses->name;
+      // print_r($dataSetElements);
+      $dataElements[$currDataSet] = [];
+      sort($dataSetElements);
+      for ($i=0; $i < count($dataSetElements); $i++) { 
+        $dataElement = $dataSetElements[$i]->dataElement;
+        // $dataElements[$i]['id'] = $dataElement->id;
+        // $dataElements[$i]['name'] = $dataElement->name;
+        $dataElements[$currDataSet][$dataElement->id] = $dataElement->name;
       }
+      // print_r($dataElements);
     }
-
-    foreach ($childDataElements as $key => $value) {
-      if($value == 0) {
-        $dx0 .= $key.';';
-      } else if($value == 1) {
-        $dx1 .= $key.';';
-      }
-    }
-    
-    $dx0 = rtrim($dx0, ';');
-    $dx1 = rtrim($dx1, ';');
-    $dv0 = $this->getDataValues($dx0, 0);
-    $dv1 = $this->getDataValues($dx1, 1);
-    
+    dd($dataElements);
+    return array('programmes'=>$dataElements);
   }
+
+  // public function getDataElementsAll() {
+  //   $dx0 = '';
+  //   $dx1 = '';
+  //   $maternalDataElements = config('static.maternalDataElements');
+  //   $childDataElements = config('static.childDataElements');
+  //   foreach ($maternalDataElements as $key => $value) {
+  //     if($value == 0) {
+  //       $dx0 .= $key.';';
+  //     } else if($value == 1) {
+  //       $dx1 .= $key.';';
+  //     }
+  //   }
+
+  //   foreach ($childDataElements as $key => $value) {
+  //     if($value == 0) {
+  //       $dx0 .= $key.';';
+  //     } else if($value == 1) {
+  //       $dx1 .= $key.';';
+  //     }
+  //   }
+    
+  //   $dx0 = rtrim($dx0, ';');
+  //   $dx1 = rtrim($dx1, ';');
+  //   $dv0 = $this->getDataValues($dx0, 0);
+  //   $dv1 = $this->getDataValues($dx1, 1);
+    
+  // }
 
   public function getDataElementsMaternal() {
     $dataElements = [];
