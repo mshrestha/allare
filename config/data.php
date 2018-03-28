@@ -3,13 +3,13 @@
 return [
 	'maternal' => [
 		'maternal_counselling' => [
-			[
+			'cc_mr_counselling_anc' => [
 				'model'		=> 'CcMrCounsellingAnc',
 				'table'		=> 'cc_mr_counselling_anc',
 				'server'	=> 'community',
 				'api_id'	=> 'WfrGlt9gYxW.YF2ivOyo5'
 			],
-			[
+			'cc_mr_anc_nutri_counsel' => [
 				'model'		=> 'CcMrAncNutriCounsel',
 				'table'		=> 'cc_mr_anc_nutri_counsel',
 				'server'	=> 'community',
@@ -58,10 +58,10 @@ return [
 			]
 		],
 		'vitamin_a_supplementation' => [
-			[
+			'cc_cr_additional_food_supplimentation' => [
 				'model'		=> 'CcCrAdditionalFoodSupplimentation',
 				'table'		=> 'cc_cr_additional_food_supplimentation',
-				'server'	=> 'community',
+				'server'	=> 'https://communitydhis.mohfw.gov.bd/nationalcc/api/',
 				'api_id'	=> 'gpJQzatKvmH'	
 			],
 		]

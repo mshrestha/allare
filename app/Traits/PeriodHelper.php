@@ -23,15 +23,20 @@ trait PeriodHelper
         for ($month = 1; $month <= 12; $month++) { 
           (strlen($month) < 2) ? $month = 0 . $month : $month;
           array_push($years_months["20".$year], '20'.$year.$month);
+          $years_months_string .= '20'.$year.$month. ';';
         }
       } else {
         for ($month = 1; $month <= $current_month; $month++) { 
           (strlen($month) < 2) ? $month = 0 . $month : $month;
           array_push($years_months["20".$year], '20'.$year.$month);
+          $years_months_string .= '20'.$year.$month. ';';
         }
       }
     }
-    return array('periods'=>$years_months);
+    
+    $years_months_string = trim($years_months_string, ';');
+
+    return array('periods'=>$years_months, 'years_months_string' => $years_months_string);
   }
 }
-?>
+
