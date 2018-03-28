@@ -13,6 +13,7 @@ class CcCrAdditionalFoodSupplimentationController extends Controller
 	use CurlHelper, PeriodHelper;
 
 	private $data;
+
 	public function __construct() {
 		$this->data = config('data.child.vitamin_a_supplementation.cc_cr_additional_food_supplimentation');
 	}
@@ -40,9 +41,7 @@ class CcCrAdditionalFoodSupplimentationController extends Controller
 			$save_data[$key]['import_date'] = date('Y-m-d');
 		}
 
-		// CcCrAdditionalFoodSupplimentation::unguard();
 		$cc_cr_additional_food_supplimentation = CcCrAdditionalFoodSupplimentation::insert($save_data);
-		// CcCrAdditionalFoodSupplimentation::reguard();
 		
 		dd($cc_cr_additional_food_supplimentation);
 	}
@@ -59,5 +58,17 @@ class CcCrAdditionalFoodSupplimentationController extends Controller
 		$dx = trim($dx, ';');
 
 		return $dx;
+	}
+
+	private function organisationUnitsString() {
+		$organisation_units = config('static.organisations');
+		
+		$ou = null;
+		foreach($organisation_units as $unit) {
+			$ou .= $unit . ';';
+		}
+		$ou = trim($ou, ';');
+
+		return $ou;
 	}
 }
