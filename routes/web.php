@@ -97,4 +97,4 @@ Route::get('/get_data_element/{id?}', 'AnalysisController@getDataElements');
 
 
 // Updating database
-Route::get('/update_anc_counsel', 'Helper\UpdateDBController@updateANCCounsel');
+Route::get('/get_imci_data', 'ImportData\ImciWasting@getImciWasting');
