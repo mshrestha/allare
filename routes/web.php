@@ -83,5 +83,6 @@ Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 	Route::get('/cc-cr-additional-food-supplimentation', 'CcCrAdditionalFoodSupplimentationController@import');
 	Route::get('/imci-wasting', 'ImciWastingController@import');
 	Route::get('/imci-stunting', 'ImciStuntingController@import');
+	Route::get('/importer', 'ImporterController@import');
 });
 
