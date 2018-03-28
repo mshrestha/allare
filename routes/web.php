@@ -76,8 +76,11 @@ Route::get('/get_data_element/{id?}', 'AnalysisController@getDataElements');
 
 
 // Updating database
+
 Route::get('/update_anc_counsel', 'Helper\UpdateDBController@updateANCCounsel');
 
 Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'import-data.'], function() {
 	Route::get('/cc-cr-additional-food-supplimentation', 'CcCrAdditionalFoodSupplimentationController@import');
+	Route::get('/imci-wasting', 'ImciWastingController@import');
 });
+
