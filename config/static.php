@@ -7,10 +7,9 @@ return [
     'dataelementEP' => 'dataElements',
     'categoryComboEP' => 'categoryCombos',
     'orgUnitEP' => 'organisationUnits',
-    'analyticsEP' => 'analytics',
+    'analyticsEP' => 'analytics.json',
     'dataValueEP' => 'analytics/dataValueSet.json',
     'centralDataSet' => ['MRAMSldVeTu','zD5f2fDwkZW'],
     'communityDataSet' => ['R1tTwMwmi8o','Gq8qQ6vFMhD'],
-    'maternalDataElements' => ['c0zIiLT97P4'=>1, 'D9jDxIOFAwV'=>1, "WfrGlt9gYxW.OJd05AWCFTk"=>1, "frGlt9gYxW.YF2ivOyo5jG"=>1],
-    'childDataElements' => ['gpJQzatKvmH'=>1, 'RN4w5hxGHRk'=>0]
+    'organizations' => ['dNLjKwsVjod', 'R1GAfTe6Mkb','Gm10pkyQc1y','mykF7AaZv9R','Ukfjm01aMRf','PL5pZp4u3MV','Y7Hx8L3Jw51','JhD8UE2rL3c','US3ov01KbUz','pF3sVE7tZdk']
 ];

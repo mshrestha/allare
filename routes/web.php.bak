@@ -73,14 +73,28 @@ Route::get('/dataValueSet/{id?}', 'ApiController@getDataSetValues');
 
 Route::get('/get_data_set/{id?}', 'AnalysisController@getDataSet');
 Route::get('/get_data_element/{id?}', 'AnalysisController@getDataElements');
+// Route::get('/get_data_value_set/{id?}', 'AnalysisController@getDataValueSet');
+
+
+// // Route::get('/dataset', 'CurlController@dataSet');
+// Route::get('/datasetelement/{id?}', 'CurlController@dataSetElements');
+// // Route::get('/datasetelement', 'CurlController@dataSetElements');
+// // Route::get('/dataelement/{id?}', 'CurlController@dataElement');
+// // Route::get('/dataelement', 'CurlController@dataElement');
+// Route::get('/dataelementgroup/{id?}', 'CurlController@dataElementGroup');
+// // Route::get('/dataelementgroup', 'CurlController@dataElementGroup');
+// Route::get('/dataentryform/{id?}', 'CurlController@dataForm');
+// // Route::get('/dataentryform', 'CurlController@dataForm');
+// Route::get('/catcomb/{id?}', 'CurlController@categoryCombo');
+// // Route::get('/catcomb', 'CurlController@categoryCombo');
+// Route::get('/catcombopt/{id?}', 'CurlController@categoryComboOption');
+// // Route::get('/catcombopt', 'CurlController@categoryComboOption');
+
+// Route::get('/orggroup/{id?}', 'CurlController@organizationGroup');
+
+// // Route::get('/orggroup/{id?}', 'CurlController@organizationGroup');
+
 
 
 // Updating database
-
 Route::get('/update_anc_counsel', 'Helper\UpdateDBController@updateANCCounsel');
-
-Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'import-data.'], function() {
-	Route::get('/cc-cr-additional-food-supplimentation', 'CcCrAdditionalFoodSupplimentationController@import');
-	Route::get('/imci-wasting', 'ImciWastingController@import');
-});
-

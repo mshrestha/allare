@@ -15,6 +15,12 @@ class CreateImciWastingsTable extends Migration
     {
         Schema::create('imci_wasting', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('value')->nullable();
+            $table->string('period');
+            $table->string('period_name');
+            $table->string('organisation_unit')->nullable();
+            $table->string('category_option_combo')->nullable();
+            $table->date('import_date');
             $table->timestamps();
         });
     }

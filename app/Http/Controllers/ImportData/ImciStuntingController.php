@@ -5,9 +5,7 @@ namespace App\Http\Controllers\ImportData;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CcCrAdditionalFoodSupplimentationController extends Controller
+class ImciStuntingController extends Controller
 {
-	public function import() {
-		dd('hit');
-	}
+    //
 }
