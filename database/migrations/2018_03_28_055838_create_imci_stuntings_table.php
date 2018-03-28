@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCcMrCounsellingAncsTable extends Migration
+class CreateImciStuntingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCcMrCounsellingAncsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cc_mr_counselling_anc', function (Blueprint $table) {
+        Schema::create('imci_stunting', function (Blueprint $table) {
             $table->increments('id');
             $table->string('value')->nullable();
             $table->string('period');
@@ -32,6 +32,6 @@ class CreateCcMrCounsellingAncsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cc_mr_counselling_anc');
+        Schema::dropIfExists('imci_stunting');
     }
 }
