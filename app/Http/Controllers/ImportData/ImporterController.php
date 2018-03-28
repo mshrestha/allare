@@ -15,7 +15,7 @@ use App\Models\Data\ImciFemale;
 use App\Models\Data\CcCrAdditionalFoodSuppliment;
 use App\Models\Data\CcMrAncIfaDistribution;
 use App\Models\Data\CcMrAncNutriCounsel;
-// use App\Models\Data\CcMrCounsellingAnc;
+use App\Models\Data\CcMrCounsellingAnc;
 use App\Models\Data\CcMrWeightInKgAnc;
 use App\Models\OrganizationUnit;
 
@@ -26,6 +26,7 @@ class ImporterController extends Controller
 
     public function import() {
     	$data = config('datamodel');
+    	$flag = 0;
     	for ($k=0; $k < count($data); $k++) {
     		$currData = $data[$k];
     		// dd($currData);
@@ -45,63 +46,75 @@ class ImporterController extends Controller
                     $baseUrl = config('static.centralBaseUrl');
                 else if($currData['server'] == 'community')
                     $baseUrl = config('static.communityBaseUrl');
-                $url = $baseUrl.config('static.analyticsEP').'?dimension=dx:'.$currData['api_id'].'&dimension=pe:LAST_MONTH&dimension=ou:'.$ou[$j].'&displayProperty=NAME&outputIdScheme=UID&skipData=True';
+                $url = $baseUrl.config('static.analyticsEP').'?dimension=dx:'.$currData['api_id'].'&dimension=pe:LAST_MONTH&filter=ou:'.$ou[$j].'&displayProperty=NAME&outputIdScheme=UID&skipData=True';
 
                 $responses = $this->callUrl($url);
                 $responses = json_decode($responses);
                 
-                // https://communitydhis.mohfw.gov.bd/nationalcc/api/26/analytics.json?dimension=dx:WfrGlt9gYxW.OJd05AWCFTk&dimension=pe:LAST_MONTH&filter=ou:dNLjKwsVjod&displayProperty=NAME&outputIdScheme=NAME
 
                 // dd($url);
                 $metaData = $responses->metaData;
                 
                 $co = $metaData->dimensions->co;
-                $dx = '';
+
+                $dx = $currData['api_id'].';';
                 if(count($co) > 0) {
-                    for($i = 0; $i < count($co); $i++) {
-                        $dx .= $currData['api_id'].'.'.$co[$i].';';
-                    }
-                    $dx = rtrim($dx, ';');
-                    $url = $baseUrl.config('static.analyticsEP').'.json?dimension=dx:'.$dx.'&dimension=pe:'.$pe.'&filter=ou:'.$ou[$j].'&displayProperty=NAME&outputIdScheme=UID';
-                    $responses = $this->callUrl($url);
-                    $responses = json_decode($responses);
-                    $metaData = $responses->metaData;
-                    $rows = $responses->rows;
-                    foreach ($rows as $keyrows => $row) {
-                        $unit = [];
-                        // $ouId = -1;
-                        // if($ou[$j] == 'op5gbhjVCRk') {
-                        // 	$orgUnit = OrganizationUnit::where('id','R1GAfTe6Mkb')->first();
-                        // 	$ouId = $orgUnit->id;
-                        // }
-                        $unit['organisation_unit'] = $ou[$j];
-                        foreach ($row as $key => $value) {
-                            if($key == 0) {
-                                $co = explode('.',$value)[1];
-                                // $unit['name'] = $metaData->items->$value->name;
-                                $unit['category_option_combo'] = $co;
-                            }
-                            else if($key == 1) {
-                                $unit['period'] = $value?:'';
-                                $unit['period_name'] = $metaData->items->$value->name;
-                            }
-                            else if($key == 2) {
-                                $unit['value'] = $value;
-                            }
-                        }
-                        $unit['import_date'] = date('Y-m-d');
-                        array_push($save_array,$unit);
-                    }
-                    
+                	if($co != 'dCWAvZ8hcrs') {
+                		$flag = 1;
+	                    for($i = 0; $i < count($co); $i++) {
+	                        $dx .= $currData['api_id'].'.'.$co[$i].';';
+	                    }
+                	}
                 }
+                $dx = rtrim($dx, ';');
+                $url = $baseUrl.config('static.analyticsEP').'.json?dimension=dx:'.$dx.'&dimension=pe:'.$pe.'&filter=ou:'.$ou[$j].'&displayProperty=NAME&outputIdScheme=UID';
+                $responses = $this->callUrl($url);
+                $responses = json_decode($responses);
+                // dd($responses);
+                $metaData = $responses->metaData;
+                $rows = $responses->rows;
+                foreach ($rows as $keyrows => $row) {
+                    $unit = [];
+                    // $ouId = -1;
+                    // if($ou[$j] == 'op5gbhjVCRk') {
+                    // 	$orgUnit = OrganizationUnit::where('id','R1GAfTe6Mkb')->first();
+                    // 	$ouId = $orgUnit->id;
+                    // }
+                    $unit['organisation_unit'] = $ou[$j];
+                    foreach ($row as $key => $value) {
+                        if($key == 0) {
+                        	
+                        	if($flag == 1) {
+	                        	$co = explode('.',$value);
+	                        	if(count($co) > 1) {
+	                        		$co = $co[1];
+	                        		// print_r($co); echo $url.'<br /><br />';
+	                        	}else{
+	                        		$co = NULL;
+	                        	}
+                            	$flag = 0;
+                            }
+                            // $unit['name'] = $metaData->items->$value->name;
+                            $unit['category_option_combo'] = $co;
+                            
+                        }
+                        else if($key == 1) {
+                            $unit['period'] = $value?:'';
+                            $unit['period_name'] = $metaData->items->$value->name;
+                        }
+                        else if($key == 2) {
+                            $unit['value'] = $value;
+                        }
+                    }
+                    $unit['import_date'] = date('Y-m-d');
+                    array_push($save_array,$unit);
+                }
+                if($keyrows == 2)
+                	exit();
+                    
             }
-            // $currData['model']::unguard();
             $model = 'App\Models\Data\\'.$currData['model'];
             $model::insert($save_array);
-            // $currData['model']::reguard();
-            // ImciWasting::unguard();
-            // ImciWasting::insert($save_array);
-            // ImciWasting::reguard();
     	}
     }
 }
