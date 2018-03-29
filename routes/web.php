@@ -25,9 +25,9 @@ Route::get('/analysis', function () {
     return view('nutrition.analysis');
 });
 
-Route::get('/dashboard', function () {
-    return view('nutrition.dashboard');
-})->name('nutrition.dashboard');
+// Route::get('/dashboard', function () {
+//     return view('nutrition.dashboard');
+// })->name('nutrition.dashboard');
 
 Route::get('/platform', function () {
     return view('nutrition.platform');
@@ -86,4 +86,10 @@ Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 	Route::get('/importer', 'ImporterController@import');
 	Route::get('/organisation-unit-importer', 'OrganisationUnitImporterController@import');
 	Route::get('/category-option-combo-importer', 'CategoryOptionComboImporterController@import');
+});
+
+Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
+	Route::get('/dashboard', 'DashboardController@indexAction')->name('dashboard');
+	Route::get('/outputs', 'OutputController@indexAction')->name('outputs');
+	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
 });
