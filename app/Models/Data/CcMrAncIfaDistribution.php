@@ -16,6 +16,6 @@ class CcMrAncIfaDistribution extends Model
 	}
 
 	public function organisationUnit() {
-		return $this->belongsTo('App\Models\OrganizationUnit', 'organisation_unit', 'api_id');
+		return $this->belongsTo('App\Models\OrganisationUnit', 'organisation_unit', 'api_id');
 	}
 }

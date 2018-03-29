@@ -9,7 +9,7 @@ use App\Jobs\FetchDataElements;
 
 use App\Models\DataSets;
 use App\Models\DataElements;
-use App\Models\OrganizationUnit;
+use App\Models\OrganisationUnit;
 use App\Models\CategoryCombos;
 use App\Models\CategoryOptionCombos;
 
@@ -118,7 +118,7 @@ class ApiController extends Controller
       $dataSet = $data['dataSet'];
       $period = $data['period'];
       $organization = $data['organization'];
-      $organizationId = OrganizationUnit::where('name', $organization)->first();
+      $organizationId = OrganisationUnit::where('name', $organization)->first();
       if($organizationId != null) {
         $baseUrl = '';
         if(strcasecmp($organizationId->server, "central") == 0){
@@ -143,7 +143,7 @@ class ApiController extends Controller
           $dElem = DataElements::where('api_id', $dataValues[$i]->dataElement)->first();
           $returnedData[$i]['dataElement'] =  $dElem->name;
           $returnedData[$i]['period'] = $dataValues[$i]->period;
-          $org = OrganizationUnit::where('api_id', $dataValues[$i]->orgUnit)->first();
+          $org = OrganisationUnit::where('api_id', $dataValues[$i]->orgUnit)->first();
           $returnedData[$i]['orgUnit'] = $org->name;
           $returnedData[$i]['value'] =  $dataValues[$i]->value;
           $catOptCombo = CategoryOptionCombos::where('api_id', $dataValues[$i]->categoryOptionCombo)->first();

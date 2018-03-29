@@ -21,6 +21,8 @@ class CreateCcMrTotalPatientsTable extends Migration
             $table->string('organisation_unit')->nullable();
             $table->string('category_option_combo')->nullable();
             $table->date('import_date');
+            $table->string('server')->nullable();
+            $table->string('source')->nullable();
             $table->timestamps();
         });
     }

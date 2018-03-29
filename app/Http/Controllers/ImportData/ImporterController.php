@@ -24,7 +24,7 @@ use App\Models\Data\CcMrWeightInKgAnc;
 use App\Models\Data\CcCrExclusiveBreastFeeding;
 use App\Models\Data\CcCrTotalMale;
 use App\Models\Data\CcCrTotalFemale;
-use App\Models\OrganizationUnit;
+use App\Models\OrganisationUnit;
 
 class ImporterController extends Controller
 {
@@ -44,7 +44,7 @@ class ImporterController extends Controller
             }else if($currData['server'] == 'community') {
             	$ou = config('static.communityOrganisation');
             }
-            // $ou = config('static.organizations');
+
             $pe = $this->getPeriods();
             $pe = $pe['years_months_string'];
             for($j = 0; $j < count($ou); $j++) {

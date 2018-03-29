@@ -17,9 +17,9 @@ class CreateCategoryOptionCombosTable extends Migration
             $table->increments('id');
             $table->string('api_id');
             $table->string('name')->nullable();
+            $table->date('import_date');
             $table->string('server')->nullable();
             $table->string('source')->nullable();
-            $table->date('import_date');
             $table->timestamps();
         });
     }

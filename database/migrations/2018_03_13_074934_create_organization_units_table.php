@@ -13,12 +13,13 @@ class CreateOrganizationUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organization_units', function (Blueprint $table) {
+        Schema::create('organisation_units', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('api_id');
+            $table->string('central_api_id')->nullable();
+            $table->string('community_api_id')->nullable();
             $table->string('name');
             $table->integer('level');
-            $table->enum('server', ['central', 'community']);
+            $table->string('source')->nullable();
             $table->timestamps();
         });
     }
