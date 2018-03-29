@@ -24,6 +24,9 @@
 	                    <option value="">Periods</option>
 	                    <option value="LAST_MONTH">1 month</option>
 	                    <option value="LAST_6_MONTHS">6 months</option>
+	                    @foreach($periods as $key => $period)
+	                    <option value="{{ $key }}">{{ $period }}</option>
+	                    @endforeach
 	                </select>
 	            </div>
 	            <div class="input-group mb-3">

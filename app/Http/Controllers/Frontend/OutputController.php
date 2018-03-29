@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\OrganisationUnit;
+use App\Traits\PeriodHelper;
 use Illuminate\Http\Request;
 
 class OutputController extends Controller
 {
+	use PeriodHelper;
+
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::all();
-		
+		$periods = $this->getPeriodYears();
 		$trend_analysis = [
 			[
 				'name' => 'Counseling',
@@ -29,12 +32,16 @@ class OutputController extends Controller
 			],
 		];
 
+		$data = config('data.maternal');
+		$indicators = [
+			'maternal_counselling' => 'Maternal Counselling',
+			'plw_who_receive_ifas' => 'Plw how receive ifas',
+			'pregnant_women_weighed' => 'Pregnant women weighed',
+		];
+
 
 		return view('frontend.output.index', 
-			compact(
-				'trend_analysis',
-				'organisation_units'
-			)
+			compact('trend_analysis','organisation_units','periods','indicators')
 		);
 	}
 }
