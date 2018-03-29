@@ -91,5 +91,7 @@ Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/dashboard', 'DashboardController@indexAction')->name('dashboard');
 	Route::get('/outputs', 'OutputController@indexAction')->name('outputs');
+	Route::get('/outputs/maternal', 'OutputController@indexAction')->name('outputs');
+	Route::get('/outputs/child', 'OutputController@indexAction')->name('outputs');
 	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
 });
