@@ -11,6 +11,7 @@
 
 @section('injavascript')
 // <script>
+$('.side-filter-div').height($('#myChart').height()-30+2);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
 

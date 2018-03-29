@@ -13,7 +13,9 @@ class PeriodController extends Controller
 	use CurlHelper, PeriodHelper;
 
   public function getPeriodsMonthly() {
+
+    $periods = $this->getPeriods();
     
-  }
+  	return $periods['periods'];
 
 }
