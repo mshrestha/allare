@@ -35,7 +35,7 @@ class OutputController extends Controller
 		$data = config('data.maternal');
 		$indicators = [
 			'maternal_counselling' => 'Maternal Counselling',
-			'plw_who_receive_ifas' => 'Plw how receive ifas',
+			'plw_who_receive_ifas' => 'Plw who receive ifas',
 			'pregnant_women_weighed' => 'Pregnant women weighed',
 		];
 

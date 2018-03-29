@@ -1,11 +1,5 @@
 <div class="main-chart">
 	<div class="row row-no-padding">
-	    {{-- Selectors --}}
-	    {{-- {{dd($periods)}} --}}
-	    @foreach($periods as $period)
-	    	dd($period);
-        {{-- <option value="{{$periods[$period]}}">{{ $period }}</option> --}}
-    	@endforeach
 	    <div class="col-md-3">
 	        <div class="side-filter-div">
 	            <div class="input-group mb-3">
@@ -39,6 +33,9 @@
 	                    <label class="input-group-text" for="indicator-id">Indicators</label>
 	                </div>
 	                <select class="custom-select" id="indicator-id" name="indicator-id">
+	                	@foreach($indicators as $key => $indicator)
+	                	<option value="{{ $key }}">{{ $indicator }}</option>
+	                	@endforeach
 	                </select>
 	            </div>
 
