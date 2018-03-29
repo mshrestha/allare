@@ -38,13 +38,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-              <a class="nav-link" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{ route('frontend.dashboard') }}">Dashboard <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="{{ route('nutrition.platform') }}">Platform</a>
+              <a class="nav-link" href="{{ route('frontend.output') }}">Outputs</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="{{ route('nutrition.nutrition-programme-areas') }}">Nutrition Programme Areas</a>
+              <a class="nav-link" href="{{ route('frontend.outcome') }}">Outcomes</a>
           </li>
            
         </ul>
