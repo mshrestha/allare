@@ -13,11 +13,9 @@ class OutcomeController extends Controller
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$periods = $this->getPeriodYears();
-		// array_flip($periods);
-		dd($periods);
 		$trend_analysis = [
 			[
-				'name' => 'Counseling',
+				'name' => 'Stunting',
 				'month' => 'Counseling Given - April',
 				'percent' => '80',
 			],
