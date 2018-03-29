@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\OrganisationUnit;
+use Illuminate\Http\Request;
 
 class OutputController extends Controller
 {
 	public function indexAction() {
-		$divisions = OrganisationUnit::all();
+		$organisation_units = OrganisationUnit::all();
+		
 		$trend_analysis = [
 			[
 				'name' => 'Counseling',
@@ -27,6 +29,12 @@ class OutputController extends Controller
 			],
 		];
 
-		return view('frontend.output.index', compact('trend_analysis'));
+
+		return view('frontend.output.index', 
+			compact(
+				'trend_analysis',
+				'organisation_units'
+			)
+		);
 	}
 }

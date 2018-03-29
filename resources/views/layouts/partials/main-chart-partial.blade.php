@@ -9,8 +9,13 @@
 	                </div>
 	                <select class="custom-select" id="division-id">
 	                    <option value="">Divisions</option>
+	                	@foreach($organisation_units as $organisation_unit)
+	                    <option data-central-id="{{ $organisation_unit->central_api_id }}" data-community-id="{{ $organisation_unit->community_api_id }}">{{ $organisation_unit->name }}</option>
+	                	@endforeach
 	                </select>
+
 	            </div>
+
 	            <div class="input-group mb-3">
 	                <div class="input-group-prepend">
 	                    <label class="input-group-text" for="period-id">Periods</label>
@@ -23,30 +28,32 @@
 	            </div>
 	            <div class="input-group mb-3">
 	                <div class="input-group-prepend">
-	                    <label class="input-group-text" for="programme-id">Indicators</label>
+	                    <label class="input-group-text" for="indicator-id">Indicators</label>
 	                </div>
-	                <select class="custom-select" id="programme-id">
+	                <select class="custom-select" id="indicator-id" name="indicator-id">
 	                </select>
 	            </div>
+
 	            <div class="input-group mb-3">
 	                <div class="input-group-prepend">
 	                    <label class="input-group-text">Departments</label>
 	                </div>
 	                <select class="custom-select" id="department-id">
 	                    <option value="">Departments</option>
-	                    <option value="">Both</option>
-	                    <option value="">DGHS</option>
-	                    <option value="">DGFP</option>
+	                    <option value="both">Both</option>
+	                    <option value="DGHS">DGHS</option>
+	                    <option value="DGFP">DGFP</option>
 	                </select>
 	            </div>
-	            {{--
-	            <div class="input-group mb-3">
+	            
+	            {{-- <div class="input-group mb-3">
 	                <div class="input-group-prepend">
 	                    <label class="input-group-text" for="affected-id">Affected</label>
 	                </div>
 	                <select class="custom-select" id="affected-id">
 	                </select>
-	            </div> --}}
+	            </div> --}} 
+
 	            <div class="input-group mb-3">
 	                <button type="button" class="btn btn-primary" id="submit-platform-btn">Submit</button>
 	            </div>
