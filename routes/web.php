@@ -38,7 +38,7 @@ Route::get('/get_org_division', 'Helper\OrganisationController@getOrganizationDi
 // ORGANIZATIONAL ROUTES END
 
 // PERIOD ROUTES
-Route::get('/get_periods', 'Helper\PeriodController@getPeriods');
+Route::get('/get_periods', 'Helper\PeriodController@getPeriodsMonthly');
 // PERIOD ROUTES END
 
 // DATA ELEMENT ROUTES
