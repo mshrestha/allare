@@ -13,7 +13,17 @@ class PeriodController extends Controller
 	use CurlHelper, PeriodHelper;
 
   public function getPeriodsMonthly() {
-    return $this->getPeriods();
+    $periods = $this->getPeriods();
+    $periods = $periods['periods'];
+    $periodArr = [];
+    foreach ($periods as $key => $value) {
+    	$periodArr[$key] = '';
+    	for ($i=0; $i < count($periods[$key]); $i++) { 
+    		$periodArr[$key] .= $periods[$key][$i].';';
+    	}
+    	$periodArr[$key] = rtrim($periodArr[$key], ';');
+    }
+    return $periodArr;
   }
 
 }

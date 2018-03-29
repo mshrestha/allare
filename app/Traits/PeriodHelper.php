@@ -40,5 +40,10 @@ trait PeriodHelper
 
     return array('periods'=>$years_months, 'years_months_string' => $years_months_string);
   }
+
+  public function getPeriodYears() {
+    $periods = $this->getPeriods();
+    
+  }
 }
 

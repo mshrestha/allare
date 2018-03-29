@@ -14,7 +14,7 @@
 $(document).ready(function() {
     $('#affected-id').parent().hide();
 
-    getDivisions();
+    // getDivisions();
     getPeriods();
     getElements();
 });
@@ -46,24 +46,24 @@ var colors = [
     'rgba(252, 129, 64, 0.8)',
 ]
 
-function getDivisions() {
-    $.ajax({
-        type: 'get',
-        url: '/get_org_division',
-        success: function(res) {
-            divisions = res["divisions"];
-            Divisions = divisions;
-            for (division in divisions) {
-                $("#division-id").append('<option value="' + division + '">' + divisions[division] + '</option>');
-            }
-            $('.organization_units_wrapper').show();
-            $('.datasets_wrapper .loading').hide();
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
+// function getDivisions() {
+//     $.ajax({
+//         type: 'get',
+//         url: '/get_org_division',
+//         success: function(res) {
+//             divisions = res["divisions"];
+//             Divisions = divisions;
+//             for (division in divisions) {
+//                 $("#division-id").append('<option value="' + division + '">' + divisions[division] + '</option>');
+//             }
+//             $('.organization_units_wrapper').show();
+//             $('.datasets_wrapper .loading').hide();
+//         },
+//         error: function(res) {
+//             console.log('failed')
+//         }
+//     })
+// }
 
 function getPeriods() {
     $.ajax({

@@ -5,12 +5,24 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\OrganisationUnit;
+use App\Traits\PeriodHelper;
 
 class OutcomeController extends Controller
 {
+	use PeriodHelper;
 	public function indexAction() {
-		$divisions = OrganisationUnit::where('level', 2)->get();
-		// dd($divisions);
+		$organisation_units = OrganisationUnit::where('level', 2)->get();
+		$periods = $this->getPeriods();
+    $periods = $periods['periods'];
+    $periodArr = [];
+    foreach ($periods as $key => $value) {
+    	$periodArr[$key] = '';
+    	for ($i=0; $i < count($periods[$key]); $i++) { 
+    		$periodArr[$key] .= $periods[$key][$i].';';
+    	}
+    	$periodArr[$key] = rtrim($periodArr[$key], ';');
+    }
+    dd($periodArr);
 		$trend_analysis = [
 			[
 				'name' => 'Counseling',
@@ -29,6 +41,6 @@ class OutcomeController extends Controller
 			],
 		];
 
-		return view('frontend.outcome.index', compact('trend_analysis'));
+		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units'));
 	}
 }
