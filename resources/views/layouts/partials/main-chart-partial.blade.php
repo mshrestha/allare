@@ -1,6 +1,11 @@
 <div class="main-chart">
 	<div class="row row-no-padding">
 	    {{-- Selectors --}}
+	    {{-- {{dd($periods)}} --}}
+	    @foreach($periods as $period)
+	    	dd($period);
+        {{-- <option value="{{$periods[$period]}}">{{ $period }}</option> --}}
+    	@endforeach
 	    <div class="col-md-3">
 	        <div class="side-filter-div">
 	            <div class="input-group mb-3">

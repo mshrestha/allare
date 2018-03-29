@@ -52,6 +52,7 @@ trait PeriodHelper
       }
       $periodArr[$key] = rtrim($periodArr[$key], ';');
     }
+    $periodArr = array_reverse(array_flip($periodArr));
     return $periodArr;
   }
 }
