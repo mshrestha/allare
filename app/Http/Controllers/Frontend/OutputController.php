@@ -9,6 +9,6 @@ class OutputController extends Controller
 {
     //
 	public function indexAction() {
-		return "Output";
+		return view('frontend.outcome.index');
 	}
 }

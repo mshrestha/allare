@@ -9,6 +9,6 @@ class OutcomeController extends Controller
 {
     //
 	public function indexAction() {
-		return "Outcome";
+		return view('frontend.outcome.index');
 	}
 }

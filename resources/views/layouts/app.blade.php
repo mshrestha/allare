@@ -41,10 +41,10 @@
               <a class="nav-link" href="{{ route('frontend.dashboard') }}">Dashboard <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="{{ route('frontend.output') }}">Outputs</a>
+              <a class="nav-link" href="{{ route('frontend.outputs') }}">Outputs</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="{{ route('frontend.outcome') }}">Outcomes</a>
+              <a class="nav-link" href="{{ route('frontend.outcomes') }}">Outcomes</a>
           </li>
            
         </ul>
