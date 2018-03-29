@@ -2,24 +2,37 @@
 
 namespace App\Http\Controllers\ImportData;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\OrganizationUnit;
+use App\Traits\CurlHelper;
+use Illuminate\Http\Request;
 
 class OrganisationUnitImporterController extends Controller
 {
-	use CurlHeler;
+	use CurlHelper;
+
 	public function import() {
 		$servers = [
-			'https://centraldhis.mohfw.gov.bd/dhismohfw/api/organisationUnits.json?level=',	
-			'https://communitydhis.mohfw.gov.bd/nationalcc/api/organisationUnits.json?level='	
+			'central' => 'https://centraldhis.mohfw.gov.bd/dhismohfw/api/organisationUnits.json?level=',	
+			'community' => 'https://communitydhis.mohfw.gov.bd/nationalcc/api/organisationUnits.json?level='	
 		];
 
-		foreach($servers as $server) {
+		foreach($servers as $key => $server) {
 			for ($i=1; $i <= 2; $i++) {  //Level 2
 				$response = $this->callUrl('https://centraldhis.mohfw.gov.bd/dhismohfw/api/organisationUnits.json?level='. $i);
 				$response = json_decode($response);
-				dd($response);
+
+				foreach($response->organisationUnits as $organisationUnit) {	
+					$organisation_unit = new OrganizationUnit;
+					$organisation_unit->api_id = $organisationUnit->id;
+					$organisation_unit->name = $organisationUnit->displayName;
+					$organisation_unit->level = $i;
+					$organisation_unit->server = $key;					
+					$organisation_unit->save();
+				}
 			}
 		}
+
+		dd('yeah');
 	}
 }
