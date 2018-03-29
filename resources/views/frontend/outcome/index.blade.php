@@ -15,7 +15,7 @@ $(document).ready(function() {
     $('#affected-id').parent().hide();
 
     // getDivisions();
-    getPeriods();
+    // getPeriods();
     getElements();
 });
 
@@ -65,22 +65,22 @@ var colors = [
 //     })
 // }
 
-function getPeriods() {
-    $.ajax({
-        type: 'get',
-        url: '/get_periods',
-        success: function(res) {
-            dataSets = res["periods"];
-            for (data in dataSets) {
-                $("#period-id").append('<option value="' + dataSets[data] + '">' + data + '</option>');
-            }
-            $('.periods_wrapper .loading').hide()
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
+// function getPeriods() {
+//     $.ajax({
+//         type: 'get',
+//         url: '/get_periods',
+//         success: function(res) {
+//             dataSets = res["periods"];
+//             for (data in dataSets) {
+//                 $("#period-id").append('<option value="' + dataSets[data] + '">' + data + '</option>');
+//             }
+//             $('.periods_wrapper .loading').hide()
+//         },
+//         error: function(res) {
+//             console.log('failed')
+//         }
+//     })
+// }
 
 function getElements() {
     $.ajax({
