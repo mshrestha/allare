@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\OrganisationUnit;
 
 class OutcomeController extends Controller
 {
     //
 	public function indexAction() {
+		$divisions = OrganisationUnit::where('level', 2)->get();
+		// dd($divisions);
 		$trend_analysis = [
 			[
 				'name' => 'Counseling',
