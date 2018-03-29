@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class OutputController extends Controller
 {
 	public function indexAction() {
-		// $divisions = OrganisationUnit::where()->get();
+		$divisions = OrganisationUnit::all();
 		$trend_analysis = [
 			[
 				'name' => 'Counseling',
@@ -27,6 +27,6 @@ class OutputController extends Controller
 			],
 		];
 
-		return view('frontend.outcome.index', compact('trend_analysis'));
+		return view('frontend.output.index', compact('trend_analysis'));
 	}
 }

@@ -1,4 +1,4 @@
-<div class="trend-analysis-pie-chart">
+<div class="trend-analysis-pie-chart" style="margin-top: 20px;">
 	<h3>{{ $analysis['name'] }}</h3>
 	<p>{{ $analysis['month'] }}</p>
 	

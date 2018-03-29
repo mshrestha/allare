@@ -1,4 +1,4 @@
-<div class="main-chart" style="margin-bottom: 20px;">
+<div class="main-chart">
 	<div class="row row-no-padding">
 	    {{-- Selectors --}}
 	    <div class="col-md-3">
