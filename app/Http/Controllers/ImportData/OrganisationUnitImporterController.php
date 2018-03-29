@@ -31,12 +31,14 @@ class OrganisationUnitImporterController extends Controller
 							'central_api_id' => $organisationUnit->id,
 							'name' => $organisationUnit->displayName,
 							'level' => $i,
+							'source' => 'DGHS',
 						];
 					} else {
 						$save_data = [
 							'community_api_id' => $organisationUnit->id,
 							'name' => $organisationUnit->displayName,
 							'level' => $i,
+							'source' => 'DGHS',
 						];
 					}
 					

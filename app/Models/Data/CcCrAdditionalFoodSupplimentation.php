@@ -15,7 +15,11 @@ class CcCrAdditionalFoodSupplimentation extends Model
 		return $this->belongsTo('App\Models\CategoryOptionCombo', 'category_option_combo', 'api_id');
 	}
 
-	public function organisationUnit() {
-		return $this->belongsTo('App\Models\OrganisationUnit', 'organisation_unit', 'api_id');
+	public function organisationUnitCentral() {
+		return $this->belongsTo('App\Models\OrganisationUnit', 'organisation_unit', 'central_api_id');
+	}
+
+	public function organisationUnitCommunity() {
+		return $this->belongsTo('App\Models\OrganisationUnit', 'organisation_unit', 'community_api_id');
 	}
 }

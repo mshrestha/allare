@@ -17,6 +17,8 @@ class CategoryOptionComboImporterController extends Controller
 			'community' => 'https://communitydhis.mohfw.gov.bd/nationalcc/api/categoryOptionCombos.json?paging=false'
 		];
 
+		CategoryOptionCombo::truncate();
+		
 		foreach($servers as $key => $server) {
 			$response = $this->callUrl($server);
 			$response = json_decode($response);
@@ -27,6 +29,7 @@ class CategoryOptionComboImporterController extends Controller
 				$categoryOptionCombo->name = $row->displayName;
 				$categoryOptionCombo->server = $key;
 				$categoryOptionCombo->import_date = date('Y-m-d');
+				$categoryOptionCombo->source = 'DGHS';
 				$categoryOptionCombo->save();
 			}
 		}
