@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
 	<div class="container">
-		@include('frontend.outcome.partials.main-chart-partial')
+		@include('layouts.partials.main-chart-partial')
 
 		@foreach($trend_analysis as $analysis)
-			@include('frontend.outcome.partials.trend-analysis-chart-partial')
+			@include('layouts.partials.trend-analysis-chart-partial')
 		@endforeach
 	</div>
 @endsection

@@ -118,7 +118,11 @@ class ImporterController extends Controller
                             $unit['value'] = $value;
                         }
                     }
+                    $unit['source'] = $currData['source'];
+                    $unit['server'] = $currData['server'];
                     $unit['import_date'] = date('Y-m-d');
+                    $unit['created_at'] = date('Y-m-d H:i:s');
+                    $unit['updated_at'] = date('Y-m-d H:i:s');
                     array_push($save_array,$unit);
                     // dd($save_array);
                 }
@@ -129,5 +133,6 @@ class ImporterController extends Controller
             $model::insert($save_array);
 
     	}
+        dd('done');
     }
 }
