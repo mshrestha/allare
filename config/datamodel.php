@@ -1,18 +1,18 @@
 <?php 
 
 return [
-		[
-			'model'		=> 'CcMrCounsellingAnc',
-			'table'		=> 'cc_mr_counselling_anc',
-			'server'	=> 'community',
-			'api_id'	=> 'WfrGlt9gYxW.YF2ivOyo5jG'
-		],
-		[
-			'model'		=> 'CcMrAncNutriCounsel',
-			'table'		=> 'cc_mr_anc_nutri_counsel',
-			'server'	=> 'community',
-			'api_id'	=> 'c0zIiLT97P4',
-		],
+		// [
+		// 	'model'		=> 'CcMrCounsellingAnc',
+		// 	'table'		=> 'cc_mr_counselling_anc',
+		// 	'server'	=> 'community',
+		// 	'api_id'	=> 'WfrGlt9gYxW.YF2ivOyo5jG'
+		// ],
+		// [
+		// 	'model'		=> 'CcMrAncNutriCounsel',
+		// 	'table'		=> 'cc_mr_anc_nutri_counsel',
+		// 	'server'	=> 'community',
+		// 	'api_id'	=> 'c0zIiLT97P4',
+		// ],
 		// [
 		// 	'model'		=> 'CcMrAncIfaDistribution',
 		// 	'table'		=> 'cc_mr_anc_ifa_distribution',
@@ -60,5 +60,53 @@ return [
 		// 	'table'		=> 'imci_wasting',
 		// 	'server'	=> 'central',
 		// 	'api_id'	=> 'JBhv2WOYxSf'	
+		// ],
+		// [
+		// 	'model'		=> 'ImciStuntingPercent',
+		// 	'table'		=> 'imci_stunting_percent',
+		// 	'server'	=> 'central',
+		// 	'api_id'	=> 'Pd6AH5koIb3'	
+		// ],
+		// [
+		// 	'model'		=> 'ImciWastingPercent',
+		// 	'table'		=> 'imci_wasting_percent',
+		// 	'server'	=> 'central',
+		// 	'api_id'	=> 'wzLKMAyhQPp'	
+		// ],
+		// [
+		// 	'model'		=> 'ImciTotalChild',
+		// 	'table'		=> 'imci_total_child',
+		// 	'server'	=> 'central',
+		// 	'api_id'	=> 't4CnonJDTnt'	
+		// ],
+		// [
+		// 	'model'		=> 'ImciExclusiveBreastFeeding',
+		// 	'table'		=> 'imci_exclusice_breast_feeding',
+		// 	'server'	=> 'central',
+		// 	'api_id'	=> 'LSNFSyDR2Ec'	
+		// ],
+		// [
+		// 	'model'		=> 'CcMrTotalPatient',
+		// 	'table'		=> 'cc_mr_total_patient',
+		// 	'server'	=> 'community',
+		// 	'api_id'	=> 'qopy9oIn4IF'	
+		// ],
+		// [
+		// 	'model'		=> 'CcCrTotalMale',
+		// 	'table'		=> 'cc_cr_total_male',
+		// 	'server'	=> 'community',
+		// 	'api_id'	=> 'EOKIlLn2w8Z'	
+		// ],
+		// [
+		// 	'model'		=> 'CcCrTotalFemale',
+		// 	'table'		=> 'cc_cr_total_female',
+		// 	'server'	=> 'community',
+		// 	'api_id'	=> 'KjnMWRRtDQJ'	
+		// ],
+		// [
+		// 	'model'		=> 'CcCrExclusiveBreastFeeding',
+		// 	'table'		=> 'cc_cr_exclusive_breast_feeding',
+		// 	'server'	=> 'community',
+		// 	'api_id'	=> 'jxtGrMi58Zx'	
 		// ],
 	];

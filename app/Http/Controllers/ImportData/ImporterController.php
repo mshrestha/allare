@@ -12,11 +12,18 @@ use App\Models\Data\ImciStunting;
 use App\Models\Data\ImciCounselling;
 use App\Models\Data\ImciMale;
 use App\Models\Data\ImciFemale;
+use App\Models\Data\ImciWastingPercent;
+use App\Models\Data\ImciStuntingPercent;
+use App\Models\Data\ImciTotalChild;
+use App\Models\Data\ImciExclusiveBreastFeeding;
 use App\Models\Data\CcCrAdditionalFoodSuppliment;
 use App\Models\Data\CcMrAncIfaDistribution;
 use App\Models\Data\CcMrAncNutriCounsel;
 use App\Models\Data\CcMrCounsellingAnc;
 use App\Models\Data\CcMrWeightInKgAnc;
+use App\Models\Data\CcCrExclusiveBreastFeeding;
+use App\Models\Data\CcCrTotalMale;
+use App\Models\Data\CcCrTotalFemale;
 use App\Models\OrganizationUnit;
 
 class ImporterController extends Controller
@@ -66,6 +73,7 @@ class ImporterController extends Controller
 	                    }
                 	}
                 }
+                // dd($co);
                 $dx = rtrim($dx, ';');
                 $url = $baseUrl.config('static.analyticsEP').'.json?dimension=dx:'.$dx.'&dimension=pe:'.$pe.'&filter=ou:'.$ou[$j].'&displayProperty=NAME&outputIdScheme=UID';
                 $responses = $this->callUrl($url);
@@ -92,7 +100,9 @@ class ImporterController extends Controller
 	                        	}else{
 	                        		$co = NULL;
 	                        	}
-                            	$flag = 0;
+
+                            	// $flag = 0;
+
                             }else{
                             	$co = NULL;
                             }
@@ -112,10 +122,9 @@ class ImporterController extends Controller
                     array_push($save_array,$unit);
                     // dd($save_array);
                 }
-                if($keyrows == 2)
-                	exit();
                     
             }
+            // dd($save_array);
             $model = 'App\Models\Data\\'.$currData['model'];
             $model::insert($save_array);
     	}
