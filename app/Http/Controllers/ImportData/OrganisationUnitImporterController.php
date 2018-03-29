@@ -16,10 +16,12 @@ class OrganisationUnitImporterController extends Controller
 			'central' => 'https://centraldhis.mohfw.gov.bd/dhismohfw/api/organisationUnits.json?level=',
 			'community' => 'https://communitydhis.mohfw.gov.bd/nationalcc/api/organisationUnits.json?level='
 		];
+		
+		OrganizationUnit::truncate();
 
 		foreach($servers as $key => $server) {
 			for ($i=1; $i <= 2; $i++) {  //Level 2
-				$response = $this->callUrl('https://centraldhis.mohfw.gov.bd/dhismohfw/api/organisationUnits.json?level='. $i);
+				$response = $this->callUrl($server.$i);
 				$response = json_decode($response);
 
 				foreach($response->organisationUnits as $organisationUnit) {	
@@ -30,6 +32,7 @@ class OrganisationUnitImporterController extends Controller
 					$organisation_unit->server = $key;					
 					$organisation_unit->save();
 				}
+
 			}
 		}
 
