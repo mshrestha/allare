@@ -1,11 +1,6 @@
 <div class="main-chart">
 	<div class="row row-no-padding">
 	    {{-- Selectors --}}
-	    {{-- {{dd($periods)}} --}}
-	    @foreach($periods as $period)
-	    	dd($period);
-        {{-- <option value="{{$periods[$period]}}">{{ $period }}</option> --}}
-    	@endforeach
 	    <div class="col-md-3">
 	        <div class="side-filter-div">
 	            <div class="input-group mb-3">
@@ -30,7 +25,7 @@
 	                    <option value="LAST_MONTH">1 month</option>
 	                    <option value="LAST_6_MONTHS">6 months</option>
 	                    @foreach($periods as $key => $period)
-	                    <option value="{{ $key }}">{{ $period }}</option>
+	                    	<option value="{{ $key }}">{{ $period }}</option>
 	                    @endforeach
 	                </select>
 	            </div>
