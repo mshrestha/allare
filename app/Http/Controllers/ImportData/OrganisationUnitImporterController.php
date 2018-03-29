@@ -13,8 +13,8 @@ class OrganisationUnitImporterController extends Controller
 
 	public function import() {
 		$servers = [
-			'central' => 'https://centraldhis.mohfw.gov.bd/dhismohfw/api/organisationUnits.json?level=',	
-			'community' => 'https://communitydhis.mohfw.gov.bd/nationalcc/api/organisationUnits.json?level='	
+			'central' => 'https://centraldhis.mohfw.gov.bd/dhismohfw/api/organisationUnits.json?level=',
+			'community' => 'https://communitydhis.mohfw.gov.bd/nationalcc/api/organisationUnits.json?level='
 		];
 
 		foreach($servers as $key => $server) {
@@ -33,6 +33,6 @@ class OrganisationUnitImporterController extends Controller
 			}
 		}
 
-		dd('yeah');
+		dd('done');
 	}
 }

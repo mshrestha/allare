@@ -127,6 +127,7 @@ class ImporterController extends Controller
             // dd($save_array);
             $model = 'App\Models\Data\\'.$currData['model'];
             $model::insert($save_array);
+
     	}
     }
 }
