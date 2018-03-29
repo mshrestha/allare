@@ -85,5 +85,5 @@ Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 	Route::get('/imci-stunting', 'ImciStuntingController@import');
 	Route::get('/importer', 'ImporterController@import');
 	Route::get('/organisation-unit-importer', 'OrganisationUnitImporterController@import');
+	Route::get('/category-option-combo-importer', 'CategoryOptionComboImporterController@import');
 });
-
