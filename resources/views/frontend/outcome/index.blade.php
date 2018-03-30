@@ -12,11 +12,11 @@
 @section('injavascript')
 // <script>
 $(document).ready(function() {
-    $('#affected-id').parent().hide();
+    // $('#affected-id').parent().hide();
 
     // getDivisions();
     // getPeriods();
-    getElements();
+    // getElements();
 });
 
 var affectedExists = 0;
@@ -82,23 +82,23 @@ var colors = [
 //     })
 // }
 
-function getElements() {
-    $.ajax({
-        type: 'get',
-        url: '/get_elements_joint',
-        success: function(res) {
-            // keys = Object.keys(res);
-            programmes = res["programmesJoint"];
-            Programme = res['programmes'];
-            for (programme in programmes) {
-                $("#programme-id").append('<option value="' + programmes[programme].toString() + '">' + programme + '</option>');
-            }
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
+// function getElements() {
+//     $.ajax({
+//         type: 'get',
+//         url: '/get_elements_joint',
+//         success: function(res) {
+//             // keys = Object.keys(res);
+//             programmes = res["programmesJoint"];
+//             Programme = res['programmes'];
+//             for (programme in programmes) {
+//                 $("#programme-id").append('<option value="' + programmes[programme].toString() + '">' + programme + '</option>');
+//             }
+//         },
+//         error: function(res) {
+//             console.log('failed')
+//         }
+//     })
+// }
 
 
 $('#programme-id').change(function() {
@@ -178,16 +178,14 @@ function charts(datasets, labels) {
 $('#submit-platform-btn').click(function() {
     division = $('#division-id').val();
     period = $('#period-id').val();
-    programme = $('#programme-id').val();
-    affected = -1;
-    if (affectedExists) {
-        affected = $('#affected-id').val();
-    }
-    platformDiction = { division: division, period: period, programme: programme, affected: affected }
-
+    indicator = $('#indicator-id').val();
+    department = $('#department-id').val();
+    
+    platformDiction = { division: division, period: period, indicator: indicator, department: department }
+    console.log(platformDiction);
     $.ajax({
         type: 'get',
-        url: '/get_data_value_set_joint/',
+        url: '/get-outcome-data/',
         data: { platformDiction: platformDiction },
         success: function(res) {
             console.log(res)

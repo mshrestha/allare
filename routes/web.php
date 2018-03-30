@@ -94,4 +94,5 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/outputs/maternal', 'OutputController@indexAction')->name('outputs.maternal');
 	Route::get('/outputs/child', 'OutputController@indexAction')->name('outputs.child');
 	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
+	Route::get('/outcomes/get-outcome-data', 'OutcomeController@getOutcomeData')->name('get-outcome-data');
 });
