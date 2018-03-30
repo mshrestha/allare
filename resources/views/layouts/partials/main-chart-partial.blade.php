@@ -8,7 +8,7 @@
 	                <div class="input-group-prepend">
 	                    <label class="input-group-text">Divisions</label>
 	                </div>
-	                <select class="custom-select" id="organisation_unit_id" name="organisation_unit_id">
+	                <select class="custom-select" id="organisation_unit_id" name="organisation_unit_id" required>
 	                    <option value="">Divisions</option>
 	                	@foreach($organisation_units as $organisation_unit)
 	                    <option value="{{ $organisation_unit->central_api_id }}.{{ $organisation_unit->community_api_id }}">{{ $organisation_unit->name }}</option>
@@ -21,7 +21,7 @@
 	                <div class="input-group-prepend">
 	                    <label class="input-group-text" for="period-id">Periods</label>
 	                </div>
-	                <select class="custom-select" name="period_id">
+	                <select class="custom-select" name="period_id" required>
 	                    <option value="">Periods</option>
 	                    <option value="LAST_MONTH">1 month</option>
 	                    <option value="LAST_6_MONTHS">6 months</option>
@@ -34,7 +34,7 @@
 	                <div class="input-group-prepend">
 	                    <label class="input-group-text" for="indicator_id">Indicators</label>
 	                </div>
-	                <select class="custom-select" id="indicator_id" name="indicator_id">
+	                <select class="custom-select" id="indicator_id" name="indicator_id" required>
 	                	@foreach($indicators as $key => $indicator)
 	                	<option value="{{ $key }}">{{ $indicator }}</option>
 	                	@endforeach

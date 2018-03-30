@@ -48,6 +48,21 @@ class OutputController extends Controller
 	public function maternalMainChart(Request $request) {
 		// return $request->all();
 		$indicator = $request->indicator_id;
-		// $this->callUrl();
+		$data_table = config('data.maternal.'.$indicator);
+		$periods = explode(';', $request->period_id);
+
+		$organisation_unit = explode('.', $request->organisation_unit_id);
+
+		$response = [];
+		foreach($data_table as $table) {
+			$model = 'App\Models\Data\\' . $table['model'];
+			$ou = ($table['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
+			return $ou;
+			$data = $model::whereIn('period', $periods)->where('source', $request->department_id)->where('organisation_unit', $request->organisation_unit_id)->get();
+			
+			return $data;
+		}
+		
+		return $response;
 	}
 }

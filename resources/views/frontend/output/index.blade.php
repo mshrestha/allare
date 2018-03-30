@@ -166,7 +166,9 @@ $('#submit-platform-btnz').click(function() {
             url: '/outputs/maternal-main-chart',
             data: $(this).serialize(),
             success: function (res) {
-                consoe.log(res)
+                dataSets = { labels: res.periods, datasets: res.dataSets };
+                title = 'test';
+                charts(dataSets, title);
             }
         })
 
