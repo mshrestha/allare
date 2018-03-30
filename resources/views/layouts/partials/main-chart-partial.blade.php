@@ -35,6 +35,7 @@
 	                    <label class="input-group-text" for="indicator_id">Indicators</label>
 	                </div>
 	                <select class="custom-select" id="indicator_id" name="indicator_id" required>
+	                	<option value="">Indicators</option>
 	                	@foreach($indicators as $key => $indicator)
 	                	<option value="{{ $key }}">{{ $indicator }}</option>
 	                	@endforeach

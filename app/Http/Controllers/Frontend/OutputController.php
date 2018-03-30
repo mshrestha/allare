@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\OrganisationUnit;
 use App\Traits\PeriodHelper;
 use Illuminate\Http\Request;
-use App\Models\Data\CcMrCounsellingAnc;
-use App\Models\Data\CcMrAncNutriCounsel;
 
 class OutputController extends Controller
 {
@@ -48,23 +46,21 @@ class OutputController extends Controller
 	}
 
 	public function maternalMainChart(Request $request) {
-		// return $request->all();
 		$indicator = $request->indicator_id;
 		$data_table = config('data.maternal.'.$indicator);
 		$periods = explode(';', $request->period_id);
-
 		$organisation_unit = explode('.', $request->organisation_unit_id);
-
-		$response = [];
+		$source = $request->department_id;
+		
+		$all_maternal_table_datas = [];
 		foreach($data_table as $table) {
 			$model = 'App\Models\Data\\' . $table['model'];
 			$ou = ($table['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
-			return $ou;
-			$data = $model::whereIn('period', $periods)->where('source', $request->department_id)->where('organisation_unit', $request->organisation_unit_id)->get();
+			$data = $model::whereIn('period', $periods)->where('source', 'DGHS')->where('organisation_unit', $ou)->whereNull('category_option_combo')->get();
 			
-			return $data;
+			array_push($all_maternal_table_datas, $data);
 		}
-		
-		return $response;
+
+		return $all_maternal_table_datas[0];
 	}
 }
