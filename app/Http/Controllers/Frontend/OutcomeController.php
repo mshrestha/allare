@@ -13,6 +13,13 @@ class OutcomeController extends Controller
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$periods = $this->getPeriodYears();
+		$data = config('data.outcomes');
+		// dd($data);
+		$indicators = [
+			'imci_stunting' => 'Stunting',
+			'imci_wasting' => 'Wasting',
+			'exclusive_breastfeeding' => 'Exclusive Breastfeeding',
+		];
 		$trend_analysis = [
 			[
 				'name' => 'Stunting',
@@ -31,6 +38,11 @@ class OutcomeController extends Controller
 			],
 		];
 
-		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods'));
+		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods', 'indicators'));
+	}
+
+	public function getOutcomeData(Request $request) {
+		$data = $request->all();
+		dd($data);
 	}
 }
