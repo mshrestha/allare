@@ -3,12 +3,12 @@
 return [
 	'maternal' => [
 		'maternal_counselling' => [
-			'cc_mr_counselling_anc' => [
-				'model'		=> 'CcMrCounsellingAnc',
-				'table'		=> 'cc_mr_counselling_anc',
-				'server'	=> 'community',
-				'api_id'	=> 'WfrGlt9gYxW.YF2ivOyo5'
-			],
+			// 'cc_mr_counselling_anc' => [
+			// 	'model'		=> 'CcMrCounsellingAnc',
+			// 	'table'		=> 'cc_mr_counselling_anc',
+			// 	'server'	=> 'community',
+			// 	'api_id'	=> 'WfrGlt9gYxW.YF2ivOyo5'
+			// ],
 			'cc_mr_anc_nutri_counsel' => [
 				'model'		=> 'CcMrAncNutriCounsel',
 				'table'		=> 'cc_mr_anc_nutri_counsel',
@@ -24,7 +24,6 @@ return [
 				'api_id'	=> 'D9jDxIOFAwV'
 			],
 		],
-
 		'pregnant_women_weighed' => [
 			[
 				'model'		=> 'CcMrWeightInKgAnc',
@@ -66,22 +65,57 @@ return [
 			],
 		]
 	],
-	
-	'imci_stunting' => [
-		[
-			'model'		=> 'ImciStunting',
-			'table'		=> 'imci_stunting',
-			'server'	=> 'central',
-			'api_id'	=> 'QCGhrXxmJDb'	
+	'outcomes' => [
+		'imci_stunting' => [
+			[
+				'model'		=> 'ImciStunting',
+				'table'		=> 'imci_stunting',
+				'server'	=> 'central',
+				'api_id'	=> 'QCGhrXxmJDb'	
+			],
 		],
-	],
-	'imci_wasting' => [
-		[
-			'model'		=> 'ImciWasting',
-			'table'		=> 'imci_wasting',
-			'server'	=> 'central',
-			'api_id'	=> 'JBhv2WOYxSf'	
+		'imci_stunting_percent' => [
+			[
+				'model'		=> 'ImciStuntingPercent',
+				'table'		=> 'imci_stunting_percent',
+				'server'	=> 'central',
+				'source'  => 'DGHS',
+				'api_id'	=> 'Pd6AH5koIb3'	
+			],
 		],
+		'imci_wasting' => [
+			[
+				'model'		=> 'ImciWasting',
+				'table'		=> 'imci_wasting',
+				'server'	=> 'central',
+				'api_id'	=> 'JBhv2WOYxSf'	
+			],
+		],
+		'imci_wasting_percent' => [
+			[
+				'model'		=> 'ImciWastingPercent',
+				'table'		=> 'imci_wasting_percent',
+				'server'	=> 'central',
+				'source'  => 'DGHS',
+				'api_id'	=> 'wzLKMAyhQPp'	
+			],
+		],
+		'exclusive_breastfeeding' => [
+			'cc_cr_exclusive_breast_feeding' => [
+				'model'		=> 'CcCrExclusiveBreastFeeding',
+				'table'		=> 'cc_cr_exclusive_breast_feeding',
+				'server'	=> 'community',
+				'source'  => 'DGHS',
+				'api_id'	=> 'jxtGrMi58Zx'	
+			],
+			'imci_exclusice_breast_feeding' => [
+				'model'		=> 'ImciExclusiveBreastFeeding',
+				'table'		=> 'imci_exclusice_breast_feeding',
+				'server'	=> 'central',
+				'source'  => 'DGHS',
+				'api_id'	=> 'LSNFSyDR2Ec'	
+			],
+		]
 	]
 
 ];

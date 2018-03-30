@@ -12,11 +12,11 @@
 @section('injavascript')
 // <script>
 $(document).ready(function() {
-    $('#affected-id').parent().hide();
+    // $('#affected-id').parent().hide();
 
-    getDivisions();
-    getPeriods();
-    getElements();
+    // getDivisions();
+    // getPeriods();
+    // getElements();
 });
 
 var affectedExists = 0;
@@ -46,59 +46,59 @@ var colors = [
     'rgba(252, 129, 64, 0.8)',
 ]
 
-function getDivisions() {
-    $.ajax({
-        type: 'get',
-        url: '/get_org_division',
-        success: function(res) {
-            divisions = res["divisions"];
-            Divisions = divisions;
-            for (division in divisions) {
-                $("#division-id").append('<option value="' + division + '">' + divisions[division] + '</option>');
-            }
-            $('.organization_units_wrapper').show();
-            $('.datasets_wrapper .loading').hide();
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
+// function getDivisions() {
+//     $.ajax({
+//         type: 'get',
+//         url: '/get_org_division',
+//         success: function(res) {
+//             divisions = res["divisions"];
+//             Divisions = divisions;
+//             for (division in divisions) {
+//                 $("#division-id").append('<option value="' + division + '">' + divisions[division] + '</option>');
+//             }
+//             $('.organization_units_wrapper').show();
+//             $('.datasets_wrapper .loading').hide();
+//         },
+//         error: function(res) {
+//             console.log('failed')
+//         }
+//     })
+// }
 
-function getPeriods() {
-    $.ajax({
-        type: 'get',
-        url: '/get_periods',
-        success: function(res) {
-            dataSets = res["periods"];
-            for (data in dataSets) {
-                $("#period-id").append('<option value="' + dataSets[data] + '">' + data + '</option>');
-            }
-            $('.periods_wrapper .loading').hide()
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
+// function getPeriods() {
+//     $.ajax({
+//         type: 'get',
+//         url: '/get_periods',
+//         success: function(res) {
+//             dataSets = res["periods"];
+//             for (data in dataSets) {
+//                 $("#period-id").append('<option value="' + dataSets[data] + '">' + data + '</option>');
+//             }
+//             $('.periods_wrapper .loading').hide()
+//         },
+//         error: function(res) {
+//             console.log('failed')
+//         }
+//     })
+// }
 
-function getElements() {
-    $.ajax({
-        type: 'get',
-        url: '/get_elements_joint',
-        success: function(res) {
-            // keys = Object.keys(res);
-            programmes = res["programmesJoint"];
-            Programme = res['programmes'];
-            for (programme in programmes) {
-                $("#programme-id").append('<option value="' + programmes[programme].toString() + '">' + programme + '</option>');
-            }
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
+// function getElements() {
+//     $.ajax({
+//         type: 'get',
+//         url: '/get_elements_joint',
+//         success: function(res) {
+//             // keys = Object.keys(res);
+//             programmes = res["programmesJoint"];
+//             Programme = res['programmes'];
+//             for (programme in programmes) {
+//                 $("#programme-id").append('<option value="' + programmes[programme].toString() + '">' + programme + '</option>');
+//             }
+//         },
+//         error: function(res) {
+//             console.log('failed')
+//         }
+//     })
+// }
 
 
 $('#programme-id').change(function() {
@@ -175,70 +175,83 @@ function charts(datasets, labels) {
     });
 }
 
-$('#submit-platform-btn').click(function() {
-    division = $('#division-id').val();
-    period = $('#period-id').val();
-    programme = $('#programme-id').val();
-    affected = -1;
-    if (affectedExists) {
-        affected = $('#affected-id').val();
-    }
-    platformDiction = { division: division, period: period, programme: programme, affected: affected }
-
+$('#main-chart-form').on('submit', function() {
     $.ajax({
-        type: 'get',
-        url: '/get_data_value_set_joint/',
-        data: { platformDiction: platformDiction },
-        success: function(res) {
-            console.log(res)
-
-            periods = res.periods;
-            dataValues = res.dataValueSets;
-            dataSets = [];
-            output = '';
-            label = [];
-            data = [];
-
-            if (affectedExists) {
-                title = $("#programme-id option[value='" + programme + "']").text() + ' - ' + $("#affected-id option[value='" + affected + "']").text();
-            } else {
-                title = $("#programme-id option[value='" + programme + "']").text();
-            }
-
-            counter = 0;
-            for (dataValue in dataValues) {
-                datas = dataValues[dataValue];
-                vals = [];
-                labs = [];
-                bgColor = [];
-                for (data in datas) {
-                    currData = datas[data];
-                    vals.push(currData['value']);
-                    bgColor.push(colors[counter]);
-                }
-                labs.push(Programme[dataValue]);
-
-                counter += 1;
-                dataSets.push({
-                    'label': labs,
-                    'data': vals,
-                    'backgroundColor': bgColor
-                    // 'borderColor': bgColor,
-                    // 'borderWidth': 1
-                });
-            }
-            if (window.myChart != undefined) {
-                window.myChart.destroy();
-            }
-            dataSets = { labels: periods, datasets: dataSets };
-
-            charts(dataSets, title);
-        },
-        error: function(res) {
-            console.log('failed')
+        type: $(this).attr('method'),
+        url: '/outcomes/get-outcome-data',
+        data: $(this).serialize(),
+        success: function (res) {
+            // dataSets = { labels: res.periods, datasets: res.dataSets };
+            // title = 'test';
+            // charts(dataSets, title);
         }
-    });
+    })
+
+    return false;
 });
+
+// $('#submit-platform-btn').click(function() {
+//     division = $('#division-id').val();
+//     period = $('#period-id').val();
+//     indicator = $('#indicator-id').val();
+//     department = $('#department-id').val();
+    
+//     platformDiction = { division: division, period: period, indicator: indicator, department: department }
+//     console.log(platformDiction);
+//     $.ajax({
+//         type: 'get',
+//         url: '/get-outcome-data/',
+//         data: { platformDiction: platformDiction },
+//         success: function(res) {
+//             console.log(res)
+
+//             periods = res.periods;
+//             dataValues = res.dataValueSets;
+//             dataSets = [];
+//             output = '';
+//             label = [];
+//             data = [];
+
+//             if (affectedExists) {
+//                 title = $("#programme-id option[value='" + programme + "']").text() + ' - ' + $("#affected-id option[value='" + affected + "']").text();
+//             } else {
+//                 title = $("#programme-id option[value='" + programme + "']").text();
+//             }
+
+//             counter = 0;
+//             for (dataValue in dataValues) {
+//                 datas = dataValues[dataValue];
+//                 vals = [];
+//                 labs = [];
+//                 bgColor = [];
+//                 for (data in datas) {
+//                     currData = datas[data];
+//                     vals.push(currData['value']);
+//                     bgColor.push(colors[counter]);
+//                 }
+//                 labs.push(Programme[dataValue]);
+
+//                 counter += 1;
+//                 dataSets.push({
+//                     'label': labs,
+//                     'data': vals,
+//                     'backgroundColor': bgColor
+//                     // 'borderColor': bgColor,
+//                     // 'borderWidth': 1
+//                 });
+//             }
+//             if (window.myChart != undefined) {
+//                 window.myChart.destroy();
+//             }
+//             dataSets = { labels: periods, datasets: dataSets };
+
+//             charts(dataSets, title);
+//         },
+//         error: function(res) {
+//             console.log('failed')
+//         }
+//     });
+// });
 //</script>
 @endsection
 
