@@ -94,4 +94,6 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/outputs/maternal', 'OutputController@indexAction')->name('outputs.maternal');
 	Route::get('/outputs/child', 'OutputController@indexAction')->name('outputs.child');
 	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
+
+	Route::post('/outputs/maternal-main-chart', 'OutputController@maternalMainChart')->name('outputs.maternal.mainchart');
 });

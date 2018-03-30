@@ -12,7 +12,7 @@ class OutputController extends Controller
 	use PeriodHelper;
 
 	public function indexAction() {
-		$organisation_units = OrganisationUnit::all();
+		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$periods = $this->getPeriodYears();
 		$trend_analysis = [
 			[
@@ -43,5 +43,11 @@ class OutputController extends Controller
 		return view('frontend.output.index', 
 			compact('trend_analysis','organisation_units','periods','indicators')
 		);
+	}
+
+	public function maternalMainChart(Request $request) {
+		// return $request->all();
+		$indicator = $request->indicator_id;
+		// $this->callUrl();
 	}
 }

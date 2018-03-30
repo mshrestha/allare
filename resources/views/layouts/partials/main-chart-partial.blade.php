@@ -3,14 +3,15 @@
 	    {{-- Selectors --}}
 	    <div class="col-md-3">
 	        <div class="side-filter-div">
+	            {{ Form::open(['id' => 'main-chart-form', 'method' => 'POST']) }}
 	            <div class="input-group mb-3">
 	                <div class="input-group-prepend">
-	                    <label class="input-group-text" for="division-id">Divisions</label>
+	                    <label class="input-group-text">Divisions</label>
 	                </div>
-	                <select class="custom-select" id="division-id">
+	                <select class="custom-select" id="organisation_unit_id" name="organisation_unit_id">
 	                    <option value="">Divisions</option>
 	                	@foreach($organisation_units as $organisation_unit)
-	                    <option data-central-id="{{ $organisation_unit->central_api_id }}" data-community-id="{{ $organisation_unit->community_api_id }}">{{ $organisation_unit->name }}</option>
+	                    <option value="{{ $organisation_unit->central_api_id }}.{{ $organisation_unit->community_api_id }}">{{ $organisation_unit->name }}</option>
 	                	@endforeach
 	                </select>
 
@@ -20,7 +21,7 @@
 	                <div class="input-group-prepend">
 	                    <label class="input-group-text" for="period-id">Periods</label>
 	                </div>
-	                <select class="custom-select" id="period-id">
+	                <select class="custom-select" name="period_id">
 	                    <option value="">Periods</option>
 	                    <option value="LAST_MONTH">1 month</option>
 	                    <option value="LAST_6_MONTHS">6 months</option>
@@ -31,9 +32,9 @@
 	            </div>
 	            <div class="input-group mb-3">
 	                <div class="input-group-prepend">
-	                    <label class="input-group-text" for="indicator-id">Indicators</label>
+	                    <label class="input-group-text" for="indicator_id">Indicators</label>
 	                </div>
-	                <select class="custom-select" id="indicator-id" name="indicator-id">
+	                <select class="custom-select" id="indicator_id" name="indicator_id">
 	                	@foreach($indicators as $key => $indicator)
 	                	<option value="{{ $key }}">{{ $indicator }}</option>
 	                	@endforeach
@@ -44,7 +45,7 @@
 	                <div class="input-group-prepend">
 	                    <label class="input-group-text">Departments</label>
 	                </div>
-	                <select class="custom-select" id="department-id">
+	                <select class="custom-select" id="department_id" name="department_id">
 	                    <option value="">Departments</option>
 	                    <option value="both">Both</option>
 	                    <option value="DGHS">DGHS</option>
@@ -61,8 +62,9 @@
 	            </div> --}} 
 
 	            <div class="input-group mb-3">
-	                <button type="button" class="btn btn-primary" id="submit-platform-btn">Submit</button>
+	                <button type="submit" class="btn btn-primary" id="submit-platform-btn">Submit</button>
 	            </div>
+	            {{ Form::close() }}
 	        </div>
 	    </div>
 	    {{-- Bargraph --}}

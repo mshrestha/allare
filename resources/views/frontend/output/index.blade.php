@@ -14,9 +14,6 @@
 $('.side-filter-div').height($('#myChart').height()-30+2);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
-
-    getPeriods();
-    getElements();
 });
 
 var affectedExists = 0;
@@ -45,88 +42,6 @@ var colors = [
     'rgba(215, 19, 164, 0.8)',
     'rgba(252, 129, 64, 0.8)',
 ]
-
-function getDivisions() {
-    $.ajax({
-        type: 'get',
-        url: '/get_org_division',
-        success: function(res) {
-            divisions = res["divisions"];
-            Divisions = divisions;
-            for (division in divisions) {
-                $("#division-id").append('<option value="' + division + '">' + divisions[division] + '</option>');
-            }
-            $('.organization_units_wrapper').show();
-            $('.datasets_wrapper .loading').hide();
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
-
-function getPeriods() {
-    $.ajax({
-        type: 'get',
-        url: '/get_periods',
-        success: function(res) {
-            dataSets = res["periods"];
-            for (data in dataSets) {
-                $("#period-id").append('<option value="' + dataSets[data] + '">' + data + '</option>');
-            }
-            $('.periods_wrapper .loading').hide()
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
-
-function getElements() {
-    $.ajax({
-        type: 'get',
-        url: '/get_elements_joint',
-        success: function(res) {
-            // keys = Object.keys(res);
-            programmes = res["programmesJoint"];
-            Programme = res['programmes'];
-            for (programme in programmes) {
-                $("#programme-id").append('<option value="' + programmes[programme].toString() + '">' + programme + '</option>');
-            }
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    })
-}
-
-
-$('#programme-id').change(function() {
-    dataElement = ($('#programme-id').val())
-    $.ajax({
-        type: 'get',
-        url: '/get_category_joint/',
-        data: { dataElement: dataElement },
-        success: function(res) {
-            if (res.exists == "true") {
-                $('#affected-id').find('option').remove()
-                affectedArrs = res.affectedArrs;
-                AffectedArrs = affectedArrs;
-                for (affectedArr in affectedArrs) {
-                    $("#affected-id").append('<option value="' + affectedArr + '">' + affectedArrs[affectedArr] + '</option>');
-                }
-                $('#affected-id').parent().show();
-                affectedExists = 1;
-            } else {
-                $('#affected-id').parent().hide();
-                affectedExists = 0;
-            }
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    });
-});
 
 function charts(datasets, labels) {
     // console.log(datasets);
@@ -175,7 +90,7 @@ function charts(datasets, labels) {
     });
 }
 
-$('#submit-platform-btn').click(function() {
+$('#submit-platform-btnz').click(function() {
     division = $('#division-id').val();
     period = $('#period-id').val();
     programme = $('#programme-id').val();
@@ -244,6 +159,20 @@ $('#submit-platform-btn').click(function() {
 
 @section('outjavascript')
   <script>
+    $('#main-chart-form').on('submit', function() {
+
+        $.ajax({
+            type: $(this).attr('method'),
+            url: '/outputs/maternal-main-chart',
+            data: $(this).serialize(),
+            success: function (res) {
+                consoe.log(res)
+            }
+        })
+
+        return false;
+    });
+
     var randomScalingFactor = function() {
       return Math.round(Math.random() * 100);
     };
