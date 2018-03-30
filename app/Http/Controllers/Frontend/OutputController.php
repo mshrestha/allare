@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\OrganisationUnit;
 use App\Traits\PeriodHelper;
 use Illuminate\Http\Request;
+use App\Models\Data\CcMrCounsellingAnc;
+use App\Models\Data\CcMrAncNutriCounsel;
 
 class OutputController extends Controller
 {
