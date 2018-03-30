@@ -90,9 +90,16 @@ Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 
 Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/dashboard', 'DashboardController@indexAction')->name('dashboard');
+
+	// Outputs 
 	Route::get('/outputs', 'OutputController@indexAction')->name('outputs');
 	Route::get('/outputs/maternal', 'OutputController@indexAction')->name('outputs.maternal');
+	Route::post('/outputs/maternal-main-chart', 'OutputController@maternalMainChart')->name('outputs.maternal.mainchart');
+
+	// Output Child
 	Route::get('/outputs/child', 'OutputController@indexAction')->name('outputs.child');
+
+	// Outcomes
 	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
-	Route::get('/outcomes/get-outcome-data', 'OutcomeController@getOutcomeData')->name('get-outcome-data');
+	Route::get('/outcomes/get-outcome-data', 'OutcomeController@getOutcomeData')->name('get-outcome-data');	
 });

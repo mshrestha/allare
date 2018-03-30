@@ -12,7 +12,7 @@ class OutputController extends Controller
 	use PeriodHelper;
 
 	public function indexAction() {
-		$organisation_units = OrganisationUnit::all();
+		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$periods = $this->getPeriodYears();
 		$trend_analysis = [
 			[
@@ -35,7 +35,7 @@ class OutputController extends Controller
 		$data = config('data.maternal');
 		$indicators = [
 			'maternal_counselling' => 'Maternal Counselling',
-			'plw_who_receive_ifas' => 'Plw how receive ifas',
+			'plw_who_receive_ifas' => 'Plw who receive ifas',
 			'pregnant_women_weighed' => 'Pregnant women weighed',
 		];
 
@@ -43,5 +43,26 @@ class OutputController extends Controller
 		return view('frontend.output.index', 
 			compact('trend_analysis','organisation_units','periods','indicators')
 		);
+	}
+
+	public function maternalMainChart(Request $request) {
+		// return $request->all();
+		$indicator = $request->indicator_id;
+		$data_table = config('data.maternal.'.$indicator);
+		$periods = explode(';', $request->period_id);
+
+		$organisation_unit = explode('.', $request->organisation_unit_id);
+
+		$response = [];
+		foreach($data_table as $table) {
+			$model = 'App\Models\Data\\' . $table['model'];
+			$ou = ($table['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
+			return $ou;
+			$data = $model::whereIn('period', $periods)->where('source', $request->department_id)->where('organisation_unit', $request->organisation_unit_id)->get();
+			
+			return $data;
+		}
+		
+		return $response;
 	}
 }
