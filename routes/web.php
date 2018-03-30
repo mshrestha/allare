@@ -101,5 +101,5 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 
 	// Outcomes
 	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
-	Route::get('/outcomes/get-outcome-data', 'OutcomeController@getOutcomeData')->name('get-outcome-data');	
+	Route::post('/outcomes/get-outcome-data', 'OutcomeController@getOutcomeData')->name('get-outcome-data');	
 });
