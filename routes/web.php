@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/main', function () {
+    return view('welcome-react');
+});
 
 Route::get('/', function () {
     return view('nutrition.index');
