@@ -176,14 +176,35 @@ function charts(datasets, labels) {
 }
 
 $('#main-chart-form').on('submit', function() {
+    formData = $(this).serialize();
+    indicator = $('indicator-id').val();
+    dataSets = [];
     $.ajax({
-        type: $(this).attr('method'),
+        type: 'post',
         url: '/outcomes/get-outcome-data',
         data: $(this).serialize(),
         success: function (res) {
+            labels = res['labels'];
+            data = res['data'];
+            dataSets.push({
+                'label': labels,
+                'data': data,
+                'backgroundColor': colors[0]
+            // 'borderColor': bgColor,
+            // 'borderWidth': 1
+            });
+            if(window.myChart != undefined){
+                window.myChart.destroy();
+            }
+            dataSets = {labels: labels, datasets: dataSets};
+
+            charts(dataSets, indicator);
             // dataSets = { labels: res.periods, datasets: res.dataSets };
             // title = 'test';
             // charts(dataSets, title);
+        },
+        error: function(res) {
+            console.log('failed')
         }
     })
 

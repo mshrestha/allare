@@ -57,13 +57,21 @@ class OutcomeController extends Controller
 		// 	dd($data[$indicator][$i]);
 		// }
 
-		$all_maternal_table_datas = [];
+		$all_table_datas = [];
+		$labels = [];
+		$dataVals = [];
 		foreach ($data[$indicator] as $table) {
 			$model = 'App\Models\Data\\' . $table['model'];
-			$data = $model::whereIn('period', $pe)->where('source', $source)->where('organisation_unit', $ou)->whereNull('category_option_combo')->get();
-			array_push($all_maternal_table_datas, $data);
+			$datum = $model::whereIn('period', $pe)->where('source', $source)->where('organisation_unit', $ou)->whereNull('category_option_combo')->get();
+			foreach ($datum as $key => $value) {
+				array_push($labels, $value['period_name']);
+				array_push($dataVals, $value['value']);
+			}
 		}
-		dd($all_maternal_table_datas);
+		return array(
+				'labels' => $labels,
+				'data' => $dataVals
+			);
 
 	}
 
