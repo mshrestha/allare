@@ -71,7 +71,7 @@
 	    {{-- Bargraph --}}
 	    <div class="col-md-9">
 	        <div class="bargraph-div">
-	            <canvas id="myChart" width="400" height="400"></canvas>
+	            <canvas id="mainChart" width="400" height="400"></canvas>
 	        </div>
 	    </div>
 	</div>
