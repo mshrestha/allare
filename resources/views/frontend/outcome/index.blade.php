@@ -23,9 +23,9 @@ var affectedExists = 0;
 var Divisions = '';
 var Programme = '';
 var AffectedArrs = '';
-var ctx = document.getElementById("myChart").getContext('2d');
-ctx.height = 500;
-var myChart;
+var ctxMain = document.getElementById("mainChart").getContext('2d');
+ctxMain.height = 500;
+var mainChart;
 var colors = [
     'rgba(255, 99, 132, 0.8)',
     'rgba(54, 162, 235, 0.8)',
@@ -44,93 +44,11 @@ var colors = [
     'rgba(25, 39, 114, 0.8)',
     'rgba(215, 19, 164, 0.8)',
     'rgba(252, 129, 64, 0.8)',
-]
-
-// function getDivisions() {
-//     $.ajax({
-//         type: 'get',
-//         url: '/get_org_division',
-//         success: function(res) {
-//             divisions = res["divisions"];
-//             Divisions = divisions;
-//             for (division in divisions) {
-//                 $("#division-id").append('<option value="' + division + '">' + divisions[division] + '</option>');
-//             }
-//             $('.organization_units_wrapper').show();
-//             $('.datasets_wrapper .loading').hide();
-//         },
-//         error: function(res) {
-//             console.log('failed')
-//         }
-//     })
-// }
-
-// function getPeriods() {
-//     $.ajax({
-//         type: 'get',
-//         url: '/get_periods',
-//         success: function(res) {
-//             dataSets = res["periods"];
-//             for (data in dataSets) {
-//                 $("#period-id").append('<option value="' + dataSets[data] + '">' + data + '</option>');
-//             }
-//             $('.periods_wrapper .loading').hide()
-//         },
-//         error: function(res) {
-//             console.log('failed')
-//         }
-//     })
-// }
-
-// function getElements() {
-//     $.ajax({
-//         type: 'get',
-//         url: '/get_elements_joint',
-//         success: function(res) {
-//             // keys = Object.keys(res);
-//             programmes = res["programmesJoint"];
-//             Programme = res['programmes'];
-//             for (programme in programmes) {
-//                 $("#programme-id").append('<option value="' + programmes[programme].toString() + '">' + programme + '</option>');
-//             }
-//         },
-//         error: function(res) {
-//             console.log('failed')
-//         }
-//     })
-// }
-
-
-$('#programme-id').change(function() {
-    dataElement = ($('#programme-id').val())
-    $.ajax({
-        type: 'get',
-        url: '/get_category_joint/',
-        data: { dataElement: dataElement },
-        success: function(res) {
-            if (res.exists == "true") {
-                $('#affected-id').find('option').remove()
-                affectedArrs = res.affectedArrs;
-                AffectedArrs = affectedArrs;
-                for (affectedArr in affectedArrs) {
-                    $("#affected-id").append('<option value="' + affectedArr + '">' + affectedArrs[affectedArr] + '</option>');
-                }
-                $('#affected-id').parent().show();
-                affectedExists = 1;
-            } else {
-                $('#affected-id').parent().hide();
-                affectedExists = 0;
-            }
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    });
-});
+];
 
 function charts(datasets, labels) {
     // console.log(datasets);
-    window.myChart = new Chart(ctx, {
+    window.mainChart = new Chart(ctxMain, {
         type: 'bar',
         data: datasets,
         options: {
@@ -177,7 +95,9 @@ function charts(datasets, labels) {
 
 $('#main-chart-form').on('submit', function() {
     formData = $(this).serialize();
-    indicator = $('indicator-id').val();
+    indicator = $('#indicator_id').val();
+    department = $('#department_id').val();
+    title = $("#indicator_id option[value="+indicator+"]").text()
     dataSets = [];
     $.ajax({
         type: 'post',
@@ -187,21 +107,18 @@ $('#main-chart-form').on('submit', function() {
             labels = res['labels'];
             data = res['data'];
             dataSets.push({
-                'label': labels,
+                'label': department,
                 'data': data,
                 'backgroundColor': colors[0]
             // 'borderColor': bgColor,
             // 'borderWidth': 1
             });
-            if(window.myChart != undefined){
-                window.myChart.destroy();
+            if(window.mainChart != undefined){
+                window.mainChart.destroy();
             }
             dataSets = {labels: labels, datasets: dataSets};
 
-            charts(dataSets, indicator);
-            // dataSets = { labels: res.periods, datasets: res.dataSets };
-            // title = 'test';
-            // charts(dataSets, title);
+            charts(dataSets, title);
         },
         error: function(res) {
             console.log('failed')
@@ -318,7 +235,7 @@ $('#main-chart-form').on('submit', function() {
 		var canvas = document.getElementById("line-chart");
     	var ctx = canvas.getContext("2d");
 
-		var myChart = new Chart(ctx, {
+		var trendChart = new Chart(ctx, {
 		  type: 'line',
 		  data: {
 		    labels: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1],
