@@ -42,7 +42,50 @@ class OutcomeController extends Controller
 	}
 
 	public function getOutcomeData(Request $request) {
-		$data = $request->all();
-		dd($data);
+		$data = config('data.outcomes');
+		$requestData = $request->all();
+		$indicator = $request->indicator_id;
+		$ou = explode('.', $request->organisation_unit_id);
+		dd($data[$indicator][0][
+			'server']);
+		if(($data[$indicator][0]['server'] == 'central')
+			$ou = $ou[0];
+		if($data[$indicator][0]['server'] == 'community')
+			$ou = $ou[1];
+		$pe = $this->getPeriodArray($request->period_id);
+		for ($i=0; $i < count($data[$indicator]); $i++) { 
+			
+		}
+
+	}
+
+	private function getPeriodArray($period) {
+		if($period == "LAST_MONTH") {
+			$current_year = date('Y');
+			$current_month = date('m');
+			if($current_month - 1 < 10) {
+				$current_month = '0'.($current_month-1);
+			}else {
+				$current_month = ($current_month-1);
+			}
+			$pe = $current_year.$current_month;
+			dd($pe);
+		}else if($period == 'LAST_6_MONTHS') {
+			$current_year = date('Y');
+			$current_month = date('m');
+			if($current_month - 1 < 10) {
+				$current_month = '0'.($current_month-1);
+			}else {
+				$current_month = ($current_month-1);
+			}
+			$pe = $current_year.$current_month.';';
+			for ($i = 2; $i < 7; $i++) {
+			  $pe .= date('Ym', strtotime("-$i month")).';';
+			}
+			$pe = rtrim($pe, ';');
+		} else {
+			$pe = $period;
+		}
+		return explode(";", $pe);
 	}
 }
