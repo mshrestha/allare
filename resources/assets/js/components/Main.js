@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 // Layouts
 import Navbar from './templates/Layouts/Navbar.js';
+import Footer from './templates/Layouts/Footer.js';
 
 import Dashboard from './templates/Dashboard/index.js';
 import Outputs from './templates/Outputs/index.js';
