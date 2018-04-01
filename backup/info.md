@@ -32,9 +32,11 @@ npm install
 
 ## .env file
 create a copy of .env.example to .env and modify following lines:
+```
 DB_DATABASE=homestead
 DB_USERNAME=homestead
 DB_PASSWORD=secret
+```
 
 ## Running Server
 ```
