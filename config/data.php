@@ -3,13 +3,14 @@
 return [
 	'maternal' => [
 		'maternal_counselling' => [
-			// 'cc_mr_counselling_anc' => [
+			// [
 			// 	'model'		=> 'CcMrCounsellingAnc',
 			// 	'table'		=> 'cc_mr_counselling_anc',
 			// 	'server'	=> 'community',
 			// 	'api_id'	=> 'WfrGlt9gYxW.YF2ivOyo5'
 			// ],
-			'cc_mr_anc_nutri_counsel' => [
+			[
+				'name'		=> 'Maternal Counselling',
 				'model'		=> 'CcMrAncNutriCounsel',
 				'table'		=> 'cc_mr_anc_nutri_counsel',
 				'server'	=> 'community',

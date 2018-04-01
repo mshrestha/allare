@@ -52,15 +52,15 @@ class OutputController extends Controller
 		$organisation_unit = explode('.', $request->organisation_unit_id);
 		$source = $request->department_id;
 		
-		$all_maternal_table_datas = [];
-		foreach($data_table as $table) {
-			$model = 'App\Models\Data\\' . $table['model'];
-			$ou = ($table['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
-			$data = $model::whereIn('period', $periods)->where('source', 'DGHS')->where('organisation_unit', $ou)->whereNull('category_option_combo')->get();
-			
-			array_push($all_maternal_table_datas, $data);
-		}
+		$model = 'App\Models\Data\\' . $data_table[0]['model'];
+		$ou = ($data_table[0]['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
+		$data = $model::whereIn('period', $periods)->where('source', 'DGHS')->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period')->get();
+		
+		$labels = $data->pluck('period_name');
+		$datasets = $data->pluck('value');
+		$pointers = $request->department_id;
+		$title = $data_table[0]['name'];
 
-		return $all_maternal_table_datas[0];
+		return response()->json(['pointers' => $pointers, 'title' => $title, 'labels' => $labels, 'datasets' => $datasets]);
 	}
 }

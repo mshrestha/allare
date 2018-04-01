@@ -11,7 +11,7 @@
 
 @section('injavascript')
 // <script>
-$('.side-filter-div').height($('#myChart').height()-30+2);
+$('.side-filter-div').height($('#mainChart').height()-30+2);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
 });
@@ -20,9 +20,9 @@ var affectedExists = 0;
 var Divisions = '';
 var Programme = '';
 var AffectedArrs = '';
-var ctx = document.getElementById("myChart").getContext('2d');
-ctx.height = 500;
-var myChart;
+var mainChartCtx = document.getElementById("mainChart").getContext('2d');
+mainChartCtx.height = 500;
+var mainChart;
 var colors = [
     'rgba(255, 99, 132, 0.8)',
     'rgba(54, 162, 235, 0.8)',
@@ -45,7 +45,7 @@ var colors = [
 
 function charts(datasets, labels) {
     // console.log(datasets);
-    window.myChart = new Chart(ctx, {
+    window.mainChart = new Chart(mainChartCtx, {
         type: 'bar',
         data: datasets,
         options: {
@@ -90,85 +90,35 @@ function charts(datasets, labels) {
     });
 }
 
-$('#submit-platform-btnz').click(function() {
-    division = $('#division-id').val();
-    period = $('#period-id').val();
-    programme = $('#programme-id').val();
-    affected = -1;
-    if (affectedExists) {
-        affected = $('#affected-id').val();
-    }
-    platformDiction = { division: division, period: period, programme: programme, affected: affected }
-
-    $.ajax({
-        type: 'get',
-        url: '/get_data_value_set_joint/',
-        data: { platformDiction: platformDiction },
-        success: function(res) {
-            console.log(res)
-
-            periods = res.periods;
-            dataValues = res.dataValueSets;
-            dataSets = [];
-            output = '';
-            label = [];
-            data = [];
-
-            if (affectedExists) {
-                title = $("#programme-id option[value='" + programme + "']").text() + ' - ' + $("#affected-id option[value='" + affected + "']").text();
-            } else {
-                title = $("#programme-id option[value='" + programme + "']").text();
-            }
-
-            counter = 0;
-            for (dataValue in dataValues) {
-                datas = dataValues[dataValue];
-                vals = [];
-                labs = [];
-                bgColor = [];
-                for (data in datas) {
-                    currData = datas[data];
-                    vals.push(currData['value']);
-                    bgColor.push(colors[counter]);
-                }
-                labs.push(Programme[dataValue]);
-
-                counter += 1;
-                dataSets.push({
-                    'label': labs,
-                    'data': vals,
-                    'backgroundColor': bgColor
-                    // 'borderColor': bgColor,
-                    // 'borderWidth': 1
-                });
-            }
-            if (window.myChart != undefined) {
-                window.myChart.destroy();
-            }
-            dataSets = { labels: periods, datasets: dataSets };
-
-            charts(dataSets, title);
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    });
-});
 //</script>
 @endsection
 
 @section('outjavascript')
   <script>
     $('#main-chart-form').on('submit', function() {
-
         $.ajax({
             type: $(this).attr('method'),
             url: '/outputs/maternal-main-chart',
             data: $(this).serialize(),
             success: function (res) {
-                dataSets = { labels: res.periods, datasets: res.dataSets };
-                title = 'test';
+                dataSets = { 
+                    labels: res.labels, 
+                    datasets: [{
+                        label: res.pointers,
+                        data: res.datasets
+                    }]
+                };
+
+                title = res.title;
+
+                if (window.mainChart != undefined) {
+                    window.mainChart.destroy();
+                }
+
                 charts(dataSets, title);
+
+            }, error : function () {
+                console.log('error');
             }
         })
 
@@ -213,9 +163,9 @@ $('#submit-platform-btnz').click(function() {
   </script>
   <script>
     var canvas = document.getElementById("line-chart");
-      var ctx = canvas.getContext("2d");
+    var ctx = canvas.getContext("2d");
 
-    var myChart = new Chart(ctx, {
+    var myTrendChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1],
