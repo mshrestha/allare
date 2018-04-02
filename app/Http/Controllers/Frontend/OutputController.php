@@ -49,17 +49,17 @@ class OutputController extends Controller
 			[
 				'name' => 'Counseling',
 				'month' => 'Counseling Given - April',
-				'percent' => $counselling_percent
+				'percent' => round($counselling_percent)
 			],
 			[
 				'name' => 'IFA Distribution',
 				'month' => 'IFA Distributed - April',
-				'percent' => $plw_who_receive_ifas_percent,
+				'percent' => round($plw_who_receive_ifas_percent),
 			],
 			[
 				'name' => 'Weight Measurement',
 				'month' => 'Weight gained - April',
-				'percent' => $pregnant_women_weighed_percent
+				'percent' => round($pregnant_women_weighed_percent)
 			],
 		];
 

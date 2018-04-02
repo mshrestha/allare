@@ -11,7 +11,7 @@
 
 @section('injavascript')
 // <script>
-$('.side-filter-div').height($('#mainChart').height()-30+2);
+$('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
 });
@@ -141,11 +141,11 @@ function charts(datasets, labels) {
           datasets: [{
             data: [
               data_value,
-              randomScalingFactor(),
+              100 - data_value,
             ],
             backgroundColor: [
-              'rgba(255, 99, 132, 0.8)',
               'rgba(54, 162, 235, 0.8)',
+              // 'rgba(255, 99, 132, 0.8)',
             ],
             label: 'Dataset 1'
           }],
