@@ -166,17 +166,17 @@
       dataSet =[];
       label = '';
       if(data_value.length > 1) {
-        for (var i = 0; i < data_value.length; i++){
+        // for (var i = 0; i < data_value.length; i++){
           currSet = {
-            label: data_value[i].title,
-            borderColor: colors[i],
+            label: data_value[0].title,
+            borderColor: colors[0],
             borderWidth: 2,
             fill: false,
-            data: data_value[i].values
+            data: data_value[0].values
           };
           dataSet.push(currSet);
           label = data_value[0].periods;
-        };
+        // };
       } else {
         currSet = {
             label: data_value.title,
