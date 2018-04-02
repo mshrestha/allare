@@ -36,13 +36,14 @@ class OutcomeController extends Controller
 		$indicators = [
 			'imci_stunting' => 'Stunting',
 			'imci_wasting' => 'Wasting',
-			'exclusive_breastfeeding' => 'Exclusive Breastfeeding',
+			'exclusive_breastfeeding' => 'Exclusive_Breastfeeding',
 		];
 		$data = config('data.outcomes');
 		$dataSet = [];
-		
+
 		foreach($indicators as $indicator => $indicatorName) {
 			$counter = 0;
+			$dataSet[$indicatorName] = [];
 			foreach ($data[$indicator] as $keyIndict => $indictData) {
 				$ou = 'dNLjKwsVjod';
 				$model = 'App\Models\Data\\' . $indictData['model'];
@@ -61,36 +62,30 @@ class OutcomeController extends Controller
 			}
 		}
 
-		dd($dataSet);
+
+		// dd($dataSet);
 
 
-		$trend_analysis = [];
-		$stunting_percent = ImciStuntingPercent::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->get();
-		$values = $stunting_percent->pluck('value');
-		$period = $stunting_percent->pluck('period');
+		$trend_analysis = $dataSet;
+		
+		// $trend_analysis = [
+		// 	[
+		// 		'name' => 'Stunting',
+		// 		'month' => 'Counseling Given - April',
+		// 		'percent' => '80',
+		// 	],
+		// 	[
+		// 		'name' => 'IFA Distribution',
+		// 		'month' => 'IFA Distributed - April',
+		// 		'percent' => '50',
+		// 	],
+		// 	[
+		// 		'name' => 'Weight Measurement',
+		// 		'month' => 'Weight gained - April',
+		// 		'percent' => '60',
+		// 	],
+		// ];
 
-
-		$wasting_percent = ImciWastingPercent::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->get();
-		$values = $stunting_percent->pluck('value');
-		$period = $stunting_percent->pluck('period');
-
-		$trend_analysis = [
-			[
-				'name' => 'Stunting',
-				'month' => 'Counseling Given - April',
-				'percent' => '80',
-			],
-			[
-				'name' => 'IFA Distribution',
-				'month' => 'IFA Distributed - April',
-				'percent' => '50',
-			],
-			[
-				'name' => 'Weight Measurement',
-				'month' => 'Weight gained - April',
-				'percent' => '60',
-			],
-		];
 
 		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods', 'indicators'));
 	}
