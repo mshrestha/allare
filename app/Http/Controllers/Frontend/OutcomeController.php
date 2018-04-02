@@ -192,7 +192,7 @@ class OutcomeController extends Controller
 				$current_month = ($current_month-1);
 			}
 			$pe = $current_year.$current_month;
-			dd($pe);
+			// dd($pe);
 		}else if($period == 'LAST_6_MONTHS') {
 			$current_year = date('Y');
 			$current_month = date('m');

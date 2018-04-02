@@ -58,7 +58,6 @@ class ImporterController extends Controller
                 $responses = $this->callUrl($url);
                 $responses = json_decode($responses);
                 
-
                 // dd($url);
                 dd($responses);
                 $metaData = $responses->metaData;
@@ -79,6 +78,7 @@ class ImporterController extends Controller
                 $url = $baseUrl.config('static.analyticsEP').'.json?dimension=dx:'.$dx.'&dimension=pe:'.$pe.'&filter=ou:'.$ou[$j].'&displayProperty=NAME&outputIdScheme=UID';
                 $responses = $this->callUrl($url);
                 $responses = json_decode($responses);
+                // dd($url);
                 // dd($responses);
                 $metaData = $responses->metaData;
                 $rows = $responses->rows;
