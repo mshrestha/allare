@@ -40,13 +40,13 @@ class OutcomeController extends Controller
 		];
 		$data = config('data.outcomes');
 		$dataSet = [];
-		// $counter = 0;
+		$currData = [];
+
 		foreach($indicators as $indicator => $indicatorName) {
 			$counter = 0;
+			$dataSet[$indicatorName] = [];
 			foreach ($data[$indicator] as $keyIndict => $indictData) {
-				echo(count($data[$indicator]).'-'.$counter);
-				$dataSet[$indicatorName] = [];
-				print_r($indictData);
+				
 				$ou = 'dNLjKwsVjod';
 				$model = 'App\Models\Data\\' . $indictData['model'];
 				$datum = $model::whereIn('period', $periodData)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->get();
@@ -55,7 +55,6 @@ class OutcomeController extends Controller
 					$dataSet[$indicatorName][$counter]['periods'] = $datum->pluck('period');
 					$dataSet[$indicatorName][$counter]['values'] = $datum->pluck('value');	
 					$counter++;
-					echo 'inc'.$counter;
 				}else{
 					$dataSet[$indicatorName]['title'] = $indictData['model'];
 					$dataSet[$indicatorName]['periods'] = $datum->pluck('period');
@@ -65,37 +64,29 @@ class OutcomeController extends Controller
 			}
 			
 		}
-		// exit();
-		dd($dataSet);
+
+		// dd($dataSet);
 
 
-		$trend_analysis = [];
-		$stunting_percent = ImciStuntingPercent::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->get();
-		$values = $stunting_percent->pluck('value');
-		$period = $stunting_percent->pluck('period');
-
-
-		$wasting_percent = ImciWastingPercent::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->get();
-		$values = $stunting_percent->pluck('value');
-		$period = $stunting_percent->pluck('period');
-
-		$trend_analysis = [
-			[
-				'name' => 'Stunting',
-				'month' => 'Counseling Given - April',
-				'percent' => '80',
-			],
-			[
-				'name' => 'IFA Distribution',
-				'month' => 'IFA Distributed - April',
-				'percent' => '50',
-			],
-			[
-				'name' => 'Weight Measurement',
-				'month' => 'Weight gained - April',
-				'percent' => '60',
-			],
-		];
+		$trend_analysis = $dataSet;
+		
+		// $trend_analysis = [
+		// 	[
+		// 		'name' => 'Stunting',
+		// 		'month' => 'Counseling Given - April',
+		// 		'percent' => '80',
+		// 	],
+		// 	[
+		// 		'name' => 'IFA Distribution',
+		// 		'month' => 'IFA Distributed - April',
+		// 		'percent' => '50',
+		// 	],
+		// 	[
+		// 		'name' => 'Weight Measurement',
+		// 		'month' => 'Weight gained - April',
+		// 		'percent' => '60',
+		// 	],
+		// ];
 
 		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods', 'indicators'));
 	}

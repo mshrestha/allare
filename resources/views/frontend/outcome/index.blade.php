@@ -2,8 +2,8 @@
 @section('content')
 	<div class="container">
 		@include('layouts.partials.main-chart-partial')
-
-		@foreach($trend_analysis as $analysis)
+        
+		@foreach($trend_analysis as $key => $analysis)
 			@include('frontend.outcome.partials.outcome-trend-analysis')
 		@endforeach
 	</div>
@@ -148,71 +148,3 @@ $('#main-chart-form').on('submit', function() {
 </script>
 @endsection
 
-@section('outjavascript')
-	<script>
-		var randomScalingFactor = function() {
-			return Math.round(Math.random() * 100);
-		};
-
-		var config = {
-			type: 'pie',
-			data: {
-				datasets: [{
-					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						// randomScalingFactor(),
-						// randomScalingFactor(),
-						// randomScalingFactor(),
-					],
-					backgroundColor: [
-						'rgba(255, 99, 132, 0.8)',
-					    'rgba(54, 162, 235, 0.8)',
-					],
-					label: 'Dataset 1'
-				}],
-				labels: [
-					'Pink',
-					'Blue',
-				]
-			},
-			options: {
-				responsive: true
-			}
-		};
-
-		window.onload = function() {
-			var ctx = document.getElementById('chart-area').getContext('2d');
-			window.myPie = new Chart(ctx, config);
-		};
-	</script>
-	<script>
-		var canvas = document.getElementById("line-chart");
-    	var ctx = canvas.getContext("2d");
-
-		var trendChart = new Chart(ctx, {
-		  type: 'line',
-		  data: {
-		    labels: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1],
-		    datasets: [{
-		      label: 'Dataset 1',
-		      borderColor: 'rgba(54, 162, 235, 0.8)',
-		      borderWidth: 2,
-		      fill: false,
-		      data: [19304,13433,9341,6931,5169, 3885,2927,2159,1853,1502, 1176,911,724,590,491, 400,335,280,239,200]
-		    }]
-		  },
-		  options: {
-		    responsive: true,
-		    title: {
-		      display: true,
-		      text: 'Chart.js Drsw Line on Chart'
-		    },
-		    tooltips: {
-		      mode: 'index',
-		      intersect: true
-		    },
-		  }
-		});
-	</script>
-@endsection
