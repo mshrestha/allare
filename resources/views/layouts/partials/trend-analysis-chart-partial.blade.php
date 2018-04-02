@@ -10,7 +10,7 @@
 		</div>
 		<div class="col-md-6">
 			<div id="canvas-holder">
-				<canvas id="line-chart"></canvas>
+				<canvas id="line-chart-{{ $key }}"></canvas>
 			</div>
 		</div>
 		<div class="col-md-3">

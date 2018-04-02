@@ -127,10 +127,63 @@ function charts(datasets, labels) {
     });
 
     @foreach($trend_analysis as $key => $analysis)
-        trendAnalysisChart({{ $key }}, {{ $analysis['percent'] }})
+        pieChart({{ $key }}, {{ $analysis['percent'] }})
+        var arr = {!! json_encode($analysis) !!};
+        trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
+
     function trendAnalysisChart(id, data_value) {
+      var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+      };
+
+      var ctx = document.getElementById("line-chart-"+id).getContext('2d');
+      // var ctx = canvas.getContext("2d");
+      dataSet =[];
+      label = '';
+      if(data_value.length > 1) {
+        for (var i = 0; i < data_value.length; i++){
+          currSet = {
+            label: data_value[i].title,
+            borderColor: colors[i],
+            borderWidth: 2,
+            fill: false,
+            data: data_value[i].values
+          };
+          dataSet.push(currSet);
+          label = data_value[0].periods;
+        };
+      } else {
+        currSet = {
+            label: data_value.title,
+            borderColor: colors[0],
+            borderWidth: 2,
+            fill: false,
+            data: data_value.values
+          };
+        dataSet.push(currSet);
+        label = data_value.periods;
+      }
+      data = {labels: label, datasets: dataSet};
+      window.myTrendChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Chart.js Drsw Line on Chart'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: true
+          },
+        }
+      });
+    }
+
+    function pieChart(id, data_value) {
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };

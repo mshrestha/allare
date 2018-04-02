@@ -64,10 +64,8 @@ class OutcomeController extends Controller
 
 
 		// dd($dataSet);
-
-
 		$trend_analysis = $dataSet;
-		
+
 		// $trend_analysis = [
 		// 	[
 		// 		'name' => 'Stunting',
