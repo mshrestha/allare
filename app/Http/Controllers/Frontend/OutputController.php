@@ -60,9 +60,9 @@ class OutputController extends Controller
 		$pregnant_women_weighed_last_month = $pregnant_women_weighed_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
 		$pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$total_patient_last_month->value) * 100;
 
-		// echo "total patient: ". $total_patient_last_month->value . "\n";
-		// echo "pregnant_women_weighed : ". $pregnant_women_weighed_last_month->value;
-		
+		print_r($pregnant_women_weighed_last_month);
+		print_r($total_patient_last_month);
+		exit;
 
 		return view('frontend.output.index', 
 			compact('trend_analysis','organisation_units','periods','indicators')
@@ -72,8 +72,8 @@ class OutputController extends Controller
 	public function maternalMainChart(Request $request) {
 		$indicator = $request->indicator_id;
 		$data_table = config('data.maternal.'.$indicator);
-		// $periods = explode(';', $request->period_id);
 		$periods = $this->getPeriodArray($request->period_id);
+
 		$organisation_unit = explode('.', $request->organisation_unit_id);
 		$source = $request->department_id;
 		$source = "DGHS";
