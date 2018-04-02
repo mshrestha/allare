@@ -59,6 +59,7 @@ class ImporterController extends Controller
                 $responses = json_decode($responses);
                 
                 // dd($url);
+                dd($responses);
                 $metaData = $responses->metaData;
                 
                 $co = $metaData->dimensions->co;
@@ -131,7 +132,7 @@ class ImporterController extends Controller
             // dd($save_array);
             $model = 'App\Models\Data\\'.$currData['model'];
             $model::insert($save_array);
-
+            echo 'ok';
     	}
         dd('done');
     }

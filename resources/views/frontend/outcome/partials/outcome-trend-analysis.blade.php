@@ -1,16 +1,20 @@
-<div class="trend-analysis-pie-chart" style="margin-top: 20px;">
-	<h3>{{ $analysis['name'] }}</h3>
-	<p>{{ $analysis['month'] }}</p>
+<div class="trend-analysis-goal" style="margin-top: 20px;">
+	<h3>{!! str_replace('_', ' ', $key) !!}</h3>
+	{{-- <p>{{ $analysis['month'] }}</p> --}}
 	
 	<div class="row row-no-padding">
 		<div class="col-md-3">
 			<div id="canvas-holder">
-				<canvas id="chart-area-{{ $key }}"></canvas>
+				<div class="progress-bar-v" id="goal=chart-{{
+				$key}}">
+					<div class="goal" style="height: 30%;">Goal 25% by 20021</div>
+					<div class="current" style="height: 70%;">80%</div>	
+				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div id="canvas-holder">
-				<canvas id="line-chart-{{ $key }}"></canvas>
+				<canvas id="line-chart-{{$key}}"></canvas>
 			</div>
 		</div>
 		<div class="col-md-3">
@@ -24,3 +28,4 @@
 		</div>
 	</div> <!-- row -->
 </div> <!-- trend-analysis-pie-chart -->
+

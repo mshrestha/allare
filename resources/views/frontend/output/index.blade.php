@@ -3,7 +3,7 @@
   <div class="container">
     @include('layouts.partials.main-chart-partial')
 
-    @foreach($trend_analysis as $analysis)
+    @foreach($trend_analysis as $key => $analysis)
       @include('layouts.partials.trend-analysis-chart-partial')
     @endforeach
   </div>
@@ -11,7 +11,7 @@
 
 @section('injavascript')
 // <script>
-$('.side-filter-div').height($('#mainChart').height()-30+2);
+$('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
 });
@@ -95,6 +95,7 @@ function charts(datasets, labels) {
 
 @section('outjavascript')
   <script>
+
     $('#main-chart-form').on('submit', function() {
         $.ajax({
             type: $(this).attr('method'),
@@ -125,41 +126,95 @@ function charts(datasets, labels) {
         return false;
     });
 
-    var randomScalingFactor = function() {
-      return Math.round(Math.random() * 100);
-    };
+    @foreach($trend_analysis as $key => $analysis)
+        pieChart({{ $key }}, {{ $analysis['percent'] }})
+        var arr = {!! json_encode($analysis) !!};
+        trendAnalysisChart('{{ $key }}', arr)
+    @endforeach
 
-    var config = {
-      type: 'pie',
-      data: {
-        datasets: [{
-          data: [
-            randomScalingFactor(),
-            randomScalingFactor(),
-            // randomScalingFactor(),
-            // randomScalingFactor(),
-            // randomScalingFactor(),
-          ],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.8)',
-              'rgba(54, 162, 235, 0.8)',
-          ],
-          label: 'Dataset 1'
-        }],
-        labels: [
-          'Pink',
-          'Blue',
-        ]
-      },
-      options: {
-        responsive: true
+
+    function trendAnalysisChart(id, data_value) {
+      var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+      };
+
+      var ctx = document.getElementById("line-chart-"+id).getContext('2d');
+      // var ctx = canvas.getContext("2d");
+      dataSet =[];
+      label = '';
+      if(data_value.length > 1) {
+        for (var i = 0; i < data_value.length; i++){
+          currSet = {
+            label: data_value[i].title,
+            borderColor: colors[i],
+            borderWidth: 2,
+            fill: false,
+            data: data_value[i].values
+          };
+          dataSet.push(currSet);
+          label = data_value[0].periods;
+        };
+      } else {
+        currSet = {
+            label: data_value.title,
+            borderColor: colors[0],
+            borderWidth: 2,
+            fill: false,
+            data: data_value.values
+          };
+        dataSet.push(currSet);
+        label = data_value.periods;
       }
-    };
+      data = {labels: label, datasets: dataSet};
+      window.myTrendChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Chart.js Drsw Line on Chart'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: true
+          },
+        }
+      });
+    }
 
-    window.onload = function() {
-      var ctx = document.getElementById('chart-area').getContext('2d');
+    function pieChart(id, data_value) {
+      var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+      };
+
+      var config = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [
+              data_value,
+              100 - data_value,
+            ],
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.8)',
+              // 'rgba(255, 99, 132, 0.8)',
+            ],
+            label: 'Dataset 1'
+          }],
+          labels: [
+            'Pink',
+            'Blue',
+          ]
+        },
+        options: {
+          responsive: true
+        }
+      };
+
+      var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
       window.myPie = new Chart(ctx, config);
-    };
+    }
   </script>
   <script>
     var canvas = document.getElementById("line-chart");
