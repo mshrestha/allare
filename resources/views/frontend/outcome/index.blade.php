@@ -56,11 +56,11 @@ function charts(datasets, labels) {
                 display: true,
                 text: labels
             },
-            // tooltips: {
-            //  mode: 'index',
-            //  intersect: false
-            // },
-            // responsive: true,
+            tooltips: {
+             mode: 'index',
+             intersect: false
+            },
+            responsive: true,
             maintainAspectRatio: false,
             scales: {
                 xAxes: [{
@@ -71,24 +71,24 @@ function charts(datasets, labels) {
                 }]
             },
             // Container for pan options
-            pan: {
-                // Boolean to enable panning
-                enabled: true,
+            // pan: {
+            //     // Boolean to enable panning
+            //     enabled: true,
 
-                // Panning directions. Remove the appropriate direction to disable
-                // Eg. 'y' would only allow panning in the y direction
-                mode: 'xy'
-            },
+            //     // Panning directions. Remove the appropriate direction to disable
+            //     // Eg. 'y' would only allow panning in the y direction
+            //     mode: 'xy'
+            // },
 
-            // Container for zoom options
-            zoom: {
-                // Boolean to enable zooming
-                enabled: true,
+            // // Container for zoom options
+            // zoom: {
+            //     // Boolean to enable zooming
+            //     enabled: true,
 
-                // Zooming directions. Remove the appropriate direction to disable
-                // Eg. 'y' would only allow zooming in the y direction
-                mode: 'xy',
-            }
+            //     // Zooming directions. Remove the appropriate direction to disable
+            //     // Eg. 'y' would only allow zooming in the y direction
+            //     mode: 'xy',
+            // }
         }
     });
 }
@@ -106,17 +106,34 @@ $('#main-chart-form').on('submit', function() {
         success: function (res) {
             labels = res['labels'];
             data = res['data'];
-            dataSets.push({
-                'label': department,
-                'data': data,
-                'backgroundColor': colors[0]
-            // 'borderColor': bgColor,
-            // 'borderWidth': 1
-            });
+            titles = res['titles'];
+            console.log(titles);
+            if(res['mixed'] == 1) {
+                for(var i = 0; i < data.length; i++) {
+                   dataSets.push({
+                        'label': titles[i],
+                        'data': data[i],
+                        'stack': 'Stack 0',
+                        'backgroundColor': colors[i]
+                    // 'borderColor': bgColor,
+                    // 'borderWidth': 1
+                    }); 
+                } 
+            } else {
+                dataSets.push({
+                    'label': titles[0],
+                    'data': data,
+                    'backgroundColor': colors[0]
+                // 'borderColor': bgColor,
+                // 'borderWidth': 1
+                }); 
+            }
+            
             if(window.mainChart != undefined){
                 window.mainChart.destroy();
             }
             dataSets = {labels: labels, datasets: dataSets};
+            console.log(dataSets);
 
             charts(dataSets, title);
         },
@@ -128,69 +145,7 @@ $('#main-chart-form').on('submit', function() {
     return false;
 });
 
-// $('#submit-platform-btn').click(function() {
-//     division = $('#division-id').val();
-//     period = $('#period-id').val();
-//     indicator = $('#indicator-id').val();
-//     department = $('#department-id').val();
-    
-//     platformDiction = { division: division, period: period, indicator: indicator, department: department }
-//     console.log(platformDiction);
-//     $.ajax({
-//         type: 'get',
-//         url: '/get-outcome-data/',
-//         data: { platformDiction: platformDiction },
-//         success: function(res) {
-//             console.log(res)
-
-//             periods = res.periods;
-//             dataValues = res.dataValueSets;
-//             dataSets = [];
-//             output = '';
-//             label = [];
-//             data = [];
-
-//             if (affectedExists) {
-//                 title = $("#programme-id option[value='" + programme + "']").text() + ' - ' + $("#affected-id option[value='" + affected + "']").text();
-//             } else {
-//                 title = $("#programme-id option[value='" + programme + "']").text();
-//             }
-
-//             counter = 0;
-//             for (dataValue in dataValues) {
-//                 datas = dataValues[dataValue];
-//                 vals = [];
-//                 labs = [];
-//                 bgColor = [];
-//                 for (data in datas) {
-//                     currData = datas[data];
-//                     vals.push(currData['value']);
-//                     bgColor.push(colors[counter]);
-//                 }
-//                 labs.push(Programme[dataValue]);
-
-//                 counter += 1;
-//                 dataSets.push({
-//                     'label': labs,
-//                     'data': vals,
-//                     'backgroundColor': bgColor
-//                     // 'borderColor': bgColor,
-//                     // 'borderWidth': 1
-//                 });
-//             }
-//             if (window.myChart != undefined) {
-//                 window.myChart.destroy();
-//             }
-//             dataSets = { labels: periods, datasets: dataSets };
-
-//             charts(dataSets, title);
-//         },
-//         error: function(res) {
-//             console.log('failed')
-//         }
-//     });
-// });
-//</script>
+</script>
 @endsection
 
 @section('outjavascript')

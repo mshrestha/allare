@@ -47,37 +47,82 @@ class OutcomeController extends Controller
 		$indicator = $request->indicator_id;
 
 		$source = $request->department_id;
-		$ou = explode('.', $request->organisation_unit_id);
-		foreach ($data[$indicator] as $indictData) {
-			print_r($indictData);
-		}
-		exit();
-		dd($data[$indicator]);
-		if($data[$indicator][0]['server'] == 'central')
-			$ou = $ou[0];
-		if($data[$indicator][0]['server'] == 'community')
-			$ou = $ou[1];
-		$pe = $this->getPeriodArray($request->period_id);
-		// for ($i=0; $i < count($data[$indicator]); $i++) { 
-		// 	dd($data[$indicator][$i]);
-		// }
+		$organisation = explode('.', $request->organisation_unit_id);
 
-		$all_table_datas = [];
 		$labels = [];
+		$vals = [];
 		$dataVals = [];
-		foreach ($data[$indicator] as $table) {
-			$model = 'App\Models\Data\\' . $table['model'];
+		$titles = [];
+		$count = 0;
+
+		$mixed = 0;
+		foreach ($data[$indicator] as $keyIndict => $indictData) {
+			// dd($indictData);
+			// print_r($organisation);
+			if($indictData['server'] == 'central')
+				$ou = $organisation[0];
+			if($indictData['server'] == 'community')
+				$ou = $organisation[1];
+			$pe = $this->getPeriodArray($request->period_id);
+			// dd($pe);
+			$all_table_datas = [];
+			// $labels = [];
+			$titles[$count] = $indictData['model'];
+			$count += 1;
+			$vals[$keyIndict] = [];
+			// echo $keyIndict.' '.$ou.' '.$source.'<br />';
+			// dd($table);
+			// print_r($indictData['model']);
+			$model = 'App\Models\Data\\' . $indictData['model'];
 			$datum = $model::whereIn('period', $pe)->where('source', $source)->where('organisation_unit', $ou)->whereNull('category_option_combo')->get();
 			foreach ($datum as $key => $value) {
-				array_push($labels, $value['period_name']);
-				array_push($dataVals, $value['value']);
+				// print_r($dataVals[$keyIndict]); echo '<br />';
+				if($value['value'] != '' || $value['value'] != NULL) {
+					if(!in_array($value['period_name'], $labels))
+						array_push($labels, $value['period_name']);
+					array_push($vals[$keyIndict], $value['value']);
+				}
 			}
 		}
+		
+		$keys = array_keys($vals);
+		
+		if(count($vals) > 1) {
+			$counter = 0;
+			$mixed = 1;
+			// $dataVals = array_fill(0, count($labels), []);
+			foreach ($vals as $key => $value) {
+				$vals[$key] = array_reverse($vals[$key]);
+				$vals[$counter] = $vals[$key];
+				unset($vals[$key]);
+				// $vals[$counter] = $value;
+				
+				// foreach($value as $keyVal=>$val) {
+				// 	// print_r($keyVal.'-'.$val); echo '<br />';
+				// 	$dataVals[$counter][] = $value[$counter];	
+				// 	// break;
+				// 	$counter += 1;
+				// }
+				// unset($vals[$key]);
+
+				$counter += 1;
+			}
+			$dataVals = $vals;
+		} else {
+			$dataVals = $vals[0];
+		}
+		// dd($dataVals);
+		// exit();
+		// dd($titles);
+		// exit();
+		
 		$labels = array_reverse($labels);
-		$dataVals = array_reverse($dataVals);
+		// $dataVals = array_reverse($dataVals);
 		return array(
 				'labels' => $labels,
-				'data' => $dataVals
+				'data' => $dataVals,
+				'titles' => $titles,
+				'mixed' => $mixed
 			);
 
 	}
