@@ -23,9 +23,9 @@ var affectedExists = 0;
 var Divisions = '';
 var Programme = '';
 var AffectedArrs = '';
-var ctx = document.getElementById("myChart").getContext('2d');
-ctx.height = 500;
-var myChart;
+var ctxMain = document.getElementById("mainChart").getContext('2d');
+ctxMain.height = 500;
+var mainChart;
 var colors = [
     'rgba(255, 99, 132, 0.8)',
     'rgba(54, 162, 235, 0.8)',
@@ -44,93 +44,11 @@ var colors = [
     'rgba(25, 39, 114, 0.8)',
     'rgba(215, 19, 164, 0.8)',
     'rgba(252, 129, 64, 0.8)',
-]
-
-// function getDivisions() {
-//     $.ajax({
-//         type: 'get',
-//         url: '/get_org_division',
-//         success: function(res) {
-//             divisions = res["divisions"];
-//             Divisions = divisions;
-//             for (division in divisions) {
-//                 $("#division-id").append('<option value="' + division + '">' + divisions[division] + '</option>');
-//             }
-//             $('.organization_units_wrapper').show();
-//             $('.datasets_wrapper .loading').hide();
-//         },
-//         error: function(res) {
-//             console.log('failed')
-//         }
-//     })
-// }
-
-// function getPeriods() {
-//     $.ajax({
-//         type: 'get',
-//         url: '/get_periods',
-//         success: function(res) {
-//             dataSets = res["periods"];
-//             for (data in dataSets) {
-//                 $("#period-id").append('<option value="' + dataSets[data] + '">' + data + '</option>');
-//             }
-//             $('.periods_wrapper .loading').hide()
-//         },
-//         error: function(res) {
-//             console.log('failed')
-//         }
-//     })
-// }
-
-// function getElements() {
-//     $.ajax({
-//         type: 'get',
-//         url: '/get_elements_joint',
-//         success: function(res) {
-//             // keys = Object.keys(res);
-//             programmes = res["programmesJoint"];
-//             Programme = res['programmes'];
-//             for (programme in programmes) {
-//                 $("#programme-id").append('<option value="' + programmes[programme].toString() + '">' + programme + '</option>');
-//             }
-//         },
-//         error: function(res) {
-//             console.log('failed')
-//         }
-//     })
-// }
-
-
-$('#programme-id').change(function() {
-    dataElement = ($('#programme-id').val())
-    $.ajax({
-        type: 'get',
-        url: '/get_category_joint/',
-        data: { dataElement: dataElement },
-        success: function(res) {
-            if (res.exists == "true") {
-                $('#affected-id').find('option').remove()
-                affectedArrs = res.affectedArrs;
-                AffectedArrs = affectedArrs;
-                for (affectedArr in affectedArrs) {
-                    $("#affected-id").append('<option value="' + affectedArr + '">' + affectedArrs[affectedArr] + '</option>');
-                }
-                $('#affected-id').parent().show();
-                affectedExists = 1;
-            } else {
-                $('#affected-id').parent().hide();
-                affectedExists = 0;
-            }
-        },
-        error: function(res) {
-            console.log('failed')
-        }
-    });
-});
+];
 
 function charts(datasets, labels) {
     // console.log(datasets);
-    window.myChart = new Chart(ctx, {
+    window.mainChart = new Chart(ctxMain, {
         type: 'bar',
         data: datasets,
         options: {
@@ -138,11 +56,11 @@ function charts(datasets, labels) {
                 display: true,
                 text: labels
             },
-            // tooltips: {
-            //  mode: 'index',
-            //  intersect: false
-            // },
-            // responsive: true,
+            tooltips: {
+             mode: 'index',
+             intersect: false
+            },
+            responsive: true,
             maintainAspectRatio: false,
             scales: {
                 xAxes: [{
@@ -153,31 +71,33 @@ function charts(datasets, labels) {
                 }]
             },
             // Container for pan options
-            pan: {
-                // Boolean to enable panning
-                enabled: true,
+            // pan: {
+            //     // Boolean to enable panning
+            //     enabled: true,
 
-                // Panning directions. Remove the appropriate direction to disable
-                // Eg. 'y' would only allow panning in the y direction
-                mode: 'xy'
-            },
+            //     // Panning directions. Remove the appropriate direction to disable
+            //     // Eg. 'y' would only allow panning in the y direction
+            //     mode: 'xy'
+            // },
 
-            // Container for zoom options
-            zoom: {
-                // Boolean to enable zooming
-                enabled: true,
+            // // Container for zoom options
+            // zoom: {
+            //     // Boolean to enable zooming
+            //     enabled: true,
 
-                // Zooming directions. Remove the appropriate direction to disable
-                // Eg. 'y' would only allow zooming in the y direction
-                mode: 'xy',
-            }
+            //     // Zooming directions. Remove the appropriate direction to disable
+            //     // Eg. 'y' would only allow zooming in the y direction
+            //     mode: 'xy',
+            // }
         }
     });
 }
 
 $('#main-chart-form').on('submit', function() {
     formData = $(this).serialize();
-    indicator = $('indicator-id').val();
+    indicator = $('#indicator_id').val();
+    department = $('#department_id').val();
+    title = $("#indicator_id option[value="+indicator+"]").text()
     dataSets = [];
     $.ajax({
         type: 'post',
@@ -186,22 +106,36 @@ $('#main-chart-form').on('submit', function() {
         success: function (res) {
             labels = res['labels'];
             data = res['data'];
-            dataSets.push({
-                'label': labels,
-                'data': data,
-                'backgroundColor': colors[0]
-            // 'borderColor': bgColor,
-            // 'borderWidth': 1
-            });
-            if(window.myChart != undefined){
-                window.myChart.destroy();
+            titles = res['titles'];
+            console.log(titles);
+            if(res['mixed'] == 1) {
+                for(var i = 0; i < data.length; i++) {
+                   dataSets.push({
+                        'label': titles[i],
+                        'data': data[i],
+                        'stack': 'Stack 0',
+                        'backgroundColor': colors[i]
+                    // 'borderColor': bgColor,
+                    // 'borderWidth': 1
+                    }); 
+                } 
+            } else {
+                dataSets.push({
+                    'label': titles[0],
+                    'data': data,
+                    'backgroundColor': colors[0]
+                // 'borderColor': bgColor,
+                // 'borderWidth': 1
+                }); 
+            }
+            
+            if(window.mainChart != undefined){
+                window.mainChart.destroy();
             }
             dataSets = {labels: labels, datasets: dataSets};
+            console.log(dataSets);
 
-            charts(dataSets, indicator);
-            // dataSets = { labels: res.periods, datasets: res.dataSets };
-            // title = 'test';
-            // charts(dataSets, title);
+            charts(dataSets, title);
         },
         error: function(res) {
             console.log('failed')
@@ -211,69 +145,7 @@ $('#main-chart-form').on('submit', function() {
     return false;
 });
 
-// $('#submit-platform-btn').click(function() {
-//     division = $('#division-id').val();
-//     period = $('#period-id').val();
-//     indicator = $('#indicator-id').val();
-//     department = $('#department-id').val();
-    
-//     platformDiction = { division: division, period: period, indicator: indicator, department: department }
-//     console.log(platformDiction);
-//     $.ajax({
-//         type: 'get',
-//         url: '/get-outcome-data/',
-//         data: { platformDiction: platformDiction },
-//         success: function(res) {
-//             console.log(res)
-
-//             periods = res.periods;
-//             dataValues = res.dataValueSets;
-//             dataSets = [];
-//             output = '';
-//             label = [];
-//             data = [];
-
-//             if (affectedExists) {
-//                 title = $("#programme-id option[value='" + programme + "']").text() + ' - ' + $("#affected-id option[value='" + affected + "']").text();
-//             } else {
-//                 title = $("#programme-id option[value='" + programme + "']").text();
-//             }
-
-//             counter = 0;
-//             for (dataValue in dataValues) {
-//                 datas = dataValues[dataValue];
-//                 vals = [];
-//                 labs = [];
-//                 bgColor = [];
-//                 for (data in datas) {
-//                     currData = datas[data];
-//                     vals.push(currData['value']);
-//                     bgColor.push(colors[counter]);
-//                 }
-//                 labs.push(Programme[dataValue]);
-
-//                 counter += 1;
-//                 dataSets.push({
-//                     'label': labs,
-//                     'data': vals,
-//                     'backgroundColor': bgColor
-//                     // 'borderColor': bgColor,
-//                     // 'borderWidth': 1
-//                 });
-//             }
-//             if (window.myChart != undefined) {
-//                 window.myChart.destroy();
-//             }
-//             dataSets = { labels: periods, datasets: dataSets };
-
-//             charts(dataSets, title);
-//         },
-//         error: function(res) {
-//             console.log('failed')
-//         }
-//     });
-// });
-//</script>
+</script>
 @endsection
 
 @section('outjavascript')
@@ -318,7 +190,7 @@ $('#main-chart-form').on('submit', function() {
 		var canvas = document.getElementById("line-chart");
     	var ctx = canvas.getContext("2d");
 
-		var myChart = new Chart(ctx, {
+		var trendChart = new Chart(ctx, {
 		  type: 'line',
 		  data: {
 		    labels: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1],
