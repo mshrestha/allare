@@ -36,7 +36,7 @@ class OutcomeController extends Controller
 		$indicators = [
 			'imci_stunting' => 'Stunting',
 			'imci_wasting' => 'Wasting',
-			'exclusive_breastfeeding' => 'Exclusive Breastfeeding',
+			'exclusive_breastfeeding' => 'Exclusive_Breastfeeding',
 		];
 		$data = config('data.outcomes');
 		$dataSet = [];
