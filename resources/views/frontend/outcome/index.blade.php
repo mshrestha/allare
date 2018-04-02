@@ -4,7 +4,7 @@
 		@include('layouts.partials.main-chart-partial')
 
 		@foreach($trend_analysis as $analysis)
-			@include('layouts.partials.trend-analysis-chart-partial')
+			@include('frontend.outcome.partials.outcome-trend-analysis')
 		@endforeach
 	</div>
 @endsection

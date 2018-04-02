@@ -7,12 +7,30 @@ use App\Http\Controllers\Controller;
 use App\Models\OrganisationUnit;
 use App\Traits\PeriodHelper;
 
+use App\Models\Data\ImciStuntingPercent;
+use App\Models\Data\ImciWastingPercent;
+
+
 class OutcomeController extends Controller
 {
 	use PeriodHelper;
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$periods = $this->getPeriodYears();
+		$flipped_period = array_flip($periods);
+
+		$periodData = '';
+		foreach ($flipped_period as $key => $value) {
+			$periodData .= $value.';';
+		}
+		
+		$periodData = rtrim($periodData, ';');
+		$periodData = explode(";", $periodData);
+		sort($periodData);
+
+		$keys = array_reverse(array_keys($flipped_period));
+		$keyPeriods = implode(';',$keys);
+
 		$data = config('data.outcomes');
 		// dd($data);
 		$indicators = [
@@ -20,6 +38,47 @@ class OutcomeController extends Controller
 			'imci_wasting' => 'Wasting',
 			'exclusive_breastfeeding' => 'Exclusive Breastfeeding',
 		];
+		$data = config('data.outcomes');
+		$dataSet = [];
+		// $counter = 0;
+		foreach($indicators as $indicator => $indicatorName) {
+			$counter = 0;
+			foreach ($data[$indicator] as $keyIndict => $indictData) {
+				echo(count($data[$indicator]).'-'.$counter);
+				$dataSet[$indicatorName] = [];
+				print_r($indictData);
+				$ou = 'dNLjKwsVjod';
+				$model = 'App\Models\Data\\' . $indictData['model'];
+				$datum = $model::whereIn('period', $periodData)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->get();
+				if(count($data[$indicator]) > 1) {
+					$dataSet[$indicatorName][$counter]['title'] = $indictData['model'];
+					$dataSet[$indicatorName][$counter]['periods'] = $datum->pluck('period');
+					$dataSet[$indicatorName][$counter]['values'] = $datum->pluck('value');	
+					$counter++;
+					echo 'inc'.$counter;
+				}else{
+					$dataSet[$indicatorName]['title'] = $indictData['model'];
+					$dataSet[$indicatorName]['periods'] = $datum->pluck('period');
+					$dataSet[$indicatorName]['values'] = $datum->pluck('value');	
+				}
+
+			}
+			
+		}
+		// exit();
+		dd($dataSet);
+
+
+		$trend_analysis = [];
+		$stunting_percent = ImciStuntingPercent::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->get();
+		$values = $stunting_percent->pluck('value');
+		$period = $stunting_percent->pluck('period');
+
+
+		$wasting_percent = ImciWastingPercent::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->get();
+		$values = $stunting_percent->pluck('value');
+		$period = $stunting_percent->pluck('period');
+
 		$trend_analysis = [
 			[
 				'name' => 'Stunting',
@@ -57,8 +116,6 @@ class OutcomeController extends Controller
 
 		$mixed = 0;
 		foreach ($data[$indicator] as $keyIndict => $indictData) {
-			// dd($indictData);
-			// print_r($organisation);
 			if($indictData['server'] == 'central')
 				$ou = $organisation[0];
 			if($indictData['server'] == 'community')
@@ -70,9 +127,7 @@ class OutcomeController extends Controller
 			$titles[$count] = $indictData['model'];
 			$count += 1;
 			$vals[$keyIndict] = [];
-			// echo $keyIndict.' '.$ou.' '.$source.'<br />';
-			// dd($table);
-			// print_r($indictData['model']);
+			
 			$model = 'App\Models\Data\\' . $indictData['model'];
 			$datum = $model::whereIn('period', $pe)->where('source', $source)->where('organisation_unit', $ou)->whereNull('category_option_combo')->get();
 			foreach ($datum as $key => $value) {
