@@ -15,23 +15,6 @@ class OutputController extends Controller
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$periods = $this->getPeriodYears();
-		$trend_analysis = [
-			[
-				'name' => 'Counseling',
-				'month' => 'Counseling Given - April',
-				'percent' => '80',
-			],
-			[
-				'name' => 'IFA Distribution',
-				'month' => 'IFA Distributed - April',
-				'percent' => '50',
-			],
-			[
-				'name' => 'Weight Measurement',
-				'month' => 'Weight gained - April',
-				'percent' => '60',
-			],
-		];
 
 		$data = config('data.maternal');
 		$indicators = [
@@ -58,11 +41,27 @@ class OutputController extends Controller
 		$pregnant_women_weighed_data = $data['pregnant_women_weighed'][0];
 		$pregnant_women_weighed_model = 'App\Models\Data\\' . $pregnant_women_weighed_data['model'];
 		$pregnant_women_weighed_last_month = $pregnant_women_weighed_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
-		$pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$total_patient_last_month->value) * 100;
+		$pregnant_women_weighed_yearly = $pregnant_women_weighed_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
 
-		print_r($pregnant_women_weighed_last_month);
-		print_r($total_patient_last_month);
-		exit;
+		$pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$pregnant_women_weighed_yearly->value) * 100;
+
+		$trend_analysis = [
+			[
+				'name' => 'Counseling',
+				'month' => 'Counseling Given - April',
+				'percent' => $counselling_percent
+			],
+			[
+				'name' => 'IFA Distribution',
+				'month' => 'IFA Distributed - April',
+				'percent' => $plw_who_receive_ifas_percent,
+			],
+			[
+				'name' => 'Weight Measurement',
+				'month' => 'Weight gained - April',
+				'percent' => $pregnant_women_weighed_percent
+			],
+		];
 
 		return view('frontend.output.index', 
 			compact('trend_analysis','organisation_units','periods','indicators')
@@ -84,7 +83,7 @@ class OutputController extends Controller
 		
 		$labels = $data->pluck('period_name');
 		$datasets = $data->pluck('value');
-		$pointers = $request->department_id;
+		$pointers = (empty($request->department_id) || $request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
 		$title = $data_table[0]['name'];
 
 		return response()->json(['pointers' => $pointers, 'title' => $title, 'labels' => $labels, 'datasets' => $datasets]);

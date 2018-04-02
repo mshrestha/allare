@@ -5,7 +5,7 @@
 	<div class="row row-no-padding">
 		<div class="col-md-3">
 			<div id="canvas-holder">
-				<canvas id="chart-area"></canvas>
+				<canvas id="chart-area-{{ $key }}"></canvas>
 			</div>
 		</div>
 		<div class="col-md-6">

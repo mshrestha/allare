@@ -3,7 +3,7 @@
   <div class="container">
     @include('layouts.partials.main-chart-partial')
 
-    @foreach($trend_analysis as $analysis)
+    @foreach($trend_analysis as $key => $analysis)
       @include('layouts.partials.trend-analysis-chart-partial')
     @endforeach
   </div>
@@ -95,6 +95,7 @@ function charts(datasets, labels) {
 
 @section('outjavascript')
   <script>
+
     $('#main-chart-form').on('submit', function() {
         $.ajax({
             type: $(this).attr('method'),
@@ -125,41 +126,42 @@ function charts(datasets, labels) {
         return false;
     });
 
-    var randomScalingFactor = function() {
-      return Math.round(Math.random() * 100);
-    };
+    @foreach($trend_analysis as $key => $analysis)
+        trendAnalysisChart({{ $key }}, {{ $analysis['percent'] }})
+    @endforeach
 
-    var config = {
-      type: 'pie',
-      data: {
-        datasets: [{
-          data: [
-            randomScalingFactor(),
-            randomScalingFactor(),
-            // randomScalingFactor(),
-            // randomScalingFactor(),
-            // randomScalingFactor(),
-          ],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.8)',
+    function trendAnalysisChart(id, data_value) {
+      var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+      };
+
+      var config = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [
+              data_value,
+              randomScalingFactor(),
+            ],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.8)',
               'rgba(54, 162, 235, 0.8)',
-          ],
-          label: 'Dataset 1'
-        }],
-        labels: [
-          'Pink',
-          'Blue',
-        ]
-      },
-      options: {
-        responsive: true
-      }
-    };
+            ],
+            label: 'Dataset 1'
+          }],
+          labels: [
+            'Pink',
+            'Blue',
+          ]
+        },
+        options: {
+          responsive: true
+        }
+      };
 
-    window.onload = function() {
-      var ctx = document.getElementById('chart-area').getContext('2d');
+      var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
       window.myPie = new Chart(ctx, config);
-    };
+    }
   </script>
   <script>
     var canvas = document.getElementById("line-chart");

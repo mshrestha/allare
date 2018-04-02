@@ -40,13 +40,11 @@ class OutcomeController extends Controller
 		];
 		$data = config('data.outcomes');
 		$dataSet = [];
-		$currData = [];
 
 		foreach($indicators as $indicator => $indicatorName) {
 			$counter = 0;
 			$dataSet[$indicatorName] = [];
 			foreach ($data[$indicator] as $keyIndict => $indictData) {
-				
 				$ou = 'dNLjKwsVjod';
 				$model = 'App\Models\Data\\' . $indictData['model'];
 				$datum = $model::whereIn('period', $periodData)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->get();
@@ -54,16 +52,16 @@ class OutcomeController extends Controller
 					$dataSet[$indicatorName][$counter]['title'] = $indictData['model'];
 					$dataSet[$indicatorName][$counter]['periods'] = $datum->pluck('period');
 					$dataSet[$indicatorName][$counter]['values'] = $datum->pluck('value');	
+
 					$counter++;
 				}else{
 					$dataSet[$indicatorName]['title'] = $indictData['model'];
 					$dataSet[$indicatorName]['periods'] = $datum->pluck('period');
 					$dataSet[$indicatorName]['values'] = $datum->pluck('value');	
 				}
-
 			}
-			
 		}
+
 
 		// dd($dataSet);
 
@@ -87,6 +85,7 @@ class OutcomeController extends Controller
 		// 		'percent' => '60',
 		// 	],
 		// ];
+
 
 		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods', 'indicators'));
 	}
