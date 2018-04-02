@@ -9,6 +9,11 @@ use App\Traits\PeriodHelper;
 
 use App\Models\Data\ImciStuntingPercent;
 use App\Models\Data\ImciWastingPercent;
+use App\Models\Data\ImciTotalChild;
+use App\Models\Data\CcCrExclusiveBreastFeeding;
+use App\Models\Data\CcCrTotalMale;
+use App\Models\Data\CcCrTotalFemale;
+
 
 
 class OutcomeController extends Controller
@@ -32,10 +37,16 @@ class OutcomeController extends Controller
 		$keyPeriods = implode(';',$keys);
 
 		$data = config('data.outcomes');
-		// dd($data);
+		$current_year = date('Y');
 		$indicators = [
 			'imci_stunting' => 'Stunting',
 			'imci_wasting' => 'Wasting',
+			'exclusive_breastfeeding' => 'Exclusive_Breastfeeding',
+		];
+
+		$goals = [
+			'imci_stunting_percent' => 'Stunting',
+			'imci_wasting_percent' => 'Wasting',
 			'exclusive_breastfeeding' => 'Exclusive_Breastfeeding',
 		];
 		$data = config('data.outcomes');
@@ -61,6 +72,41 @@ class OutcomeController extends Controller
 				}
 			}
 		}
+
+		$imciTotalChild = ImciTotalChild::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcMaleTotal = CcCrTotalMale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcFemaleTotal = CcCrTotalFemale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcTotalChild = $CcMaleTotal + $CcFemaleTotal;
+		// dd($CcTotalChild);
+
+		$goal_analysis = [];
+		foreach ($goals as $goalKey => $goalValue) {
+			$counter = 0;
+			$goal_analysis[$goalValue] = [];
+			foreach ($data[$goalKey] as $dataKey => $dataValue) {
+				$ou = 'dNLjKwsVjod';
+				$model = 'App\Models\Data\\' . $dataValue['model'];
+				$datum = $model::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first();
+
+				if(count($data[$goalKey]) > 1) {
+					$goal_analysis[$goalValue][$counter]['title'] = $dataValue['model'];
+					$goal_analysis[$goalValue][$counter]['periods'] = $datum->period;
+					if($dataValue['model'] == 'ImciExclusiveBreastFeeding')
+						$goal_analysis[$goalValue][$counter]['values'] = ($datum->value / $imciTotalChild) * 100;
+					else
+						$goal_analysis[$goalValue][$counter]['values'] = ($datum->value / $CcTotalChild) * 100;
+
+					$counter++;
+				}else{
+					$goal_analysis[$goalValue]['title'] = $dataValue['model'];
+					$goal_analysis[$goalValue]['periods'] = $datum->period;
+					$goal_analysis[$goalValue]['values'] = $datum->value;	
+				}
+			}
+		}
+		// dd($goal_analysis);
+
+
 
 
 		// dd($dataSet);
