@@ -19,6 +19,7 @@ return [
 		],
 		'plw_who_receive_ifas' => [
 			[
+				'name'		=> 'PLW who receive IFAS',
 				'model'		=> 'CcMrAncIfaDistribution',
 				'table'		=> 'cc_mr_anc_ifa_distribution',
 				'server'	=> 'community',
@@ -27,6 +28,7 @@ return [
 		],
 		'pregnant_women_weighed' => [
 			[
+				'name'		=> 'Pregnant women weighed',
 				'model'		=> 'CcMrWeightInKgAnc',
 				'table'		=> 'cc_mr_weight_in_kg_anc',
 				'server'	=> 'community',
