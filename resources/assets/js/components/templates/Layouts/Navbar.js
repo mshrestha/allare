@@ -27,7 +27,7 @@ class Navbar extends Component {
               </li>
 
               
-              <li className="nav-item">
+              <li className="nav-item hidden-xs-up hidden">
                 <Link className="nav-link" to={site_url + 'producttest'}>ProductTest</Link>
               </li>
 
