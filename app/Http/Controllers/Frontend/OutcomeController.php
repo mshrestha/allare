@@ -40,34 +40,23 @@ class OutcomeController extends Controller
 		];
 		$data = config('data.outcomes');
 		$dataSet = [];
-		// $counter = 0;
+		
 		foreach($indicators as $indicator => $indicatorName) {
-			$counter = 0;
 			foreach ($data[$indicator] as $keyIndict => $indictData) {
-				echo(count($data[$indicator]).'-'.$counter);
-				$dataSet[$indicatorName] = [];
-				print_r($indictData);
 				$ou = 'dNLjKwsVjod';
 				$model = 'App\Models\Data\\' . $indictData['model'];
 				$datum = $model::whereIn('period', $periodData)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->get();
 				if(count($data[$indicator]) > 1) {
-					$dataSet[$indicatorName][$counter]['title'] = $indictData['model'];
-					$dataSet[$indicatorName][$counter]['periods'] = $datum->pluck('period');
-					$dataSet[$indicatorName][$counter]['values'] = $datum->pluck('value');	
-					$counter++;
-					echo 'inc'.$counter;
+					$dataSet[$indicatorName][$keyIndict]['title'] = $indictData['model'];
+					$dataSet[$indicatorName][$keyIndict]['periods'] = $datum->pluck('period');
+					$dataSet[$indicatorName][$keyIndict]['values'] = $datum->pluck('value');
 				}else{
 					$dataSet[$indicatorName]['title'] = $indictData['model'];
 					$dataSet[$indicatorName]['periods'] = $datum->pluck('period');
 					$dataSet[$indicatorName]['values'] = $datum->pluck('value');	
 				}
-
 			}
-			
 		}
-		// exit();
-		dd($dataSet);
-
 
 		$trend_analysis = [];
 		$stunting_percent = ImciStuntingPercent::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->get();
