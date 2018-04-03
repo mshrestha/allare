@@ -17,9 +17,9 @@
 					
 					<div class="current" style="height: 70%;">
 						@if(count($analysis) > 5)
-							{{$analysis['goal_values']}}
+							{{$analysis['goal_values']}}  %
 						@elseif(count($trend_analysis[$key]) == 2)
-							{{$trend_analysis[$key][0]['goal_values']}}
+							{{$trend_analysis[$key][0]['goal_values']}} %
 						@endif
 					</div>	
 				</div>
