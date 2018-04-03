@@ -1,5 +1,5 @@
+<h3>{!! str_replace('_', ' ', $key) !!}</h3>
 <div class="trend-analysis-goal" style="margin-top: 20px;">
-	<h3>{!! str_replace('_', ' ', $key) !!}</h3>
 	{{-- <p>{{ $analysis['month'] }}</p> --}}
 	@php
 		if($analysis['direction'] == -1) {
@@ -11,17 +11,10 @@
 			$incomplete = 100 - $complete;
 		}
 	@endphp
-	<div class="row row-no-padding">
+	<div class="row">
 		<div class="col-md-3">
 			<div class="report-heading">
 				<h5>Current</h5>
-				@if (strpos(strtolower($key), 'stunting') !== false) 
-			    <img src="{{ asset('images\stunting.svg') }}" alt="">
-				@elseif (strpos(strtolower($key), 'wasting') !== false) 
-			    <img src="{{ asset('images\wasting.svg') }}" alt="">
-				@elseif (strpos(strtolower($key), 'breastfeed') !== false)
-			    <img src="{{ asset('images\breastfeed.svg') }}" alt="">
-				@endif
 			</div>
 			<div id="canvas-holder">
 				<div class="progress-bar-v" id="goal-chart-{{
@@ -35,6 +28,9 @@
 					</div>	
 				</div>
 			</div>
+			<div class="progress-bar-note">
+				Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021
+			</div>
 		</div>
 		<div class="col-md-6">
 			<h5>Trending</h5>
@@ -43,7 +39,17 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<h5>Reports</h5>
+			<h5>Reports 
+				<div class="report-icon float-right">
+					@if (strpos(strtolower($key), 'stunting') !== false) 
+					<img src="{{ asset('images\stunting.svg') }}" alt="">
+					@elseif (strpos(strtolower($key), 'wasting') !== false) 
+					<img src="{{ asset('images\wasting.svg') }}" alt="">
+					@elseif (strpos(strtolower($key), 'breastfeed') !== false)
+					<img src="{{ asset('images\breastfeed.svg') }}" alt="">
+					@endif
+				</div>
+			</h5>
 			<div class="reports-wrapper">
 				<p>Lorem ipsum dolor sit amet adipiscing.</p>
 				<p>Feb 13,2018</p>
