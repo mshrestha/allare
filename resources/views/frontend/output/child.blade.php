@@ -89,13 +89,20 @@ var colors = [
           }
       });
   }
+  
+  $(document).ready(function() {
 
-    $('#main-chart-form').on('submit', function() {
-        var data = $(this).serialize();
-        data += '&output=child';
+      var data = "organisation_unit_id=mykF7AaZv9R.mykF7AaZv9R&period_id=201801%3B201802%3B201803%3B201804&indicator_id=iycf_counselling&department_id=DGHS&output=child";
 
+      data += "&_token={{ Session::token() }}";
+
+      main_chart_data(data);
+
+    });
+
+  function main_chart_data(data) {
         $.ajax({
-            type: $(this).attr('method'),
+            type: 'POST',
             url: '/outputs/maternal-main-chart',
             data: data,
             success: function (res) {
@@ -119,6 +126,14 @@ var colors = [
                 console.log('error');
             }
         })
+    }
+
+    $('#main-chart-form').on('submit', function() {
+        var data = $(this).serialize();
+        data += '&output=child';
+        console.log(data);
+
+        main_chart_data(data);
 
         return false;
     });

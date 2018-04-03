@@ -90,7 +90,7 @@ class OutputController extends Controller
 		];
 
 		return view('frontend.output.maternal', 
-			compact('trend_analysis','organisation_units','periods','indicators')
+			compact('trend_analysis','organisation_units','periods','indicators', 'main_chart_data')
 		);
 	}
 

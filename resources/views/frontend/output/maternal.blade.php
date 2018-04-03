@@ -9,9 +9,9 @@
   </div>
 @endsection
 
-@section('injavascript')
-// <script>
-$('.side-filter-div').height($('#mainChart').height()-30+8);
+@section('outjavascript')
+<script>
+// $('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
 });
@@ -89,36 +89,17 @@ function charts(datasets, labels) {
         }
     });
 }
-
-//</script>
-@endsection
-
-@section('outjavascript')
-  <script>
     $(document).ready(function() {
-      dataSets = { 
-          labels: res.labels, 
-          datasets: [{
-              label: res.pointers,
-              data: res.datasets
-          }]
-      };
+      var data = "organisation_unit_id=mykF7AaZv9R.mykF7AaZv9R&period_id=201801%3B201802%3B201803%3B201804&indicator_id=maternal_counselling&department_id=DGHS&output=maternal";
+      data += "&_token={{ Session::token() }}";
 
-      title = res.title;
+      main_chart_data(data);
 
-      if (window.mainChart != undefined) {
-          window.mainChart.destroy();
-      }
-
-      charts(dataSets, title);
     });
 
-    $('#main-chart-form').on('submit', function() {
-        var data = $(this).serialize();
-        data += '&output=maternal';
-
+    function main_chart_data(data) {
         $.ajax({
-            type: $(this).attr('method'),
+            type: 'POST',
             url: '/outputs/maternal-main-chart',
             data: data,
             success: function (res) {
@@ -142,6 +123,15 @@ function charts(datasets, labels) {
                 console.log('error');
             }
         })
+    }
+
+    $('#main-chart-form').on('submit', function() {
+        var data = $(this).serialize();
+        data += '&output=maternal';
+
+        console.log(data);
+
+        main_chart_data(data);
 
         return false;
     });
