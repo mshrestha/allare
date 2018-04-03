@@ -54,14 +54,23 @@
 
     }
     .progress-bar-v{
-      width: 50px;
+      width: 80%;
       height: 300px;
+      min-width: 80px;
+      max-width: 100px;
+      margin: 0 auto;
+      margin-bottom: 30px;
+    }
+    @media(min-width: 768px){
+     .progress-bar-v{
+        width: 90%;
+        margin: 0;
+        max-width: 100%;
+      } 
     }
     .progress-bar-v .current{
       width: 100%;
       height: 80%;
-
-
     }
     .progress-bar-v .goal{
       height: 30%;
