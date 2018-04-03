@@ -114,10 +114,13 @@ function charts(datasets, labels) {
     });
 
     $('#main-chart-form').on('submit', function() {
+        var data = $(this).serialize();
+        data += '&output=maternal';
+
         $.ajax({
             type: $(this).attr('method'),
             url: '/outputs/maternal-main-chart',
-            data: $(this).serialize(),
+            data: data,
             success: function (res) {
                 dataSets = { 
                     labels: res.labels, 
@@ -220,8 +223,8 @@ function charts(datasets, labels) {
             label: 'Dataset 1'
           }],
           labels: [
-            'Pink',
             'Blue',
+            'Grey',
           ]
         },
         options: {
@@ -232,34 +235,5 @@ function charts(datasets, labels) {
       var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
       window.myPie = new Chart(ctx, config);
     }
-  </script>
-  <script>
-    var canvas = document.getElementById("line-chart");
-    var ctx = canvas.getContext("2d");
-
-    var myTrendChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1],
-        datasets: [{
-          label: 'Dataset 1',
-          borderColor: 'rgba(54, 162, 235, 0.8)',
-          borderWidth: 2,
-          fill: false,
-          data: [19304,13433,9341,6931,5169, 3885,2927,2159,1853,1502, 1176,911,724,590,491, 400,335,280,239,200]
-        }]
-      },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-          text: 'Chart.js Drsw Line on Chart'
-        },
-        tooltips: {
-          mode: 'index',
-          intersect: true
-        },
-      }
-    });
   </script>
 @endsection
