@@ -5,10 +5,23 @@
 	<div class="row">
 		<div class="col-md-3">
 			<div id="canvas-holder">
-				<div class="progress-bar-v" id="goal=chart-{{
+				<div class="progress-bar-v" id="goal-chart-{{
 				$key}}">
-					<div class="goal" style="height: 30%;">Goal 25% by 20021</div>
-					<div class="current" style="height: 70%;">80%</div>	
+					<div class="goal" style="height: 30%;">
+						@if(count($analysis) > 5)
+							{{$trend_analysis[$key]['goal']}}
+						@elseif(count($trend_analysis[$key]) == 2)
+							{{$trend_analysis[$key][0]['goal']}}
+						@endif
+					</div>
+					
+					<div class="current" style="height: 70%;">
+						@if(count($analysis) > 5)
+							{{$analysis['goal_values']}}  %
+						@elseif(count($trend_analysis[$key]) == 2)
+							{{$trend_analysis[$key][0]['goal_values']}} %
+						@endif
+					</div>	
 				</div>
 			</div>
 		</div>
