@@ -117,34 +117,27 @@ class OutputController extends Controller
 
 
 		// IMCI total children
-		$counselling_data = $data['iycf_counselling'][0];
-		$counselling_model = 'App\Models\Data\\' . $counselling_data['model'];
-		$counselling_last_month = $counselling_model::where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
-		$counselling_yearly = $counselling_model::where('organisation_unit', 'dNLjKwsVjod')->where('period', date('Y'))->orderBy('period', 'desc')->first();
-
-		$counselling_percent = ($counselling_last_month->value/$counselling_yearly->value) * 100;
-		
-		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
-		$counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		$counselling_data = $this->calculateMonthlyPercentage($data['iycf_counselling'][0], $periodData);
+		$counselling_percent = $counselling_data['percent'];
+		$counselling_all_values = $counselling_data['all_values'];
+		$counselling_all_periods = $counselling_data['all_periods'];
 
 		
 		// Vitamin A supplimentation
-		$pregnant_women_weighed_data = $data['pregnant_women_weighed'][0];
-		$pregnant_women_weighed_model = 'App\Models\Data\\' . $pregnant_women_weighed_data['model'];
-		$pregnant_women_weighed_last_month = $pregnant_women_weighed_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
-		$pregnant_women_weighed_yearly = $pregnant_women_weighed_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
-		$pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$pregnant_women_weighed_yearly->value) * 100;
-		$pregnant_women_weighed_all_periods = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('period');
-		$pregnant_women_weighed_all_values = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('value');
+		$vitamin_a_supplimentation_data = $this->calculateMonthlyPercentage($data['vitamin_a_supplementation'][0], $periodData);
+		$vitamin_a_supplementation_percent = $vitamin_a_supplimentation_data['percent'];
+		$vitamin_a_supplementation_all_values = $vitamin_a_supplimentation_data['all_values'];
+		$vitamin_a_supplementation_all_periods = $vitamin_a_supplimentation_data['all_periods'];
 
 		$trend_analysis = [
-			// [
-			// 	'name' => 'Counseling',
-			// 	'month' => 'IYCF counselling',
-			// 	'percent' => round($counselling_percent),
-			// 	'periods' => $counselling_all_periods,
-			// 	'values' => $counselling_all_values
-			// ],
+			[
+				'name' => 'Counseling',
+				'title' => 'IMCI Counselling',
+				'month' => 'IYCF counselling',
+				'percent' => round($counselling_percent),
+				'periods' => $counselling_all_periods,
+				'values' => $counselling_all_values
+			],
 			// [
 			// 	'name' => 'Child Growth',
 			// 	'month' => 'Child growth monitoring',
@@ -152,18 +145,32 @@ class OutputController extends Controller
 			// 	'periods' => $plw_who_receive_ifas_all_periods,
 			// 	'values' => $plw_who_receive_ifas_all_values
 			// ],
-			// [
-			// 	'name' => 'Supplements',
-			// 	'month' => 'Vitamin A supplements',
-			// 	'percent' => round($pregnant_women_weighed_percent),
-			// 	'periods' => $pregnant_women_weighed_all_periods,
-			// 	'values' => $pregnant_women_weighed_all_values
-			// ],
+			[
+				'name' => 'Supplements',
+				'title' => 'Food Supplimentation',
+				'month' => 'Vitamin A supplements',
+				'percent' => round($vitamin_a_supplementation_percent),
+				'periods' => $vitamin_a_supplementation_all_periods,
+				'values' => $vitamin_a_supplementation_all_values
+			],
 		];
 
 		return view('frontend.output.child', 
 			compact('trend_analysis','organisation_units','periods','indicators')
 		);
+	}
+
+	public function calculateMonthlyPercentage($data, $periodData) {
+		$model = 'App\Models\Data\\' . $data['model'];
+		$last_month = $model::where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->whereNull('category_option_combo')->first();
+		$yearly = $model::where('organisation_unit', 'dNLjKwsVjod')->where('period', date('Y'))->whereNull('category_option_combo')->orderBy('period', 'desc')->first();
+
+		$percent = ($last_month->value/$yearly->value) * 100;
+
+		$all_periods = $model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
+		$all_values = $model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		
+		return compact('percent', 'all_periods', 'all_values');
 	}
 
 	public function maternalMainChart(Request $request) {

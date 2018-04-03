@@ -46,7 +46,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{{ route('frontend.outputs.maternal') }}">Maternal</a>
-              <a class="dropdown-item" href="#">Child</a>
+              <a class="dropdown-item" href="{{ route('frontend.outputs.child') }}">Child</a>
             </div>
           </li>
           {{-- <li class="nav-item">
