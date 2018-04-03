@@ -49,8 +49,15 @@ class OutcomeController extends Controller
 			'imci_wasting_percent' => 'Wasting',
 			'exclusive_breastfeeding' => 'Exclusive_Breastfeeding',
 		];
+		$ou = 'dNLjKwsVjod';
+
 		$data = config('data.outcomes');
 		$dataSet = [];
+
+		$imciTotalChild = ImciTotalChild::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcMaleTotal = CcCrTotalMale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcFemaleTotal = CcCrTotalFemale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcTotalChild = $CcMaleTotal + $CcFemaleTotal;
 
 		foreach($indicators as $indicator => $indicatorName) {
 			$counter = 0;
@@ -59,24 +66,31 @@ class OutcomeController extends Controller
 				$ou = 'dNLjKwsVjod';
 				$model = 'App\Models\Data\\' . $indictData['model'];
 				$datum = $model::whereIn('period', $periodData)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->get();
+				$datum_goal = $model::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first();
+				// dd($datum_goal);
 				if(count($data[$indicator]) > 1) {
 					$dataSet[$indicatorName][$counter]['title'] = $indictData['model'];
 					$dataSet[$indicatorName][$counter]['periods'] = $datum->pluck('period');
+					$dataSet[$indicatorName][$counter]['goal_period'] = $datum_goal->period;
 					$dataSet[$indicatorName][$counter]['values'] = $datum->pluck('value');	
+					if($indictData['model'] == 'ImciExclusiveBreastFeeding')
+						$dataSet[$indicatorName][$counter]['goal_values'] = ($datum_goal->value / $imciTotalChild) * 100;
+					else
+						$dataSet[$indicatorName][$counter]['goal_values'] = ($datum_goal->value / $CcTotalChild) * 100;
 
 					$counter++;
 				}else{
 					$dataSet[$indicatorName]['title'] = $indictData['model'];
 					$dataSet[$indicatorName]['periods'] = $datum->pluck('period');
+					$dataSet[$indicatorName]['goal_period'] = $datum_goal->period;
+					$dataSet[$indicatorName]['goal_value'] = $datum_goal->value / $imciTotalChild * 100;
 					$dataSet[$indicatorName]['values'] = $datum->pluck('value');	
+
 				}
 			}
 		}
 
-		$imciTotalChild = ImciTotalChild::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcMaleTotal = CcCrTotalMale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcFemaleTotal = CcCrTotalFemale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcTotalChild = $CcMaleTotal + $CcFemaleTotal;
+		
 		// dd($CcTotalChild);
 
 		$goal_analysis = [];
@@ -104,13 +118,14 @@ class OutcomeController extends Controller
 				}
 			}
 		}
-		// dd($goal_analysis);
+		
 
 
 
 
 		// dd($dataSet);
 		$trend_analysis = $dataSet;
+		// dd($trend_analysis);
 
 		// $trend_analysis = [
 		// 	[
