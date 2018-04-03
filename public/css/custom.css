@@ -27,6 +27,7 @@
       -webkit-transition: all 0.5s ease-out;
       -o-transition: all 0.5s ease-out;
       transition: all 0.5s ease-out;
+      color: #333;
     }
     .progress-bar-h .current, .progress-bar-v .current{
       width: 80%;
@@ -207,4 +208,34 @@
   border: 1px solid #cc4b37;
   background: linear-gradient(#d67060, #cc4b37 70%);
 }
+*/
+/*outcome*/
+.report-icon{
+  max-width: 35px;
+}
+.report-icon img{
+  width: 100%;
+}
 
+/*global style*/
+html{
+  font-family:'ArialMT', 'Arial';
+  font-weight:400;
+  font-style:normal;
+  font-size:11.2px;
+  color:#333333;
+  line-height:normal;
+}
+body{
+  font-family:'ArialMT', 'Arial';
+  font-size: 1.1rem;
+}
+.h5 h5{
+  margin-bottom: 1.7rem;
+}
+.h3 h3{
+  font-size: 1.85rem;
+}
+.progress-bar-note {
+    margin: 1.4rem 0;
+}
