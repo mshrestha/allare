@@ -37,10 +37,9 @@ return [
 		]
 	],
 	'child' => [
-		'child_growth_monitoring' => [
-		],
 		'iycf_counselling' => [
 			[
+				'name'		=> 'Imci Counselling',
 				'model'		=> 'ImciCounselling',
 				'table'		=> 'imci_counselling',
 				'server'	=> 'central',
@@ -59,8 +58,11 @@ return [
 				'api_id'	=> 'Fnsa8A43USl'
 			]
 		],
+		'child_growth_monitoring' => [
+		],
 		'vitamin_a_supplementation' => [
-			'cc_cr_additional_food_supplimentation' => [
+			[
+				'name'		=> 'Food Supplimentation',
 				'model'		=> 'CcCrAdditionalFoodSupplimentation',
 				'table'		=> 'cc_cr_additional_food_supplimentation',
 				'server'	=> 'https://communitydhis.mohfw.gov.bd/nationalcc/api/',

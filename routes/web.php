@@ -10,12 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/main', function () {
-    return view('welcome-react');
-});
-
 Route::get('/', function () {
-    return view('nutrition.index');
+	return redirect()->route('frontend.outputs.maternal');
 });
 
 Route::get('/nutrition-programme-areas', 'NutritionProgrammeAreasController@index')->name('nutrition.nutrition-programme-areas');
@@ -100,7 +96,7 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::post('/outputs/maternal-main-chart', 'OutputController@maternalMainChart')->name('outputs.maternal.mainchart');
 
 	// Output Child
-	Route::get('/outputs/child', 'OutputController@indexAction')->name('outputs.child');
+	Route::get('/outputs/child', 'OutputController@indexChild')->name('outputs.child');
 
 	// Outcomes
 	Route::get('/outcomes', 'OutcomeController@secondIndexAction')->name('outcomes');
