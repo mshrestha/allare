@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="progress-bar-note">
-				Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021
+				{{$analysis['goal_text']}}
 			</div>
 		</div>
 		<div class="col-md-6">

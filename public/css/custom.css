@@ -239,3 +239,30 @@ body{
 .progress-bar-note {
     margin: 1.4rem 0;
 }
+
+
+/* Dashboard */
+img.item-image {
+    max-width: 35px;
+    margin-right: 25px;
+}
+
+span.item-percent {
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+.sideblock {
+    margin-top: 25px;
+}
+
+.bg-green {
+    background: #32E684;
+    padding: 5px 0px 5px 2px;
+}
+
+.bg-red {
+    background: #FF3232;
+    padding: 5px 0px 5px 2px;
+}
+/* Dashboard end */
