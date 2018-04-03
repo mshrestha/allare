@@ -191,16 +191,19 @@ class OutcomeController extends Controller
 					$dataSet[$indicator]['limit'] = 25;
 					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
 					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['goal_text'] = "Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021";
 				}
 				else if($indicators[$indicator] == 'BdhsWasting') {
 					$dataSet[$indicator]['goal'] = 'Goal < 10% by 2021';
 					$dataSet[$indicator]['limit'] = 10;
 					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
 				}
 				else {
 					$dataSet[$indicator]['goal'] = 'Goal 65% by 2021';
 					$dataSet[$indicator]['direction'] = 1;
 					$dataSet[$indicator]['limit'] = 65;
+					$dataSet[$indicator]['goal_text'] = "Increase prevalence of exclusive breastfeeding";
 				}
 		}
 		

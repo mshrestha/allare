@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="progress-bar-note">
-				Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021
+				{{$analysis['goal_text']}}
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -39,17 +39,20 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<h5>Reports 
-				<div class="report-icon float-right">
-					@if (strpos(strtolower($key), 'stunting') !== false) 
-					<img src="{{ asset('images\stunting.svg') }}" alt="">
-					@elseif (strpos(strtolower($key), 'wasting') !== false) 
-					<img src="{{ asset('images\wasting.svg') }}" alt="">
-					@elseif (strpos(strtolower($key), 'breastfeed') !== false)
-					<img src="{{ asset('images\breastfeed.svg') }}" alt="">
-					@endif
+			<div class="row">
+				<div class="col-9"><h5>Reports</h5></div>
+				<div class="col-3">
+					<div class="report-icon float-right">
+						@if (strpos(strtolower($key), 'stunting') !== false) 
+						<img src="{{ asset('images\stunting.svg') }}" alt="">
+						@elseif (strpos(strtolower($key), 'wasting') !== false) 
+						<img src="{{ asset('images\wasting.svg') }}" alt="">
+						@elseif (strpos(strtolower($key), 'breastfeed') !== false)
+						<img src="{{ asset('images\breastfeed.svg') }}" alt="">
+						@endif
+					</div>
 				</div>
-			</h5>
+			</div>
 			<div class="reports-wrapper">
 				<p>Lorem ipsum dolor sit amet adipiscing.</p>
 				<p>Feb 13,2018</p>
