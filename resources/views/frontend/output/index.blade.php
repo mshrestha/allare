@@ -95,6 +95,23 @@ function charts(datasets, labels) {
 
 @section('outjavascript')
   <script>
+    $(document).ready(function() {
+      dataSets = { 
+          labels: res.labels, 
+          datasets: [{
+              label: res.pointers,
+              data: res.datasets
+          }]
+      };
+
+      title = res.title;
+
+      if (window.mainChart != undefined) {
+          window.mainChart.destroy();
+      }
+
+      charts(dataSets, title);
+    });
 
     $('#main-chart-form').on('submit', function() {
         $.ajax({
