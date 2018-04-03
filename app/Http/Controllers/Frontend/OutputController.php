@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Data\CcMrAncNutriCounsel;
 use App\Models\Data\CcMrTotalPatient;
+use App\Models\Data\ImciTotalChild;
 use App\Models\OrganisationUnit;
 use App\Traits\PeriodHelper;
 use Illuminate\Http\Request;
@@ -63,35 +65,122 @@ class OutputController extends Controller
 		$trend_analysis = [
 			[
 				'name' => 'Counseling',
-				'month' => 'Counseling Given - April',
+				'month' => 'Counseling Given',
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
-				'values' => $counselling_all_values
+				'values' => $counselling_all_values,
+				'title' => 'Counseling',
 			],
 			[
 				'name' => 'IFA Distribution',
-				'month' => 'IFA Distributed - April',
+				'month' => 'IFA Distributed',
 				'percent' => round($plw_who_receive_ifas_percent),
 				'periods' => $plw_who_receive_ifas_all_periods,
-				'values' => $plw_who_receive_ifas_all_values
+				'values' => $plw_who_receive_ifas_all_values,
+				'title' => 'IFA Distribution',
 			],
 			[
 				'name' => 'Weight Measurement',
-				'month' => 'Weight gained - April',
+				'month' => 'Weight gained',
 				'percent' => round($pregnant_women_weighed_percent),
 				'periods' => $pregnant_women_weighed_all_periods,
-				'values' => $pregnant_women_weighed_all_values
+				'values' => $pregnant_women_weighed_all_values,
+				'title' => 'Weight Measurement'
 			],
 		];
 
-		return view('frontend.output.index', 
+		return view('frontend.output.maternal', 
 			compact('trend_analysis','organisation_units','periods','indicators')
 		);
 	}
 
+	public function indexChild() {
+		$organisation_units = OrganisationUnit::where('level', 2)->get();
+		$periods = $this->getPeriodYears();
+		$flipped_period = array_flip($periods);
+
+		$periodData = '';
+		foreach ($flipped_period as $key => $value) {
+			$periodData .= $value.';';
+		}
+		
+		$periodData = rtrim($periodData, ';');
+		$periodData = explode(";", $periodData);
+		sort($periodData);
+
+		$data = config('data.child');
+		$indicators = [
+			'iycf_counselling' => 'IYCF Counselling',
+			'child_growth_monitoring' => 'Child growth monitoring',
+			'vitamin_a_supplementation' => 'Vitamin A supplementation',
+		];
+
+
+		// IMCI total children
+		$counselling_data = $this->calculateMonthlyPercentage($data['iycf_counselling'][0], $periodData);
+		$counselling_percent = $counselling_data['percent'];
+		$counselling_all_values = $counselling_data['all_values'];
+		$counselling_all_periods = $counselling_data['all_periods'];
+
+		
+		// Vitamin A supplimentation
+		$vitamin_a_supplimentation_data = $this->calculateMonthlyPercentage($data['vitamin_a_supplementation'][0], $periodData);
+		$vitamin_a_supplementation_percent = $vitamin_a_supplimentation_data['percent'];
+		$vitamin_a_supplementation_all_values = $vitamin_a_supplimentation_data['all_values'];
+		$vitamin_a_supplementation_all_periods = $vitamin_a_supplimentation_data['all_periods'];
+
+		$trend_analysis = [
+			[
+				'name' => 'Counseling',
+				'title' => 'IMCI Counselling',
+				'month' => 'IYCF counselling',
+				'percent' => round($counselling_percent),
+				'periods' => $counselling_all_periods,
+				'values' => $counselling_all_values
+			],
+			// [
+			// 	'name' => 'Child Growth',
+			// 	'month' => 'Child growth monitoring',
+			// 	'percent' => round($plw_who_receive_ifas_percent),
+			// 	'periods' => $plw_who_receive_ifas_all_periods,
+			// 	'values' => $plw_who_receive_ifas_all_values
+			// ],
+			[
+				'name' => 'Supplements',
+				'title' => 'Food Supplimentation',
+				'month' => 'Vitamin A supplements',
+				'percent' => round($vitamin_a_supplementation_percent),
+				'periods' => $vitamin_a_supplementation_all_periods,
+				'values' => $vitamin_a_supplementation_all_values
+			],
+		];
+
+		return view('frontend.output.child', 
+			compact('trend_analysis','organisation_units','periods','indicators')
+		);
+	}
+
+	public function calculateMonthlyPercentage($data, $periodData) {
+		$model = 'App\Models\Data\\' . $data['model'];
+		$last_month = $model::where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->whereNull('category_option_combo')->first();
+		$yearly = $model::where('organisation_unit', 'dNLjKwsVjod')->where('period', date('Y'))->whereNull('category_option_combo')->orderBy('period', 'desc')->first();
+
+		$percent = ($last_month->value/$yearly->value) * 100;
+
+		$all_periods = $model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
+		$all_values = $model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		
+		return compact('percent', 'all_periods', 'all_values');
+	}
+
 	public function maternalMainChart(Request $request) {
 		$indicator = $request->indicator_id;
-		$data_table = config('data.maternal.'.$indicator);
+		if($request->output == 'maternal') {
+			$data_table = config('data.maternal.'.$indicator);
+		} else {
+			$data_table = config('data.child.'.$indicator);
+		}
+
 		$periods = $this->getPeriodArray($request->period_id);
 
 		$organisation_unit = explode('.', $request->organisation_unit_id);
@@ -105,6 +194,7 @@ class OutputController extends Controller
 		$labels = $data->pluck('period_name');
 		$datasets = $data->pluck('value');
 		$pointers = (empty($request->department_id) || $request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
+
 		$title = $data_table[0]['name'];
 
 		return response()->json(['pointers' => $pointers, 'title' => $title, 'labels' => $labels, 'datasets' => $datasets]);

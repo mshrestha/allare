@@ -212,6 +212,7 @@
 /*outcome*/
 .report-icon{
   max-width: 35px;
+  margin-top: -20px;
 }
 .report-icon img{
   width: 100%;
@@ -230,10 +231,10 @@ body{
   font-family:'ArialMT', 'Arial';
   font-size: 1.1rem;
 }
-.h5 h5{
+.h5, h5{
   margin-bottom: 1.7rem;
 }
-.h3 h3{
+.h3, h3{
   font-size: 1.85rem;
 }
 .progress-bar-note {
@@ -266,3 +267,24 @@ span.item-percent {
     padding: 5px 0px 5px 2px;
 }
 /* Dashboard end */
+
+
+/*navbar*/
+header{
+  margin-bottom: 2rem;
+}
+.navbar-nav{
+  font-size: 1.85rem;
+}
+.navbar-nav .dropdown-menu{
+  font-size: 1.6rem;
+}
+.navbar-nav .dropdown-item{
+  min-width: 155px;
+}
+@media (min-width: 992px){
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 2rem;
+  }
+}
+

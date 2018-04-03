@@ -27,7 +27,7 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white">
       <a class="navbar-brand" href="/dashboard">
          <img src="{{asset('images\bd_logo.png')}}"> 
       </a>
@@ -46,7 +46,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{{ route('frontend.outputs.maternal') }}">Maternal</a>
-              <a class="dropdown-item" href="#">Child</a>
+              <a class="dropdown-item" href="{{ route('frontend.outputs.child') }}">Child</a>
             </div>
           </li>
           {{-- <li class="nav-item">
