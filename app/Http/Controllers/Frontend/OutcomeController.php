@@ -77,14 +77,19 @@ class OutcomeController extends Controller
 						$dataSet[$indicatorName][$counter]['goal_values'] = ($datum_goal->value / $imciTotalChild) * 100;
 					else
 						$dataSet[$indicatorName][$counter]['goal_values'] = ($datum_goal->value / $CcTotalChild) * 100;
+					$dataSet[$indicatorName][$counter]['goal'] = 'Goal 65% by 2021';
 
 					$counter++;
 				}else{
 					$dataSet[$indicatorName]['title'] = $indictData['model'];
 					$dataSet[$indicatorName]['periods'] = $datum->pluck('period');
 					$dataSet[$indicatorName]['goal_period'] = $datum_goal->period;
-					$dataSet[$indicatorName]['goal_value'] = $datum_goal->value / $imciTotalChild * 100;
+					$dataSet[$indicatorName]['goal_values'] = $datum_goal->value / $imciTotalChild * 100;
 					$dataSet[$indicatorName]['values'] = $datum->pluck('value');	
+					if($indictData['model'] == 'ImciStunting')
+						$dataSet[$indicatorName]['goal'] = 'Goal 25% by 2021';
+					else
+						$dataSet[$indicatorName]['goal'] = 'Goal < 10% by 2021';
 
 				}
 			}

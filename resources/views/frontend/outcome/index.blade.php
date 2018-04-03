@@ -2,7 +2,7 @@
 @section('content')
 	<div class="container">
 		@include('layouts.partials.main-chart-partial')
-        
+       {{-- {{dd($trend_analysis)}} --}}
 		@foreach($trend_analysis as $key => $analysis)
 			@include('frontend.outcome.partials.outcome-trend-analysis')
 		@endforeach
