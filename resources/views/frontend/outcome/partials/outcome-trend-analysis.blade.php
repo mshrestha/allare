@@ -2,7 +2,7 @@
 	<h3>{!! str_replace('_', ' ', $key) !!}</h3>
 	{{-- <p>{{ $analysis['month'] }}</p> --}}
 	
-	<div class="row row-no-padding">
+	<div class="row">
 		<div class="col-md-3">
 			<div id="canvas-holder">
 				<div class="progress-bar-v" id="goal=chart-{{
