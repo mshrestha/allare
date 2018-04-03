@@ -103,6 +103,6 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/outputs/child', 'OutputController@indexChild')->name('outputs.child');
 
 	// Outcomes
-	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
+	Route::get('/outcomes', 'OutcomeController@secondIndexAction')->name('outcomes');
 	Route::post('/outcomes/get-outcome-data', 'OutcomeController@getOutcomeData')->name('get-outcome-data');	
 });

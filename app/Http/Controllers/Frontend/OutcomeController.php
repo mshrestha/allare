@@ -14,6 +14,9 @@ use App\Models\Data\CcCrExclusiveBreastFeeding;
 use App\Models\Data\CcCrTotalMale;
 use App\Models\Data\CcCrTotalFemale;
 
+use App\Models\Data\BdhsStunting;
+use App\Models\Data\BdhsWasting;
+use App\Models\Data\BdhsExclusiveBreastfeeding;
 
 
 class OutcomeController extends Controller
@@ -45,12 +48,19 @@ class OutcomeController extends Controller
 		];
 
 		$goals = [
-			'imci_stunting_percent' => 'Stunting',
-			'imci_wasting_percent' => 'Wasting',
-			'exclusive_breastfeeding' => 'Exclusive_Breastfeeding',
+			'imci_stunting' => 'BdhsStunting',
+			'imci_wasting' => 'BdhsWasting',
+			'exclusive_breastfeeding' => 'BdhsExclusiveBreastfeeding',
 		];
+		$ou = 'dNLjKwsVjod';
+
 		$data = config('data.outcomes');
 		$dataSet = [];
+
+		$imciTotalChild = ImciTotalChild::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcMaleTotal = CcCrTotalMale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcFemaleTotal = CcCrTotalFemale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
+		$CcTotalChild = $CcMaleTotal + $CcFemaleTotal;
 
 		foreach($indicators as $indicator => $indicatorName) {
 			$counter = 0;
@@ -58,25 +68,42 @@ class OutcomeController extends Controller
 			foreach ($data[$indicator] as $keyIndict => $indictData) {
 				$ou = 'dNLjKwsVjod';
 				$model = 'App\Models\Data\\' . $indictData['model'];
+				$goal_model = 'App\Models\Data\\'.$goals[$indicator];
 				$datum = $model::whereIn('period', $periodData)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->get();
+				// $datum_goal = $model::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first();
+				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
+				// dd($datum_goal);
 				if(count($data[$indicator]) > 1) {
 					$dataSet[$indicatorName][$counter]['title'] = $indictData['model'];
 					$dataSet[$indicatorName][$counter]['periods'] = $datum->pluck('period');
+					$dataSet[$indicatorName][$counter]['goal_period'] = $datum_goal->period;
 					$dataSet[$indicatorName][$counter]['values'] = $datum->pluck('value');	
+					if($indictData['model'] == 'ImciExclusiveBreastFeeding')
+						// $dataSet[$indicatorName][$counter]['goal_values'] = ($datum_goal->value / $imciTotalChild) * 100;
+						$dataSet[$indicatorName][$counter]['goal_values'] = $datum_goal->value;
+					else
+						$dataSet[$indicatorName][$counter]['goal_values'] = $datum_goal->value;
+						// $dataSet[$indicatorName][$counter]['goal_values'] = ($datum_goal->value / $CcTotalChild) * 100;
+					$dataSet[$indicatorName][$counter]['goal'] = 'Goal 65% by 2021';
 
 					$counter++;
 				}else{
 					$dataSet[$indicatorName]['title'] = $indictData['model'];
 					$dataSet[$indicatorName]['periods'] = $datum->pluck('period');
+					$dataSet[$indicatorName]['goal_period'] = $datum_goal->period;
+					$dataSet[$indicatorName]['goal_values'] = $datum_goal->value;
+					// $dataSet[$indicatorName]['goal_values'] = $datum_goal->value / $imciTotalChild * 100;
 					$dataSet[$indicatorName]['values'] = $datum->pluck('value');	
+					if($indictData['model'] == 'ImciStunting')
+						$dataSet[$indicatorName]['goal'] = 'Goal 25% by 2021';
+					else
+						$dataSet[$indicatorName]['goal'] = 'Goal < 10% by 2021';
+
 				}
 			}
 		}
 
-		$imciTotalChild = ImciTotalChild::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcMaleTotal = CcCrTotalMale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcFemaleTotal = CcCrTotalFemale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcTotalChild = $CcMaleTotal + $CcFemaleTotal;
+		
 		// dd($CcTotalChild);
 
 		$goal_analysis = [];
@@ -104,32 +131,80 @@ class OutcomeController extends Controller
 				}
 			}
 		}
-		// dd($goal_analysis);
-
-
-
-
-		// dd($dataSet);
+		
 		$trend_analysis = $dataSet;
 
-		// $trend_analysis = [
-		// 	[
-		// 		'name' => 'Stunting',
-		// 		'month' => 'Counseling Given - April',
-		// 		'percent' => '80',
-		// 	],
-		// 	[
-		// 		'name' => 'IFA Distribution',
-		// 		'month' => 'IFA Distributed - April',
-		// 		'percent' => '50',
-		// 	],
-		// 	[
-		// 		'name' => 'Weight Measurement',
-		// 		'month' => 'Weight gained - April',
-		// 		'percent' => '60',
-		// 	],
-		// ];
+		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods', 'indicators'));
+	}
 
+	public function secondIndexAction() {
+		$organisation_units = OrganisationUnit::where('level', 2)->get();
+		$periods = $this->getPeriodYears();
+		$flipped_period = array_flip($periods);
+
+		$periodData = '';
+		foreach ($flipped_period as $key => $value) {
+			$periodData .= $value.';';
+		}
+		
+		$periodData = rtrim($periodData, ';');
+		$periodData = explode(";", $periodData);
+		sort($periodData);
+
+		$keys = array_reverse(array_keys($flipped_period));
+		$keyPeriods = implode(';',$keys);
+
+		$data = config('data.outcomes');
+		$current_year = date('Y');
+
+		$indicators = [
+			'Stunting' => 'BdhsStunting',
+			'Wasting' => 'BdhsWasting',
+			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
+		];
+		$ou = 'dNLjKwsVjod';
+
+		$data = config('data.outcomes');
+		$dataSet = [];
+
+		foreach($indicators as $indicator => $indicatorName) {
+			$counter = 0;
+			$dataSet[$indicator] = [];
+			// foreach ($data[$indicator] as $keyIndict => $indictData) {
+				$ou = 'dNLjKwsVjod';
+				// $model = 'App\Models\Data\\' . $indictData['model'];
+				$goal_model = 'App\Models\Data\\'.$indicators[$indicator];
+				$datum = $goal_model::orderBy('period', 'asc')->get();
+				// $datum_goal = $model::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first();
+				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
+				// dd($datum_goal);
+				$dataSet[$indicator]['title'] = $indicator;
+				$dataSet[$indicator]['periods'] = $datum->pluck('period');
+				$dataSet[$indicator]['goal_period'] = $datum_goal->period;
+				$dataSet[$indicator]['goal_values'] = $datum_goal->value;
+				$dataSet[$indicator]['min'] = $goal_model::min('value');
+				$dataSet[$indicator]['max'] = $goal_model::max('value');
+
+				// $dataSet[$indicator]['goal_values'] = $datum_goal->value / $imciTotalChild * 100;
+				$dataSet[$indicator]['values'] = $datum->pluck('value');	
+				if($indicators[$indicator] == 'BdhsStunting') {
+					$dataSet[$indicator]['limit'] = 25;
+					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
+					$dataSet[$indicator]['direction'] = -1;
+				}
+				else if($indicators[$indicator] == 'BdhsWasting') {
+					$dataSet[$indicator]['goal'] = 'Goal < 10% by 2021';
+					$dataSet[$indicator]['limit'] = 10;
+					$dataSet[$indicator]['direction'] = -1;
+				}
+				else {
+					$dataSet[$indicator]['goal'] = 'Goal 65% by 2021';
+					$dataSet[$indicator]['direction'] = 1;
+					$dataSet[$indicator]['limit'] = 65;
+				}
+		}
+		
+		$trend_analysis = $dataSet;
 
 		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods', 'indicators'));
 	}
