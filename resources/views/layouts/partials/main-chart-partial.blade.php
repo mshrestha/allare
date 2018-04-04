@@ -1,13 +1,13 @@
 <div class="main-chart">
-	<div class="row row-no-padding">
+	<div class="row no-gutters">
 	    {{-- Selectors --}}
 	    <div class="col-md-3">
 	        <div class="side-filter-div">
 	            {{ Form::open(['id' => 'main-chart-form', 'method' => 'POST']) }}
 	            <div class="input-group mb-3">
-	                <div class="input-group-prepend">
+	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text">Divisions</label>
-	                </div>
+	                </div> --}}
 	                <select class="custom-select" id="organisation_unit_id" name="organisation_unit_id" required>
 	                    <option value="">Divisions</option>
 	                	@foreach($organisation_units as $organisation_unit)
@@ -18,9 +18,9 @@
 	            </div>
 
 	            <div class="input-group mb-3">
-	                <div class="input-group-prepend">
+	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text" for="period-id">Periods</label>
-	                </div>
+	                </div> --}}
 	                <select class="custom-select" name="period_id" required>
 	                    <option value="">Periods</option>
 	                    <option value="LAST_MONTH">1 month</option>
@@ -31,9 +31,9 @@
 	                </select>
 	            </div>
 	            <div class="input-group mb-3">
-	                <div class="input-group-prepend">
+	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text" for="indicator_id">Indicators</label>
-	                </div>
+	                </div> --}}
 	                <select class="custom-select" id="indicator_id" name="indicator_id" required>
 	                	<option value="">Indicators</option>
 	                	@foreach($indicators as $key => $indicator)
@@ -43,9 +43,9 @@
 	            </div>
 
 	            <div class="input-group mb-3">
-	                <div class="input-group-prepend">
+	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text">Departments</label>
-	                </div>
+	                </div> --}}
 	                <select class="custom-select" id="department_id" name="department_id">
 	                    <option value="">Departments</option>
 	                    <option value="both">Both</option>
@@ -62,8 +62,8 @@
 	                </select>
 	            </div> --}} 
 
-	            <div class="input-group mb-3">
-	                <button type="submit" class="btn btn-primary" id="submit-platform-btn">Submit</button>
+	            <div class="input-group mb-3 submit-input-group">
+	                <button type="submit" class="btn btn-secondary btn-md btn-block" id="submit-platform-btn">Submit</button>
 	            </div>
 	            {{ Form::close() }}
 	        </div>

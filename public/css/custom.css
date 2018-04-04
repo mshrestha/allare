@@ -451,3 +451,14 @@ header{
 .container-fluid{
   max-width: 1600px;
 }
+
+/*maternal page style*/
+.side-filter-div form#main-chart-form{
+  height: 100%;
+  position: relative;
+}
+.submit-input-group{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
