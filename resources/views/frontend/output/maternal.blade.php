@@ -88,7 +88,7 @@ function charts(datasets, labels) {
             }
         }
     });
-}
+  }
     $(document).ready(function() {
       var data = "organisation_unit_id=mykF7AaZv9R.mykF7AaZv9R&period_id=201801%3B201802%3B201803%3B201804&indicator_id=maternal_counselling&department_id=DGHS&output=maternal";
       data += "&_token={{ Session::token() }}";
@@ -129,8 +129,6 @@ function charts(datasets, labels) {
         var data = $(this).serialize();
         data += '&output=maternal';
 
-        console.log(data);
-
         main_chart_data(data);
 
         return false;
@@ -153,7 +151,7 @@ function charts(datasets, labels) {
       dataSet =[];
       label = '';
       if(data_value.length > 1) {
-        for (var i = 0; i < data_value.length; i++){
+        for (var i = 0; i < data_value.length; i++) {
           currSet = {
             label: data_value[i].title,
             borderColor: colors[i],
@@ -213,8 +211,8 @@ function charts(datasets, labels) {
             label: 'Dataset 1'
           }],
           labels: [
-            'Blue',
-            'Grey',
+            'Last Month',
+            'Total Patient',
           ]
         },
         options: {
