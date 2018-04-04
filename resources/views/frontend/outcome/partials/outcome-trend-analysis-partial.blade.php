@@ -24,7 +24,7 @@
 						{{$analysis['goal']}}
 					</div>
 					
-					<div class="current" style="height: {{$complete}}%;">
+					<div class="current grow-v-animation" style="height: {{$complete}}%;">
 						{{$analysis['goal_values']}}  %
 					</div>
 
@@ -40,7 +40,7 @@
 						{{$analysis['goal']}}
 					</div>
 					
-					<div class="current" style="width: {{$complete}}%;">
+					<div class="current grow-h-animation" style="width: {{$complete}}%;">
 						{{$analysis['goal_values']}}  %
 					</div>
 
