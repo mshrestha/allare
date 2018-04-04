@@ -18,66 +18,69 @@
   }
 
 .progress-bar-h, .progress-bar-v{
-      width: 300px;
-      height: 50px;
-      background: #CCC;
-      display: block;
-      word-wrap: unset;
-      overflow: hidden;
-      -webkit-transition: all 0.5s ease-out;
-      -o-transition: all 0.5s ease-out;
-      transition: all 0.5s ease-out;
-      color: #333;
-    }
-    .progress-bar-h .current, .progress-bar-v .current{
-      width: 80%;
-      height: 100%;
-      background: rgba(0, 204, 255, 1);
-      display: block;
-      float: left;
-      display: flex;
-      align-self: center;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
+  width: 300px;
+  height: 50px;
+  background: #CCC;
+  display: block;
+  word-wrap: unset;
+  overflow: hidden;
+  -webkit-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+  color: #333;
+}
+.progress-bar-h{
+  width: 100%;
+}
+.progress-bar-h .current, .progress-bar-v .current{
+  width: 80%;
+  height: 100%;
+  background: rgba(0, 204, 255, 1);
+  display: block;
+  float: left;
+  display: flex;
+  align-self: center;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 
-    }
-    .progress-bar-h .goal, .progress-bar-v .goal{
-        width: 20%;
-        height: 100%;
-        background: #BBB;
-        float: right;
-        display: flex;
-        align-self: center;
-        text-align: center;
-        justify-content: center;
-        align-items: center;
+}
+.progress-bar-h .goal, .progress-bar-v .goal{
+  width: 20%;
+  height: 100%;
+  background: #BBB;
+  float: right;
+  display: flex;
+  align-self: center;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 
-    }
-    .progress-bar-v{
-      width: 80%;
-      height: 300px;
-      min-width: 80px;
-      max-width: 100px;
-      margin: 0 auto;
-      margin-bottom: 30px;
-    }
-    @media(min-width: 768px){
-     .progress-bar-v{
-        width: 90%;
-        margin: 0;
-        max-width: 100%;
-      } 
-    }
-    .progress-bar-v .current{
-      width: 100%;
-      height: 80%;
-    }
-    .progress-bar-v .goal{
-      height: 30%;
-      width: 100%;
+}
+.progress-bar-v{
+  width: 80%;
+  height: 300px;
+  min-width: 80px;
+  max-width: 100px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+@media(min-width: 768px){
+ .progress-bar-v{
+    width: 90%;
+    margin: 0;
+    max-width: 100%;
+  } 
+}
+.progress-bar-v .current{
+  width: 100%;
+  height: 80%;
+}
+.progress-bar-v .goal{
+  height: 30%;
+  width: 100%;
 
-    }
+}
 /*
 .bar-graph {
   padding: 0;
@@ -282,9 +285,24 @@ header{
 .navbar-nav .dropdown-item{
   min-width: 155px;
 }
+@media (max-width: 767px){
+  .report-row{
+    margin-top: 40px;
+  }
+  .progress-bar-v{
+    width: 100%;
+  }
+}
 @media (min-width: 992px){
   .navbar-expand-lg .navbar-nav .nav-link {
     padding-right: 2rem;
   }
 }
-
+@media (min-width: 1200px){
+  .container{
+    max-width: 1400px;
+  }
+}
+.container-fluid{
+  max-width: 1600px;
+}
