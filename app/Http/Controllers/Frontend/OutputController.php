@@ -44,6 +44,7 @@ class OutputController extends Controller
 		$counselling_percent = ($counselling_last_month->value/$total_patient_last_month->value) * 100;
 		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
 		$counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		$counselling_month = $counselling_last_month->period_name;
 
 		//Plw who receive ifas
 		$plw_who_receive_ifas_data = $data['plw_who_receive_ifas'][0];
@@ -52,7 +53,8 @@ class OutputController extends Controller
 		$plw_who_receive_ifas_percent = ($plw_who_receive_ifas_last_month->value/$total_patient_last_month->value) * 100;
 		$plw_who_receive_ifas_all_periods = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
 		$plw_who_receive_ifas_all_values = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
-		
+		$plw_who_receive_ifas_month = $plw_who_receive_ifas_last_month->period_name;
+
 		//Pregnant women weighed
 		$pregnant_women_weighed_data = $data['pregnant_women_weighed'][0];
 		$pregnant_women_weighed_model = 'App\Models\Data\\' . $pregnant_women_weighed_data['model'];
@@ -61,31 +63,35 @@ class OutputController extends Controller
 		$pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$pregnant_women_weighed_yearly->value) * 100;
 		$pregnant_women_weighed_all_periods = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('period');
 		$pregnant_women_weighed_all_values = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('value');
+		$pregnant_women_weighed_month = $pregnant_women_weighed_last_month->period_name;
 
 		$trend_analysis = [
 			[
 				'name' => 'Counseling',
-				'month' => 'Counseling Given',
+				'month' => 'Maternal Counselling Given - '. $counselling_month,
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
 				'values' => $counselling_all_values,
 				'title' => 'Counseling',
+				'labels' => [$counselling_month, 'test'],
 			],
 			[
 				'name' => 'IFA Distribution',
-				'month' => 'IFA Distributed',
+				'month' => 'PLW who receive IFA\'s - '. $plw_who_receive_ifas_month,
 				'percent' => round($plw_who_receive_ifas_percent),
 				'periods' => $plw_who_receive_ifas_all_periods,
 				'values' => $plw_who_receive_ifas_all_values,
 				'title' => 'IFA Distribution',
+				'labels' => [$plw_who_receive_ifas_month, 'test'],
 			],
 			[
 				'name' => 'Weight Measurement',
-				'month' => 'Weight gained',
+				'month' => 'Pregnant women weighed - ' . $pregnant_women_weighed_month,
 				'percent' => round($pregnant_women_weighed_percent),
 				'periods' => $pregnant_women_weighed_all_periods,
 				'values' => $pregnant_women_weighed_all_values,
-				'title' => 'Weight Measurement'
+				'title' => 'Weight Measurement',
+				'labels' => [$pregnant_women_weighed_month, 'test'],
 			],
 		];
 
@@ -121,6 +127,7 @@ class OutputController extends Controller
 		$counselling_percent = $counselling_data['percent'];
 		$counselling_all_values = $counselling_data['all_values'];
 		$counselling_all_periods = $counselling_data['all_periods'];
+		$counselling_month = $counselling_data['month'];
 
 		
 		// Vitamin A supplimentation
@@ -128,15 +135,16 @@ class OutputController extends Controller
 		$vitamin_a_supplementation_percent = $vitamin_a_supplimentation_data['percent'];
 		$vitamin_a_supplementation_all_values = $vitamin_a_supplimentation_data['all_values'];
 		$vitamin_a_supplementation_all_periods = $vitamin_a_supplimentation_data['all_periods'];
+		$vitamin_a_supplementation_month = $vitamin_a_supplimentation_data['month'];
 
 		$trend_analysis = [
 			[
-				'name' => 'Counseling',
+				'name' => 'IMCI Counseling',
 				'title' => 'IMCI Counselling',
-				'month' => 'IYCF counselling',
+				'month' => 'IYCF counselling - '. $counselling_month,
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
-				'values' => $counselling_all_values
+				'values' => $counselling_all_values,
 			],
 			// [
 			// 	'name' => 'Child Growth',
@@ -148,10 +156,10 @@ class OutputController extends Controller
 			[
 				'name' => 'Supplements',
 				'title' => 'Food Supplimentation',
-				'month' => 'Vitamin A supplements',
+				'month' => 'Vitamin A supplements - '. $vitamin_a_supplementation_month,
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,
-				'values' => $vitamin_a_supplementation_all_values
+				'values' => $vitamin_a_supplementation_all_values,
 			],
 		];
 
@@ -169,8 +177,9 @@ class OutputController extends Controller
 
 		$all_periods = $model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
 		$all_values = $model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
-		
-		return compact('percent', 'all_periods', 'all_values');
+		$month = $last_month->period_name;
+
+		return compact('percent', 'all_periods', 'all_values', 'month');
 	}
 
 	public function maternalMainChart(Request $request) {
@@ -189,12 +198,17 @@ class OutputController extends Controller
 		
 		$model = 'App\Models\Data\\' . $data_table[0]['model'];
 		$ou = ($data_table[0]['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
-		$data = $model::whereIn('period', $periods)->where('source', 'DGHS')->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period')->get();
+		$query = $model::whereIn('period', $periods);
+		$query->where('source', 'DGHS');
+		$query->where('organisation_unit', $ou);
+		if($indicator !== 'pregnant_women_weighed') {	
+			$query->whereNull('category_option_combo');
+		}
+		$data = $query->orderBy('period')->get();
 		
 		$labels = $data->pluck('period_name');
 		$datasets = $data->pluck('value');
 		$pointers = (empty($request->department_id) || $request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
-
 		$title = $data_table[0]['name'];
 
 		return response()->json(['pointers' => $pointers, 'title' => $title, 'labels' => $labels, 'datasets' => $datasets]);

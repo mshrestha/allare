@@ -215,8 +215,8 @@ var colors = [
             label: 'Dataset 1'
           }],
           labels: [
-            'Blue',
-            'Grey',
+            'Last Month',
+            'Rest of the year',
           ]
         },
         options: {
