@@ -63,7 +63,7 @@
 	            </div> --}} 
 
 	            <div class="input-group mb-3 submit-input-group">
-	                <button type="submit" class="btn btn-secondary btn-md btn-block" id="submit-platform-btn">Submit</button>
+	                <button type="submit" class="btn btn-secondary btn-lg btn-block rounded-0" id="submit-platform-btn">Submit</button>
 	            </div>
 	            {{ Form::close() }}
 	        </div>
