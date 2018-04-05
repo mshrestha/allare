@@ -11,7 +11,7 @@
 |
 */
 Route::get('/', function () {
-	return redirect()->route('frontend.outputs.maternal');
+	return redirect()->route('frontend.dashboard');
 });
 
 Route::get('/nutrition-programme-areas', 'NutritionProgrammeAreasController@index')->name('nutrition.nutrition-programme-areas');

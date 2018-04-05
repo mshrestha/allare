@@ -10,17 +10,28 @@
 					<div id="maternal-health">
 						<h3>Maternal Health</h3>
 						<div class="row">
-							<div class="col-sm-4"></div>
-							<div class="col-sm-4"></div>
-							<div class="col-sm-4"></div>
+							@foreach($maternal_trend_analysis as $key => $maternal_trend)
+							<div class="col-sm-4">
+								<h4>{{ $maternal_trend['name'] }}</h4>
+								<div id="canvas-holder">
+									<canvas id="chart-area-maternal-{{ $key }}"></canvas>
+								</div>
+							</div>
+							@endforeach
 						</div>
 					</div>
+
 					<div id="child-health">
 						<h3>Child Health</h3>
 						<div class="row">
-							<div class="col-sm-4"></div>
-							<div class="col-sm-4"></div>
-							<div class="col-sm-4"></div>
+							@foreach($child_trend_analysis as $key => $child_trend)
+							<div class="col-sm-4">
+								<h4>{{ $child_trend['name'] }}</h4>
+								<div id="canvas-holder">
+									<canvas id="chart-area-child-{{ $key }}"></canvas>
+								</div>
+							</div>
+							@endforeach
 						</div>
 					</div>
 				</div>
@@ -51,4 +62,50 @@
 
 		</div>
 	</div>
+@endsection
+
+
+@section('outjavascript')
+	<script>
+	@foreach($maternal_trend_analysis as $key => $maternal_trend) 
+		pieChart('maternal-' + '{{$key }}', {{ $maternal_trend['percent'] }})
+	@endforeach
+
+	@foreach($child_trend_analysis as $key => $child_trend)
+		pieChart('child-' + '{{$key }}', {{ $child_trend['percent'] }})
+	@endforeach
+
+	function pieChart(id, data_value) {
+      var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+      };
+
+      var config = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [
+              data_value,
+              100 - data_value,
+            ],
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.8)',
+              // 'rgba(255, 99, 132, 0.8)',
+            ],
+            label: 'Dataset 1'
+          }],
+          labels: [
+            'Last Month',
+            'Rest of the year',
+          ]
+        },
+        options: {
+          responsive: true
+        }
+      };
+
+      var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    }
+	</script>
 @endsection
