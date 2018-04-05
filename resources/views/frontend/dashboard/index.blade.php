@@ -8,8 +8,8 @@
 					Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.
 				</div>
 				<div class="output-dashboard">
-					<h2>Outputs</h2>
-					<div id="maternal-health">
+					<h1><b>Outputs</b></h1>
+					<div id="maternal-health" class="mt-5">
 						<h3>Maternal Health</h3>
 						<div class="row">
 							@foreach($maternal_trend_analysis as $key => $maternal_trend)
@@ -23,7 +23,7 @@
 						</div>
 					</div>
 
-					<div id="child-health">
+					<div id="child-health" class="mt-5">
 						<h3>Child Health</h3>
 						<div class="row">
 							@foreach($child_trend_analysis as $key => $child_trend)
@@ -37,8 +37,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="outcome-dashboard">
-					<h2>Outcome</h2>
+				<div class="outcome-dashboard mt-5">
+					<h1><b>Outcome</b></h1>
 					<div class="row">
 						@foreach($outcomes as $key => $analysis)
 							@include('layouts.partials.dashboard-outcomes-partial')
@@ -48,7 +48,7 @@
 			</div>
 			<!-- sidebar -->
 			<div class="col-sm-3">
-				<h1>Inputs</h1>
+				<h1><b>Inputs</b></h1>
 				<div class="sideblock">
 					<h4>Reporting</h4>
 					<p>Departments that have submitted the reports for the month of April.</p>
