@@ -170,12 +170,12 @@ class OutcomeController extends Controller
 		foreach($indicators as $indicator => $indicatorName) {
 			$counter = 0;
 			$dataSet[$indicator] = [];
-			// foreach ($data[$indicator] as $keyIndict => $indictData) {
+			
 				$ou = 'dNLjKwsVjod';
-				// $model = 'App\Models\Data\\' . $indictData['model'];
+				
 				$goal_model = 'App\Models\Data\\'.$indicators[$indicator];
 				$datum = $goal_model::orderBy('period', 'asc')->get();
-				// $datum_goal = $model::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first();
+				
 				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
 				// dd($datum_goal);
 				$dataSet[$indicator]['title'] = $indicator;
@@ -185,7 +185,7 @@ class OutcomeController extends Controller
 				$dataSet[$indicator]['min'] = $goal_model::min('value');
 				$dataSet[$indicator]['max'] = $goal_model::max('value');
 
-				// $dataSet[$indicator]['goal_values'] = $datum_goal->value / $imciTotalChild * 100;
+				
 				$dataSet[$indicator]['values'] = $datum->pluck('value');	
 				if($indicators[$indicator] == 'BdhsStunting') {
 					$dataSet[$indicator]['limit'] = 25;

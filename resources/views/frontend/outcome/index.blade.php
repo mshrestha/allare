@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-	<div class="container-fluid">
+	<div class="container">
 		{{-- @include('layouts.partials.main-chart-partial') --}}
        {{-- {{dd($trend_analysis)}} --}}
 		@foreach($trend_analysis as $key => $analysis)

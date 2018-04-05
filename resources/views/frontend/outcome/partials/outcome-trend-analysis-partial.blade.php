@@ -16,18 +16,39 @@
 			<div class="report-heading">
 				<h5>Current</h5>
 			</div>
-			<div id="canvas-holder">
+			<div id="canvas-holder" class="d-none d-md-block">
 				<div class="progress-bar-v" id="goal-chart-{{
 				$key}}">
+					
 					<div class="goal" style="height: {{$incomplete}}%;">
 						{{$analysis['goal']}}
 					</div>
 					
-					<div class="current" style="height: {{$complete}}%;">
+					<div class="current grow-v-animation" style="height: {{$complete}}%;">
 						{{$analysis['goal_values']}}  %
-					</div>	
+					</div>
+
 				</div>
+
 			</div>
+
+			<div id="canvas-holder-h" class="d-md-none">
+				<div class="progress-bar-h" id="goal-chart-h-{{
+				$key}}">
+					
+					<div class="goal" style="width: {{$incomplete}}%;">
+						{{$analysis['goal']}}
+					</div>
+					
+					<div class="current grow-h-animation" style="width: {{$complete}}%;">
+						{{$analysis['goal_values']}}  %
+					</div>
+
+				</div>
+
+			</div>
+
+
 			<div class="progress-bar-note">
 				{{$analysis['goal_text']}}
 			</div>
@@ -39,9 +60,9 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="row">
-				<div class="col-9"><h5>Reports</h5></div>
-				<div class="col-3">
+			<div class="row report-row">
+				<div class="col-8"><h5>Reports</h5></div>
+				<div class="col-4">
 					<div class="report-icon float-right">
 						@if (strpos(strtolower($key), 'stunting') !== false) 
 						<img src="{{ asset('images\stunting.svg') }}" alt="">

@@ -4,18 +4,33 @@
 		<div class="row">
 			<!-- content -->
 			<div class="col-sm-9">
-				<h3>Our goald is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant & lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.</h3>
-				<div class="row">
-					<div class="col-12">						
+				<h3>Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant & lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.</h3>
+				<div class="output-dashboard">
+					<h2>Outputs</h2>
+					<div id="maternal-health">
+						<h3>Maternal Health</h3>
+						<div class="row">
+							<div class="col-sm-4"></div>
+							<div class="col-sm-4"></div>
+							<div class="col-sm-4"></div>
+						</div>
 					</div>
-					
+					<div id="child-health">
+						<h3>Child Health</h3>
+						<div class="row">
+							<div class="col-sm-4"></div>
+							<div class="col-sm-4"></div>
+							<div class="col-sm-4"></div>
+						</div>
+					</div>
+				</div>
+				<div class="outcome-dashboard">
+					<h2>Outcome</h2>
 					<div class="row">
-						<h2>Output</h2>
-						<div class="col-sm-4"></div>
-						<div class="col-sm-4"></div>
-						<div class="col-sm-4"></div>
+						@foreach($outcomes as $key => $analysis)
+							@include('layouts.partials.dashboard-outcomes-partial')
+						@endforeach
 					</div>
-
 				</div>
 			</div>
 			<!-- sidebar -->
