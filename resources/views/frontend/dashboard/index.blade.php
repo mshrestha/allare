@@ -49,8 +49,8 @@
 			<!-- sidebar -->
 			<div class="col-sm-3">
 				<h1><b>Inputs</b></h1>
-				<div class="sideblock">
-					<h4>Reporting</h4>
+				<div class="sideblock mt-2">
+					<h3>Reporting</h3>
 					<p>Departments that have submitted the reports for the month of April.</p>
 					<h4 class="bg-green">FWC</h4>
 					<h4 class="bg-green">IMCI-N</h4>

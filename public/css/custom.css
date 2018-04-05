@@ -401,12 +401,12 @@ span.item-percent {
 }
 
 .bg-green {
-    background: #32E684;
+    background: rgba(0, 204, 102, 1);
     padding: 5px 0px 5px 2px;
 }
 
 .bg-red {
-    background: #FF3232;
+    background: rgba(255, 51, 51, 1);
     padding: 5px 0px 5px 2px;
 }
 /* Dashboard end */

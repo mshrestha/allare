@@ -1,5 +1,5 @@
 <div class="sideblock">
-	<h4>{{$key}}</h4>
+	<h3>{{$key}}</h3>
 	<p>{{$sidebarContent['title']}}</p>
 	@foreach($sidebarContent['items'] as $itemKey => $item)
 		<div class="sideblock-item">
