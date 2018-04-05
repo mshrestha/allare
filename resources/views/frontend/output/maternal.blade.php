@@ -80,7 +80,7 @@ function charts(datasets, labels) {
             // Container for zoom options
             zoom: {
                 // Boolean to enable zooming
-                enabled: true,
+                enabled: false,
 
                 // Zooming directions. Remove the appropriate direction to disable
                 // Eg. 'y' would only allow zooming in the y direction
