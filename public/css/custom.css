@@ -5,11 +5,6 @@
     height: 100%;
 }
 
-/* /* For bargraph border*/
-.bargraph-div {
-    border: 1px solid #787878;
-}
-
 /* Removing colpadding */
 .row-no-padding
   [class*="col-"] {
@@ -442,6 +437,7 @@ header{
   .navbar-expand-lg .navbar-nav .nav-link {
     padding-right: 2rem;
   }
+
 }
 @media (min-width: 1600px){
   .container{
@@ -453,12 +449,25 @@ header{
 }
 
 /*maternal page style*/
-.side-filter-div form#main-chart-form{
-  height: 100%;
-  position: relative;
+.bargraph-div {
+    border: 1px solid rgba(121, 121, 121, 1);
+    border-top: none;
 }
-.submit-input-group{
-  position: absolute;
-  bottom: 0;
-  left: 0;
+@media(min-width: 767px){
+  .bargraph-div {
+    border: 1px solid rgba(121, 121, 121, 1);
+    border-left: none;
+  }
+  .side-filter-div form#main-chart-form{
+    height: 100%;
+    position: relative;
+  }
+  .submit-input-group{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+.bargraph-div{
+  height: 100%;
 }

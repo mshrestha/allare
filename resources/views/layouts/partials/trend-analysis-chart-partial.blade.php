@@ -2,7 +2,7 @@
 	<h3>{{ $analysis['name'] }}</h3>
 	<p>{{ $analysis['month'] }}</p>
 	
-	<div class="row row-no-padding">
+	<div class="row">
 		<div class="col-md-3">
 			<div id="canvas-holder">
 				<canvas id="chart-area-{{ $key }}"></canvas>
@@ -23,4 +23,5 @@
 			</div>
 		</div>
 	</div> <!-- row -->
+	<hr>
 </div> <!-- trend-analysis-pie-chart -->
