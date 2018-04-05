@@ -4,7 +4,9 @@
 		<div class="row">
 			<!-- content -->
 			<div class="col-sm-9">
-				<h3>Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant & lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.</h3>
+				<div class="intro-text h3">
+					Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.
+				</div>
 				<div class="output-dashboard">
 					<h2>Outputs</h2>
 					<div id="maternal-health">

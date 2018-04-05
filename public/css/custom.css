@@ -471,3 +471,22 @@ header{
 .bargraph-div{
   height: 100%;
 }
+
+/*Dashboard*/
+.outcome-progress-col{
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+.outcome-progress-col .report-icon{
+  margin-right: 10px;
+}
+@media (min-width: 992px){
+  .outcome-progress-col .progress-bar-note{
+    height: 40px;
+    font-size: 1.3rem;
+  }
+}
+.intro-text{
+  margin-top: 10px;
+  margin-bottom: 30px; 
+}

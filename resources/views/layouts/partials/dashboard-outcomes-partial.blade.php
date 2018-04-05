@@ -9,7 +9,7 @@
 	}
 @endphp
 
-	<div class="col-md-4">
+	<div class="col-lg-6 col-md-12 outcome-progress-col">
 		<div class="report-heading">
 			<div class="report-icon float-left">
 				@if (strpos(strtolower($key), 'stunting') !== false) 
@@ -20,7 +20,7 @@
 				<img src="{{ asset('images\breastfeed.svg') }}" alt="">
 				@endif
 			</div>
-			<h4>{!! str_replace('_', ' ', $key) !!}</h4>
+			<h3>{!! str_replace('_', ' ', $key) !!}</h3>
 		</div>
 		{{-- <div id="canvas-holder" class="d-none d-md-block">
 			<div class="progress-bar-v" id="goal-chart-{{
