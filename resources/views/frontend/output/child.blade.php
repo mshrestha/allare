@@ -91,9 +91,21 @@ var colors = [
   }
   
   $(document).ready(function() {
+      $("#organisation_unit_id").val("mykF7AaZv9R.mykF7AaZv9R");
+      var organisation_unit_id = $("#organisation_unit_id").val();
 
-      var data = "organisation_unit_id=mykF7AaZv9R.mykF7AaZv9R&period_id=201801%3B201802%3B201803%3B201804&indicator_id=iycf_counselling&department_id=DGHS&output=child";
+      $("#period_id").val("LAST_6_MONTHS");
+      var period_id = $("#period_id").val();
+      
+      $("#indicator_id").val("iycf_counselling");
+      var indicator_id = $("#indicator_id").val();
+      
+      $("#department_id").val("DGHS");
+      var department_id = $("#department_id").val();
+      
+      var output = 'child';
 
+      var data = 'organisation_unit_id='+organisation_unit_id+'&period_id='+period_id+'&indicator_id='+indicator_id+'&department_id='+department_id+'&output='+output;
       data += "&_token={{ Session::token() }}";
 
       main_chart_data(data);
@@ -110,7 +122,8 @@ var colors = [
                     labels: res.labels, 
                     datasets: [{
                         label: res.pointers,
-                        data: res.datasets
+                        data: res.datasets,
+                        backgroundColor: 'rgba(54, 162, 235, 0.8)',
                     }]
                 };
 
@@ -139,7 +152,7 @@ var colors = [
     });
 
     @foreach($trend_analysis as $key => $analysis)
-        pieChart({{ $key }}, {{ $analysis['percent'] }})
+        pieChart({{ $key }}, {{ $analysis['percent'] }}, {!! $analysis['labels'] !!})
         var arr = {!! json_encode($analysis) !!};
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
@@ -195,7 +208,7 @@ var colors = [
       });
     }
 
-    function pieChart(id, data_value) {
+    function pieChart(id, data_value, labels) {
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
@@ -215,8 +228,8 @@ var colors = [
             label: 'Dataset 1'
           }],
           labels: [
-            'Last Month',
-            'Rest of the year',
+            labels[0],
+            labels[1],
           ]
         },
         options: {

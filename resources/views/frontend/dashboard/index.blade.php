@@ -70,18 +70,26 @@
 @section('outjavascript')
 	<script>
 	@foreach($maternal_trend_analysis as $key => $maternal_trend) 
-		pieChart('maternal-' + '{{$key }}', {{ $maternal_trend['percent'] }})
+		pieChart(
+			'maternal-' + '{{$key }}', 
+			{{ $maternal_trend['percent'] }}, 
+			{!! $maternal_trend['labels'] !!}
+		)
 	@endforeach
 
 	@foreach($child_trend_analysis as $key => $child_trend)
-		pieChart('child-' + '{{$key }}', {{ $child_trend['percent'] }})
+		pieChart(
+			'child-' + '{{$key }}', 
+			{{ $child_trend['percent'] }},
+			{!! $child_trend['labels'] !!}
+		)
 	@endforeach
 
-	function pieChart(id, data_value) {
+	function pieChart(id, data_value, labels) {
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
-
+      
       var config = {
         type: 'pie',
         data: {
@@ -92,13 +100,12 @@
             ],
             backgroundColor: [
               'rgba(54, 162, 235, 0.8)',
-              // 'rgba(255, 99, 132, 0.8)',
             ],
             label: 'Dataset 1'
           }],
           labels: [
-            'Last Month',
-            'Rest of the year',
+            labels[0],
+            labels[1],
           ]
         },
         options: {

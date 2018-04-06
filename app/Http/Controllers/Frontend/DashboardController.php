@@ -184,7 +184,7 @@ class DashboardController extends Controller
 		$counselling_percent = ($counselling_last_month->value/$total_patient_last_month->value) * 100;
 		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
 		$counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
-		$counselling_month = $counselling_last_month->period_name;
+		$counselling_month_maternal = $counselling_last_month->period_name;
 
 		//Plw who receive ifas
 		$plw_who_receive_ifas_data = $data['plw_who_receive_ifas'][0];
@@ -213,7 +213,7 @@ class DashboardController extends Controller
 		$counselling_percent = $counselling_data['percent'];
 		$counselling_all_values = $counselling_data['all_values'];
 		$counselling_all_periods = $counselling_data['all_periods'];
-		$counselling_month = $counselling_data['month'];
+		$counselling_month_child = $counselling_data['month'];
 
 		
 		// Vitamin A supplimentation
@@ -226,12 +226,12 @@ class DashboardController extends Controller
 		$maternal_trend_analysis = [
 			[
 				'name' => 'Counseling',
-				'month' => 'Maternal Counselling Given - '. $counselling_month,
+				'month' => 'Maternal Counselling Given - '. $counselling_month_maternal,
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
 				'values' => $counselling_all_values,
 				'title' => 'Counseling',
-				'labels' => [$counselling_month, 'test'],
+				'labels' => json_encode(['Maternal Counselling Given '.$counselling_month_maternal, 'Total patient ' .$counselling_month_maternal]),
 			],
 			[
 				'name' => 'IFA Distribution',
@@ -240,7 +240,7 @@ class DashboardController extends Controller
 				'periods' => $plw_who_receive_ifas_all_periods,
 				'values' => $plw_who_receive_ifas_all_values,
 				'title' => 'IFA Distribution',
-				'labels' => [$plw_who_receive_ifas_month, 'test'],
+				'labels' => json_encode(['PLW who receive IFA\'s in '. $plw_who_receive_ifas_month, 'Total patient '.$plw_who_receive_ifas_month]),
 			],
 			[
 				'name' => 'Weight Measurement',
@@ -249,7 +249,7 @@ class DashboardController extends Controller
 				'periods' => $pregnant_women_weighed_all_periods,
 				'values' => $pregnant_women_weighed_all_values,
 				'title' => 'Weight Measurement',
-				'labels' => [$pregnant_women_weighed_month, 'test'],
+				'labels' => json_encode(['Pregnant women weighed in ' .$pregnant_women_weighed_month, 'Pregnant women weighed yearly']),
 			],
 		];
 
@@ -257,10 +257,11 @@ class DashboardController extends Controller
 			[
 				'name' => 'IMCI Counseling',
 				'title' => 'IMCI Counselling',
-				'month' => 'IYCF counselling - '. $counselling_month,
+				'month' => 'IYCF counselling - '. $counselling_month_child,
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
 				'values' => $counselling_all_values,
+				'labels' => json_encode(['IMCI Counselling given '. $counselling_month_child, 'IMCI Counselling yearly']),
 			],
 			// [
 			// 	'name' => 'Child Growth',
@@ -272,10 +273,11 @@ class DashboardController extends Controller
 			[
 				'name' => 'Supplements',
 				'title' => 'Food Supplimentation',
-				'month' => 'Vitamin A supplements - '. $vitamin_a_supplementation_month,
+				'month' => 'Food Supplimentation - '. $vitamin_a_supplementation_month,
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,
 				'values' => $vitamin_a_supplementation_all_values,
+				'labels' => json_encode(['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplimentation yearly']),
 			],
 		];
 

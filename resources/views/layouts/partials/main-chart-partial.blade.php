@@ -21,7 +21,7 @@
 	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text" for="period-id">Periods</label>
 	                </div> --}}
-	                <select class="custom-select" name="period_id" required>
+	                <select class="custom-select" name="period_id" id="period_id" required>
 	                    <option value="">Periods</option>
 	                    <option value="LAST_MONTH">1 month</option>
 	                    <option value="LAST_6_MONTHS">6 months</option>
