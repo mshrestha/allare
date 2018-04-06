@@ -126,7 +126,7 @@ var colors = [
                     datasets: [{
                         label: res.pointers,
                         data: res.datasets,
-                        backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                        backgroundColor: 'rgb(29, 192, 255)',
                     }]
                 };
 
@@ -225,7 +225,7 @@ var colors = [
               100 - data_value,
             ],
             backgroundColor: [
-              'rgba(54, 162, 235, 0.8)',
+              'rgb(29, 192, 255)',
             ],
             label: 'Dataset 1'
           }],
@@ -238,7 +238,7 @@ var colors = [
           responsive: true,
           pieceLabel: {
             render: 'percentage',
-            fontColor: ['white', 'rgba(54, 162, 235, 0.8)'],
+            fontColor: ['white', 'rgb(29, 192, 255)'],
             precision: 2
           }
         }

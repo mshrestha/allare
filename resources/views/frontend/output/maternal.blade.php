@@ -124,7 +124,7 @@ function charts(datasets, labels) {
                     datasets: [{
                         label: res.pointers,
                         data: res.datasets,
-                        backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                        backgroundColor: 'rgb(29, 192, 255)',
                     }]
                 };
 
@@ -222,8 +222,7 @@ function charts(datasets, labels) {
               100 - data_value,
             ],
             backgroundColor: [
-              'rgba(54, 162, 235, 0.8)',
-              // 'rgba(255, 99, 132, 0.8)',
+              'rgb(29, 192, 255)'
             ],
             label: 'Dataset 1'
           }],

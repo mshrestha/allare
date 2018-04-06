@@ -23,8 +23,8 @@
 	                </div> --}}
 	                <select class="custom-select" name="period_id" id="period_id" required>
 	                    <option value="">Periods</option>
-	                    <option value="LAST_MONTH">1 month</option>
-	                    <option value="LAST_6_MONTHS">6 months</option>
+	                    <option value="LAST_MONTH">Last month</option>
+	                    <option value="LAST_6_MONTHS">Last 6 months</option>
 	                    @foreach($periods as $key => $period)
 	                    	<option value="{{ $key }}">{{ $period }}</option>
 	                    @endforeach
