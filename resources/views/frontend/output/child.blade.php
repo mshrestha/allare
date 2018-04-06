@@ -10,6 +10,8 @@
 @endsection
 
 @section('outjavascript')
+<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
+
 <script>
 // $('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
@@ -67,6 +69,7 @@ var colors = [
                       stacked: true
                   }]
               },
+
               // Container for pan options
               pan: {
                   // Boolean to enable panning
@@ -223,7 +226,6 @@ var colors = [
             ],
             backgroundColor: [
               'rgba(54, 162, 235, 0.8)',
-              // 'rgba(255, 99, 132, 0.8)',
             ],
             label: 'Dataset 1'
           }],
@@ -233,7 +235,12 @@ var colors = [
           ]
         },
         options: {
-          responsive: true
+          responsive: true,
+          pieceLabel: {
+            render: 'percentage',
+            fontColor: ['white', 'rgba(54, 162, 235, 0.8)'],
+            precision: 2
+          }
         }
       };
 

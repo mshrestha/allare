@@ -10,6 +10,8 @@
 @endsection
 
 @section('outjavascript')
+<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
+
 <script>
 // $('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
@@ -231,7 +233,12 @@ function charts(datasets, labels) {
           ]
         },
         options: {
-          responsive: true
+          responsive: true,
+          pieceLabel: {
+            render: 'percentage',
+            fontColor: ['white', 'rgba(54, 162, 235, 0.8)'],
+            precision: 2
+          }
         }
       };
 

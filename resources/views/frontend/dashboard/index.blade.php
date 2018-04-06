@@ -68,6 +68,7 @@
 
 
 @section('outjavascript')
+	<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 	<script>
 	@foreach($maternal_trend_analysis as $key => $maternal_trend) 
 		pieChart(
@@ -109,7 +110,12 @@
           ]
         },
         options: {
-          responsive: true
+          responsive: true,
+          pieceLabel: {
+            render: 'percentage',
+            fontColor: ['white', 'rgba(54, 162, 235, 0.8)'],
+            precision: 2
+          }
         }
       };
 
