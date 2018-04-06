@@ -78,18 +78,19 @@ Route::get('/get_data_element/{id?}', 'AnalysisController@getDataElements');
 
 Route::get('/update_anc_counsel', 'Helper\UpdateDBController@updateANCCounsel');
 
-Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'import-data.'], function() {
+Route::group(['prefix' >= 'import-data', 'namespace' => 'ImportData', 'as' => 'import-data.'], function() {
 	Route::get('/cc-cr-additional-food-supplimentation', 'CcCrAdditionalFoodSupplimentationController@import');
 	Route::get('/imci-wasting', 'ImciWastingController@import');
 	Route::get('/imci-stunting', 'ImciStuntingController@import');
 	Route::get('/importer', 'ImporterController@import');
+	Route::get('/scheduleImport', 'ImporterController@scheduleImport');
 	Route::get('/organisation-unit-importer', 'OrganisationUnitImporterController@import');
 	Route::get('/category-option-combo-importer', 'CategoryOptionComboImporterController@import');
 });
 
+
 Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/dashboard', 'DashboardController@indexAction')->name('dashboard');
-
 	// Outputs 
 	Route::get('/outputs', 'OutputController@indexAction')->name('outputs');
 	Route::get('/outputs/maternal', 'OutputController@indexAction')->name('outputs.maternal');
