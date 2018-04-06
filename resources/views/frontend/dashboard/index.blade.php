@@ -13,9 +13,9 @@
 						<h3>Maternal Health</h3>
 						<div class="row">
 							@foreach($maternal_trend_analysis as $key => $maternal_trend)
-							<div class="col-sm-4">
+							<div class="col-md-6 col-lg-4">
 								<h4>{{ $maternal_trend['name'] }}</h4>
-								<div id="canvas-holder">
+								<div id="canvas-holder" class="canvas-holder">
 									<canvas id="chart-area-maternal-{{ $key }}"></canvas>
 								</div>
 							</div>
@@ -27,9 +27,9 @@
 						<h3>Child Health</h3>
 						<div class="row">
 							@foreach($child_trend_analysis as $key => $child_trend)
-							<div class="col-sm-4">
+							<div class="col-md-6 col-lg-4">
 								<h4>{{ $child_trend['name'] }}</h4>
-								<div id="canvas-holder">
+								<div id="canvas-holder" class="canvas-holder">
 									<canvas id="chart-area-child-{{ $key }}"></canvas>
 								</div>
 							</div>

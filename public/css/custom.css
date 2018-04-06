@@ -490,4 +490,9 @@ header{
   margin-top: 10px;
   margin-bottom: 30px; 
 }
-
+@media(max-width: 991px){
+  .output-dashboard div.canvas-holder {
+      max-width: 250px;
+      margin: 0 auto;
+  }
+}
