@@ -388,14 +388,19 @@ body{
 /* Dashboard */
 img.item-image {
     max-width: 35px;
-    margin-right: 25px;
+    /*margin-right: 25px;*/
 }
 
 span.item-percent {
     font-size: 25px;
-    margin-right: 10px;
+    /*margin-right: 10px;*/
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
+.sideblock-item{
+  margin-bottom: 20px;
+}
 .sideblock {
     margin-top: 25px;
 }
