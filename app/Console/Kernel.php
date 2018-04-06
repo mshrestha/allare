@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->call('App\Http\Controllers\ImportData\ImporterController@importer')->monthly();
+        $schedule->call('App\Http\Controllers\ImportData\ImporterController@scheduleImport')->monthly();
     }
 
     /**
