@@ -8,7 +8,7 @@
 					Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.
 				</div>
 				<div class="output-dashboard">
-					<h1><b>Outputs</b></h1>
+					<h1><b>National Outputs</b></h1>
 					<div id="maternal-health" class="mt-5">
 						<h3>Maternal Health</h3>
 						<div class="row">
@@ -37,6 +37,14 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="output-dashboard mt-5">
+					<h1><b>Outputs by Division</b></h1>
+					<div class="row">
+						
+					</div>
+				</div>
+
 				<div class="outcome-dashboard mt-5">
 					<h1><b>Outcome</b></h1>
 					<div class="row">
@@ -45,6 +53,8 @@
 						@endforeach
 					</div>
 				</div>
+
+
 			</div>
 			<!-- sidebar -->
 			<div class="col-sm-3">
