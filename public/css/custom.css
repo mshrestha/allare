@@ -501,3 +501,10 @@ header{
       margin: 0 auto;
   }
 }
+
+
+/*Map*/
+.map-wrapper {
+  height: 600px;
+}
+/*Map end*/

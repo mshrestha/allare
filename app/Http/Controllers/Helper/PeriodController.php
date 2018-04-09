@@ -17,5 +17,5 @@ class PeriodController extends Controller
     $periods = $this->getPeriods();
     
   	return $periods['periods'];
-
+  }
 }

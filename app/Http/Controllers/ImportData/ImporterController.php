@@ -24,6 +24,8 @@ use App\Models\Data\CcMrWeightInKgAnc;
 use App\Models\Data\CcCrExclusiveBreastFeeding;
 use App\Models\Data\CcCrTotalMale;
 use App\Models\Data\CcCrTotalFemale;
+use App\Models\Data\GeoJson;
+
 use App\Models\OrganisationUnit;
 
 class ImporterController extends Controller
@@ -138,7 +140,6 @@ class ImporterController extends Controller
         dd('done');
     }
 
-
     public function scheduleImport() {
         // dd($period);
         $data = config('datamodel');
@@ -244,4 +245,39 @@ class ImporterController extends Controller
         // dd($save_array);
         dd('done');
     }
+
+    public function mapImport() {
+        $baseUrls = array(config('static.centralBaseUrl'), config('static.communityBaseUrl'));
+        $url = 'https://communitydhis.mohfw.gov.bd/nationalcc/api/26/geoFeatures.json?ou=ou:dNLjKwsVjod;LEVEL-2&displayProperty=NAME';
+        // foreach ($baseUrls as $key => $value) {
+        // $url = $value.'geoFeatures.json?ou=ou:dNLjKwsVjod;LEVEL-2&displayProperty=NAME';
+        $responses = $this->callUrl($url);
+        $responses = json_decode($responses);
+        
+        $save_array = [];
+        // dd($responses);
+        foreach ($responses as $key => $value) {
+            $unit = [];
+            $unit['code'] = $value->code;
+            $unit['organisation_unit'] = $value->id;
+            $unit['coordinates'] =$value->co;
+            $unit['import_date'] = date('Y-m-d H:i:s');
+            if((strpos(strtolower($url), 'centraldhis') !== false)) {
+                $unit['server'] = 'central';
+            }else if((strpos(strtolower($url), 'communitydhis') !== false)) {
+                $unit['server'] = 'community';
+            }
+            $unit['source'] = 'DHIS';
+            array_push($save_array, $unit);
+        }
+        $model = new GeoJson();
+        $model::insert($save_array);    
+        // }
+        // $url = 'https://communitydhis.mohfw.gov.bd/nationalcc/api/26/geoFeatures.json?ou=ou:dNLjKwsVjod;LEVEL-2&displayProperty=NAME';
+        // $responses = $this->callUrl($url);
+        // $responses = json_decode($responses);
+        // dd($responses);
+        dd('done');
+    }
+
 }
