@@ -536,3 +536,7 @@ header{
   width: 100px; 
   float: left;
 }
+
+.output-division-dashboard {
+  margin-top: 30px;
+}
