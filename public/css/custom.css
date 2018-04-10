@@ -508,3 +508,22 @@ header{
   height: 600px;
 }
 /*Map end*/
+
+.outer-legend {
+  display: inline-block;
+  padding: 5px 0;
+  width: 100%;
+}
+.outer-legend .legend{
+  float: left;
+  width: 28%;
+  border-bottom: 3px solid #2bc0fe;
+  color: #2bc0fe;
+  font: bold 14px/18px 'ArialMT', 'Arial';
+  padding: 5px 0 5px 0;
+}
+.outer-legend .legend-2{
+  border-color: #CCC;
+  color: #CCC;
+  text-align: right;
+}

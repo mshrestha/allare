@@ -45,7 +45,11 @@
 							<div id="mapdiv" class="map-wrapper"></div>
 						</div>
 						<div class="col-sm-3">
-							<h4 id="division-name"></h4>
+							<h3 id="division-name" class="mb-2"></h3>
+						<div class="outer-legend mb-1">
+							<div class="legend legend-1">label 1</div> 
+							<div class="legend legend-2">label 2</div> 
+						</div>
 							<div class="piecharts" id="division-piecharts"></div>
 						</div>
 					</div>
@@ -207,7 +211,7 @@
 						text: data_value+"%",
 	          color: '#36AFFF', // Default is #000000
 	          fontStyle: 'Arial', // Default is Arial
-	          sidePadding: 20 // Defualt is 20 (as a percentage)
+	          sidePadding: 50 // Defualt is 20 (as a percentage)
 					}
 				},
 				title: {
@@ -221,13 +225,16 @@
 		    },
 		    tooltips: {
 		    	bodyFontSize: 12,
-		    	xPadding: 10
+		    	xPadding: 10,
 		    	// Template: "<%if (label){%><%=label%>: <%}%><%= value %>hrs",
+		    	display: false
 		    },
 			  percentageInnerCutout : 100,
+
 		    responsive:true,
 				maintainAspectRatio: true,
-				tooltipCaretSize: 0
+				tooltipCaretSize: 0,
+				cutoutPercentage: 90
 			}
     };
 
