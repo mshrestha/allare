@@ -41,10 +41,10 @@
 				<div class="output-division-dashboard">
 					<h1><b>Outputs by Division</b></h1>
 					<div class="row">
-						<div class="col-sm-9">
+						<div class="col-lg-8">
 							<div id="mapdiv" class="map-wrapper"></div>
 						</div>
-						<div class="col-sm-3">
+						<div class="col-lg-4">
 							<h3 id="division-name" class="mb-2"></h3>
 							<div class="outer-legend mb-1" id="legend-for-data">
 								<div class="legend legend-1">This month</div> 
