@@ -251,7 +251,8 @@
     function initMap() {
         map = new google.maps.Map(document.getElementById('mapdiv'), {
           center: {lat: 23.684994, lng: 90.356331},
-          zoom: 7
+          zoom: 7,
+          scrollwheel: true
         });
 
         // Set a blank infoWindow to be used for each to state on click
