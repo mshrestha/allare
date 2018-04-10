@@ -38,8 +38,8 @@
 					</div>
 				</div>
 
-				<div class="output-division-dashboard">
-					<h1><b>Outputs by Division</b></h1>
+				<div class="output-division-dashboard mt-5">
+					<h1 class="mb-5"><b>Outputs by Division</b></h1>
 					<div class="row">
 						<div class="col-lg-12 slidemap">
 							<div id="mapdiv" class="map-wrapper"></div>
