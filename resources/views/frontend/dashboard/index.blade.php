@@ -228,17 +228,14 @@
 	        display: false
 		    },
 		    tooltips: {
-		    	bodyFontSize: 12,
-		    	xPadding: 10,
-		    	// Template: "<%if (label){%><%=label%>: <%}%><%= value %>hrs",
-		    	display: false
+		    	enabled: false
 		    },
 			  percentageInnerCutout : 100,
 
 		    responsive:true,
 				maintainAspectRatio: true,
 				tooltipCaretSize: 0,
-				cutoutPercentage: 90
+				cutoutPercentage: 80
 			}
     };
 
