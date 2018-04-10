@@ -41,7 +41,7 @@
 				<div class="output-division-dashboard">
 					<h1><b>Outputs by Division</b></h1>
 					<div class="row">
-						<div class="col-lg-8">
+						<div class="col-lg-12">
 							<div id="mapdiv" class="map-wrapper"></div>
 						</div>
 						<div class="col-lg-4">
@@ -293,6 +293,9 @@
 		});
 		
 		stateLayer.addListener('click', function(e) {
+			var elem = $('#mapdiv').parent();
+			elem.addClass('col-lg-8');
+			elem.removeClass('col-lg-12');
 	    infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
 	      e.feature.getProperty('name') + '</div>');
 
