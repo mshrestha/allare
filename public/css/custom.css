@@ -544,3 +544,10 @@ header{
 #division-name {
   margin-top: 15px;
 }
+
+.slidemap {
+  display:block;
+  width: 100%;
+  -webkit-transition: 0.75s; /* Safari */
+  transition: 0.75s;
+}
