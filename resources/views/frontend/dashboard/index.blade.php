@@ -219,12 +219,21 @@
 	          fontStyle: 'Arial', // Default is Arial
 	          sidePadding: 20 // Defualt is 20 (as a percentage)
 					}
-				}
+				},
+				legend: {
+	        display: false
+		    },
+		    tooltipFontSize: 30,
+				tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>hrs",
+				percentageInnerCutout : 70,
+				responsive:true,
+				maintainAspectRatio: false
 			}
     };
 
     var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
     window.myPie = new Chart(ctx, config);
+    // window.myPie.canvas.parentNode.style.height = '128px';
   }
 
    //  $.ajax({
@@ -256,10 +265,10 @@
 			      	maternal = res['maternal'];
 			      	output = '';
 			      	for (var i = 0; i < child.length; i++) {
-			      		output += '<div id="canvas-holder" class="canvas-holder"><canvas id="chart-area-division-child-'+[i]+'"></canvas></div>';
+			      		output += '<div id="canvas-holder" class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-child-'+[i]+'"></canvas></div>';
 			      	};
 			      	for (var i = 0; i < maternal.length; i++) {
-			      		output += '<div id="canvas-holder" class="canvas-holder"><canvas id="chart-area-division-maternal-'+[i]+'"></canvas></div>';
+			      		output += '<div id="canvas-holder" class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-maternal-'+[i]+'"></canvas></div>';
 			      	};
 			      	$('#division-piecharts').html(output);
 
