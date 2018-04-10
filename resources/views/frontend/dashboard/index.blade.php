@@ -135,6 +135,14 @@
         ]
       },
       options: {
+      	legend: {
+            display: true,
+            labels: {
+                // fontColor: 'rgb(255, 99, 132)',
+            },
+            // position: 'left'
+        },
+
         responsive: true,
         pieceLabel: {
           render: 'percentage',
