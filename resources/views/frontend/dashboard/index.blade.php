@@ -280,7 +280,7 @@
 		// Add mouseover and mouse out styling for the GeoJSON State data
 		stateLayer.addListener('mouseover', function(e) {
 			stateLayer.overrideStyle(e.feature, {
-				strokeColor: '#444',
+				strokeColor: '#333',
 				strokeWeight: 2,
 				zIndex: 2
 			});
