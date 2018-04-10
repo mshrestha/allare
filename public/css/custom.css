@@ -527,3 +527,12 @@ header{
   color: #CCC;
   text-align: right;
 }
+
+.legend.legend-2 {
+    font-size: 12px;
+}
+
+.canvas-holder , .canvas-holder-division { 
+  width: 100px; 
+  float: left;
+}
