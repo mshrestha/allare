@@ -48,7 +48,7 @@
 							<h3 id="division-name" class="mb-2"></h3>
 							<div class="outer-legend mb-1" id="legend-for-data">
 								<div class="legend legend-1">This month</div> 
-								<div class="legend legend-2">Rest of the month</div> 
+								<div class="legend legend-2">Rest of the year</div> 
 							</div>
 							<div class="piecharts" id="division-piecharts"></div>
 						</div>
