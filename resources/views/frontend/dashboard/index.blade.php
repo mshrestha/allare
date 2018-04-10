@@ -140,7 +140,7 @@
     window.myPie = new Chart(ctx, config);
   }
 
-  function doughChart(id, data_value, labels) {    
+  function doughChart(id, data_value, labels, title) {    
 		Chart.pluginService.register({
 			beforeDraw: function (chart) {
 				if (chart.config.options.elements.center) {
@@ -194,7 +194,7 @@
           backgroundColor: [
             'rgb(29, 192, 255)',
           ],
-          // label: 'Dataset 1'
+          label: 'Dataset 1'
         }],
         labels: [
           labels[0],
@@ -210,14 +210,24 @@
 	          sidePadding: 20 // Defualt is 20 (as a percentage)
 					}
 				},
+				title: {
+					display: true,
+					text: title,
+					// fontSize: 15,
+					wrap: true, 
+				},
 				legend: {
 	        display: false
 		    },
-		    tooltipFontSize: 30,
-				tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>hrs",
-				percentageInnerCutout : 70,
-				responsive:true,
-				maintainAspectRatio: false
+		    tooltips: {
+		    	bodyFontSize: 12,
+		    	xPadding: 10
+		    	// Template: "<%if (label){%><%=label%>: <%}%><%= value %>hrs",
+		    },
+			  percentageInnerCutout : 100,
+		    responsive:true,
+				maintainAspectRatio: true,
+				tooltipCaretSize: 0
 			}
     };
 
