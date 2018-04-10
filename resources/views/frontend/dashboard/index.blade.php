@@ -148,41 +148,41 @@
 		Chart.pluginService.register({
 			beforeDraw: function (chart) {
 				if (chart.config.options.elements.center) {
-	        //Get ctx from string
-	        var ctx = chart.chart.ctx;
-	        
+			        //Get ctx from string
+			        var ctx = chart.chart.ctx;
+			        
 					//Get options from the center object in options
-	        var centerConfig = chart.config.options.elements.center;
-	      	var fontStyle = centerConfig.fontStyle || 'Arial';
-					var txt = centerConfig.text;
-	        var color = centerConfig.color || '#000';
-	        var sidePadding = centerConfig.sidePadding || 20;
-	        var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
-	        //Start with a base font of 30px
-	        ctx.font = "30px " + fontStyle;
-	        
+			        var centerConfig = chart.config.options.elements.center;
+			      	var fontStyle = centerConfig.fontStyle || 'Arial';
+							var txt = centerConfig.text;
+			        var color = centerConfig.color || '#000';
+			        var sidePadding = centerConfig.sidePadding || 20;
+			        var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+			        //Start with a base font of 30px
+			        ctx.font = "30px " + fontStyle;
+			        
 					//Get the width of the string and also the width of the element minus 10 to give it 5px side padding
-	        var stringWidth = ctx.measureText(txt).width;
-	        var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+			        var stringWidth = ctx.measureText(txt).width;
+			        var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
 
-	        // Find out how much the font can grow in width.
-	        var widthRatio = elementWidth / stringWidth;
-	        var newFontSize = Math.floor(30 * widthRatio);
-	        var elementHeight = (chart.innerRadius * 2);
+			        // Find out how much the font can grow in width.
+			        var widthRatio = elementWidth / stringWidth;
+			        var newFontSize = Math.floor(30 * widthRatio);
+			        var elementHeight = (chart.innerRadius * 2);
 
-	        // Pick a new font size so it will not be larger than the height of label.
-	        var fontSizeToUse = Math.min(newFontSize, elementHeight);
+			        // Pick a new font size so it will not be larger than the height of label.
+			        var fontSizeToUse = Math.min(newFontSize, elementHeight);
 
 					//Set font settings to draw it correctly.
-	        ctx.textAlign = 'center';
-	        ctx.textBaseline = 'middle';
-	        var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
-	        var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
-	        ctx.font = fontSizeToUse+"px " + fontStyle;
-	        ctx.fillStyle = color;
-	        
-	        //Draw text in center
-	        ctx.fillText(txt, centerX, centerY);
+			        ctx.textAlign = 'center';
+			        ctx.textBaseline = 'middle';
+			        var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+			        var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+			        ctx.font = fontSizeToUse+"px " + fontStyle;
+			        ctx.fillStyle = color;
+			        
+			        //Draw text in center
+			        ctx.fillText(txt, centerX, centerY);
 				}
 			}
 		});
@@ -243,56 +243,104 @@
     // window.myPie.canvas.parentNode.style.height = '128px';
   }
 
-   //  $.ajax({
-   //    type: 'get',
-   //    url: '/dashboard_maps',
-   //    success: function (res) {
-   //    	console.log(res);
-   //    },
-   //    error: function(res) {
-   //      console.log('failed')
-   //    }
-  	// });
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('mapdiv'), {
           center: {lat: 23.684994, lng: 90.356331},
-          zoom: 6
+          zoom: 7
         });
-        map.data.loadGeoJson("{{asset('bangladesh-division.geojson')}}");
 
-        map.data.addListener('click', function(event) {
-         	$.ajax({
-			      type: 'get',
-			      url: '/dashboard_percents',
-			      data: {"ids": event.feature.getProperty('ids')},
-			      success: function (res) {
-			      	$('#division-name').html(event.feature.getProperty('name')+" Division")
-			      	child = res['child'];
-			      	maternal = res['maternal'];
-			      	output = '';
-			      	for (var i = 0; i < child.length; i++) {
-			      		output += '<div id="canvas-holder" class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-child-'+[i]+'"></canvas></div>';
-			      	};
-			      	for (var i = 0; i < maternal.length; i++) {
-			      		output += '<div id="canvas-holder" class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-maternal-'+[i]+'"></canvas></div>';
-			      	};
-			      	$('#division-piecharts').html(output);
+        // Set a blank infoWindow to be used for each to state on click
+		var infoWindow = new google.maps.InfoWindow({
+			content: ""
+		});
 
-			      	for (var i = 0; i < child.length; i++) {
-			      		doughChart('division-child-' + i, child[i].percent, child[i].labels, child[i].name);
-			      	};
-			      	for (var i = 0; i < maternal.length; i++) {
-			      		doughChart('division-maternal-' + i, maternal[i].percent, maternal[i].labels, maternal[i].name);
-			      	};
-			      	
-			      },
-			      error: function(res) {
-			        console.log('failed')
-			      }
-			  	});
+		// Create the state data layer and load the GeoJson Data
+		var stateLayer = new google.maps.Data();
+		
+		{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
+		stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+
+		// Set and apply styling to the stateLayer
+		stateLayer.setStyle(function(feature) {
+			return {
+				fillColor: '#666',
+				fillOpacity: 0.6,
+				strokeColor: '#777',
+				strokeWeight: 1.5,
+				zIndex: 1
+			};
+		});
+
+		// Add mouseover and mouse out styling for the GeoJSON State data
+		stateLayer.addListener('mouseover', function(e) {
+			stateLayer.overrideStyle(e.feature, {
+				strokeColor: '#444',
+				strokeWeight: 2,
+				zIndex: 2
+			});
+		});
+
+		stateLayer.addListener('mouseout', function(e) {
+			
+			stateLayer.overrideStyle(e.feature, {
+				strokeColor: '#777',
+				strokeWeight: 1.5,
+				zIndex: 1
+			});
+		});
+		
+		stateLayer.addListener('click', function(e) {
+		    infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
+		      e.feature.getProperty('name') + '</div>');
+
+		    var anchor = new google.maps.MVCObject();
+		    anchor.set("position", e.latLng);
+		    infoWindow.open(map, anchor);
+		});
+
+        stateLayer.addListener('click', function(event) {
+         	getDivisionData(event);
+         	stateLayer.revertStyle();
+         	stateLayer.overrideStyle(event.feature, {fillColor: '#1ebffa', fillOpacity: 0.8,});
         });
-      }
+
+
+        // Final step here sets the stateLayer GeoJSON data onto the map
+		stateLayer.setMap(map);
+	}
+
+	function getDivisionData(event) {
+      	$.ajax({
+	      type: 'get',
+	      url: '/dashboard_percents',
+	      data: {"ids": event.feature.getProperty('ids')},
+	      success: function (res) {
+	      	$('#division-name').html(event.feature.getProperty('name')+" Division")
+	      	child = res['child'];
+	      	maternal = res['maternal'];
+	      	output = '';
+	      	for (var i = 0; i < child.length; i++) {
+	      		output += '<div id="canvas-holder" class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-child-'+[i]+'"></canvas></div>';
+	      	};
+	      	for (var i = 0; i < maternal.length; i++) {
+	      		output += '<div id="canvas-holder" class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-maternal-'+[i]+'"></canvas></div>';
+	      	};
+	      	$('#division-piecharts').html(output);
+
+	      	for (var i = 0; i < child.length; i++) {
+	      		doughChart('division-child-' + i, child[i].percent, child[i].labels);
+	      	};
+	      	for (var i = 0; i < maternal.length; i++) {
+	      		doughChart('division-maternal-' + i, maternal[i].percent, maternal[i].labels);
+	      	};
+	      	
+	      },
+	      error: function(res) {
+	        console.log('failed')
+	      }
+	  	});
+	}
 
 	</script>
 
