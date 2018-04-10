@@ -510,11 +510,12 @@ header{
 /*Map end*/
 
 .outer-legend {
-  display: inline-block;
+  display: flex;
   padding: 5px 0;
   width: 100%;
 }
 .outer-legend .legend{
+  display: flex;
   float: left;
   width: 41%;
   border-bottom: 3px solid #2bc0fe;
@@ -522,14 +523,22 @@ header{
   font: bold 14px/18px 'ArialMT', 'Arial';
   padding: 5px 0 5px 0;
 }
+
+@media(min-width: 992px){
+  .outer-legend .legend{
+    font-size: 10px;
+  } 
+  
+}
+@media(min-width: 1200px){
+  .outer-legend .legend{
+    font-size: 12px;
+  }
+}
 .outer-legend .legend-2{
   border-color: #CCC;
   color: #CCC;
-  text-align: right;
-}
-
-.legend.legend-2 {
-    font-size: 12px;
+  justify-content: flex-end;
 }
 
 .canvas-holder-division { 
@@ -543,4 +552,11 @@ header{
 
 #division-name {
   margin-top: 15px;
+}
+
+.slidemap {
+  display:block;
+  width: 100%;
+  -webkit-transition: 0.75s; /* Safari */
+  transition: 0.75s;
 }

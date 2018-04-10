@@ -41,7 +41,7 @@
 				<div class="output-division-dashboard">
 					<h1><b>Outputs by Division</b></h1>
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-12 slidemap">
 							<div id="mapdiv" class="map-wrapper"></div>
 						</div>
 						<div class="col-lg-4">
@@ -135,6 +135,14 @@
         ]
       },
       options: {
+      	legend: {
+            display: true,
+            labels: {
+                // fontColor: 'rgb(255, 99, 132)',
+            },
+            // position: 'left'
+        },
+
         responsive: true,
         pieceLabel: {
           render: 'percentage',
@@ -228,17 +236,14 @@
 	        display: false
 		    },
 		    tooltips: {
-		    	bodyFontSize: 12,
-		    	xPadding: 10,
-		    	// Template: "<%if (label){%><%=label%>: <%}%><%= value %>hrs",
-		    	display: false
+		    	enabled: false
 		    },
 			  percentageInnerCutout : 100,
 
 		    responsive:true,
 				maintainAspectRatio: true,
 				tooltipCaretSize: 0,
-				cutoutPercentage: 90
+				cutoutPercentage: 80
 			}
     };
 
@@ -297,22 +302,24 @@
 		
 		stateLayer.addListener('click', function(e) {
 			var elem = $('#mapdiv').parent();
-			elem.addClass('col-lg-8');
+			// var elem = $('#mapdiv');
+			// elem.css('width', '500px');
+			
+		    elem.addClass('col-lg-8');
 			elem.removeClass('col-lg-12');
-	    infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
-	      e.feature.getProperty('name') + '</div>');
+	    	infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
+			e.feature.getProperty('name') + '</div>');
 
-	    var anchor = new google.maps.MVCObject();
-	    anchor.set("position", e.latLng);
-	    infoWindow.open(map, anchor);
+	    	var anchor = new google.maps.MVCObject();
+	    	anchor.set("position", e.latLng);
+	    	infoWindow.open(map, anchor);
 		});
 
-    stateLayer.addListener('click', function(event) {
-     	getDivisionData(event);
-     	stateLayer.revertStyle();
-     	stateLayer.overrideStyle(event.feature, {fillColor: '#1ebffa', fillOpacity: 0.8,});
-    });
-
+	    stateLayer.addListener('click', function(event) {
+	     	getDivisionData(event);
+	     	stateLayer.revertStyle();
+	     	stateLayer.overrideStyle(event.feature, {fillColor: '#1ebffa', fillOpacity: 0.8,});
+	    });
 
         // Final step here sets the stateLayer GeoJSON data onto the map
 		stateLayer.setMap(map);
