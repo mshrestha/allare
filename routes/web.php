@@ -84,6 +84,7 @@ Route::group(['prefix' >= 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 	Route::get('/imci-stunting', 'ImciStuntingController@import');
 	Route::get('/importer', 'ImporterController@import');
 	Route::get('/scheduleImport', 'ImporterController@scheduleImport');
+	Route::get('/mapImport', 'ImporterController@mapImport');
 	Route::get('/organisation-unit-importer', 'OrganisationUnitImporterController@import');
 	Route::get('/category-option-combo-importer', 'CategoryOptionComboImporterController@import');
 });
@@ -91,6 +92,8 @@ Route::group(['prefix' >= 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 
 Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/dashboard', 'DashboardController@indexAction')->name('dashboard');
+	Route::get('/dashboard_maps', 'DashboardController@getGeoJsons')->name('dashboard-maps');
+	Route::get('/dashboard_percents', 'DashboardController@getPercentTrend')->name('dashboard-percents');
 	// Outputs 
 	Route::get('/outputs', 'OutputController@indexAction')->name('outputs');
 	Route::get('/outputs/maternal', 'OutputController@indexAction')->name('outputs.maternal');

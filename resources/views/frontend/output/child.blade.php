@@ -201,7 +201,7 @@ var colors = [
           responsive: true,
           title: {
             display: true,
-            text: 'Chart.js Drsw Line on Chart'
+            // text: 'Chart.js Drsw Line on Chart'
           },
           tooltips: {
             mode: 'index',
