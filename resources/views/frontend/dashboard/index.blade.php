@@ -41,7 +41,7 @@
 				<div class="output-division-dashboard">
 					<h1><b>Outputs by Division</b></h1>
 					<div class="row">
-						<div class="col-lg-8">
+						<div class="col-lg-12">
 							<div id="mapdiv" class="map-wrapper"></div>
 						</div>
 						<div class="col-lg-4">
@@ -228,17 +228,14 @@
 	        display: false
 		    },
 		    tooltips: {
-		    	bodyFontSize: 12,
-		    	xPadding: 10,
-		    	// Template: "<%if (label){%><%=label%>: <%}%><%= value %>hrs",
-		    	display: false
+		    	enabled: false
 		    },
 			  percentageInnerCutout : 100,
 
 		    responsive:true,
 				maintainAspectRatio: true,
 				tooltipCaretSize: 0,
-				cutoutPercentage: 90
+				cutoutPercentage: 80
 			}
     };
 
@@ -251,7 +248,8 @@
     function initMap() {
         map = new google.maps.Map(document.getElementById('mapdiv'), {
           center: {lat: 23.684994, lng: 90.356331},
-          zoom: 7
+          zoom: 7,
+          scrollwheel: true
         });
 
         // Set a blank infoWindow to be used for each to state on click
@@ -295,6 +293,9 @@
 		});
 		
 		stateLayer.addListener('click', function(e) {
+			var elem = $('#mapdiv').parent();
+			elem.addClass('col-lg-8');
+			elem.removeClass('col-lg-12');
 	    infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
 	      e.feature.getProperty('name') + '</div>');
 
