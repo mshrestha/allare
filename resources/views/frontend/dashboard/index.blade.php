@@ -1,4 +1,4 @@
-@extends('layouts.app')
+	@extends('layouts.app')
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -46,10 +46,10 @@
 						</div>
 						<div class="col-sm-3">
 							<h3 id="division-name" class="mb-2"></h3>
-						<div class="outer-legend mb-1">
-							<div class="legend legend-1">label 1</div> 
-							<div class="legend legend-2">label 2</div> 
-						</div>
+							<div class="outer-legend mb-1" id="legend-for-data">
+								<div class="legend legend-1">This month</div> 
+								<div class="legend legend-2">Rest of the month</div> 
+							</div>
 							<div class="piecharts" id="division-piecharts"></div>
 						</div>
 					</div>
@@ -91,6 +91,10 @@
 	<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 
 	<script>
+	$(document).ready(function(){
+		$('#legend-for-data').hide();
+	});
+
 	@foreach($maternal_trend_analysis as $key => $maternal_trend) 
 		pieChart(
 			'maternal-' + '{{$key }}', 
@@ -291,19 +295,19 @@
 		});
 		
 		stateLayer.addListener('click', function(e) {
-		    infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
-		      e.feature.getProperty('name') + '</div>');
+	    infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
+	      e.feature.getProperty('name') + '</div>');
 
-		    var anchor = new google.maps.MVCObject();
-		    anchor.set("position", e.latLng);
-		    infoWindow.open(map, anchor);
+	    var anchor = new google.maps.MVCObject();
+	    anchor.set("position", e.latLng);
+	    infoWindow.open(map, anchor);
 		});
 
-        stateLayer.addListener('click', function(event) {
-         	getDivisionData(event);
-         	stateLayer.revertStyle();
-         	stateLayer.overrideStyle(event.feature, {fillColor: '#1ebffa', fillOpacity: 0.8,});
-        });
+    stateLayer.addListener('click', function(event) {
+     	getDivisionData(event);
+     	stateLayer.revertStyle();
+     	stateLayer.overrideStyle(event.feature, {fillColor: '#1ebffa', fillOpacity: 0.8,});
+    });
 
 
         // Final step here sets the stateLayer GeoJSON data onto the map
@@ -311,12 +315,13 @@
 	}
 
 	function getDivisionData(event) {
-      	$.ajax({
+    	$.ajax({
 	      type: 'get',
 	      url: '/dashboard_percents',
 	      data: {"ids": event.feature.getProperty('ids')},
 	      success: function (res) {
-	      	$('#division-name').html(event.feature.getProperty('name')+" Division")
+	      	$('#legend-for-data').show();
+	      	$('#division-name').html(event.feature.getProperty('name'))
 	      	child = res['child'];
 	      	maternal = res['maternal'];
 	      	output = '';
@@ -329,10 +334,10 @@
 	      	$('#division-piecharts').html(output);
 
 	      	for (var i = 0; i < child.length; i++) {
-	      		doughChart('division-child-' + i, child[i].percent, child[i].labels);
+	      		doughChart('division-child-' + i, child[i].percent, child[i].labels, child[i].name);
 	      	};
 	      	for (var i = 0; i < maternal.length; i++) {
-	      		doughChart('division-maternal-' + i, maternal[i].percent, maternal[i].labels);
+	      		doughChart('division-maternal-' + i, maternal[i].percent, maternal[i].labels, maternal[i].name);
 	      	};
 	      	
 	      },
