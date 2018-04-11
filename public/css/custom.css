@@ -517,7 +517,7 @@ header{
 .outer-legend .legend{
   display: flex;
   float: left;
-  width: 41%;
+  width: 50%;
   border-bottom: 3px solid #2bc0fe;
   color: #2bc0fe;
   font: bold 14px/18px 'ArialMT', 'Arial';
@@ -557,6 +557,6 @@ header{
 .slidemap {
   display:block;
   width: 100%;
-  -webkit-transition: 0.75s; /* Safari */
-  transition: 0.75s;
+  -webkit-transition: 0.20s; /* Safari */
+  transition: 0.20s;
 }
