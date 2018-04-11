@@ -136,11 +136,7 @@
       },
       options: {
       	legend: {
-            display: true,
-            labels: {
-                // fontColor: 'rgb(255, 99, 132)',
-            },
-            // position: 'left'
+            display: true
         },
 
         responsive: true,
@@ -166,7 +162,7 @@
 					//Get options from the center object in options
 			        var centerConfig = chart.config.options.elements.center;
 			      	var fontStyle = centerConfig.fontStyle || 'Arial';
-							var txt = centerConfig.text;
+					var txt = centerConfig.text;
 			        var color = centerConfig.color || '#000';
 			        var sidePadding = centerConfig.sidePadding || 20;
 			        var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
@@ -257,7 +253,7 @@
         map = new google.maps.Map(document.getElementById('mapdiv'), {
           center: {lat: 23.684994, lng: 90.356331},
           zoom: 7,
-          scrollwheel: true
+          scrollwheel: false
         });
 
         // Set a blank infoWindow to be used for each to state on click
@@ -292,7 +288,6 @@
 		});
 
 		stateLayer.addListener('mouseout', function(e) {
-			
 			stateLayer.overrideStyle(e.feature, {
 				strokeColor: '#777',
 				strokeWeight: 1.5,
@@ -302,9 +297,6 @@
 		
 		stateLayer.addListener('click', function(e) {
 			var elem = $('#mapdiv').parent();
-			// var elem = $('#mapdiv');
-			// elem.css('width', '500px');
-			
 		    elem.addClass('col-lg-8');
 			elem.removeClass('col-lg-12');
 	    	infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
