@@ -250,42 +250,42 @@
 
 
     function initMap() {
-        map = new google.maps.Map(document.getElementById('mapdiv'), {
-          center: {lat: 23.684994, lng: 90.356331},
-          zoom: 7,
-          scrollwheel: false
-        });
+      map = new google.maps.Map(document.getElementById('mapdiv'), {
+        center: {lat: 23.684994, lng: 90.356331},
+        zoom: 7,
+        scrollwheel: true
+      });
 
         // Set a blank infoWindow to be used for each to state on click
-		var infoWindow = new google.maps.InfoWindow({
-			content: ""
-		});
-
-		// Create the state data layer and load the GeoJson Data
-		var stateLayer = new google.maps.Data();
-		
-		{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
-		stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
-
-		// Set and apply styling to the stateLayer
-		stateLayer.setStyle(function(feature) {
-			return {
-				fillColor: '#666',
-				fillOpacity: 0.6,
-				strokeColor: '#777',
-				strokeWeight: 1.5,
-				zIndex: 1
-			};
-		});
-
-		// Add mouseover and mouse out styling for the GeoJSON State data
-		stateLayer.addListener('mouseover', function(e) {
-			stateLayer.overrideStyle(e.feature, {
-				strokeColor: '#333',
-				strokeWeight: 2,
-				zIndex: 2
+			var infoWindow = new google.maps.InfoWindow({
+				content: ""
 			});
-		});
+
+			// Create the state data layer and load the GeoJson Data
+			var stateLayer = new google.maps.Data();
+			
+			{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
+			stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+
+			// Set and apply styling to the stateLayer
+			stateLayer.setStyle(function(feature) {
+				return {
+					fillColor: '#666',
+					fillOpacity: 0.6,
+					strokeColor: '#777',
+					strokeWeight: 1.5,
+					zIndex: 1
+				};
+			});
+
+			// Add mouseover and mouse out styling for the GeoJSON State data
+			stateLayer.addListener('mouseover', function(e) {
+				stateLayer.overrideStyle(e.feature, {
+					strokeColor: '#333',
+					strokeWeight: 2,
+					zIndex: 2
+				});
+			});
 
 		stateLayer.addListener('mouseout', function(e) {
 			stateLayer.overrideStyle(e.feature, {
@@ -314,8 +314,8 @@
 	    });
 
         // Final step here sets the stateLayer GeoJSON data onto the map
-		stateLayer.setMap(map);
-	}
+			stateLayer.setMap(map);
+		}
 
 	function getDivisionData(event) {
     	$.ajax({
