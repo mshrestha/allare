@@ -257,7 +257,8 @@
       map = new google.maps.Map(document.getElementById('mapdiv'), {
         center: {lat: 23.684994, lng: 90.356331},
         zoom: 7,
-        scrollwheel: true
+        scrollwheel: true,
+        styles: [{"featureType":"administrative","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":"50"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"lightness":"30"}]},{"featureType":"road.local","elementType":"all","stylers":[{"lightness":"40"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"lightness":-25},{"saturation":-100}]}]
       });
 
         // Set a blank infoWindow to be used for each to state on click
@@ -273,6 +274,7 @@
 
 			// Set and apply styling to the stateLayer
 			stateLayer.setStyle(function(feature) {
+				color = feature.getProperty('color');
 				return {
 					fillColor: '#666',
 					fillOpacity: 0.6,
@@ -284,8 +286,11 @@
 
 			// Add mouseover and mouse out styling for the GeoJSON State data
 			stateLayer.addListener('mouseover', function(e) {
+				// console.log();
 				stateLayer.overrideStyle(e.feature, {
-					strokeColor: '#333',
+					// fillColor: e.feature.getProperty('color'),
+					strokeColor: '#2bc0fe',
+					// strokeColor: e.feature.getProperty('color'),
 					strokeWeight: 2,
 					zIndex: 2
 				});
@@ -294,6 +299,7 @@
 			stateLayer.addListener('mouseout', function(e) {
 				
 				stateLayer.overrideStyle(e.feature, {
+					// fillColor: '#666',
 					strokeColor: '#777',
 					strokeWeight: 1.5,
 					zIndex: 1
@@ -318,6 +324,7 @@
 	     	getDivisionData(event);
 	     	stateLayer.revertStyle();
 	     	stateLayer.overrideStyle(event.feature, {fillColor: '#1ebffa', fillOpacity: 0.8,});
+	     	// stateLayer.overrideStyle(event.feature, {fillColor: event.feature.getProperty('color'), fillOpacity: 0.8,});
 	    });
 
         // Final step here sets the stateLayer GeoJSON data onto the map
