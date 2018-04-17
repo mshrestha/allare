@@ -171,7 +171,7 @@
 				            var width = this.width; 
 				            console.log(this);
 				           
-				            this.lineWidths = this.lineWidths.map( () => this.width-12 );
+				            this.lineWidths = this.lineWidths.map( () => this.width-0 );
 				            
 				            this.options.labels.padding = 10;
 				            this.options.labels.boxWidth = 15;
