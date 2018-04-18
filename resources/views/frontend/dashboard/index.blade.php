@@ -7,6 +7,23 @@
 				<div class="intro-text h3">
 					Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.
 				</div>
+				<div class="output-division-dashboard mt-5">
+					<h1 class="mb-5"><b>Outputs by Division</b></h1>
+					<div class="row">
+						<div class="col-lg-12 slidemap">
+							<div id="mapdiv" class="map-wrapper"></div>
+						</div>
+						<div class="col-lg-4">
+							<h3 id="division-name" class="mb-2"></h3>
+							<div class="outer-legend mb-1" id="legend-for-data">
+								<div class="legend legend-1">This month</div> 
+								<div class="legend legend-2">Rest of the year</div> 
+							</div>
+							<div class="piecharts" id="division-piecharts"></div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="output-dashboard">
 					<h1><b>National Outputs</b></h1>
 					<div id="maternal-health" class="mt-5">
@@ -34,23 +51,6 @@
 								</div>
 							</div>
 							@endforeach
-						</div>
-					</div>
-				</div>
-
-				<div class="output-division-dashboard mt-5">
-					<h1 class="mb-5"><b>Outputs by Division</b></h1>
-					<div class="row">
-						<div class="col-lg-12 slidemap">
-							<div id="mapdiv" class="map-wrapper"></div>
-						</div>
-						<div class="col-lg-4">
-							<h3 id="division-name" class="mb-2"></h3>
-							<div class="outer-legend mb-1" id="legend-for-data">
-								<div class="legend legend-1">This month</div> 
-								<div class="legend legend-2">Rest of the year</div> 
-							</div>
-							<div class="piecharts" id="division-piecharts"></div>
 						</div>
 					</div>
 				</div>
