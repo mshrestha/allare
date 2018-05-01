@@ -1,12 +1,26 @@
 	@extends('layouts.app')
 @section('content')
 	<div class="container">
+		
 		<div class="row">
 			<!-- content -->
 			<div class="col-sm-9">
+				<div class="row">
+					<div class="col-sm-6">
+						<h3>Maternal Health</h3>
+						<div id="maternal-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+					</div>
+					<div class="col-sm-6">
+						<h3>Child Health</h3>
+						<div id="child-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+					</div>
+				</div>
+
 				<div class="intro-text h3">
 					Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.
 				</div>
+
+
 				<div class="output-division-dashboard mt-5">
 					<h1 class="mb-5"><b>Outputs by Division</b></h1>
 					<div class="row">
@@ -423,4 +437,117 @@
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkyw2RR6Cy0hsAOE4-um5lZg5TV6c8bbQ&callback=initMap">
   </script>
+  {{-- radial progress --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.js"></script>
+  <script src="https://rawgit.com/pablomolnar/radial-progress-chart/master/dist/radial-progress-chart.js"></script>
+  <script>
+  var mainChart = new RadialProgressChart('#maternal-health', {
+        diameter: 150,
+        shadow: {
+        	width: 0
+        },
+        stroke:{
+        	width: 30,
+        	gap: 5
+        },
+         animation: {
+		        // duration: int (default: 1750),
+		        // delay: int (between each ring, default: 200)
+		        duration: 2000,
+		        delay: 300
+
+		    },
+		    min: 0,
+		    max: 900,
+        series: [
+          {
+          	labelStart: 'Counseling', 
+          	value: 400,
+          	color: '#ECE59A',
+        //   	color: {
+				    //   linearGradient: {
+				    //     x1: '0%',
+				    //     y1: '0%',
+				    //     x2: '100%',
+				    //     y2: '100%',
+				    //     spreadMethod: 'pad' // reflect, repeat, pad 
+				    //   },
+				    //   stops: [{
+				    //     offset: '0%',
+				    //     'stop-color': '#fe08b5',
+				    //     'stop-opacity': 1
+				    //   }, {
+				    //     offset: '100%',
+				    //     'stop-color': '#000000',
+				    //     'stop-opacity': 1
+				    //   }]
+				    // }
+          },
+          {
+          	labelStart: 'IFA Distribution', 
+          	value: 100,
+          	color: '#FD6E8A',
+          },
+          {
+          	labelStart: 'Weight Measurement', 
+          	value: 850,
+          	color: "#2C3B63"
+          },
+          
+        ]}
+  );
+  // for child health
+   var mainChart = new RadialProgressChart('#child-health', {
+        diameter: 150,
+        shadow: {
+        	width: 0
+        },
+        stroke:{
+        	width: 30,
+        	gap: 5
+        },
+         animation: {
+		        // duration: int (default: 1750),
+		        // delay: int (between each ring, default: 200)
+		        duration: 2000,
+		        delay: 300
+
+		    },
+		    min: 0,
+		    max: 900,
+        series: [
+          {
+          	labelStart: 'IMCI Counseling', 
+          	value: 400,
+          	color: '#ECE59A',
+        //   	color: {
+				    //   linearGradient: {
+				    //     x1: '0%',
+				    //     y1: '0%',
+				    //     x2: '100%',
+				    //     y2: '100%',
+				    //     spreadMethod: 'pad' // reflect, repeat, pad 
+				    //   },
+				    //   stops: [{
+				    //     offset: '0%',
+				    //     'stop-color': '#fe08b5',
+				    //     'stop-opacity': 1
+				    //   }, {
+				    //     offset: '100%',
+				    //     'stop-color': '#000000',
+				    //     'stop-opacity': 1
+				    //   }]
+				    // }
+          },
+          {
+          	labelStart: 'Supplements', 
+          	value: 100,
+          	color: '#FD6E8A',
+          },
+          
+        ]}
+  );
+  </script>
+  {{-- radial progress end --}}
+
 @endsection
