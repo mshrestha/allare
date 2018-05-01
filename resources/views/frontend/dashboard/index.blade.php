@@ -7,6 +7,23 @@
 				<div class="intro-text h3">
 					Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.
 				</div>
+				<div class="output-division-dashboard mt-5">
+					<h1 class="mb-5"><b>Outputs by Division</b></h1>
+					<div class="row">
+						<div class="col-lg-12 slidemap">
+							<div id="mapdiv" class="map-wrapper"></div>
+						</div>
+						<div class="col-lg-4">
+							<h3 id="division-name" class="mb-2"></h3>
+							<div class="outer-legend mb-1" id="legend-for-data">
+								<div class="legend legend-1">This month</div> 
+								<div class="legend legend-2">Rest of the year</div> 
+							</div>
+							<div class="piecharts" id="division-piecharts"></div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="output-dashboard">
 					<h1><b>National Outputs</b></h1>
 					<div id="maternal-health" class="mt-5">
@@ -34,23 +51,6 @@
 								</div>
 							</div>
 							@endforeach
-						</div>
-					</div>
-				</div>
-
-				<div class="output-division-dashboard mt-5">
-					<h1 class="mb-5"><b>Outputs by Division</b></h1>
-					<div class="row">
-						<div class="col-lg-12 slidemap">
-							<div id="mapdiv" class="map-wrapper"></div>
-						</div>
-						<div class="col-lg-4">
-							<h3 id="division-name" class="mb-2"></h3>
-							<div class="outer-legend mb-1" id="legend-for-data">
-								<div class="legend legend-1">This month</div> 
-								<div class="legend legend-2">Rest of the year</div> 
-							</div>
-							<div class="piecharts" id="division-piecharts"></div>
 						</div>
 					</div>
 				</div>
@@ -116,6 +116,27 @@
       return Math.round(Math.random() * 100);
     };
     
+// for aligning label of pie chart 
+		isArray = Array.isArray ?
+		function (obj) {
+		return Array.isArray(obj);
+		} :
+		function (obj) {
+		return Object.prototype.toString.call(obj) === '[object Array]';
+		};
+
+		getValueAtIndexOrDefault = (value, index, defaultValue) => {
+		if (value === undefined || value === null) {
+		return defaultValue;
+		}
+
+		if (this.isArray(value)) {
+		return index < value.length ? value[index] : defaultValue;
+		}
+
+		return value;
+		};
+
     var config = {
       type: 'pie',
       data: {
@@ -134,17 +155,58 @@
           labels[1],
         ]
       },
-      options: {
-      	legend: {
-            display: true
-        },
-
         responsive: true,
         pieceLabel: {
           render: 'percentage',
           fontColor: ['white', 'rgb(29, 192, 255)'],
           precision: 2
-        }
+        },
+        options: {
+	      	legend: {
+	            display: true,
+	            labels: {
+				        generateLabels: (chart) => {
+
+				          chart.legend.afterFit = function () {
+				            var width = this.width; 
+				            console.log(this);
+				           
+				            this.lineWidths = this.lineWidths.map( () => this.width-0 );
+				            
+				            this.options.labels.padding = 10;
+				            this.options.labels.boxWidth = 15;
+				          };
+
+				          var data = chart.data;
+				          //https://github.com/chartjs/Chart.js/blob/1ef9fbf7a65763c13fa4bdf42bf4c68da852b1db/src/controllers/controller.doughnut.js
+				          if (data.labels.length && data.datasets.length) {
+				            return data.labels.map((label, i) => {
+				              var meta = chart.getDatasetMeta(0);
+				              var ds = data.datasets[0];
+				              var arc = meta.data[i];
+				              var custom = arc && arc.custom || {};
+				              var getValueAtIndexOrDefault = this.getValueAtIndexOrDefault;
+				              var arcOpts = chart.options.elements.arc;
+				              var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+				              var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+				              var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+				              
+				              return {
+				                text: label,
+				                fillStyle: fill,
+				                strokeStyle: stroke,
+				                lineWidth: bw,
+				                hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+
+				                // Extra data used for toggling the correct item
+				                index: i
+				              };
+				            });
+				          }
+				          return [];
+				        }
+				      }
+	        }
       }
     };
 
@@ -253,7 +315,8 @@
       map = new google.maps.Map(document.getElementById('mapdiv'), {
         center: {lat: 23.684994, lng: 90.356331},
         zoom: 7,
-        scrollwheel: true
+        scrollwheel: true,
+        styles: [{"featureType":"administrative","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":"50"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"lightness":"30"}]},{"featureType":"road.local","elementType":"all","stylers":[{"lightness":"40"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"lightness":-25},{"saturation":-100}]}]
       });
 
         // Set a blank infoWindow to be used for each to state on click
@@ -269,6 +332,7 @@
 
 			// Set and apply styling to the stateLayer
 			stateLayer.setStyle(function(feature) {
+				color = feature.getProperty('color');
 				return {
 					fillColor: '#666',
 					fillOpacity: 0.6,
@@ -280,8 +344,11 @@
 
 			// Add mouseover and mouse out styling for the GeoJSON State data
 			stateLayer.addListener('mouseover', function(e) {
+				// console.log();
 				stateLayer.overrideStyle(e.feature, {
-					strokeColor: '#333',
+					// fillColor: e.feature.getProperty('color'),
+					strokeColor: '#2bc0fe',
+					// strokeColor: e.feature.getProperty('color'),
 					strokeWeight: 2,
 					zIndex: 2
 				});
@@ -311,6 +378,7 @@
 	     	getDivisionData(event);
 	     	stateLayer.revertStyle();
 	     	stateLayer.overrideStyle(event.feature, {fillColor: '#1ebffa', fillOpacity: 0.8,});
+	     	// stateLayer.overrideStyle(event.feature, {fillColor: event.feature.getProperty('color'), fillOpacity: 0.8,});
 	    });
 
         // Final step here sets the stateLayer GeoJSON data onto the map
