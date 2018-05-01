@@ -382,8 +382,8 @@
 	    });
 
         // Final step here sets the stateLayer GeoJSON data onto the map
-			stateLayer.setMap(map);
-		}
+		stateLayer.setMap(map);
+	}
 
 	function getDivisionData(event) {
     	$.ajax({
