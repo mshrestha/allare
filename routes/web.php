@@ -78,11 +78,12 @@ Route::get('/get_data_element/{id?}', 'AnalysisController@getDataElements');
 
 Route::get('/update_anc_counsel', 'Helper\UpdateDBController@updateANCCounsel');
 
-Route::group(['prefix' >= 'import-data', 'namespace' => 'ImportData', 'as' => 'import-data.'], function() {
+Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'import-data.'], function() {
 	Route::get('/cc-cr-additional-food-supplimentation', 'CcCrAdditionalFoodSupplimentationController@import');
 	Route::get('/imci-wasting', 'ImciWastingController@import');
 	Route::get('/imci-stunting', 'ImciStuntingController@import');
 	Route::get('/importer', 'ImporterController@import');
+	Route::get('/csvimport', 'ImporterController@importDGFPCsv');
 	Route::get('/scheduleImport', 'ImporterController@scheduleImport');
 	Route::get('/mapImport', 'ImporterController@mapImport');
 	Route::get('/organisation-unit-importer', 'OrganisationUnitImporterController@import');
@@ -105,4 +106,15 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	// Outcomes
 	Route::get('/outcomes', 'OutcomeController@secondIndexAction')->name('outcomes');
 	Route::post('/outcomes/get-outcome-data', 'OutcomeController@getOutcomeData')->name('get-outcome-data');	
+});
+
+Route::get('excel-test', function () {
+		// dd(getcwd ());
+    $address = 'FPMIS2017.xlsx';
+    Excel::load($address, function($reader) {
+        $results = $reader->get();
+        foreach ($results as $result) {
+        	dd($result);
+        }
+    });
 });
