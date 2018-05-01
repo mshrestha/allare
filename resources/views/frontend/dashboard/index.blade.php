@@ -438,8 +438,6 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkyw2RR6Cy0hsAOE4-um5lZg5TV6c8bbQ&callback=initMap">
   </script>
   {{-- radial progress --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.js"></script>
-  <script src="https://rawgit.com/pablomolnar/radial-progress-chart/master/dist/radial-progress-chart.js"></script>
   <script>
   var mainChart = new RadialProgressChart('#maternal-health', {
         diameter: 150,
