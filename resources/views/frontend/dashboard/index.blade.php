@@ -334,7 +334,7 @@
 			stateLayer.setStyle(function(feature) {
 				color = feature.getProperty('color');
 				return {
-					fillColor: '#666',
+					fillColor: color,
 					fillOpacity: 0.6,
 					strokeColor: '#777',
 					strokeWeight: 1.5,
@@ -344,7 +344,7 @@
 
 			// Add mouseover and mouse out styling for the GeoJSON State data
 			stateLayer.addListener('mouseover', function(e) {
-				// console.log();
+				console.log("mouse over");
 				stateLayer.overrideStyle(e.feature, {
 					// fillColor: e.feature.getProperty('color'),
 					strokeColor: '#2bc0fe',

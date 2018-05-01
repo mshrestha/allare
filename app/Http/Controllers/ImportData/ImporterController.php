@@ -28,6 +28,8 @@ use App\Models\Data\GeoJson;
 
 use App\Models\OrganisationUnit;
 
+use Maatwebsite\Excel\Facades\Excel;
+
 class ImporterController extends Controller
 {
     use CurlHelper;
@@ -48,7 +50,9 @@ class ImporterController extends Controller
             	$ou = config('static.communityOrganisation');
             }
 
-            $pe = $this->getPeriods();
+            // $pe = '201803;201804';
+            $this->getPeriods();
+            // dd($pe);
             $pe = $pe['years_months_string'];
             for($j = 0; $j < count($ou); $j++) {
                 $baseUrl = config('static.centralBaseUrl');
@@ -278,6 +282,116 @@ class ImporterController extends Controller
         // $responses = json_decode($responses);
         // dd($responses);
         dd('done');
+    }
+
+    public function importDGFPCsv() {
+        $address = 'FPMIS2017.xlsx';
+        Excel::load($address, function($reader) {
+            $results = $reader->get();
+            $data = config('datamodel');
+            $dataArray['cc_cr_exclusive_breast_feeding'] = [];
+            $dataArray['cc_mr_anc_ifa_distribution'] = [];
+            $dataArray['imci_counselling'] = [];
+            $dataArray['imci_stunting'] = [];
+            $dataArray['imci_wasting'] = [];
+            foreach ($results as $result) {
+                if($result['district'] != '') {
+                    if (strpos(strtolower($result['district']), 'district') === false) {
+                        $unit = [];
+                        $organization = OrganisationUnit::where('name', $result['district'])->first();
+                        $ou = $organization->central_api_id;
+                        $periods = explode(' ', $result['month']);
+                        $pe = $periods[1].$this->getMonth($periods[0]);
+                        $source = 'DGFP';
+                        $unit['organisation_unit'] = $ou;
+                        $unit['category_option_combo'] = NULL;
+                        $unit['period'] = $pe;
+                        $unit['period_name'] = $result['month'];
+                        $unit['source'] = 'DGFP';
+                        $unit['server'] = 'central';
+                        $unit['import_date'] = date('Y-m-d');
+                        $unit['created_at'] = date('Y-m-d H:i:s');
+                        $unit['updated_at'] = date('Y-m-d H:i:s');
+                        
+                        $unit['value'] = $result['counseling_on_iycf_ifa_vitamin_a_hand_washing'];
+                        array_push($dataArray['imci_counselling'], $unit);
+
+                        $unit['value'] = $result['received_ifa_pregnant_child_mother'];
+                        array_push($dataArray['cc_mr_anc_ifa_distribution'], $unit);
+
+                        $unit['value'] = $result['exclusive_breast_feeding_up_to_6_months'];
+                        array_push($dataArray['cc_cr_exclusive_breast_feeding'], $unit);
+
+                        $unit['value'] = $result['identifying_child_stunting'];
+                        array_push($dataArray['imci_stunting'], $unit);
+
+                        $unit['value'] = $result['identifying_child_wasting'];
+                        array_push($dataArray['imci_wasting'], $unit);
+                    }
+                }
+            }
+            
+            foreach ($dataArray as $key => $value) {
+                for ($i=0; $i < count($data); $i++) { 
+                    if($data[$i]['table'] == $key) {
+                        $model = 'App\Models\Data\\'.$data[$i]['model'];
+                        $model::insert($dataArray[$key]);   
+                    }
+                }
+            }
+        });
+    }
+
+    private function getMonth($monthName) {
+        switch (strtolower($monthName)) {
+            case 'january':
+                return '01';
+                break;
+
+            case 'february':
+                return '02';
+                break;
+
+            case 'march':
+                return '03';
+                break;
+
+            case 'april':
+                return '04';
+                break;
+
+            case 'may':
+                return '05';
+                break;
+
+            case 'june':
+                return '06';
+                break;
+
+            case 'july':
+                return '07';
+                break;
+
+            case 'august':
+                return '08';
+                break;
+
+            case 'september':
+                return '09';
+                break;
+
+            case 'october':
+                return '10';
+                break;
+
+            case 'november':
+                return '11';
+                break;
+
+            case 'december':
+                return '12';
+                break;
+        }
     }
 
 }
