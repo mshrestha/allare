@@ -5,16 +5,23 @@
 		<div class="row">
 			<!-- content -->
 			<div class="col-sm-9">
-				<div class="row">
-					<div class="col-sm-6">
-						<h3>Maternal Health</h3>
-						<div id="maternal-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+				<div class="nationalOutputWrap">
+					<div class="slideTrigger">Show map</div>
+					<div class="slideInContainer">
+						map 
+						<div>test</div>
 					</div>
-					<div class="col-sm-6">
-						<h3>Child Health</h3>
-						<div id="child-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
-					</div>
-				</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<h3>Maternal Health</h3>
+							<div id="maternal-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+						</div>
+						<div class="col-sm-6">
+							<h3>Child Health</h3>
+							<div id="child-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+						</div>
+					</div> {{-- /.row --}}
+				</div> {{-- /.national-output-wrap --}}
 
 				<div class="intro-text h3">
 					Our goal is to reduce malnutrition and improve nutritional status of  the peoples of Bangladesh with special emphasis to the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban area in line with National Nutrition Policy 2015.
@@ -440,7 +447,7 @@
   {{-- radial progress --}}
   <script>
   var mainChart = new RadialProgressChart('#maternal-health', {
-        diameter: 150,
+        diameter: 100,
         shadow: {
         	width: 0
         },
@@ -547,5 +554,9 @@
   );
   </script>
   {{-- radial progress end --}}
-
+	<script>
+		$('.slideTrigger').click(function(){
+			TweenMax.staggerTo(".slideInContainer", 1, {left:'0', backgroundColor: "#CCC", ease:Power4.easeInOut});
+		});
+	</script>
 @endsection

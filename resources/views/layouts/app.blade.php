@@ -16,6 +16,8 @@
     --}}
 
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -84,6 +86,8 @@
     {{-- d3 js added --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.js"></script>
     <script type="text/javascript" src="{{asset('js\radial-progress-chart.js')}}"></script>
+    {{-- for element animation --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
 
     <script type="text/javascript" src="{{asset('js\hammer.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js\chart-plugin-zoom.min.js')}}"></script>
