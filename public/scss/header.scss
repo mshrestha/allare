@@ -1,0 +1,60 @@
+
+// header
+.header-full{
+	bottom: auto;
+	background: $red;
+	.navbar.navbar-red{
+		.navbar-brand{
+			margin-right: 32px;
+		}
+		li {
+			@include media-breakpoint-up(lg){
+				border-right: 1px solid $darkRed;
+				a{
+					position: relative;
+					padding-left: 50px;
+					padding-right: 50px;
+				}
+			}
+			&:first-child{
+				@include media-breakpoint-up(lg){
+					border-left: 1px solid $darkRed;
+				}
+			}
+			&.active{
+				a:before{
+					@include media-breakpoint-up(lg){
+						width: 0; 
+						height: 0; 
+						border-left: 5px solid transparent;
+						border-right: 5px solid transparent;
+						border-bottom: 5px solid #ededed;
+						content: "";
+						bottom: 0;
+						left: 50%;
+						margin-left: -3px;
+						position: absolute;
+					}
+				}
+			}
+			a{
+				position: relative;
+				text-transform: uppercase;
+				color: $white;
+				font-size: 1rem;
+				@include media-breakpoint-up(lg){
+					padding-top: 27px;
+					padding-bottom: 20px;
+				}
+			}
+		}
+	}
+	.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active, 
+	.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active{
+		color: $white;
+	}
+}
+
+// .navbar-light .navbar-nav .active > .nav-link,
+
+// .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active

@@ -1,7 +1,71 @@
 	@extends('layouts.app')
 @section('content')
 	<div class="container">
-		
+		<!-- Slider main container -->
+		<!-- Swiper -->
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide container">
+      	<div class="row">
+	      	<div class="output-col col-md-7 col-lg-8 pb-5">
+	      		<div class="row"  data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
+	      			<div class="col-sm-12">
+	      				<div class="box-heading float-left">National output</div>
+	      				<div class="view-on-map float-right swiper-button-next">VIEW ON MAP</div>
+	      			</div>
+	      		</div> {{-- row --}}
+	      		<div class="row">
+	      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+	      				<div id="maternal-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+	      				<div class="legend row">
+	      					<div class="conselling-given col-6">Conselling Given</div>
+	      					<div class="ifa-distributed col-6">IFA Distributed</div>
+	      					<div class="weight-measured col-6">Weight Measured</div>
+	      				</div> {{-- legend --}}
+	      			</div>
+	      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+	      				<div id="child-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+	      				<div class="legend row">
+	      					<div class="imci-counselling col-10 offset-2">IMCI Counselling Given</div>
+	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
+	      				</div> {{-- legend --}}
+	      			</div>
+	      		</div> {{-- row --}}
+	      	</div> {{-- output col-md-8 --}}
+	      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
+	      		<div class="row">
+	      			<div class="col-12">
+	      				<div class="box-heading float-left">OUTCOME</div>
+	      			</div>
+	      		</div>
+	      		<div class="row">
+	      				@foreach($outcomes as $key => $analysis)
+									@include('layouts.partials.dashboard-outcomes-partial')
+								@endforeach
+								<div class="col-12 outcome-note">
+									Our goal is to reduce malnutrition and improve nutritional status of the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban areas of Bangladesh.
+								</div>
+	      		</div>
+	      	</div> {{-- col-md-4 --}}
+      	</div>
+      </div>
+      <div class="swiper-slide container">
+        <div class="title" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">Slide 2</div>
+        <div class="subtitle" data-swiper-parallax="-200">Subtitle</div>
+        <div class="text" data-swiper-parallax="-100">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla laoreet justo vitae porttitor porttitor. Suspendisse in sem justo. Integer laoreet magna nec elit suscipit, ac laoreet nibh euismod. Aliquam hendrerit lorem at elit facilisis rutrum. Ut at ullamcorper velit. Nulla ligula nisi, imperdiet ut lacinia nec, tincidunt ut libero. Aenean feugiat non eros quis feugiat.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination swiper-pagination-white"></div>
+    <!-- Add Navigation -->
+    <div class="swiper-button-prev swiper-button-white"></div>
+    <div class="swiper-button-next swiper-button-white"></div>
+  </div>
+
+	</div> {{-- container --}}
+	<div class="container">
 		<div class="row">
 			<!-- content -->
 			<div class="col-sm-9">
@@ -14,11 +78,11 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<h3>Maternal Health</h3>
-							<div id="maternal-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+							{{-- <div id="maternal-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div> --}}
 						</div>
 						<div class="col-sm-6">
 							<h3>Child Health</h3>
-							<div id="child-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+							{{-- <div id="child-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div> --}}
 						</div>
 					</div> {{-- /.row --}}
 				</div> {{-- /.national-output-wrap --}}
@@ -446,112 +510,125 @@
   </script>
   {{-- radial progress --}}
   <script>
-  var mainChart = new RadialProgressChart('#maternal-health', {
-        diameter: 100,
-        shadow: {
-        	width: 0
-        },
-        stroke:{
-        	width: 30,
-        	gap: 5
-        },
-         animation: {
-		        // duration: int (default: 1750),
-		        // delay: int (between each ring, default: 200)
-		        duration: 2000,
-		        delay: 300
+	  var mainChart = new RadialProgressChart('#maternal-health', {
+	        diameter: 100,
+	        shadow: {
+	        	width: 0
+	        },
+	        stroke:{
+	        	width: 10,
+	        	gap: 3
+	        },
+	         animation: {
+			        // duration: int (default: 1750),
+			        // delay: int (between each ring, default: 200)
+			        duration: 2000,
+			        delay: 300
 
-		    },
-		    min: 0,
-		    max: 900,
-        series: [
-          {
-          	labelStart: 'Counseling', 
-          	value: 400,
-          	color: '#ECE59A',
-        //   	color: {
-				    //   linearGradient: {
-				    //     x1: '0%',
-				    //     y1: '0%',
-				    //     x2: '100%',
-				    //     y2: '100%',
-				    //     spreadMethod: 'pad' // reflect, repeat, pad 
-				    //   },
-				    //   stops: [{
-				    //     offset: '0%',
-				    //     'stop-color': '#fe08b5',
-				    //     'stop-opacity': 1
-				    //   }, {
-				    //     offset: '100%',
-				    //     'stop-color': '#000000',
-				    //     'stop-opacity': 1
-				    //   }]
-				    // }
-          },
-          {
-          	labelStart: 'IFA Distribution', 
-          	value: 100,
-          	color: '#FD6E8A',
-          },
-          {
-          	labelStart: 'Weight Measurement', 
-          	value: 850,
-          	color: "#2C3B63"
-          },
-          
-        ]}
-  );
-  // for child health
-   var mainChart = new RadialProgressChart('#child-health', {
-        diameter: 150,
-        shadow: {
-        	width: 0
-        },
-        stroke:{
-        	width: 30,
-        	gap: 5
-        },
-         animation: {
-		        // duration: int (default: 1750),
-		        // delay: int (between each ring, default: 200)
-		        duration: 2000,
-		        delay: 300
+			    },
+			    min: 0,
+			    max: 100,
+	        series: [
+	          {
+	          	labelStart: '', //Counselling Given
+	          	value: 40,
+	          	color: '#81ddc6',
+	        //   	color: {
+					    //   linearGradient: {
+					    //     x1: '0%',
+					    //     y1: '0%',
+					    //     x2: '100%',
+					    //     y2: '100%',
+					    //     spreadMethod: 'pad' // reflect, repeat, pad 
+					    //   },
+					    //   stops: [{
+					    //     offset: '0%',
+					    //     'stop-color': '#fe08b5',
+					    //     'stop-opacity': 1
+					    //   }, {
+					    //     offset: '100%',
+					    //     'stop-color': '#000000',
+					    //     'stop-opacity': 1
+					    //   }]
+					    // }
+	          },
+	          {
+	          	labelStart: '', // IFA Distributed
+	          	value: 60,
+	          	color: '#008091',
+	          },
+	          {
+	          	labelStart: '', // Weight Measured
+	          	value: 65,
+	          	color: "#0c4a60"
+	          }
+	        ],
+	        center: {
+					    content: [
+					    'MATERNAL','HEALTH'
+					    ],
+					  }
 
-		    },
-		    min: 0,
-		    max: 900,
-        series: [
-          {
-          	labelStart: 'IMCI Counseling', 
-          	value: 400,
-          	color: '#ECE59A',
-        //   	color: {
-				    //   linearGradient: {
-				    //     x1: '0%',
-				    //     y1: '0%',
-				    //     x2: '100%',
-				    //     y2: '100%',
-				    //     spreadMethod: 'pad' // reflect, repeat, pad 
-				    //   },
-				    //   stops: [{
-				    //     offset: '0%',
-				    //     'stop-color': '#fe08b5',
-				    //     'stop-opacity': 1
-				    //   }, {
-				    //     offset: '100%',
-				    //     'stop-color': '#000000',
-				    //     'stop-opacity': 1
-				    //   }]
-				    // }
-          },
-          {
-          	labelStart: 'Supplements', 
-          	value: 100,
-          	color: '#FD6E8A',
-          },
-          
-        ]}
-  );
+			 		// center: function() {
+				  //   return 'MATERNAL' +  + 'HEALTH'
+				  // }
+	      }
+	  );
+	  // for child health
+	   var mainChart = new RadialProgressChart('#child-health', {
+	        diameter: 100,
+	        shadow: {
+	        	width: 0
+	        },
+	        stroke:{
+	        	width: 10,
+	        	gap: 3
+	        },
+	         animation: {
+			        // duration: int (default: 1750),
+			        // delay: int (between each ring, default: 200)
+			        duration: 2000,
+			        delay: 300
+
+			    },
+			    min: 0,
+			    max: 100,
+	        series: [
+	          {
+	          	labelStart: '', //IMCI Counselling Given     
+	          	value: 55,
+	          	color: '#008091',
+	        //   	color: {
+					    //   linearGradient: {
+					    //     x1: '0%',
+					    //     y1: '0%',
+					    //     x2: '100%',
+					    //     y2: '100%',
+					    //     spreadMethod: 'pad' // reflect, repeat, pad 
+					    //   },
+					    //   stops: [{
+					    //     offset: '0%',
+					    //     'stop-color': '#fe08b5',
+					    //     'stop-opacity': 1
+					    //   }, {
+					    //     offset: '100%',
+					    //     'stop-color': '#000000',
+					    //     'stop-opacity': 1
+					    //   }]
+					    // }
+	          },
+	          {
+	          	labelStart: '', //Child Health
+	          	value: 70,
+	          	color: '#0c4a60',
+	          },
+	        ],
+	        center: {
+				    content: [
+				    	'CHILD', 'HEALTH'],
+				  }
+	      }
+	  );
   </script>
   {{-- radial progress end --}}
 	<script>
@@ -559,4 +636,23 @@
 			TweenMax.staggerTo(".slideInContainer", 1, {left:'0', backgroundColor: "#CCC", ease:Power4.easeInOut});
 		});
 	</script>
+	{{-- swiper js --}}
+	{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/js/swiper.min.js"></script> --}}
+	<script src="{{asset('js/swiper.min.js')}}"></script>
+
+	<!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper('.swiper-container', {
+      speed: 600,
+      parallax: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  </script>
 @endsection

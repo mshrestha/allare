@@ -9,18 +9,24 @@
 	}
 @endphp
 
-	<div class="col-lg-6 col-md-12 outcome-progress-col">
-		<div class="report-heading">
-			<div class="report-icon float-left">
+	<div class="col-12 outcome-progress-col mt-4">
+		<div class="report-heading row">
+			<div class="report-icon col-2 pr-1">
 				@if (strpos(strtolower($key), 'stunting') !== false) 
-				<img src="{{ asset('images\stunting.svg') }}" alt="">
+				<span class="icon-children icon"></span>
+				{{-- <img src="{{ asset('images\stunting.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'wasting') !== false) 
-				<img src="{{ asset('images\wasting.svg') }}" alt="">
+				<span class="icon-children icon"></span>
+				{{-- <img src="{{ asset('images\wasting.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'breastfeed') !== false)
-				<img src="{{ asset('images\breastfeed.svg') }}" alt="">
+				<span class="icon-breastfeeding icon"></span>
+				{{-- <img src="{{ asset('images\breastfeed.svg') }}" alt=""> --}}
 				@endif
 			</div>
-			<h3>{!! str_replace('_', ' ', $key) !!}</h3>
+			<div class="txt-icon col-10 pl-0">
+				<h6 class="mb-0">{!! str_replace('_', ' ', $key) !!}</h6>
+				<div>{{$analysis['goal_text']}}</div>
+			</div>
 		</div>
 		{{-- <div id="canvas-holder" class="d-none d-md-block">
 			<div class="progress-bar-v" id="goal-chart-{{
@@ -37,21 +43,23 @@
 			</div>
 
 		</div> --}}
-		<div class="progress-bar-note">
-			{{$analysis['goal_text']}}
-		</div>
+		
 		<div id="canvas-holder-h" class="d-md-none-">
 			<div class="progress-bar-h" id="goal-chart-h-{{
 			$key}}">
 				
 				<div class="goal" style="width: {{$incomplete}}%;">
-					{{$analysis['goal']}}
+					{{-- {{$analysis['goal']}} --}}
 				</div>
 				
 				<div class="current grow-h-animation" style="width: {{$complete}}%;">
 					{{$analysis['goal_values']}}  %
 				</div>
 
+			</div>
+
+			<div class="tgtxt">
+				Target {{$analysis['goal']}}
 			</div>
 
 		</div>
