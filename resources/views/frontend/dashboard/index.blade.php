@@ -5,9 +5,9 @@
 		<!-- Swiper -->
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide container">
+    	<div class="swiper-slide container dataview">
       	<div class="row">
-	      	<div class="output-col col-md-7 col-lg-8 pb-5">
+	      	<div class="output-col col-md-7 col-lg-8 pb-3">
 	      		<div class="row"  data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
 	      			<div class="col-sm-12">
 	      				<div class="box-heading float-left">National output</div>
@@ -48,23 +48,86 @@
 	      		</div>
 	      	</div> {{-- col-md-4 --}}
       	</div>
-      </div>
-      <div class="swiper-slide container">
-        <div class="title" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">Slide 2</div>
-        <div class="subtitle" data-swiper-parallax="-200">Subtitle</div>
-        <div class="text" data-swiper-parallax="-100">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla laoreet justo vitae porttitor porttitor. Suspendisse in sem justo. Integer laoreet magna nec elit suscipit, ac laoreet nibh euismod. Aliquam hendrerit lorem at elit facilisis rutrum. Ut at ullamcorper velit. Nulla ligula nisi, imperdiet ut lacinia nec, tincidunt ut libero. Aenean feugiat non eros quis feugiat.</p>
+      </div> {{-- data view --}}
+      <div class="swiper-slide container map-view-container">
+        <div class="row justify-content-between">
+        	<div class="col-6 col-md-4 col-lg-3 col-xl-2 pr-0 pl-0 d-block">
+    				<div class="box-heading float-left d-block ml-0">National output</div>
+    			</div>
+        	<div class="col-md-2 col-6">
+    				<div class="view-on-map float-right swiper-button-prev">VIEW DATA</div>
+    			</div>
         </div>
-      </div>
-    </div>
+        <div class="row">
+        	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
+    				<ul class="map-filter mb-0">
+    					<li class="list-head">MATERNAL HEALTH</li>
+							<li><a href="#">Counselling Given</a></li>
+							<li><a href="#">IFA Distributed</a></li>
+							<li><a href="#">Weight Measured</a></li>
+							<li class="list-head">Child health</li>
+							<li><a href="#">IMCI Counselling Given</a></li>
+							<li><a href="#">Supplements Distributed</a></li>
+    				</ul>
+    				<ul class="map-filter outcome mb-0">
+							<li class="list-head green">OUTCOME</li>
+							<li class="list-head">STUNING</li>
+							<li class="list-head">WASTING</li>
+							<li class="list-head">BREASTFEEDING</li>
+    				</ul>
+    			</div>
+    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
+    				<div id="mapdiv" class="map-wrapper" style="width: 100%;"></div>
+    			</div>
+        </div>
+      </div> {{-- swiper-slide --}}
+    </div> {{-- swiper-wrrapper --}}
     <!-- Add Pagination -->
     <div class="swiper-pagination swiper-pagination-white"></div>
     <!-- Add Navigation -->
     <div class="swiper-button-prev swiper-button-white"></div>
     <div class="swiper-button-next swiper-button-white"></div>
-  </div>
-
+  </div> {{-- swiper-container --}}
 	</div> {{-- container --}}
+
+	<div class="input-wrapper">
+		<div class="container">
+			<div class="input-wrapper-inner">
+			  <div class="row">
+			  	<div class="col-12"><div class="box-heading float-left">INPUTS</div></div>
+			  </div>
+			  <div class="row">
+			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 input-box input-reporting">
+			  		<h6>REPORTING</h6>
+			  		<div><span class="report-lable">FWC</span> <span class="yes">Yes</span> <span class="no">No</span></div>
+			  		<div><span class="report-lable">MCHN</span> <span class="yes">Yes</span> <span class="no">No</span></div>
+			  		<div><span class="report-lable">SAM</span> <span class="yes">Yes</span> <span class="no">No</span></div>
+			  	</div>{{-- input-box input-reporting --}}
+			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-training">
+			  		<div class="input-trainning-inner">
+				  		<h6 class="mb-0">TRAINING</h6>
+				  		<div><span class="number">65%</span><span class="number-txt">Health workers trained </span></div>
+				  		<div><span class="number">65%</span><span class="number-txt">Health workers who succeeded </span></div>
+			  		</div>
+			  	</div>{{-- input-box input-training --}}
+			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-qa">
+			  		<h6 class="mb-0">QUALITY ASSESSMENT</h6>
+			  		<div><span class="number">65%</span><span class="number-txt">Facilities receiving SS&amp;M</span></div>
+			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing IYCF/ Maternal counseling</span></div>
+			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing quality Nut reporting</span></div>
+			  	</div>{{-- input-box input-qa --}}
+			  	<div class="col-sm-6 col-md-12 col-lg-3 col-xl-4 input-box input-supply-management">
+			  		<h6 class="mb-0">SUPPLY MANAGEMENT</h6>
+			  		<div class="row">
+			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities providing quality Nut reporting</span></div>
+			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Health workers trained </span></div>
+			  		</div>
+			  	</div>{{-- input-box input-qa --}}
+			  </div>
+			</div>
+		</div>
+	</div>
+
 	<div class="container">
 		<div class="row">
 			<!-- content -->
@@ -96,7 +159,7 @@
 					<h1 class="mb-5"><b>Outputs by Division</b></h1>
 					<div class="row">
 						<div class="col-lg-12 slidemap">
-							<div id="mapdiv" class="map-wrapper"></div>
+							{{-- <div id="mapdiv" class="map-wrapper"></div> --}}
 						</div>
 						<div class="col-lg-4">
 							<h3 id="division-name" class="mb-2"></h3>
@@ -643,6 +706,7 @@
 	<!-- Initialize Swiper -->
   <script>
     var swiper = new Swiper('.swiper-container', {
+    	autoHeight: true, //enable auto height
       speed: 600,
       parallax: true,
       pagination: {
