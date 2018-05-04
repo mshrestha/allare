@@ -128,7 +128,7 @@
 		</div>
 	</div>
 
-	<div class="container">
+	<div class="container d-none">
 		<div class="row">
 			<!-- content -->
 			<div class="col-sm-9">
