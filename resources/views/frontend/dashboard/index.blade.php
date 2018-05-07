@@ -77,7 +77,7 @@
     				</ul>
     			</div>
     			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
-    				<div id="mapdiv" class="map-wrapper" style="width: 100%;"></div>
+    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;"></div>
     				<div id="overdiv">
     					<span class="legend-text" id="low-text"></span>
     					<span class="legend-text" id="avg-text"></span>
