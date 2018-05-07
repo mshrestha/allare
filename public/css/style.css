@@ -7102,6 +7102,29 @@ body {
       .map-view-container .map-filter.outcome li.list-head.green {
         background: #8ec89a;
         color: #FFF; }
+.map-view-container div#overdiv {
+  position: absolute;
+  bottom: 5px;
+  right: 3px;
+  color: #535353;
+  font-size: 11px;
+  background: #ededed;
+  padding: 15px 20px; }
+.map-view-container div#overdiv .legend-text {
+  display: block; }
+.map-view-container div#overdiv .legend-text:before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 10px;
+  margin-right: 10px;
+  background: #FFF; }
+.map-view-container div#overdiv span#low-text:before {
+  background: #81ddc6; }
+.map-view-container div#overdiv span#avg-text:before {
+  background: #008091; }
+.map-view-container div#overdiv span#high-text:before {
+  background: #0c4a60; }
 
 @media (min-width: 768px) {
   .map-wrapper {
@@ -7168,7 +7191,7 @@ body {
     width: 53%; }
 
 .swiper-tab {
-  border: #CCC 1px solid; }
+  background: #fff; }
   .swiper-tab .swiper-pagination {
     display: none; }
 
@@ -7189,11 +7212,18 @@ body {
 
 .tab-col-title {
   color: #f45e58;
-  font-size: 14px; }
+  font-size: 14px;
+  text-transform: uppercase; }
 
 .tab-col-subtitle {
   color: #a0a0a0;
   font-size: 14px; }
+
+.swiper-tab-nav .list-inline {
+  margin-bottom: 0; }
+
+.swiper-slide {
+  padding: 17px 15px; }
 
 .custom-select {
   background-image: url("../images/select-img.png");
@@ -7230,5 +7260,31 @@ body {
       background-color: #81ddc6; }
     .side-filter-div .chart-legend .dgfp:before {
       background-color: #008091; }
+
+.report-col .tab-col-title {
+  margin-bottom: 25px; }
+
+.report-list {
+  list-style: none;
+  padding: 0; }
+  .report-list li {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 10px; }
+  .report-list a, .report-list a:hover {
+    text-decoration: none; }
+  .report-list span.report-title {
+    color: #008091;
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    line-height: 16px; }
+  .report-list span.date {
+    display: block;
+    color: #666666;
+    font-size: 12px; }
+  .report-list span.date {
+    line-height: 16px; }
 
 /*# sourceMappingURL=style.css.map */

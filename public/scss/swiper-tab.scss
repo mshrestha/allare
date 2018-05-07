@@ -1,5 +1,5 @@
 .swiper-tab{
-	border: #CCC 1px solid;
+	background: $white;
 	.swiper-pagination{
 		display: none;
 	}
@@ -26,8 +26,17 @@
 .tab-col-title{
 	color: #f45e58;
 	font-size: 14px;
+	text-transform: uppercase;
 }
 .tab-col-subtitle{
 	color: #a0a0a0;
 	font-size: 14px;
+}
+
+.swiper-tab-nav .list-inline {
+    margin-bottom: 0;
+}
+
+.swiper-slide {
+    padding: 17px 15px;
 }
