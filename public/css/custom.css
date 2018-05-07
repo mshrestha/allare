@@ -345,3 +345,8 @@ header{
   height: 100%;
   z-index: 1;
 }
+
+/*map tooltip text*/
+span.map-text {
+  color: #f45e57;
+}
