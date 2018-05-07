@@ -1,9 +1,5 @@
 /* /* For side filter selector in platform*/
-.side-filter-div {
-    background: #D6D6D6;
-    padding: 15px;
-    height: 100%;
-}
+
 
 /* Removing colpadding */
 .row-no-padding
@@ -251,19 +247,7 @@ header{
     border-top: none;
 }
 @media(min-width: 767px){
-  .bargraph-div {
-    border: 1px solid rgba(121, 121, 121, 1);
-    border-left: none;
-  }
-  .side-filter-div form#main-chart-form{
-    height: 100%;
-    position: relative;
-  }
-  .submit-input-group{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
+
 }
 .bargraph-div{
   height: 100%;

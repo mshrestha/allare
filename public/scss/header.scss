@@ -8,7 +8,7 @@
 			margin-right: 32px;
 		}
 		li {
-			@include media-breakpoint-up(lg){
+			@include media-breakpoint-up(lg) {
 				border-right: 1px solid $darkRed;
 				a{
 					position: relative;
@@ -17,13 +17,13 @@
 				}
 			}
 			&:first-child{
-				@include media-breakpoint-up(lg){
+				@include media-breakpoint-up(lg) {
 					border-left: 1px solid $darkRed;
 				}
 			}
 			&.active{
 				a:before{
-					@include media-breakpoint-up(lg){
+					@include media-breakpoint-up(lg) {
 						width: 0; 
 						height: 0; 
 						border-left: 5px solid transparent;
@@ -42,9 +42,24 @@
 				text-transform: uppercase;
 				color: $white;
 				font-size: 1rem;
-				@include media-breakpoint-up(lg){
+				@include media-breakpoint-up(lg) {
 					padding-top: 27px;
 					padding-bottom: 20px;
+				}
+			}
+			// dropdown
+			.dropdown-menu{
+				background: #f45d57;
+				border-radius: 0;
+				margin-top: 1px;
+				width: 100%;
+				border: none;
+				padding: 0;
+				a{
+					border-top: 1px solid #cd4031;
+				}
+				.dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active, .dropdown-item:active{
+					background: #fda69c;
 				}
 			}
 		}

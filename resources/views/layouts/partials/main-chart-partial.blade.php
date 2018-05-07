@@ -1,7 +1,7 @@
 <div class="main-chart">
 	<div class="row no-gutters">
 	    {{-- Selectors --}}
-	    <div class="col-md-3">
+	    <div class="col-md-3 col-xl-2">
 	        <div class="side-filter-div">
 	            {{ Form::open(['id' => 'main-chart-form', 'method' => 'POST']) }}
 	            <div class="input-group mb-3">
@@ -63,9 +63,15 @@
 	            </div> --}} 
 
 	            <div class="input-group mb-3 submit-input-group">
-	                <button type="submit" class="btn btn-secondary btn-lg btn-block rounded-0" id="submit-platform-btn">Submit</button>
+	                <button type="submit" class="btn btn-secondary btn-sm btn-block rounded-0" id="submit-platform-btn">Submit</button>
 	            </div>
 	            {{ Form::close() }}
+	            <div class="chart-legend">
+	            	<div class="row">
+	            		<div class="col-6"><div class="legend"><div class="dghs">DGHS</div></div></div>
+	            		<div class="col-6"><div class="legend"><div class="dgfp">DGFP</div></div></div>
+	            	</div>
+	            </div>
 	        </div>
 	    </div>
 	    {{-- Bargraph --}}

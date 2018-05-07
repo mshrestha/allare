@@ -1,0 +1,246 @@
+.swiper-button-next.swiper-button-white {
+    display: none;
+}
+.swiper-button-prev.swiper-button-white {
+    display: none;
+}
+.swiper-pagination.swiper-pagination-bullets{
+	display: none;
+}
+.legend{
+	color: #535353;
+	font-size: 12px;
+	font-family: $primary-font;
+	div:before{
+		content: "";
+		width: 25px;
+		height: 10px;
+		display: inline-block;
+    margin-right: 10px;
+	}
+	.conselling-given:before{
+		background-color: #81ddc6;
+	}
+	.ifa-distributed:before{
+		background-color: #008091;
+	}
+	.weight-measured:before{
+		background-color: #0c4a60;
+	}
+	.imci-counselling:before{
+		background-color: #008091;
+	}
+	.supplements-distributed:before{
+		background-color: #0c4a60;
+	}
+}
+
+.box-heading{
+	display: inline-block;
+	background: #8ec89a;
+	font-size: 18px;
+	color: #FFF;
+	font-weight: normal;
+	font-family: $primary-font;
+	text-transform: uppercase;
+	padding: 0px 10px;
+	line-height: 30px;
+	margin-left: -15px;
+}
+.view-on-map{
+	background: #AAAAAA;
+	padding: 0 10px;
+	font-size: 12px;
+	color: #FFF;
+	width: auto;
+	height: auto;
+	margin: 0;
+	display: inline-block;
+	top: 0;
+	position: relative;
+	z-index: 1;
+}
+.output-col{
+	background-color: #ededed;
+}
+.outcome-col{
+	background: #e6e6e6;
+}
+
+.report-icon{
+	margin-top: 0px;
+}
+.outcome-col{
+	.report-heading{
+		font-size: 12px;
+		line-height: 16px;
+		color: #808080;
+		margin-bottom:10px;
+		.icon{
+			font-size: 31px;
+			color: #008091;
+		}
+		h6{
+			font-size: 15px;
+			color: #666666;
+		}
+	}
+	.outcome-note{
+		background: #AAAAAA;
+		color: #FFF;
+		font-size: 14px;
+		line-height: 17px;
+		font-weight: 300;
+		padding-top: 15px;
+		padding-bottom: 15px;
+		margin-top: 20px;
+	}
+}
+
+// map filter
+.map-view-container{
+	.box-heading{
+		width: 100%;
+	}
+	.filter-col{
+		background: #e6e6e6;
+	}
+	.map-filter{
+	  list-style: none;
+	  padding: 0;
+	  @include media-breakpoint-down(md) {
+			margin-bottom: 0;
+		}
+		li a {
+	    background: #e6e6e6;
+	    display: block;
+	    border-bottom: 1px solid #FFF;
+	    font-size: 12px;
+	    color: #535353;
+	    line-height: 12px;
+	    padding: 10px 15px;
+		}
+		li.list-head {
+	    color: #FFF;
+	    background: #cccccc;
+	    padding: 8px 15px;
+	    font-size: 15px;
+	   	&:last-child{
+	   		border: none !important;
+	   	} 
+		}
+		li.list-head.green {
+	    background: #8ec89a;
+	    color: #FFF;
+		}	
+		&.outcome{
+			li{
+				color: #e6e6e6;
+				&.list-head {
+			    background: #e6e6e6;
+			    color: #666666;
+			    border-bottom: 1px solid #FFF;
+			    &.green {
+				    background: #8ec89a;
+				    color: #FFF;
+					}	
+				}
+			}
+		}
+	}
+}
+
+.map-wrapper {
+	@include media-breakpoint-up(md) { 
+	  height: 422px;
+	  margin-top: -29px;
+	}
+}
+
+
+// input 
+.input-wrapper{
+	background: #e0e0e0;
+	.input-wrapper-inner{
+		background: #e0e0e0;
+		padding: 0 15px;
+	}
+	.box-heading{
+		margin-bottom: 20px;
+	}
+	.input-box{
+		margin-bottom: 30px;
+			h6{
+				font-size: 15px;
+				color: #666666;
+			}
+	}
+	.input-box.input-reporting div {
+    margin-bottom: 5px;
+    span.report-lable {
+		    width: 38%;
+		    display: inline-block;
+		}
+
+		span.yes, span.no {
+		    width: 44px;
+		    background: #fcb942;
+		    color: #FFF;
+		    height: 30px;
+		    display: inline-block;
+		    line-height: 30px;
+		    text-align: center;
+		    font-size: 14px;
+		}
+
+		span.no {
+		    background: #999999;
+		}
+	}
+	.input-training, .input-qa, .input-supply-management{
+		span.number {
+		    font-size: 27px;
+		    font-weight: 300;
+		    color: #008091;
+		    display: inline-block;
+		    margin-right: 10px;
+		    width: 24%;
+				max-width: 50px;
+		    min-width: 50px;
+		    @include media-breakpoint-up(xl) { 
+			    width: 32%;
+			  }
+		}
+
+		span.number-txt {
+		    display: inline-block;
+		    width: 60%;
+		    font-size: 12px;
+		    color: #666666;
+		    line-height: 15px;
+		}
+	}
+	.input-trainning-inner{
+		@include media-breakpoint-up(xl) {
+			padding-left: 50px;
+		}
+		
+	}
+	.input-supply-management{
+		span.number{
+			width: 24%;
+		}
+	}
+	.input-qa{
+		span.number {
+			width: 24%;
+			@include media-breakpoint-up(xl) { 
+	    	width: 20%;
+			}
+		}
+
+		span.number-txt {
+			width: 53%;
+	  }
+	}
+}
