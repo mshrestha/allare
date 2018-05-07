@@ -1,6 +1,4 @@
-<h3>{!! str_replace('_', ' ', $key) !!}</h3>
-<div class="trend-analysis-goal" style="margin-top: 20px;">
-	{{-- <p>{{ $analysis['month'] }}</p> --}}
+<div class="swiper-slide" data-hash="slide{{$counter}}">
 	@php
 		if($analysis['direction'] == -1) {
 			$complete = 100 / ($analysis['limit'] - $analysis['max']) * ($analysis['goal_values'] - $analysis['max']);
@@ -11,13 +9,12 @@
 			$incomplete = 100 - $complete;
 		}
 	@endphp
-	<div class="row">
-		<div class="col-md-3">
-			<div class="report-heading">
-				<h5>Current</h5>
-			</div>
-			<div id="canvas-holder" class="d-none d-md-block">
-				<div class="progress-bar-v" id="goal-chart-{{
+  <div class="row">
+    <div class="col-xl-2 col-lg-3 col-sm-4">
+      <div class="tab-col-title">{!! str_replace('_', ' ', $key) !!}</div>
+      <div class="tab-col-subtitle"> date</div>
+      <div id="canvas-holder">
+        <div class="progress-bar-v" id="goal-chart-{{
 				$key}}">
 					
 					<div class="goal" style="height: {{$incomplete}}%;">
@@ -29,59 +26,39 @@
 					</div>
 
 				</div>
+      </div>
+    </div> {{-- col-xs-2 --}}
+    <div class="col-xl-5 offset-xl-1 pr-xl-0 col-lg-6 col-sm-8">
+      <div class="tab-col-title">People Counselled on Maternal Health</div>
+      <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+      <div id="canvas-holder">
+        <canvas id="line-chart-{{$key}}"></canvas>
+      </div>
+    </div> {{-- col-xs-5 --}}
+    <div class="col-xl-3 offset-xl-1 report-col col-lg-3">
+      <div class="tab-col-title">Reports on Maternal Health</div>
+      <ul class="report-list row">
+        <li class="col-sm-6 col-lg-12">
+          <a href="#" class="row">
+            <span class="col-md-3 col-sm-3 col-3 pr-0"><img src="{{asset('images\report-img.png')}}" alt="" class="img-fluid"> </span>
+            <span class="col-sm-9 col-md-9 col-9"><span class="report-title">Lorem ipsum dolor sit amet adipiscing</span> <span class="date">Feb 13,2018</span></span>
+          </a>
+        </li>
+        <li class="col-sm-6 col-lg-12">
+          <a href="#" class="row">
+            <span class="col-md-3 col-sm-3 col-3 pr-0"><img src="{{asset('images\report-img.png')}}" alt="" class="img-fluid"> </span>
+            <span class="col-sm-9 col-md-9 col-9"><span class="report-title">Lorem ipsum dolor sit amet adipiscing</span> <span class="date">Feb 13,2018</span></span>
+          </a>
+        </li>
+        <li class="col-sm-6 col-lg-12">
+          <a href="#" class="row">
+            <span class="col-md-3 col-sm-3 col-3 pr-0"><img src="{{asset('images\report-img.png')}}" alt="" class="img-fluid"> </span>
+            <span class="col-sm-9 col-md-9 col-9"><span class="report-title">Lorem ipsum dolor sit amet adipiscing</span> <span class="date">Feb 13,2018</span></span>
+          </a>
+        </li>
+        
+      </ul>
 
-			</div>
-
-			<div id="canvas-holder-h" class="d-md-none">
-				<div class="progress-bar-h" id="goal-chart-h-{{
-				$key}}">
-					
-					<div class="goal" style="width: {{$incomplete}}%;">
-						{{$analysis['goal']}}
-					</div>
-					
-					<div class="current grow-h-animation" style="width: {{$complete}}%;">
-						{{$analysis['goal_values']}}  %
-					</div>
-
-				</div>
-
-			</div>
-
-
-			<div class="progress-bar-note">
-				{{$analysis['goal_text']}}
-			</div>
-		</div>
-		<div class="col-md-6">
-			<h5>Trending</h5>
-			<div id="canvas-holder">
-				<canvas id="line-chart-{{$key}}"></canvas>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="row report-row">
-				<div class="col-8"><h5>Reports</h5></div>
-				<div class="col-4">
-					<div class="report-icon float-right">
-						@if (strpos(strtolower($key), 'stunting') !== false) 
-						<img src="{{ asset('images\stunting.svg') }}" alt="">
-						@elseif (strpos(strtolower($key), 'wasting') !== false) 
-						<img src="{{ asset('images\wasting.svg') }}" alt="">
-						@elseif (strpos(strtolower($key), 'breastfeed') !== false)
-						<img src="{{ asset('images\breastfeed.svg') }}" alt="">
-						@endif
-					</div>
-				</div>
-			</div>
-			<div class="reports-wrapper">
-				<p>Lorem ipsum dolor sit amet adipiscing.</p>
-				<p>Feb 13,2018</p>
-				
-				<p>Proin magna elit, congue dictum blandit sed, laor eet quis quam. Praesent sit amet arcu vel nibh tempor hendrerit et id lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in placerat arcu. Sed tinc idunt orci viverra nisl vehicula dignissim.</p>		
-			</div>
-		</div>
-	</div> <!-- row -->
-</div> <!-- trend-analysis-pie-chart -->
-<hr />
-
+    </div>
+  </div>
+</div>
