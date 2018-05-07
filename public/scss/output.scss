@@ -1,0 +1,43 @@
+.custom-select{
+	background-image: url('../images/select-img.png');
+	background-position: right center;
+	background-size: auto 100%;
+	-webkit-appearance: none;
+	height: 25px;
+	padding: 0 10px;
+	font: 12px/25px $primary-font;
+	border-radius: 0;
+	&:focus{
+		border-color: transparent;
+		box-shadow: none;
+	}
+}
+.side-filter-div{
+	padding: 15px;
+	height: 100%;
+	background: #e6e6e6;
+	.btn{
+		background: #ffa69c;
+		color: #FFF;
+		border-color: transparent;
+		font-size: 12px;
+    padding: 3px;
+	}
+	.chart-legend{
+		position: absolute;
+		bottom: 15px;
+		left: 0;
+		color: #535353;
+		font-size: 11px;
+		width: 100%;
+		padding: 0 15px;
+		.dghs:before{
+			background-color: #81ddc6;
+		}
+		.dgfp:before{
+			background-color: #008091;
+		}
+	}
+}
+
+
