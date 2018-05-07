@@ -1,28 +1,29 @@
-<div class="trend-analysis-pie-chart" style="margin-top: 20px;">
-	<h3>{{ $analysis['name'] }}</h3>
-	<p>{{ $analysis['month'] }}</p>
-
-	
-	<div class="row">
-		<div class="col-md-3">
-			<div id="canvas-holder">
+<div class="swiper-slide" data-hash="slide{{$key}}">
+  <div class="row">
+    <div class="col-xl-2">
+      <div class="tab-col-title">{{$analysis['name']}}</div>
+      <div class="tab-col-subtitle"> FEBRUARY 2018</div>
+      <div id="canvas-holder">
 				<canvas id="chart-area-{{ $key }}"></canvas>
 			</div>
-		</div>
-		<div class="col-md-6">
-			<div id="canvas-holder">
+    </div> {{-- col-xs-2 --}}
+    <div class="col-xl-5">
+      <div class="tab-col-title">People Counselled on Maternal Health</div>
+      <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+      <div id="canvas-holder">
 				<canvas id="line-chart-{{ $key }}"></canvas>
 			</div>
-		</div>
-		<div class="col-md-3">
-			<h3>Reports</h3>
-			<div class="reports-wrapper">
-				<p>Lorem ipsum dolor sit amet adipiscing.</p>
-				<p>Feb 13,2018</p>
-				
-				<p>Proin magna elit, congue dictum blandit sed, laor eet quis quam. Praesent sit amet arcu vel nibh tempor hendrerit et id lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in placerat arcu. Sed tinc idunt orci viverra nisl vehicula dignissim.</p>		
-			</div>
-		</div>
-	</div> <!-- row -->
-	<hr>
-</div> <!-- trend-analysis-pie-chart -->
+    </div> {{-- col-xs-5 --}}
+    <div class="row">
+	    <div class="col-xl-5">
+	      <div class="tab-col-title">Reports on Maternal Health</div>
+	      <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+	      
+	    </div> {{-- col-xs-5 --}}
+	    <div class="col-xl-5">
+	      <div class="tab-col-title">Reports on Maternal Health</div>
+	        <div class="report-list">repot list</div>
+	    </div> {{-- col-xs-5 --}}
+    </div>
+  </div>
+</div>
