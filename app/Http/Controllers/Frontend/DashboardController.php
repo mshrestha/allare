@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+
+// Models
 use App\Models\Data\BdhsExclusiveBreastfeeding;
 use App\Models\Data\BdhsStunting;
 use App\Models\Data\BdhsWasting;
@@ -15,7 +17,11 @@ use App\Models\Data\ImciTotalChild;
 use App\Models\Data\ImciWastingPercent;
 use App\Models\Data\GeoJson;
 use App\Models\OrganisationUnit;
+
+// Traits
 use App\Traits\PeriodHelper;
+use App\Traits\OrganisationHelper;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -23,6 +29,7 @@ class DashboardController extends Controller
 {
     //
 	use PeriodHelper;
+	use OrganisationHelper;
 	public function indexAction() {
 		$sidebarContents = [
 			'Training' => 
@@ -482,5 +489,80 @@ class DashboardController extends Controller
 		];
 
 		return $maternal_trend_analysis;
+	}
+
+	public function getMapData(Request $request) {
+		$data = $request->all();
+		$datamodel = config('datamodel');
+		$model = 'App\Models\Data\\' . $data['model'];
+		$server = 'central';
+		for ($i=0; $i < count($datamodel); $i++) { 
+			if($datamodel[$i]['model'] == $data['model'])
+				$server = $datamodel[$i]['server'];
+		}
+		$pe = date('Y').date('m', strtotime('-1 month'));
+		$pe = '201802';
+		$organisations = $this->getOrganisations($server);
+		// dd($organisations);
+		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', NULL)->get();
+		$dataArr = [];
+		$valueArr = [];
+		for ($i=0; $i < count($responseData); $i++) { 
+			$dataArr[$responseData[$i]['organisation_unit']] = $responseData[$i]['value'];
+			if($responseData[$i]['organisation_unit'] != 'dNLjKwsVjod')
+				array_push($valueArr, $responseData[$i]['value']);
+		}
+		$ranges = $this->getThreeRanges($valueArr);
+
+		$text = 'People reached: ';
+		$reverse = false;
+		if(strcasecmp($data['model'], 'ImciStunting') == 0){
+			$text = 'Children suffering from Stunting: ';
+			$reverse = true;
+		} else if(strcasecmp($data['model'], 'ImciStunting') == 0){
+			$text = 'Children suffering from Wasting: ';
+			$reverse = true;
+		} else if(strcasecmp($data['model'], 'CcCrExclusiveBreastFeeding') == 0){
+			$text = 'Children breastfed: ';
+			$reverse = true;
+		}
+
+		// dd($valueArr);
+		if(count($valueArr) <= 0){
+			return array(
+				'dataExists' => false,
+			);
+		}else{
+			return array(
+				'dataExists' => true,
+				'modelData' => $responseData,
+				'minimalData' => $dataArr,
+				'server' => $server,
+				'min' => count($ranges)>0?$ranges['min']:0,
+				'q1' => count($ranges)>0?$ranges['q1']:0,
+				'q2' => count($ranges)>0?$ranges['q2']:0,
+				'max' => count($ranges)>0?$ranges['max']:0,
+				'text' => $text,
+				'reverse' => $reverse
+			);
+		}
+	}
+
+	private function getThreeRanges($valueArray) {
+		if(count($valueArray) > 0) {
+			$min = min($valueArray);
+			$max = max($valueArray);
+			$step = ($max - $min) / 3;
+			$q1 = $min + $step;
+			$q2 = $max - $step;
+			return array(
+				'min' => $min,
+				'max' => $max,
+				'q1' => $q1,
+				'q2' => $q2,
+			);
+		}else{
+			return [];
+		}
 	}
 }

@@ -62,22 +62,27 @@
         	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
     				<ul class="map-filter mb-0">
     					<li class="list-head">MATERNAL HEALTH</li>
-							<li><a href="#">Counselling Given</a></li>
-							<li><a href="#">IFA Distributed</a></li>
-							<li><a href="#">Weight Measured</a></li>
+							<li><a href="#" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given')">Counselling Given</a></li>
+							<li><a href="#" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed')">IFA Distributed</a></li>
+							<li><a href="#" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured')">Weight Measured</a></li>
 							<li class="list-head">Child health</li>
-							<li><a href="#">IMCI Counselling Given</a></li>
-							<li><a href="#">Supplements Distributed</a></li>
+							<li><a href="#" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given')">IMCI Counselling Given</a></li>
+							<li><a href="#" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed')">Supplements Distributed</a></li>
     				</ul>
     				<ul class="map-filter outcome mb-0">
 							<li class="list-head green">OUTCOME</li>
-							<li class="list-head">STUNING</li>
-							<li class="list-head">WASTING</li>
-							<li class="list-head">BREASTFEEDING</li>
+							<li class="list-head" onclick="getMapData('ImciStunting', 'STUNING')">STUNING</li>
+							<li class="list-head" onclick="getMapData('ImciWasting', 'WASTING')">WASTING</li>
+							<li class="list-head" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING')">BREASTFEEDING</li>
     				</ul>
     			</div>
     			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
     				<div id="mapdiv" class="map-wrapper" style="width: 100%;"></div>
+    				<div id="overdiv">
+    					<span class="legend-text" id="low-text"></span>
+    					<span class="legend-text" id="avg-text"></span>
+    					<span class="legend-text" id="high-text"></span>
+    				</div>
     			</div>
         </div>
       </div> {{-- swiper-slide --}}
@@ -237,6 +242,10 @@
 
 @section('outjavascript')
 	<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
+
+	<script>
+		scoreColors = {"high": "#0b495e", "average": "#137f91", "low": "#81ddc5"};
+	</script>
 
 	<script>
 	$(document).ready(function(){
@@ -460,77 +469,113 @@
 
 
     function initMap() {
-      map = new google.maps.Map(document.getElementById('mapdiv'), {
-        center: {lat: 23.684994, lng: 90.356331},
-        zoom: 7,
-        scrollwheel: true,
-        styles: [{"featureType":"administrative","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":"50"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"lightness":"30"}]},{"featureType":"road.local","elementType":"all","stylers":[{"lightness":"40"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"lightness":-25},{"saturation":-100}]}]
-      });
+      $.ajax({
+	      type: 'get',
+	      url: '/dashboard_specific_map',
+	      data: {"model": "CcMrAncNutriCounsel"},
+	      success: function (res) {
+	      	if(res['dataExists']) {
+	      		
+						if(res['reverse']) {
+							$('#low-text').html('Major Problem');
+							$('#avg-text').html('Severe Problem');
+							$('#high-text').html('Critical Problem');
+						} else {
+							$('#low-text').html('Critical Problem');
+							$('#avg-text').html('Severe Problem');
+							$('#high-text').html('Major Problem');
+						}
+	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
+			        center: {lat: 23.684994, lng: 90.356331},
+			        zoom: 7,
+			        scrollwheel: true,
+			        styles: [{"featureType":"administrative","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":"50"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"lightness":"30"}]},{"featureType":"road.local","elementType":"all","stylers":[{"lightness":"40"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"lightness":-25},{"saturation":-100}]}],
+			        	zoomControl: true,
+			          zoomControlOptions: {
+			              position: google.maps.ControlPosition.LEFT_BOTTOM
+			          },
+		          scaleControl: true,
+		          streetViewControl: true,
+		          streetViewControlOptions: {
+		              position: google.maps.ControlPosition.LEFT_BOTTOM
+		          },
+		      	});
 
-        // Set a blank infoWindow to be used for each to state on click
-			var infoWindow = new google.maps.InfoWindow({
-				content: ""
-			});
+		        // Set a blank infoWindow to be used for each to state on click
+						var infoWindow = new google.maps.InfoWindow({
+							content: ""
+						});
 
-			// Create the state data layer and load the GeoJson Data
-			var stateLayer = new google.maps.Data();
-			
-			{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
-			stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+						// Create the state data layer and load the GeoJson Data
+						var stateLayer = new google.maps.Data();
+						
+						{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
+						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
 
-			// Set and apply styling to the stateLayer
-			stateLayer.setStyle(function(feature) {
-				color = feature.getProperty('color');
-				return {
-					fillColor: color,
-					fillOpacity: 0.6,
-					strokeColor: '#777',
-					strokeWeight: 1.5,
-					zIndex: 1
-				};
-			});
+						// Set and apply styling to the stateLayer
+						stateLayer.setStyle(function(feature) {
+							var ids = feature.getProperty('ids').split('-');
+							var id = ids[0];
+							if(res['server'] == 'community')
+								id = ids[1];
+							var value = parseInt(res['minimalData'][id]);
+							var localColor = '';
+							if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
+								localColor = scoreColors['low'];
+							} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
+								localColor = scoreColors['average'];
+							} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
+								localColor = scoreColors['high'];
+							}
+							color = feature.getProperty('color');
+							return {
+								fillColor: localColor,
+								fillOpacity: 1,
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 1
+							};
+						});
 
-			// Add mouseover and mouse out styling for the GeoJSON State data
-			stateLayer.addListener('mouseover', function(e) {
-				console.log("mouse over");
-				stateLayer.overrideStyle(e.feature, {
-					// fillColor: e.feature.getProperty('color'),
-					strokeColor: '#2bc0fe',
-					// strokeColor: e.feature.getProperty('color'),
-					strokeWeight: 2,
-					zIndex: 2
-				});
-			});
+						// Add mouseover and mouse out styling for the GeoJSON State data
+						stateLayer.addListener('mouseover', function(e) {
+							ids = e.feature.getProperty('ids').split('-');
+							id = ids[0];
+							if(res['server'] == 'community')
+								id = ids[1];
+							value = res['minimalData'][id];
+							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + value + '</div>');
+							var anchor = new google.maps.MVCObject();
+				    	anchor.set("position", e.latLng);
+				    	infoWindow.open(map, anchor);
+							stateLayer.overrideStyle(e.feature, {
+								// fillColor: e.feature.getProperty('color'),
+								strokeColor: '#000',
+								// strokeColor: e.feature.getProperty('color'),
+								strokeWeight: 2,
+								zIndex: 2
+							});
+						});
 
-		stateLayer.addListener('mouseout', function(e) {
-			stateLayer.overrideStyle(e.feature, {
-				strokeColor: '#777',
-				strokeWeight: 1.5,
-				zIndex: 1
-			});
-		});
-		
-		stateLayer.addListener('click', function(e) {
-			var elem = $('#mapdiv').parent();
-		    elem.addClass('col-lg-8');
-			elem.removeClass('col-lg-12');
-	    	infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' +
-			e.feature.getProperty('name') + '</div>');
+						stateLayer.addListener('mouseout', function(e) {
+							stateLayer.overrideStyle(e.feature, {
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 1
+							});
+						});
+						
+		        // Final step here sets the stateLayer GeoJSON data onto the map
+						stateLayer.setMap(map);
+	      	}else{
 
-	    	var anchor = new google.maps.MVCObject();
-	    	anchor.set("position", e.latLng);
-	    	infoWindow.open(map, anchor);
-		});
-
-	    stateLayer.addListener('click', function(event) {
-	     	getDivisionData(event);
-	     	stateLayer.revertStyle();
-	     	stateLayer.overrideStyle(event.feature, {fillColor: '#1ebffa', fillOpacity: 0.8,});
-	     	// stateLayer.overrideStyle(event.feature, {fillColor: event.feature.getProperty('color'), fillOpacity: 0.8,});
-	    });
-
-        // Final step here sets the stateLayer GeoJSON data onto the map
-		stateLayer.setMap(map);
+	      	}
+	      	
+	      },
+	      error: function(res) {
+	        console.log('failed')
+	      }
+	  	});
 	}
 
 	function getDivisionData(event) {
@@ -718,5 +763,126 @@
         prevEl: '.swiper-button-prev',
       },
     });
+  </script>
+
+  <script>
+  	const getMapData = (model, item) => {
+  		console.log(model);
+  		$.ajax({
+	      type: 'get',
+	      url: '/dashboard_specific_map',
+	      data: {"model": model},
+	      success: function (res) {
+	      	if(res['dataExists']) {
+	      		var value = parseInt(res['minimalData'][id]);
+	      		var localColor = '';
+						if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
+							localColor = scoreColors['low'];
+						} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
+							localColor = scoreColors['average'];
+						} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
+							localColor = scoreColors['high'];
+						}
+						if(res['reverse']) {
+							$('#low-text').html('Major Problem');
+							$('#avg-text').html('Severe Problem');
+							$('#high-text').html('Critical Problem');
+						} else {
+							$('#low-text').html('Critical Problem');
+							$('#avg-text').html('Severe Problem');
+							$('#high-text').html('Major Problem');
+						}
+	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
+			        center: {lat: 23.684994, lng: 90.356331},
+			        zoom: 7,
+			        scrollwheel: true,
+			        styles: [{"featureType":"administrative","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":"50"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"lightness":"30"}]},{"featureType":"road.local","elementType":"all","stylers":[{"lightness":"40"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"lightness":-25},{"saturation":-100}]}],
+			        zoomControl: true,
+		          zoomControlOptions: {
+		              position: google.maps.ControlPosition.LEFT_BOTTOM
+		          },
+		          scaleControl: true,
+		          streetViewControl: true,
+		          streetViewControlOptions: {
+		              position: google.maps.ControlPosition.LEFT_BOTTOM
+		          },
+		      	});
+
+		        // Set a blank infoWindow to be used for each to state on click
+						var infoWindow = new google.maps.InfoWindow({
+							content: ""
+						});
+
+						// Create the state data layer and load the GeoJson Data
+						var stateLayer = new google.maps.Data();
+						
+						{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
+						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+
+						// Set and apply styling to the stateLayer
+						stateLayer.setStyle(function(feature) {
+							var ids = feature.getProperty('ids').split('-');
+							var id = ids[0];
+							if(res['server'] == 'community')
+								id = ids[1];
+							value = res['minimalData'][id];
+							var localColor = '';
+							if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
+								localColor = scoreColors['low'];
+							} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
+								localColor = scoreColors['average'];
+							} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
+								localColor = scoreColors['high'];
+							}
+							color = feature.getProperty('color');
+							return {
+								fillColor: localColor,
+								fillOpacity: 1,
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 1
+							};
+						});
+
+						// Add mouseover and mouse out styling for the GeoJSON State data
+						stateLayer.addListener('mouseover', function(e) {
+							ids = e.feature.getProperty('ids').split('-');
+							id = ids[0];
+							if(res['server'] == 'community')
+								id = ids[1];
+							value = res['minimalData'][id];
+							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + value + '</div>');
+							var anchor = new google.maps.MVCObject();
+				    	anchor.set("position", e.latLng);
+				    	infoWindow.open(map, anchor);
+							stateLayer.overrideStyle(e.feature, {
+								// fillColor: e.feature.getProperty('color'),
+								strokeColor: '#000',
+								// strokeColor: e.feature.getProperty('color'),
+								strokeWeight: 2,
+								zIndex: 2
+							});
+						});
+
+						stateLayer.addListener('mouseout', function(e) {
+							stateLayer.overrideStyle(e.feature, {
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 1
+							});
+						});
+						
+		        // Final step here sets the stateLayer GeoJSON data onto the map
+						stateLayer.setMap(map);
+	      	}else{
+
+	      	}
+	      	
+	      },
+	      error: function(res) {
+	        console.log('failed')
+	      }
+	  	});
+  	}
   </script>
 @endsection

@@ -95,6 +95,8 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/dashboard', 'DashboardController@indexAction')->name('dashboard');
 	Route::get('/dashboard_maps', 'DashboardController@getGeoJsons')->name('dashboard-maps');
 	Route::get('/dashboard_percents', 'DashboardController@getPercentTrend')->name('dashboard-percents');
+	Route::get('/dashboard_specific_map', 'DashboardController@getMapData')->name('dashboard-specific-map');
+
 	// Outputs 
 	Route::get('/outputs', 'OutputController@indexAction')->name('outputs');
 	Route::get('/outputs/maternal', 'OutputController@indexAction')->name('outputs.maternal');
