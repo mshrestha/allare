@@ -7167,6 +7167,34 @@ body {
   .input-wrapper .input-qa span.number-txt {
     width: 53%; }
 
+.swiper-tab {
+  border: #CCC 1px solid; }
+  .swiper-tab .swiper-pagination {
+    display: none; }
+
+.swiper-tab-nav li a {
+  background: #959595;
+  height: 30px;
+  line-height: 30px;
+  display: inline-block;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #FFF;
+  text-transform: uppercase;
+  text-decoration: none; }
+  .swiper-tab-nav li a.active {
+    background: #ffa69c; }
+.swiper-tab-nav .list-inline-item:not(:last-child) {
+  margin: 0px; }
+
+.tab-col-title {
+  color: #f45e58;
+  font-size: 14px; }
+
+.tab-col-subtitle {
+  color: #a0a0a0;
+  font-size: 14px; }
+
 .custom-select {
   background-image: url("../images/select-img.png");
   background-position: right center;

@@ -3,6 +3,119 @@
   <div class="container">
     @include('layouts.partials.main-chart-partial')
 
+    {{-- tabcontent start  --}}
+
+    <div class="tab-content mt-3">
+      <div class="row">
+        <div class="col-12">
+          <div class="box-heading float-left ml-0">MATERNAL</div>
+          <div class="swiper-tab-nav">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <a href="#slide1">Counselling</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#slide2">IFA DISTRIBUTION</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#slide3">WEIGHT MEASUREMENT</a>
+              </li>
+            </ul>
+          </div> {{-- swiper-tab-nav --}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          {{-- tab slide swiper --}}
+          <!-- Swiper -->
+          <div class="swiper-container swiper-tab" id="swiper-tab">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" data-hash="slide1">
+                <div class="row">
+                  <div class="col-xl-2">
+                    <div class="tab-col-title">MATERNAL COUNSELLING</div>
+                    <div class="tab-col-subtitle"> FEBRUARY 2018</div>
+                    <div class="piechart"> piechart </div>
+                  </div> {{-- col-xs-2 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">People Counselled on Maternal Health</div>
+                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+                    <div class="linechart">linechar goes here</div>
+                  </div> {{-- col-xs-5 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">Reports on Maternal Health</div>
+                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+                    
+                  </div> {{-- col-xs-5 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">Reports on Maternal Health</div>
+                      <div class="report-list">repot list</div>
+                  </div> {{-- col-xs-5 --}}
+                </div>
+              </div>
+              <div class="swiper-slide" data-hash="slide2">
+                <div class="row">
+                  <div class="col-xl-2">
+                    <div class="tab-col-title">MATERNAL COUNSELLING</div>
+                    <div class="tab-col-subtitle"> FEBRUARY 2018</div>
+                    <div class="piechart"> piechart </div>
+                  </div> {{-- col-xs-2 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">People Counselled on Maternal Health</div>
+                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+                    <div class="linechart">linechar goes here</div>
+                  </div> {{-- col-xs-5 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">Reports on Maternal Health</div>
+                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+                    
+                  </div> {{-- col-xs-5 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">Reports on Maternal Health</div>
+                      <div class="report-list">repot list</div>
+                  </div> {{-- col-xs-5 --}}
+                </div>
+              </div>
+              <div class="swiper-slide" data-hash="slide3">
+                <div class="row">
+                  <div class="col-xl-2">
+                    <div class="tab-col-title">MATERNAL COUNSELLING</div>
+                    <div class="tab-col-subtitle"> FEBRUARY 2018</div>
+                    <div class="piechart"> piechart </div>
+                  </div> {{-- col-xs-2 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">People Counselled on Maternal Health</div>
+                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+                    <div class="linechart">linechar goes here</div>
+                  </div> {{-- col-xs-5 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">Reports on Maternal Health</div>
+                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
+                    
+                  </div> {{-- col-xs-5 --}}
+                  <div class="col-xl-5">
+                    <div class="tab-col-title">Reports on Maternal Health</div>
+                      <div class="report-list">repot list</div>
+                  </div> {{-- col-xs-5 --}}
+                </div>
+              </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination invisible"></div>  
+            <!-- Add Arrows -->
+            <div class="swiper-button-next invisible"></div>
+            <div class="swiper-button-prev invisible"></div>
+          </div>
+          {{-- tab slide swiper end --}}
+        </div>
+      </div>
+      
+
+  </div>
+
+  {{-- tabcontent end --}}
+
+
     @foreach($trend_analysis as $key => $analysis)
       @include('layouts.partials.trend-analysis-chart-partial')
     @endforeach
@@ -244,5 +357,22 @@ function charts(datasets, labels) {
       var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
       window.myPie = new Chart(ctx, config);
     }
+  </script>
+  <script src="{{asset('js/swiper.min.js')}}"></script>
+  <script>
+     var swiper = new Swiper('#swiper-tab', {
+      spaceBetween: 30,
+      hashNavigation: {
+        watchState: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
   </script>
 @endsection

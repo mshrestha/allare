@@ -1,0 +1,33 @@
+.swiper-tab{
+	border: #CCC 1px solid;
+	.swiper-pagination{
+		display: none;
+	}
+}
+.swiper-tab-nav{
+	li a {
+    background: #959595;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #FFF;
+    text-transform: uppercase;
+    text-decoration: none;
+		&.active {
+		    background: #ffa69c;
+		}
+	}
+	.list-inline-item:not(:last-child) {
+	    margin: 0px;
+	}
+}
+.tab-col-title{
+	color: #f45e58;
+	font-size: 14px;
+}
+.tab-col-subtitle{
+	color: #a0a0a0;
+	font-size: 14px;
+}
