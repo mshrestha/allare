@@ -3,6 +3,46 @@
   <div class="container">
     @include('layouts.partials.main-chart-partial')
 
+    {{-- tabcontent start  --}}
+    <div class="tab-content mt-3">
+      <div class="row">
+        <div class="col-12">
+          <div class="box-heading float-left ml-0">CHILD</div>
+          <div class="swiper-tab-nav">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <a href="#slide0">IMCI COUNSELING</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#slide1">SUPPLEMENTS</a>
+              </li>
+            </ul>
+          </div> {{-- swiper-tab-nav --}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          {{-- tab slide swiper --}}
+          <!-- Swiper -->
+          <div class="swiper-container swiper-tab" id="swiper-tab-child-output">
+            <div class="swiper-wrapper">
+              @foreach($trend_analysis as $key => $analysis)
+                @include('layouts.partials.trend-analysis-chart-partial')
+              @endforeach
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination invisible"></div>  
+            <!-- Add Arrows -->
+            <div class="swiper-button-next invisible"></div>
+            <div class="swiper-button-prev invisible"></div>
+          </div>
+          {{-- tab slide swiper end --}}
+        </div>
+      </div>
+  </div>
+  {{-- tabcontent end --}}
+
+
     @foreach($trend_analysis as $key => $analysis)
       @include('layouts.partials.trend-analysis-chart-partial')
     @endforeach
@@ -247,5 +287,22 @@ var colors = [
       var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
       window.myPie = new Chart(ctx, config);
     }
+  </script>
+  <script src="{{asset('js/swiper.min.js')}}"></script>
+  <script>
+     var swiper = new Swiper('#swiper-tab-child-output', {
+      spaceBetween: 30,
+      hashNavigation: {
+        watchState: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
   </script>
 @endsection
