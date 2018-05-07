@@ -269,22 +269,20 @@ function charts(datasets, labels) {
               100 - data_value,
             ],
             backgroundColor: [
-              'rgb(29, 192, 255)'
+              '#fba69c'
             ],
             label: 'Dataset 1'
           }],
-          labels: [
-            labels[0],
-            labels[1],
-          ]
+          
         },
         options: {
           responsive: true,
           pieceLabel: {
             render: 'percentage',
-            fontColor: ['white', 'rgba(54, 162, 235, 0.8)'],
+            fontColor: ['white', '#fba69c'],
             precision: 2
-          }
+          },
+          tooltips: false
         }
       };
 
