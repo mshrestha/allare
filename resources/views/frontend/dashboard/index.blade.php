@@ -774,15 +774,7 @@
 	      data: {"model": model},
 	      success: function (res) {
 	      	if(res['dataExists']) {
-	      		var value = parseInt(res['minimalData'][id]);
-	      		var localColor = '';
-						if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
-							localColor = scoreColors['low'];
-						} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
-							localColor = scoreColors['average'];
-						} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
-							localColor = scoreColors['high'];
-						}
+	      		
 						if(res['reverse']) {
 							$('#low-text').html('Major Problem');
 							$('#avg-text').html('Severe Problem');
