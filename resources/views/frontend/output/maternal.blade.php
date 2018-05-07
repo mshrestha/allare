@@ -12,13 +12,13 @@
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a href="#slide1">Counselling</a>
+                <a href="#slide0">Counselling</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide2">IFA DISTRIBUTION</a>
+                <a href="#slide1">IFA DISTRIBUTION</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide3">WEIGHT MEASUREMENT</a>
+                <a href="#slide2">WEIGHT MEASUREMENT</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
@@ -30,75 +30,9 @@
           <!-- Swiper -->
           <div class="swiper-container swiper-tab" id="swiper-tab">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" data-hash="slide1">
-                <div class="row">
-                  <div class="col-xl-2">
-                    <div class="tab-col-title">MATERNAL COUNSELLING</div>
-                    <div class="tab-col-subtitle"> FEBRUARY 2018</div>
-                    <div class="piechart"> piechart </div>
-                  </div> {{-- col-xs-2 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">People Counselled on Maternal Health</div>
-                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
-                    <div class="linechart">linechar goes here</div>
-                  </div> {{-- col-xs-5 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">Reports on Maternal Health</div>
-                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
-                    
-                  </div> {{-- col-xs-5 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">Reports on Maternal Health</div>
-                      <div class="report-list">repot list</div>
-                  </div> {{-- col-xs-5 --}}
-                </div>
-              </div>
-              <div class="swiper-slide" data-hash="slide2">
-                <div class="row">
-                  <div class="col-xl-2">
-                    <div class="tab-col-title">MATERNAL COUNSELLING</div>
-                    <div class="tab-col-subtitle"> FEBRUARY 2018</div>
-                    <div class="piechart"> piechart </div>
-                  </div> {{-- col-xs-2 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">People Counselled on Maternal Health</div>
-                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
-                    <div class="linechart">linechar goes here</div>
-                  </div> {{-- col-xs-5 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">Reports on Maternal Health</div>
-                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
-                    
-                  </div> {{-- col-xs-5 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">Reports on Maternal Health</div>
-                      <div class="report-list">repot list</div>
-                  </div> {{-- col-xs-5 --}}
-                </div>
-              </div>
-              <div class="swiper-slide" data-hash="slide3">
-                <div class="row">
-                  <div class="col-xl-2">
-                    <div class="tab-col-title">MATERNAL COUNSELLING</div>
-                    <div class="tab-col-subtitle"> FEBRUARY 2018</div>
-                    <div class="piechart"> piechart </div>
-                  </div> {{-- col-xs-2 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">People Counselled on Maternal Health</div>
-                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
-                    <div class="linechart">linechar goes here</div>
-                  </div> {{-- col-xs-5 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">Reports on Maternal Health</div>
-                    <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
-                    
-                  </div> {{-- col-xs-5 --}}
-                  <div class="col-xl-5">
-                    <div class="tab-col-title">Reports on Maternal Health</div>
-                      <div class="report-list">repot list</div>
-                  </div> {{-- col-xs-5 --}}
-                </div>
-              </div>
+              @foreach($trend_analysis as $key => $analysis)
+                @include('layouts.partials.trend-analysis-chart-partial')
+              @endforeach
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination invisible"></div>  
@@ -114,11 +48,6 @@
   </div>
 
   {{-- tabcontent end --}}
-
-
-    @foreach($trend_analysis as $key => $analysis)
-      @include('layouts.partials.trend-analysis-chart-partial')
-    @endforeach
   </div>
 @endsection
 
@@ -284,9 +213,10 @@ function charts(datasets, labels) {
         for (var i = 0; i < data_value.length; i++) {
           currSet = {
             label: data_value[i].title,
-            borderColor: colors[i],
+            borderColor:  '#9fdfd0',
             borderWidth: 2,
-            fill: false,
+            fill: true,
+            backgroundColor: '#9fdfd0',
             data: data_value[i].values
           };
           dataSet.push(currSet);
@@ -295,9 +225,10 @@ function charts(datasets, labels) {
       } else {
         currSet = {
             label: data_value.title,
-            borderColor: colors[0],
+            borderColor:  '#9fdfd0',
             borderWidth: 2,
-            fill: false,
+            fill: true,
+            backgroundColor: '#9fdfd0',
             data: data_value.values
           };
         dataSet.push(currSet);
@@ -317,6 +248,9 @@ function charts(datasets, labels) {
             mode: 'index',
             intersect: true
           },
+          chartArea: {
+            backgroundColor: '#e5e5e5'
+          }
         }
       });
     }
@@ -335,22 +269,20 @@ function charts(datasets, labels) {
               100 - data_value,
             ],
             backgroundColor: [
-              'rgb(29, 192, 255)'
+              '#fba69c'
             ],
             label: 'Dataset 1'
           }],
-          labels: [
-            labels[0],
-            labels[1],
-          ]
+          
         },
         options: {
           responsive: true,
           pieceLabel: {
             render: 'percentage',
-            fontColor: ['white', 'rgba(54, 162, 235, 0.8)'],
+            fontColor: ['white', '#fba69c'],
             precision: 2
-          }
+          },
+          tooltips: false
         }
       };
 

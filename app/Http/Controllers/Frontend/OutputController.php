@@ -74,6 +74,7 @@ class OutputController extends Controller
 				'values' => $counselling_all_values,
 				'title' => 'Counseling',
 				'labels' => json_encode(['Maternal Counselling Given '.$counselling_month_maternal, 'Total patient in ' .$counselling_month_maternal]),
+				'current_month' => $counselling_month_maternal
 			],
 			[
 				'name' => 'IFA Distribution',
@@ -83,6 +84,7 @@ class OutputController extends Controller
 				'values' => $plw_who_receive_ifas_all_values,
 				'title' => 'IFA Distribution',
 				'labels' => json_encode(['PLW who receive IFA\'s in '. $plw_who_receive_ifas_month, 'Total patient in '.$plw_who_receive_ifas_month]),
+				'current_month' => $plw_who_receive_ifas_month
 			],
 			[
 				'name' => 'Weight Measurement',
@@ -92,6 +94,7 @@ class OutputController extends Controller
 				'values' => $pregnant_women_weighed_all_values,
 				'title' => 'Weight Measurement',
 				'labels' => json_encode(['Pregnant women weighed in ' .$pregnant_women_weighed_month, 'Pregnant women weighed yearly']),
+				'current_month' => $pregnant_women_weighed_month
 			],
 		];
 
@@ -146,6 +149,7 @@ class OutputController extends Controller
 				'periods' => $counselling_all_periods,
 				'values' => $counselling_all_values,
 				'labels' => json_encode(['IMCI Counselling given '. $counselling_month_child, 'IMCI Counselling yearly']),
+				'current_month' => $counselling_month_child
 			],
 			// [
 			// 	'name' => 'Child Growth',
@@ -162,6 +166,7 @@ class OutputController extends Controller
 				'periods' => $vitamin_a_supplementation_all_periods,
 				'values' => $vitamin_a_supplementation_all_values,
 				'labels' => json_encode(['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplimentation yearly']),
+				'current_month' => $vitamin_a_supplementation_month
 			],
 		];
 
