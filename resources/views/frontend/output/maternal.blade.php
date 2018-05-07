@@ -308,6 +308,16 @@ function charts(datasets, labels) {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
+       onSlideChangeEnd: function (swiper) {
+          console.log('slide change end - after');
+          console.log(swiper);
+          console.log(swiper.activeIndex);
+          //after Event use it for your purpose
+          if (swiper.activeIndex == 1) {
+              //First Slide is active
+              console.log('First slide active')
+          }
+      }
     });
   </script>
 @endsection
