@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col-xl-2 col-lg-3 col-sm-4">
       <div class="tab-col-title">{!! str_replace('_', ' ', $key) !!}</div>
-      <div class="tab-col-subtitle"> date</div>
+      <div class="tab-col-subtitle"></div>
       <div id="canvas-holder">
         <div class="progress-bar-v" id="goal-chart-{{
 				$key}}">

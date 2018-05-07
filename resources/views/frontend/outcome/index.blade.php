@@ -213,10 +213,12 @@
         // for (var i = 0; i < data_value.length; i++){
           currSet = {
             label: data_value[0].title,
-            borderColor: colors[0],
+            borderColor: '#9fdfd0',
             borderWidth: 2,
-            fill: false,
-            data: data_value[0].values
+            fill: true,
+            backgroundColor: '#9fdfd0',
+            data: data_value[0].values,
+            pointRadius: 0,
           };
           dataSet.push(currSet);
           label = data_value[0].periods;
@@ -224,10 +226,12 @@
       } else {
         currSet = {
             label: data_value.title,
-            borderColor: colors[0],
+            borderColor: '#9fdfd0',
             borderWidth: 2,
-            fill: false,
-            data: data_value.values
+            fill: true,
+            backgroundColor: '#9fdfd0',
+            data: data_value.values,
+            pointRadius: 0,
           };
         dataSet.push(currSet);
         label = data_value.periods;
@@ -267,5 +271,10 @@
         prevEl: '.swiper-button-prev',
       },
     });
+  </script>
+
+  <script>
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    $('.tab-col-subtitle').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
   </script>
 @endsection
