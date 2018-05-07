@@ -217,7 +217,8 @@ function charts(datasets, labels) {
             borderWidth: 2,
             fill: true,
             backgroundColor: '#9fdfd0',
-            data: data_value[i].values
+            data: data_value[i].values,
+            pointRadius: 0,
           };
           dataSet.push(currSet);
           label = data_value[0].periods;
@@ -229,7 +230,8 @@ function charts(datasets, labels) {
             borderWidth: 2,
             fill: true,
             backgroundColor: '#9fdfd0',
-            data: data_value.values
+            data: data_value.values,
+            pointRadius: 0,
           };
         dataSet.push(currSet);
         label = data_value.periods;
@@ -250,7 +252,8 @@ function charts(datasets, labels) {
           },
           chartArea: {
             backgroundColor: '#e5e5e5'
-          }
+          },
+
         }
       });
     }
