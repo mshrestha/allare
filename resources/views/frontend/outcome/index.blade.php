@@ -194,10 +194,15 @@
 
   //     return false;
   // });
-
+    @php
+      $counter = 0;
+    @endphp
     @foreach($trend_analysis as $key => $analysis)
       var arr = {!! json_encode($analysis) !!};
-      trendAnalysisChart('{{ $key }}', arr)
+      trendAnalysisChart('{{ $counter }}', arr)
+      @php
+        $counter = $counter + 1;
+      @endphp
     @endforeach
 
     function trendAnalysisChart(id, data_value) {
@@ -205,54 +210,78 @@
         return Math.round(Math.random() * 100);
       };
 
-      var ctx = document.getElementById("line-chart-"+id).getContext('2d');
-      // var ctx = canvas.getContext("2d");
-      dataSet =[];
-      label = '';
-      if(data_value.length > 1) {
-        // for (var i = 0; i < data_value.length; i++){
-          currSet = {
-            label: data_value[0].title,
-            borderColor: '#9fdfd0',
-            borderWidth: 2,
-            fill: true,
-            backgroundColor: '#9fdfd0',
-            data: data_value[0].values,
-            pointRadius: 0,
-          };
-          dataSet.push(currSet);
-          label = data_value[0].periods;
-        // };
-      } else {
-        currSet = {
-            label: data_value.title,
-            borderColor: '#9fdfd0',
-            borderWidth: 2,
-            fill: true,
-            backgroundColor: '#9fdfd0',
-            data: data_value.values,
-            pointRadius: 0,
-          };
-        dataSet.push(currSet);
-        label = data_value.periods;
-      }
-      data = {labels: label, datasets: dataSet};
-      window.myTrendChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            // text: 'Chart.js Drsw Line on Chart'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: true
-          },
-          maintainAspectRatio: true,
+      var dataCSV = [];
+      for (var i = 0; i < data_value.values.length; i++) {
+        temp = {};
+        if(data_value.periods[i] == '1993-1994') {
+          temp.date = '1994';
+        }else if(data_value.periods[i] == '1996-1997') {
+          temp.date = '1997';
+        }else if(data_value.periods[i] == '1999-2000') {
+          temp.date = '2000';
+        }else {
+          temp.date = data_value.periods[i];
         }
+        temp.value = data_value.values[i];
+        dataCSV.push(temp);
+        console.log(temp);
+      };
+      
+
+
+      dataCSV.forEach(function(d) {
+        d.date = d3.time.format("%Y").parse(d.date);
       });
+
+      var margin = {top: 20, right: 20, bottom: 30, left: 50},
+          width = 500 - margin.left - margin.right,
+          height = 300 - margin.top - margin.bottom;
+
+      var x = d3.time.scale()
+                .range([0, width])
+                .domain([d3.max(dataCSV, function(d) { return d.date; }), d3.min(dataCSV, function(d) { return d.date; })]);
+
+      // var x = d3.scale.linear()
+      //     .domain([0, d3.max(dataCSV, function(d) { return d.date; })])
+      //     .range([0, width]);
+
+      var y = d3.scale.linear()
+          .domain([0, d3.max(dataCSV, function(d) { return d.value; })])
+          .range([height, 0]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+      var area = d3.svg.area()
+          .x(function(d) { return x(d.date); })
+          .y0(height)
+          .y1(function(d) { return y(d.value); });
+
+      var svg = d3.select("#line-chart-"+id)
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      svg.append("path")
+          .datum(dataCSV)
+          .attr("class", "area")
+          .attr("d", area);
+
+      // svg.append("g")
+      //     .attr("class", "x axis")
+      //     .attr("transform", "translate(0," + height + ")")
+      //     .call(xAxis);
+
+      // svg.append("g")
+      //     .attr("class", "y axis")
+      //     .call(yAxis);
+
     }
   </script>
   <script src="{{asset('js/swiper.min.js')}}"></script>

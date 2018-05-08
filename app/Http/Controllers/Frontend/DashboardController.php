@@ -292,7 +292,7 @@ class DashboardController extends Controller
 
 		// $geoJsons = json_encode($this->getGeoJsons());
 		// dd($geoJsons);
-
+		// dd($maternal_trend_analysis);
 		return view('frontend.dashboard.index', compact('sidebarContents', 'outcomes', 'maternal_trend_analysis', 'child_trend_analysis'));
 	}
 

@@ -199,63 +199,68 @@ function charts(datasets, labels) {
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
-
     function trendAnalysisChart(id, data_value) {
+      var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
 
-      var ctx = document.getElementById("line-chart-"+id).getContext('2d');
-      // var ctx = canvas.getContext("2d");
-      dataSet =[];
-      label = '';
-      if(data_value.length > 1) {
-        for (var i = 0; i < data_value.length; i++) {
-          currSet = {
-            label: data_value[i].title,
-            borderColor:  '#9fdfd0',
-            borderWidth: 2,
-            fill: true,
-            backgroundColor: '#9fdfd0',
-            data: data_value[i].values,
-            pointRadius: 0,
-          };
-          dataSet.push(currSet);
-          label = data_value[0].periods;
-        };
-      } else {
-        currSet = {
-            label: data_value.title,
-            borderColor:  '#9fdfd0',
-            borderWidth: 2,
-            fill: true,
-            backgroundColor: '#9fdfd0',
-            data: data_value.values,
-            pointRadius: 0,
-          };
-        dataSet.push(currSet);
-        label = data_value.periods;
-      }
-      data = {labels: label, datasets: dataSet};
-      window.myTrendChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            // text: 'Chart.js Drsw Line on Chart'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: true
-          },
-          chartArea: {
-            backgroundColor: '#e5e5e5'
-          },
+      var dataCSV = [];
+      var max = 0;
+      for (var i = 0; i < data_value.values.length; i++) {
+        temp = {};
+        temp.date = data_value.periods[i];
+        temp.value = data_value.values[i];
+        if(max < temp.value)
+          max = temp.value;
 
-        }
+        dataCSV.push(temp);
+      };
+
+      dataCSV.forEach(function(d) {
+        d.value = d.value / max;
       });
+
+       var margin = {top: 20, right: 20, bottom: 30, left: 50},
+          width = 500 - margin.left - margin.right,
+          height = 300 - margin.top - margin.bottom;
+
+      var x = d3.time.scale()
+                .range([0, width])
+                .domain([d3.max(dataCSV, function(d) { return d.date; }), d3.min(dataCSV, function(d) { return d.date; })]);
+
+      // var x = d3.scale.linear()
+      //     .domain([0, d3.max(dataCSV, function(d) { return d.date; })])
+      //     .range([0, width]);
+
+      var y = d3.scale.linear()
+          .domain([0, d3.max(dataCSV, function(d) { return d.value; })])
+          .range([height, 0]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+      var area = d3.svg.area()
+          .x(function(d) { return x(d.date); })
+          .y0(height)
+          .y1(function(d) { return y(d.value); })
+          .interpolate(interpolateTypes[6]);
+
+      var svg = d3.select("#line-chart-"+id)
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      svg.append("path")
+          .datum(dataCSV)
+          .attr("class", "area")
+          .attr("d", area);
     }
 
     function pieChart(id, data_value, labels) {

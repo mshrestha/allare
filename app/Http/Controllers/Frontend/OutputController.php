@@ -190,7 +190,13 @@ class OutputController extends Controller
 	}
 
 	public function maternalMainChart(Request $request) {
+		return null;
 		$indicator = $request->indicator_id;
+		$department = $request->department_id;
+		if($request->department_id == 'both') {
+			$department = ['DGHS', 'DGFP'];
+		}
+
 		if($request->output == 'maternal') {
 			$data_table = config('data.maternal.'.$indicator);
 		} else {
@@ -201,24 +207,67 @@ class OutputController extends Controller
 
 		$organisation_unit = explode('.', $request->organisation_unit_id);
 		$source = $request->department_id;
-		$source = "DGHS";
-		
+
 		$model = 'App\Models\Data\\' . $data_table[0]['model'];
 		$ou = ($data_table[0]['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
 		$query = $model::whereIn('period', $periods);
-		$query->where('source', 'DGHS');
+		$query->whereIn('source', $department);
 		$query->where('organisation_unit', $ou);
 		if($indicator !== 'pregnant_women_weighed') {	
 			$query->whereNull('category_option_combo');
 		}
-		$data = $query->orderBy('period')->get();
-		
+		$data = $query->orderBy('period')->get()->groupBy('source');
 		$labels = $data->pluck('period_name');
 		$datasets = $data->pluck('value');
+		$data = $data->toArray();
+		
+
+		$dghs_data = count($data['DGHS']);
+		$dgfp_data = count($data['DGFP']);
+
+		if($dghs_data > $dgfp_data) {
+			$loop_data_used = 'DGHS';
+			$next_data_used = 'DGFP';
+		} else {
+			$loop_data_used = 'DGFP';
+			$next_data_used = 'DGHS';
+		}
+		$final_data = [
+			'DGHS' => array(),
+			'DGFP' => array(),
+		];
+
+		// dd($data[$next_data_used]);
+		for ($i=0; $i < count($data[$loop_data_used]); $i++) { 
+
+			if(!$this->existsInArray($data[$next_data_used], $data[$loop_data_used][$i]['period'])) {
+				array_push($data[$next_data_used], $data[$loop_data_used][$i]);
+			}
+		}
+
+
+		for ($i=0; $i < count($data[$next_data_used]); $i++) { 
+			if(!$this->existsInArray($data[$loop_data_used], $data[$next_data_used][$i]['period'])) {
+				array_push($data[$loop_data_used], $data[$next_data_used][$i]);
+			}
+		}
+
+		
+
+		
 		$pointers = (empty($request->department_id) || $request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
 		$title = $data_table[0]['name'];
 
 		return response()->json(['pointers' => $pointers, 'title' => $title, 'labels' => $labels, 'datasets' => $datasets]);
+	}
+
+	private function existsInArray($arr, $val) {
+		for ($i=0; $i < count($arr); $i++) { 
+			if($arr[$i]['period'] == $val) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private function getPeriodArray($period) {

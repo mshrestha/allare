@@ -350,3 +350,12 @@ header{
 span.map-text {
   color: #f45e57;
 }
+
+/* d3 area chart */
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.area { fill: #9fdfd0; }
