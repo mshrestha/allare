@@ -242,10 +242,10 @@ header{
 }
 
 /*maternal page style*/
-.bargraph-div {
+/*.bargraph-div {
     border: 1px solid rgba(121, 121, 121, 1);
     border-top: none;
-}
+}*/
 @media(min-width: 767px){
 
 }
