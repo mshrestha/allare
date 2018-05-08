@@ -185,6 +185,7 @@ class OutputController extends Controller
 	}
 
 	public function maternalMainChart(Request $request) {
+		dd($request->department_id);
 		$indicator = $request->indicator_id;
 		if($request->output == 'maternal') {
 			$data_table = config('data.maternal.'.$indicator);
@@ -196,8 +197,7 @@ class OutputController extends Controller
 
 		$organisation_unit = explode('.', $request->organisation_unit_id);
 		$source = $request->department_id;
-		$source = "DGHS";
-		
+
 		$model = 'App\Models\Data\\' . $data_table[0]['model'];
 		$ou = ($data_table[0]['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
 		$query = $model::whereIn('period', $periods);
@@ -212,6 +212,8 @@ class OutputController extends Controller
 		$datasets = $data->pluck('value');
 		$pointers = (empty($request->department_id) || $request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
 		$title = $data_table[0]['name'];
+
+		// dd();
 
 		return response()->json(['pointers' => $pointers, 'title' => $title, 'labels' => $labels, 'datasets' => $datasets]);
 	}
