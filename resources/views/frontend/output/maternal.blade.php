@@ -246,7 +246,7 @@ function charts(datasets, labels) {
           .orient("left");
 
       var area = d3.svg.area()
-          .curve(d3.curveMonotoneX)
+          .interpolate(d3.curveMonotoneX)
           .x(function(d) { return x(d.date); })
           .y0(height)
           .y1(function(d) { return y(d.value); });

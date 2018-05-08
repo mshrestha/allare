@@ -216,7 +216,10 @@ class OutputController extends Controller
 			$query->whereNull('category_option_combo');
 		}
 		$data = $query->orderBy('period')->get()->groupBy('source');
-		return $data;
+		$labels = $data->pluck('period_name');
+		$datasets = $data->pluck('value');
+		$data = $data->toArray();
+		
 
 		$dghs_data = count($data['DGHS']);
 		$dgfp_data = count($data['DGFP']);
@@ -233,18 +236,37 @@ class OutputController extends Controller
 			'DGFP' => array(),
 		];
 
-		foreach($data[$loop_data_used] as $ldata) {
-			array_push($final_data[$loop_data_used], $ldata);
-			
-			// if(!$data[$], )
+		// dd($data[$next_data_used]);
+		for ($i=0; $i < count($data[$loop_data_used]); $i++) { 
+
+			if(!$this->existsInArray($data[$next_data_used], $data[$loop_data_used][$i]['period'])) {
+				array_push($data[$next_data_used], $data[$loop_data_used][$i]);
+			}
 		}
 
-		$labels = $data->pluck('period_name');
-		$datasets = $data->pluck('value');
+
+		for ($i=0; $i < count($data[$next_data_used]); $i++) { 
+			if(!$this->existsInArray($data[$loop_data_used], $data[$next_data_used][$i]['period'])) {
+				array_push($data[$loop_data_used], $data[$next_data_used][$i]);
+			}
+		}
+
+		return $data;
+
+		
 		$pointers = (empty($request->department_id) || $request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
 		$title = $data_table[0]['name'];
 
 		return response()->json(['pointers' => $pointers, 'title' => $title, 'labels' => $labels, 'datasets' => $datasets]);
+	}
+
+	private function existsInArray($arr, $val) {
+		for ($i=0; $i < count($arr); $i++) { 
+			if($arr[$i]['period'] == $val) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private function getPeriodArray($period) {
