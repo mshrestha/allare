@@ -199,6 +199,8 @@ function charts(datasets, labels) {
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
+    
+
     function trendAnalysisChart(id, data_value) {
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
@@ -207,6 +209,8 @@ function charts(datasets, labels) {
 
       var dataCSV = [];
       var max = 0;
+      var origValues = [];
+      var processedValues = [];
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
         temp.date = data_value.periods[i];
@@ -217,11 +221,15 @@ function charts(datasets, labels) {
         dataCSV.push(temp);
       };
 
+      origDataCSV = dataCSV;
+
       dataCSV.forEach(function(d) {
+        origValues.push(d.value);
+        processedValues.push(d.value/max);
         d.value = d.value / max;
       });
 
-       var margin = {top: 20, right: 20, bottom: 30, left: 50},
+       var margin = {top: 20, right: 20, bottom: 20, left: 60},
           width = 500 - margin.left - margin.right,
           height = 300 - margin.top - margin.bottom;
 
@@ -234,33 +242,56 @@ function charts(datasets, labels) {
       //     .range([0, width]);
 
       var y = d3.scale.linear()
-          .domain([0, d3.max(dataCSV, function(d) { return d.value; })])
+          .domain([0, d3.max(origDataCSV, function(d) {return d.value; })])
           .range([height, 0]);
+
+      var ydash = d3.scale.linear()
+          .domain([0, d3.max(dataCSV, function(d) {return d.value; })])
+          .range([height, 0]);
+
+      console.log(max);
 
       var xAxis = d3.svg.axis()
           .scale(x)
-          .orient("bottom");
+          .orient("bottom")
+          .innerTickSize(-height)
+          .outerTickSize(0)
+          .ticks(5)
+          .tickPadding(20);
 
       var yAxis = d3.svg.axis()
           .scale(y)
-          .orient("left");
+          .orient("left")
+          .innerTickSize(-width)
+          .outerTickSize(0)
+          .ticks(5)
+          .tickPadding(20);
+          // .tickValues(processedValues)
+          // .tickFormat(function(x){return origValues[processedValues.indexOf(x)];});
 
       var area = d3.svg.area()
           .x(function(d) { return x(d.date); })
           .y0(height)
-          .y1(function(d) { return y(d.value); })
+          .y1(function(d) { return ydash(d.value); })
           .interpolate(interpolateTypes[6]);
 
       var svg = d3.select("#line-chart-"+id)
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
+          .attr("class", "areachart")
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+      
       svg.append("path")
           .datum(dataCSV)
           .attr("class", "area")
           .attr("d", area);
+
+      svg.append("g")
+          .attr("class", "grid")
+          .call(yAxis)
+
+      
     }
 
     function pieChart(id, data_value, labels) {

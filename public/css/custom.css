@@ -242,10 +242,10 @@ header{
 }
 
 /*maternal page style*/
-.bargraph-div {
+/*.bargraph-div {
     border: 1px solid rgba(121, 121, 121, 1);
     border-top: none;
-}
+}*/
 @media(min-width: 767px){
 
 }
@@ -359,3 +359,14 @@ span.map-text {
 }
 
 .area { fill: #9fdfd0; }
+
+.areachart {background: #e5e5e5;}
+
+g.grid {
+    stroke: white;
+    font-size: 10px;
+}
+
+g.grid text {
+  stroke: #9f9f9f;
+}

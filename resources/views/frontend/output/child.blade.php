@@ -220,11 +220,13 @@ var colors = [
         dataCSV.push(temp);
       };
 
+      origDataCSV = dataCSV;
+
       dataCSV.forEach(function(d) {
         d.value = d.value / max;
       });
 
-       var margin = {top: 20, right: 20, bottom: 30, left: 50},
+       var margin = {top: 20, right: 20, bottom: 20, left: 60},
           width = 500 - margin.left - margin.right,
           height = 300 - margin.top - margin.bottom;
 
@@ -237,16 +239,28 @@ var colors = [
       //     .range([0, width]);
 
       var y = d3.scale.linear()
-          .domain([0, d3.max(dataCSV, function(d) { return d.value; })])
+          .domain([0, d3.max(origDataCSV, function(d) {return d.value; })])
+          .range([height, 0]);
+
+      var y = d3.scale.linear()
+          .domain([0, d3.max(origDataCSV, function(d) {return d.value; })])
           .range([height, 0]);
 
       var xAxis = d3.svg.axis()
           .scale(x)
-          .orient("bottom");
+          .orient("bottom")
+          .innerTickSize(-height)
+          .outerTickSize(0)
+          .ticks(5)
+          .tickPadding(20);
 
       var yAxis = d3.svg.axis()
           .scale(y)
-          .orient("left");
+          .orient("left")
+          .innerTickSize(-width)
+          .outerTickSize(0)
+          .ticks(5)
+          .tickPadding(20);
 
       var area = d3.svg.area()
           .x(function(d) { return x(d.date); })
@@ -257,6 +271,7 @@ var colors = [
       var svg = d3.select("#line-chart-"+id)
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
+          .attr("class", "areachart")
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -264,6 +279,10 @@ var colors = [
           .datum(dataCSV)
           .attr("class", "area")
           .attr("d", area);
+
+      svg.append("g")
+          .attr("class", "grid")
+          .call(yAxis)
     }
 
     function pieChart(id, data_value, labels) {

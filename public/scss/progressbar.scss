@@ -10,6 +10,10 @@
   transition: all 0.5s ease-out;
   color: #333;
 }
+
+.progress-bar-v{
+  background-image: url('../images/loading-strip-v.png');
+}
 .progress-bar-h{
   width: 73%;
   float: left;
@@ -76,6 +80,7 @@
   -ms-transform: scaleY(0);
   -o-transform: scaleY(0);
   transform: scaleY(0);
+  justify-content: center;
 }
 .progress-bar-v .goal{
   height: 30%;

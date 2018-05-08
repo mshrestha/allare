@@ -4,7 +4,7 @@
 	    <div class="col-md-3 col-xl-2">
 	        <div class="side-filter-div">
 	            {{ Form::open(['id' => 'main-chart-form', 'method' => 'POST']) }}
-	            <div class="input-group mb-3">
+	            <div class="input-group">
 	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text">Divisions</label>
 	                </div> --}}
@@ -17,7 +17,7 @@
 
 	            </div>
 
-	            <div class="input-group mb-3">
+	            <div class="input-group">
 	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text" for="period-id">Periods</label>
 	                </div> --}}
@@ -30,7 +30,7 @@
 	                    @endforeach
 	                </select>
 	            </div>
-	            <div class="input-group mb-3">
+	            <div class="input-group">
 	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text" for="indicator_id">Indicators</label>
 	                </div> --}}
@@ -42,7 +42,7 @@
 	                </select>
 	            </div>
 
-	            <div class="input-group mb-3">
+	            <div class="input-group">
 	                {{-- <div class="input-group-prepend">
 	                    <label class="input-group-text">Departments</label>
 	                </div> --}}
@@ -68,14 +68,14 @@
 	            {{ Form::close() }}
 	            <div class="chart-legend">
 	            	<div class="row">
-	            		<div class="col-6"><div class="legend"><div class="dghs">DGHS</div></div></div>
-	            		<div class="col-6"><div class="legend"><div class="dgfp">DGFP</div></div></div>
+	            		<div class="col-6 pr-0"><div class="legend"><div class="dghs">DGHS</div></div></div>
+	            		<div class="col-6 pr-0"><div class="legend"><div class="dgfp">DGFP</div></div></div>
 	            	</div>
 	            </div>
 	        </div>
 	    </div>
 	    {{-- Bargraph --}}
-	    <div class="col-md-9">
+	    <div class="col-md-9 col-xl-10">
 	        <div class="bargraph-div">
 	            <canvas id="mainChart" width="400" height="400"></canvas>
 	        </div>

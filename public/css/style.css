@@ -6813,6 +6813,9 @@ body {
   transition: all 0.5s ease-out;
   color: #333; }
 
+.progress-bar-v {
+  background-image: url("../images/loading-strip-v.png"); }
+
 .progress-bar-h {
   width: 73%;
   float: left;
@@ -6876,7 +6879,8 @@ body {
   -webkit-transform: scaleY(0);
   -ms-transform: scaleY(0);
   -o-transform: scaleY(0);
-  transform: scaleY(0); }
+  transform: scaleY(0);
+  justify-content: center; }
 
 .progress-bar-v .goal {
   height: 30%;
@@ -7212,8 +7216,8 @@ body {
 
 .swiper-tab-nav li a {
   background: #959595;
-  height: 30px;
-  line-height: 30px;
+  height: 27px;
+  line-height: 27px;
   display: inline-block;
   padding: 0 10px;
   font-size: 14px;
@@ -7228,7 +7232,9 @@ body {
 .tab-col-title {
   color: #f45e58;
   font-size: 14px;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  margin-top: 5px;
+  line-height: 11px; }
 
 .tab-col-subtitle {
   color: #a0a0a0;
@@ -7238,7 +7244,7 @@ body {
   margin-bottom: 0; }
 
 .tab-content .swiper-slide {
-  padding: 17px 15px; }
+  padding: 12px 15px; }
 
 .custom-select {
   background-image: url("../images/select-img.png");
@@ -7255,8 +7261,13 @@ body {
 
 .side-filter-div {
   padding: 15px;
+  padding-top: 32px;
   height: 100%;
   background: #e6e6e6; }
+  .side-filter-div .input-group {
+    margin-bottom: 10px; }
+  .side-filter-div .submit-input-group {
+    margin-top: 20px; }
   .side-filter-div .btn {
     background: #ffa69c;
     color: #FFF;
@@ -7265,7 +7276,7 @@ body {
     padding: 3px; }
   .side-filter-div .chart-legend {
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     left: 0;
     color: #535353;
     font-size: 11px;
@@ -7301,6 +7312,9 @@ body {
     font-size: 12px; }
   .report-list span.date {
     line-height: 16px; }
+
+.bargraph-div {
+  background: #FFF; }
 
 @media (min-width: 1200px) {
   .container {
