@@ -199,8 +199,8 @@ function charts(datasets, labels) {
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
-
     function trendAnalysisChart(id, data_value) {
+      var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
@@ -246,10 +246,10 @@ function charts(datasets, labels) {
           .orient("left");
 
       var area = d3.svg.area()
-          .interpolate(d3.curveMonotoneX)
           .x(function(d) { return x(d.date); })
           .y0(height)
-          .y1(function(d) { return y(d.value); });
+          .y1(function(d) { return y(d.value); })
+          .interpolate(interpolateTypes[6]);
 
       var svg = d3.select("#line-chart-"+id)
           .attr("width", width + margin.left + margin.right)

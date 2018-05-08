@@ -190,6 +190,7 @@ class OutputController extends Controller
 	}
 
 	public function maternalMainChart(Request $request) {
+		return null;
 		$indicator = $request->indicator_id;
 		$department = $request->department_id;
 		if($request->department_id == 'both') {
@@ -251,7 +252,7 @@ class OutputController extends Controller
 			}
 		}
 
-		return $data;
+		
 
 		
 		$pointers = (empty($request->department_id) || $request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
