@@ -271,36 +271,75 @@ var colors = [
         return Math.round(Math.random() * 100);
       };
 
-      var config = {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: [
-              data_value,
-              100 - data_value,
-            ],
-            backgroundColor: [
-              '#fba69c',
-            ],
-            label: 'Dataset 1'
-          }],
-          // labels: [
-          //   labels[0],
-          //   labels[1],
-          // ]
-        },
-        options: {
-          responsive: false,
-          pieceLabel: {
-            render: 'percentage',
-            fontColor: ['white', '#fba69c'],
-            precision: 2
-          }
-        }
-      };
+      var w = 300,                        
+      h = 300,                            
+      r = 100,                            
+      color = ['#fba69c', '#d2d2d2'];     
+      dataCSV = [{"label": data_value+"%", "value": data_value}, 
+                {"label":  100 - data_value+"%", "value": 100 - data_value}]
+      var vis = d3.select('#chart-area-'+ id)
+        .data([dataCSV])                   
+            .attr("width", w)           
+            .attr("height", h)
+        .append("svg:g")                
+            .attr("transform", "translate(" + r + "," + r + ")")
 
-      var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
-      window.myPie = new Chart(ctx, config);
+      var arc = d3.svg.arc()
+          .outerRadius(r);
+
+      var pie = d3.layout.pie()
+          .value(function(d) { return d.value; });    
+
+      var arcs = vis.selectAll("g.slice")     
+        .data(pie)                          
+        .enter()                            
+            .append("svg:g")                
+                .attr("class", "slice");    
+
+        arcs.append("svg:path")
+                .attr("fill", function(d, i) { return color[i]; } ) 
+                .attr("d", arc);                                    
+        arcs.append("svg:text")                                     
+                .attr("transform", function(d) {                   
+                d.innerRadius = 0;
+                d.outerRadius = r;
+                return "translate(" + arc.centroid(d) + ")";        
+            })
+            .attr("text-anchor", "middle")                         
+            .text(function(d, i) { return dataCSV[i].label; })
+            .style("fill", function(d, i) { if(i==0) return color[1]; else return color[0]; } )
+            .style("font-size", "13px")
+            .style("font-weight", "bold");
+      // var config = {
+      //   type: 'pie',
+      //   data: {
+      //     datasets: [{
+      //       data: [
+      //         data_value,
+      //         100 - data_value,
+      //       ],
+      //       backgroundColor: [
+      //         '#fba69c',
+      //       ],
+      //       label: 'Dataset 1'
+      //     }],
+      //     // labels: [
+      //     //   labels[0],
+      //     //   labels[1],
+      //     // ]
+      //   },
+      //   options: {
+      //     responsive: false,
+      //     pieceLabel: {
+      //       render: 'percentage',
+      //       fontColor: ['white', '#fba69c'],
+      //       precision: 2
+      //     }
+      //   }
+      // };
+
+      // var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
+      // window.myPie = new Chart(ctx, config);
     }
   </script>
 
