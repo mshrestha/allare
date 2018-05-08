@@ -6748,6 +6748,9 @@ body {
   background: #f45e58; }
   .header-full .navbar.navbar-red .navbar-brand {
     margin-right: 32px; }
+  .header-full .navbar.navbar-red .navbar-toggler, .header-full .navbar.navbar-red .navbar-toggler:focus {
+    border: none;
+    outline: none; }
   @media (min-width: 992px) {
     .header-full .navbar.navbar-red li {
       border-right: 1px solid #cd4031; }
@@ -6787,7 +6790,7 @@ body {
     border: none;
     padding: 0; }
     .header-full .navbar.navbar-red li .dropdown-menu a {
-      border-top: 1px solid #cd4031; }
+      border-bottom: 1px solid #cd4031; }
     .header-full .navbar.navbar-red li .dropdown-menu .dropdown-item:hover, .header-full .navbar.navbar-red li .dropdown-menu .dropdown-item:focus, .header-full .navbar.navbar-red li .dropdown-menu .dropdown-item.active, .header-full .navbar.navbar-red li .dropdown-menu .dropdown-item:active {
       background: #fda69c; }
   .header-full .navbar-light .navbar-nav .show > .nav-link, .header-full .navbar-light .navbar-nav .active > .nav-link, .header-full .navbar-light .navbar-nav .nav-link.show, .header-full .navbar-light .navbar-nav .nav-link.active,
