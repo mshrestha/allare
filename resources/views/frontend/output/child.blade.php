@@ -51,11 +51,12 @@
 
 @section('outjavascript')
 <script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
-
+<script src="//d3js.org/d3.v3.min.js"></script>
 <script>
 // $('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
+    
 });
 
 var affectedExists = 0;
@@ -292,6 +293,8 @@ var colors = [
       window.myPie = new Chart(ctx, config);
     }
   </script>
+
+  
   <script src="{{asset('js/swiper.min.js')}}"></script>
   <script>
      var swiper = new Swiper('#swiper-tab-child-output', {
