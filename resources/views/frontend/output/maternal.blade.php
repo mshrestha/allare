@@ -279,7 +279,7 @@ function charts(datasets, labels) {
           
         },
         options: {
-          responsive: true,
+          responsive: false,
           pieceLabel: {
             render: 'percentage',
             fontColor: ['white', '#fba69c'],
