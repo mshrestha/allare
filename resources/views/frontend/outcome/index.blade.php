@@ -194,10 +194,15 @@
 
   //     return false;
   // });
-
+    @php
+      $counter = 0;
+    @endphp
     @foreach($trend_analysis as $key => $analysis)
       var arr = {!! json_encode($analysis) !!};
-      trendAnalysisChart('{{ $key }}', arr)
+      trendAnalysisChart('{{ $counter }}', arr)
+      @php
+        $counter = $counter + 1;
+      @endphp
     @endforeach
 
     function trendAnalysisChart(id, data_value) {
@@ -208,10 +213,21 @@
       var dataCSV = [];
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
-        temp.date = data_value.periods[i];
+        if(data_value.periods[i] == '1993-1994') {
+          temp.date = '1994';
+        }else if(data_value.periods[i] == '1996-1997') {
+          temp.date = '1997';
+        }else if(data_value.periods[i] == '1999-2000') {
+          temp.date = '2000';
+        }else {
+          temp.date = data_value.periods[i];
+        }
         temp.value = data_value.values[i];
         dataCSV.push(temp);
+        console.log(temp);
       };
+      
+
 
       dataCSV.forEach(function(d) {
         d.date = d3.time.format("%Y").parse(d.date);
