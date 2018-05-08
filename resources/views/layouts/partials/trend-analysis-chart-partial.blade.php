@@ -4,7 +4,7 @@
       <div class="tab-col-title">{{$analysis['name']}}</div>
       <div class="tab-col-subtitle"> {{strtoupper($analysis['current_month'])}}</div>
       <div id="canvas-holder">
-				<canvas id="chart-area-{{ $key }}"></canvas>
+				<svg id="chart-area-{{ $key }}"></svg>
 			</div>
     </div> {{-- col-xs-2 --}}
     <div class="col-xl-5 offset-xl-1 pr-xl-0 col-lg-6 col-sm-8">
