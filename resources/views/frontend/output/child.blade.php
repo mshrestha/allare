@@ -43,9 +43,9 @@
   {{-- tabcontent end --}}
 
 
-    @foreach($trend_analysis as $key => $analysis)
+    {{-- @foreach($trend_analysis as $key => $analysis)
       @include('layouts.partials.trend-analysis-chart-partial')
-    @endforeach
+    @endforeach --}}
   </div>
 @endsection
 
@@ -214,10 +214,12 @@ var colors = [
         for (var i = 0; i < data_value.length; i++){
           currSet = {
             label: data_value[i].title,
-            borderColor: colors[i],
+            borderColor: '#9fdfd0',
             borderWidth: 2,
-            fill: false,
-            data: data_value[i].values
+            fill: true,
+            backgroundColor: '#9fdfd0',
+            data: data_value[i].values,
+            pointRadius: 0
           };
           dataSet.push(currSet);
           label = data_value[0].periods;
@@ -225,10 +227,12 @@ var colors = [
       } else {
         currSet = {
             label: data_value.title,
-            borderColor: colors[0],
+            borderColor: '#9fdfd0',
             borderWidth: 2,
-            fill: false,
-            data: data_value.values
+            fill: true,
+            backgroundColor: '#9fdfd0',
+            data: data_value.values,
+            pointRadius: 0,
           };
         dataSet.push(currSet);
         label = data_value.periods;
@@ -265,20 +269,20 @@ var colors = [
               100 - data_value,
             ],
             backgroundColor: [
-              'rgb(29, 192, 255)',
+              '#fba69c',
             ],
             label: 'Dataset 1'
           }],
-          labels: [
-            labels[0],
-            labels[1],
-          ]
+          // labels: [
+          //   labels[0],
+          //   labels[1],
+          // ]
         },
         options: {
-          responsive: true,
+          responsive: false,
           pieceLabel: {
             render: 'percentage',
-            fontColor: ['white', 'rgb(29, 192, 255)'],
+            fontColor: ['white', '#fba69c'],
             precision: 2
           }
         }

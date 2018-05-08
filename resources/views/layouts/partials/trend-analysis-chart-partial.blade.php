@@ -8,14 +8,14 @@
 			</div>
     </div> {{-- col-xs-2 --}}
     <div class="col-xl-5 offset-xl-1 pr-xl-0 col-lg-6 col-sm-8">
-      <div class="tab-col-title">People Counselled on Maternal Health</div>
+      <div class="tab-col-title">People Counselled on {{$analysis['name']}}</div>
       <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
       <div id="canvas-holder">
 				<canvas id="line-chart-{{ $key }}"></canvas>
 			</div>
     </div> {{-- col-xs-5 --}}
     <div class="col-xl-3 offset-xl-1 report-col col-lg-3">
-			<div class="tab-col-title">Reports on Maternal Health</div>
+			<div class="tab-col-title">Reports on {{$analysis['name']}}</div>
 		  <ul class="report-list row">
 		  	<li class="col-sm-6 col-lg-12">
 		  		<a href="#" class="row">
