@@ -14,8 +14,15 @@
 }
 .side-filter-div{
 	padding: 15px;
+	padding-top: 32px;
 	height: 100%;
 	background: #e6e6e6;
+	.input-group{
+		margin-bottom: 10px;
+	}
+	.submit-input-group{
+		margin-top: 20px;
+	}
 	.btn{
 		background: #ffa69c;
 		color: #FFF;
@@ -25,7 +32,7 @@
 	}
 	.chart-legend{
 		position: absolute;
-		bottom: 15px;
+		bottom: 10px;
 		left: 0;
 		color: #535353;
 		font-size: 11px;
@@ -76,5 +83,7 @@
 	    line-height: 16px;
 	}
 
-
+}
+.bargraph-div{
+	background: #FFF;
 }

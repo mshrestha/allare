@@ -9,7 +9,7 @@
 	}
 @endphp
 
-	<div class="col-12 outcome-progress-col mt-4">
+	<div class="col-12 outcome-progress-col">
 		<div class="report-heading row">
 			<div class="report-icon col-2 pr-1">
 				@if (strpos(strtolower($key), 'stunting') !== false) 

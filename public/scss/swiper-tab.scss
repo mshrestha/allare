@@ -7,8 +7,8 @@
 .swiper-tab-nav{
 	li a {
     background: #959595;
-    height: 30px;
-    line-height: 30px;
+    height: 27px;
+    line-height: 27px;
     display: inline-block;
     padding: 0 10px;
     font-size: 14px;
@@ -27,6 +27,8 @@
 	color: #f45e58;
 	font-size: 14px;
 	text-transform: uppercase;
+	margin-top: 5px;
+	line-height: 11px;
 }
 .tab-col-subtitle{
 	color: #a0a0a0;
@@ -37,6 +39,8 @@
     margin-bottom: 0;
 }
 
-.swiper-slide {
-    padding: 17px 15px;
-}
+.tab-content{
+	.swiper-slide {
+	    padding: 12px 15px;
+	}
+} 

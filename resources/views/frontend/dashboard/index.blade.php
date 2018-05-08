@@ -16,7 +16,7 @@
 	      		</div> {{-- row --}}
 	      		<div class="row">
 	      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-	      				<div id="maternal-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+	      				<div id="maternal-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
 	      				<div class="legend row">
 	      					<div class="conselling-given col-6">Conselling Given</div>
 	      					<div class="ifa-distributed col-6">IFA Distributed</div>
@@ -24,7 +24,7 @@
 	      				</div> {{-- legend --}}
 	      			</div>
 	      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
-	      				<div id="child-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div>
+	      				<div id="child-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
 	      				<div class="legend row">
 	      					<div class="imci-counselling col-10 offset-2">IMCI Counselling Given</div>
 	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
@@ -661,6 +661,64 @@
 		}
 	});
 	  // for child health
+<?php /* <<<<<<< HEAD
+	   var mainChart = new RadialProgressChart('#child-health', {
+	        diameter: 100,
+	        shadow: {
+	        	width: 0
+	        },
+	        stroke:{
+	        	width: 13,
+	        	gap: 3
+	        },
+	         animation: {
+			        // duration: int (default: 1750),
+			        // delay: int (between each ring, default: 200)
+			        duration: 2000,
+			        delay: 300
+
+			    },
+			    min: 0,
+			    max: 100,
+	        series: [
+	          {
+	          	labelStart: '', //IMCI Counselling Given     
+	          	value: 55,
+	          	color: '#008091',
+	        //   	color: {
+					    //   linearGradient: {
+					    //     x1: '0%',
+					    //     y1: '0%',
+					    //     x2: '100%',
+					    //     y2: '100%',
+					    //     spreadMethod: 'pad' // reflect, repeat, pad 
+					    //   },
+					    //   stops: [{
+					    //     offset: '0%',
+					    //     'stop-color': '#fe08b5',
+					    //     'stop-opacity': 1
+					    //   }, {
+					    //     offset: '100%',
+					    //     'stop-color': '#000000',
+					    //     'stop-opacity': 1
+					    //   }]
+					    // }
+	          },
+	          {
+	          	labelStart: '', //Child Health
+	          	value: 70,
+	          	color: '#0c4a60',
+	          },
+	        ],
+	        center: {
+				    content: [
+				    	'CHILD', 'HEALTH'],
+				  }
+	      }
+	  );
+  </script>
+  {{-- radial progress end --}}
+======= */ ?>
 	  var mainChart = new RadialProgressChart('#child-health', {
 	  	diameter: 100,
 	  	shadow: {
@@ -699,6 +757,7 @@
 	});
 	</script>
 	{{-- radial progress end --}}
+{{-- >>>>>>> a1835801bf0f5809dc712799bb9b94300fef4d1c --}}
 	<script>
 		$('.slideTrigger').click(function(){
 			TweenMax.staggerTo(".slideInContainer", 1, {left:'0', backgroundColor: "#CCC", ease:Power4.easeInOut});
