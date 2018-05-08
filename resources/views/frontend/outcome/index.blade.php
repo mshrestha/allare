@@ -210,6 +210,8 @@
         return Math.round(Math.random() * 100);
       };
 
+      var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
+
       var dataCSV = [];
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
@@ -251,20 +253,30 @@
 
       var xAxis = d3.svg.axis()
           .scale(x)
-          .orient("bottom");
+          .orient("bottom")
+          .innerTickSize(-height)
+          .outerTickSize(0)
+          .ticks(5)
+          .tickPadding(20);
 
       var yAxis = d3.svg.axis()
           .scale(y)
-          .orient("left");
+          .orient("left")
+          .innerTickSize(-width)
+          .outerTickSize(0)
+          .ticks(5)
+          .tickPadding(20);
 
       var area = d3.svg.area()
           .x(function(d) { return x(d.date); })
           .y0(height)
-          .y1(function(d) { return y(d.value); });
+          .y1(function(d) { return y(d.value); })
+          .interpolate(interpolateTypes[6]);;
 
       var svg = d3.select("#line-chart-"+id)
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
+          .attr("class", "areachart")
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -272,6 +284,10 @@
           .datum(dataCSV)
           .attr("class", "area")
           .attr("d", area);
+
+       svg.append("g")
+          .attr("class", "grid")
+          .call(yAxis)
 
       // svg.append("g")
       //     .attr("class", "x axis")

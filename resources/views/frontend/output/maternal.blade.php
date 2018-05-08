@@ -241,6 +241,12 @@ function charts(datasets, labels) {
           .domain([0, d3.max(origDataCSV, function(d) {return d.value; })])
           .range([height, 0]);
 
+      var ydash = d3.scale.linear()
+          .domain([0, d3.max(dataCSV, function(d) {return d.value; })])
+          .range([height, 0]);
+
+      console.log(max);
+
       var xAxis = d3.svg.axis()
           .scale(x)
           .orient("bottom")
@@ -260,7 +266,7 @@ function charts(datasets, labels) {
       var area = d3.svg.area()
           .x(function(d) { return x(d.date); })
           .y0(height)
-          .y1(function(d) { return y(d.value); })
+          .y1(function(d) { return ydash(d.value); })
           .interpolate(interpolateTypes[6]);
 
       var svg = d3.select("#line-chart-"+id)
@@ -269,15 +275,15 @@ function charts(datasets, labels) {
           .attr("class", "areachart")
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-      svg.append("g")
-          .attr("class", "grid")
-          .call(yAxis)
       
       svg.append("path")
           .datum(dataCSV)
           .attr("class", "area")
           .attr("d", area);
+
+      svg.append("g")
+          .attr("class", "grid")
+          .call(yAxis)
 
       
     }
