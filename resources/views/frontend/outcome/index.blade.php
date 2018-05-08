@@ -205,54 +205,66 @@
         return Math.round(Math.random() * 100);
       };
 
-      var ctx = document.getElementById("line-chart-"+id).getContext('2d');
-      // var ctx = canvas.getContext("2d");
-      dataSet =[];
-      label = '';
-      if(data_value.length > 1) {
-        // for (var i = 0; i < data_value.length; i++){
-          currSet = {
-            label: data_value[0].title,
-            borderColor: '#9fdfd0',
-            borderWidth: 2,
-            fill: true,
-            backgroundColor: '#9fdfd0',
-            data: data_value[0].values,
-            pointRadius: 0,
-          };
-          dataSet.push(currSet);
-          label = data_value[0].periods;
-        // };
-      } else {
-        currSet = {
-            label: data_value.title,
-            borderColor: '#9fdfd0',
-            borderWidth: 2,
-            fill: true,
-            backgroundColor: '#9fdfd0',
-            data: data_value.values,
-            pointRadius: 0,
-          };
-        dataSet.push(currSet);
-        label = data_value.periods;
-      }
-      data = {labels: label, datasets: dataSet};
-      window.myTrendChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            // text: 'Chart.js Drsw Line on Chart'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: true
-          },
-          maintainAspectRatio: true,
-        }
-      });
+      var dataCSV = [];
+      for (var i = 0; i < data_value.values.length; i++) {
+        temp = {};
+        temp.date = data_value.periods[i];
+        temp.value = data_value.values[i];
+        dataCSV.push(temp);
+      };
+
+      var data = [
+          { x: 0, y: 10, },
+          { x: 1, y: 15, },
+          { x: 2, y: 35, },
+          { x: 3, y: 20, },
+      ];
+
+      var margin = {top: 20, right: 20, bottom: 30, left: 50},
+          width = 575 - margin.left - margin.right,
+          height = 350 - margin.top - margin.bottom;
+
+      var x = d3.scale.linear()
+          .domain([0, d3.max(data, function(d) { return d.x; })])
+          .range([0, width]);
+
+      var y = d3.scale.linear()
+          .domain([0, d3.max(data, function(d) { return d.y; })])
+          .range([height, 0]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+      var area = d3.svg.area()
+          .x(function(d) { return x(d.x); })
+          .y0(height)
+          .y1(function(d) { return y(d.y); });
+
+      var svg = d3.select("#line-chart-"+id)
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      svg.append("path")
+          .datum(data)
+          .attr("class", "area")
+          .attr("d", area);
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis);
+
     }
   </script>
   <script src="{{asset('js/swiper.min.js')}}"></script>

@@ -32,7 +32,7 @@
       <div class="tab-col-title">People Counselled on {!! str_replace('_', ' ', $key) !!}</div>
       <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
       <div id="canvas-holder">
-        <canvas id="line-chart-{{$key}}"></canvas>
+        <svg id="line-chart-{{$key}}"></svg>
       </div>
     </div> {{-- col-xs-5 --}}
     <div class="col-xl-3 offset-xl-1 report-col col-lg-3">
