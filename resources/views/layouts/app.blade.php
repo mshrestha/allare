@@ -38,7 +38,7 @@
       <header class="container mb-0">
         <div class="row">
           <nav class="navbar navbar-expand-lg navbar-light navbar-red mb-0 pb-0 pt-0 col-12">
-            <a class="navbar-brand pl-0" href="/dashboard">
+            <a class="navbar-brand" href="/dashboard">
                <img src="{{asset('images\logo.png')}}"> 
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,5 +108,12 @@
     </script>
 
     @yield('outjavascript')
+     <script>
+        // design qa
+        $(document).ready(function(){
+            $('body').addClass('dashboard-design');
+            $('.dashboard-design').prepend('<div class="design-test"></div>')
+        });
+      </script>
   </body>
 </html>

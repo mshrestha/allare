@@ -11,8 +11,23 @@
 @import "./swiper-tab.scss";
 @import "./output.scss";
 
+// design test need to remove
+@media (min-width: 1200px){
+	.container {
+	    max-width: 1172px;
+	}
+}
 
-
-
-
-
+.design-test {
+		display: none;
+		top: 0;
+		left: 0;
+    width: 100%;
+    height: 200%;
+    position: absolute;
+    background: #FFF;
+    z-index: 99999999;
+    opacity: 0.8;
+    background: url('../images/output.jpg') no-repeat;
+    background-position: center top;
+}
