@@ -209,6 +209,8 @@ function charts(datasets, labels) {
 
       var dataCSV = [];
       var max = 0;
+      var origValues = [];
+      var processedValues = [];
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
         temp.date = data_value.periods[i];
@@ -222,6 +224,8 @@ function charts(datasets, labels) {
       origDataCSV = dataCSV;
 
       dataCSV.forEach(function(d) {
+        origValues.push(d.value);
+        processedValues.push(d.value/max);
         d.value = d.value / max;
       });
 
@@ -262,6 +266,8 @@ function charts(datasets, labels) {
           .outerTickSize(0)
           .ticks(5)
           .tickPadding(20);
+          // .tickValues(processedValues)
+          // .tickFormat(function(x){return origValues[processedValues.indexOf(x)];});
 
       var area = d3.svg.area()
           .x(function(d) { return x(d.date); })
