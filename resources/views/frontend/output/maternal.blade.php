@@ -88,7 +88,7 @@ var colors = [
 ]
 
 function charts(datasets, labels) {
-    // console.log(datasets);
+    console.log(datasets);
     window.mainChart = new Chart(mainChartCtx, {
         type: 'bar',
         data: datasets,
