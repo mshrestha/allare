@@ -190,7 +190,7 @@ class OutputController extends Controller
 	}
 
 	public function maternalMainChart(Request $request) {
-		dd($request->department_id);
+		// dd($request->department_id);
 		$indicator = $request->indicator_id;
 		if($request->output == 'maternal') {
 			$data_table = config('data.maternal.'.$indicator);
