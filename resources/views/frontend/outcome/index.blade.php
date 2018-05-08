@@ -1,11 +1,60 @@
 @extends('layouts.app')
 @section('content')
 	<div class="container">
+
+    {{-- tabcontent start  --}}
+
+    <div class="tab-content mt-3">
+      <div class="row">
+        <div class="col-12">
+          <div class="box-heading float-left ml-0">OUTCOMES</div>
+          <div class="swiper-tab-nav">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <a href="#slide0">STUNTING</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#slide1">WASTING</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#slide2">EXCLUSIVE BREASTFEEDING</a>
+              </li>
+            </ul>
+          </div> {{-- swiper-tab-nav --}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          {{-- tab slide swiper --}}
+          <!-- Swiper -->
+          <div class="swiper-container swiper-tab" id="swiper-tab-outcome">
+            <div class="swiper-wrapper">
+              @php
+                $counter = 0;
+              @endphp
+              @foreach($trend_analysis as $key => $analysis)
+                @include('frontend.outcome.partials.outcome-trend-analysis-partial')
+                @php
+                $counter = $counter + 1;
+              @endphp
+              @endforeach
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination invisible"></div>  
+            <!-- Add Arrows -->
+            <div class="swiper-button-next invisible"></div>
+            <div class="swiper-button-prev invisible"></div>
+          </div>
+          {{-- tab slide swiper end --}}
+        </div>
+      </div>
+  </div>
+
+  {{-- tabcontent end --}}
+
 		{{-- @include('layouts.partials.main-chart-partial') --}}
        {{-- {{dd($trend_analysis)}} --}}
-		@foreach($trend_analysis as $key => $analysis)
-			@include('frontend.outcome.partials.outcome-trend-analysis-partial')
-		@endforeach
+		
 	</div>
 @endsection
 
@@ -164,10 +213,12 @@
         // for (var i = 0; i < data_value.length; i++){
           currSet = {
             label: data_value[0].title,
-            borderColor: colors[0],
+            borderColor: '#9fdfd0',
             borderWidth: 2,
-            fill: false,
-            data: data_value[0].values
+            fill: true,
+            backgroundColor: '#9fdfd0',
+            data: data_value[0].values,
+            pointRadius: 0,
           };
           dataSet.push(currSet);
           label = data_value[0].periods;
@@ -175,10 +226,12 @@
       } else {
         currSet = {
             label: data_value.title,
-            borderColor: colors[0],
+            borderColor: '#9fdfd0',
             borderWidth: 2,
-            fill: false,
-            data: data_value.values
+            fill: true,
+            backgroundColor: '#9fdfd0',
+            data: data_value.values,
+            pointRadius: 0,
           };
         dataSet.push(currSet);
         label = data_value.periods;
@@ -201,5 +254,27 @@
         }
       });
     }
+  </script>
+  <script src="{{asset('js/swiper.min.js')}}"></script>
+  <script>
+     var swiper = new Swiper('#swiper-tab-outcome', {
+      spaceBetween: 30,
+      hashNavigation: {
+        watchState: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  </script>
+
+  <script>
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    $('.tab-col-subtitle').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
   </script>
 @endsection

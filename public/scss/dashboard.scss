@@ -148,6 +148,35 @@
 			}
 		}
 	}
+	div#overdiv {
+    position: absolute;
+    bottom: 5px;
+    right: 3px;
+    color: #535353;
+    font-size: 11px;
+    background: #ededed;
+    padding: 15px 20px;
+	}
+	div#overdiv .legend-text {
+	  display: block;
+	}
+	div#overdiv .legend-text:before {
+    content: "";
+    display: inline-block;
+    width: 25px;
+    height: 10px;
+    margin-right: 10px;
+    background: #FFF;
+	}
+	div#overdiv span#low-text:before {
+	  background: #81ddc6;
+	}
+	div#overdiv span#avg-text:before {
+	  background: #008091;
+	}
+	div#overdiv span#high-text:before {
+	  background: #0c4a60;
+	}
 }
 
 .map-wrapper {
@@ -155,6 +184,7 @@
 	  height: 422px;
 	  margin-top: -29px;
 	}
+
 }
 
 

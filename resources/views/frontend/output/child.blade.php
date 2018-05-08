@@ -3,9 +3,49 @@
   <div class="container">
     @include('layouts.partials.main-chart-partial')
 
-    @foreach($trend_analysis as $key => $analysis)
+    {{-- tabcontent start  --}}
+    <div class="tab-content mt-3">
+      <div class="row">
+        <div class="col-12">
+          <div class="box-heading float-left ml-0">CHILD</div>
+          <div class="swiper-tab-nav">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <a href="#slide0">IMCI COUNSELING</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#slide1">SUPPLEMENTS</a>
+              </li>
+            </ul>
+          </div> {{-- swiper-tab-nav --}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          {{-- tab slide swiper --}}
+          <!-- Swiper -->
+          <div class="swiper-container swiper-tab" id="swiper-tab-child-output">
+            <div class="swiper-wrapper">
+              @foreach($trend_analysis as $key => $analysis)
+                @include('layouts.partials.trend-analysis-chart-partial')
+              @endforeach
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination invisible"></div>  
+            <!-- Add Arrows -->
+            <div class="swiper-button-next invisible"></div>
+            <div class="swiper-button-prev invisible"></div>
+          </div>
+          {{-- tab slide swiper end --}}
+        </div>
+      </div>
+  </div>
+  {{-- tabcontent end --}}
+
+
+    {{-- @foreach($trend_analysis as $key => $analysis)
       @include('layouts.partials.trend-analysis-chart-partial')
-    @endforeach
+    @endforeach --}}
   </div>
 @endsection
 
@@ -174,10 +214,12 @@ var colors = [
         for (var i = 0; i < data_value.length; i++){
           currSet = {
             label: data_value[i].title,
-            borderColor: colors[i],
+            borderColor: '#9fdfd0',
             borderWidth: 2,
-            fill: false,
-            data: data_value[i].values
+            fill: true,
+            backgroundColor: '#9fdfd0',
+            data: data_value[i].values,
+            pointRadius: 0
           };
           dataSet.push(currSet);
           label = data_value[0].periods;
@@ -185,10 +227,12 @@ var colors = [
       } else {
         currSet = {
             label: data_value.title,
-            borderColor: colors[0],
+            borderColor: '#9fdfd0',
             borderWidth: 2,
-            fill: false,
-            data: data_value.values
+            fill: true,
+            backgroundColor: '#9fdfd0',
+            data: data_value.values,
+            pointRadius: 0,
           };
         dataSet.push(currSet);
         label = data_value.periods;
@@ -225,20 +269,20 @@ var colors = [
               100 - data_value,
             ],
             backgroundColor: [
-              'rgb(29, 192, 255)',
+              '#fba69c',
             ],
             label: 'Dataset 1'
           }],
-          labels: [
-            labels[0],
-            labels[1],
-          ]
+          // labels: [
+          //   labels[0],
+          //   labels[1],
+          // ]
         },
         options: {
-          responsive: true,
+          responsive: false,
           pieceLabel: {
             render: 'percentage',
-            fontColor: ['white', 'rgb(29, 192, 255)'],
+            fontColor: ['white', '#fba69c'],
             precision: 2
           }
         }
@@ -247,5 +291,22 @@ var colors = [
       var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
       window.myPie = new Chart(ctx, config);
     }
+  </script>
+  <script src="{{asset('js/swiper.min.js')}}"></script>
+  <script>
+     var swiper = new Swiper('#swiper-tab-child-output', {
+      spaceBetween: 30,
+      hashNavigation: {
+        watchState: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
   </script>
 @endsection
