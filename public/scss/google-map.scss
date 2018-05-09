@@ -1,0 +1,11 @@
+// #mapdiv .gm-style > .gmnoprint > .gmnoprint { background: url(/images/map-zoom-controls.png) no-repeat center center !important; width: 42px !important; height: 68px !important; }
+// #mapdiv .gm-style > .gmnoprint > .gmnoprint > div > img { display: none !important; }
+
+#mapdiv .gm-style > .gmnoprint > .gmnoprint div[title="Zoom in"] { 
+	top: 2px !important; 
+	left: 2px !important; 
+	width: 38px !important; 
+	height: 31px !important; 
+	background-color: #F00 !important;
+}
+#mapdiv .gm-style > .gmnoprint > .gmnoprint div[title="Zoom out"] { top: 35px !important; left: 2px !important; width: 38px !important; height: 30px !important; }

@@ -6775,6 +6775,13 @@ body {
       left: 50%;
       margin-left: -3px;
       position: absolute; } }
+  @media (max-width: 991.98px) {
+    .header-full .navbar.navbar-red li.active a {
+      background: #fda69c; } }
+  .header-full .navbar.navbar-red li.dropdown .dropdown-menu .dropdown-item:before {
+    display: none; }
+  .header-full .navbar.navbar-red li.dropdown .dropdown-menu .dropdown-item.active:before {
+    display: block; }
   .header-full .navbar.navbar-red li a {
     position: relative;
     text-transform: uppercase;
@@ -6786,6 +6793,10 @@ body {
         padding-bottom: 13px;
         padding-left: 50px;
         padding-right: 57px; } }
+  @media (max-width: 991.98px) {
+    .header-full .navbar.navbar-red li .nav-link {
+      padding-left: 10px;
+      padding-right: 10px; } }
   .header-full .navbar.navbar-red li .dropdown-menu {
     background: #f45d57;
     border-radius: 0;
@@ -6797,6 +6808,8 @@ body {
       border-bottom: 1px solid #cd4031; }
     .header-full .navbar.navbar-red li .dropdown-menu .dropdown-item:hover, .header-full .navbar.navbar-red li .dropdown-menu .dropdown-item:focus, .header-full .navbar.navbar-red li .dropdown-menu .dropdown-item.active, .header-full .navbar.navbar-red li .dropdown-menu .dropdown-item:active {
       background: #fda69c; }
+  .header-full .navbar.navbar-red li .dropdown-toggle:after {
+    display: none; }
   .header-full .navbar-light .navbar-nav .show > .nav-link, .header-full .navbar-light .navbar-nav .active > .nav-link, .header-full .navbar-light .navbar-nav .nav-link.show, .header-full .navbar-light .navbar-nav .nav-link.active,
   .header-full .navbar-light .navbar-nav .show > .nav-link, .header-full .navbar-light .navbar-nav .active > .nav-link, .header-full .navbar-light .navbar-nav .nav-link.show, .header-full .navbar-light .navbar-nav .nav-link.active {
     color: #fff; }
@@ -7317,6 +7330,19 @@ body {
 
 .bargraph-div {
   background: #FFF; }
+
+#mapdiv .gm-style > .gmnoprint > .gmnoprint div[title="Zoom in"] {
+  top: 2px !important;
+  left: 2px !important;
+  width: 38px !important;
+  height: 31px !important;
+  background-color: #F00 !important; }
+
+#mapdiv .gm-style > .gmnoprint > .gmnoprint div[title="Zoom out"] {
+  top: 35px !important;
+  left: 2px !important;
+  width: 38px !important;
+  height: 30px !important; }
 
 @media (min-width: 1200px) {
   .container {
