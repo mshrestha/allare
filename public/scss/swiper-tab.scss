@@ -15,7 +15,6 @@
     color: #FFF;
     text-transform: uppercase;
     text-decoration: none;
-    
 		&.active {
 		    background: #ffa69c;
 		    position: relative;
@@ -62,6 +61,12 @@
 			}
 			.pie-chart{
 				margin-top: 15px;
+			}
+			.area-chart{
+				height: 200px;
+				@include media-breakpoint-up(md) {
+					width: 87%;
+				}
 			}
 	}
 } 
