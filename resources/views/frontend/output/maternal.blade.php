@@ -103,7 +103,8 @@ function charts(datasets, labels) {
                     stacked: false,
                     gridLines : {
                         display : false
-                    }
+                    },
+                    barPercentage: 1.0
                 }],
                 yAxes: [{
                     stacked: false
