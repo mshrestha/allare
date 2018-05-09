@@ -47,22 +47,20 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item {{ Request::path() == 'dashboard' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.dashboard') }}">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown {{ (Request::path() == 'outputs/maternal' || Request::path() == 'outputs/child') ? 'active' : '' }}">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Outputs
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('frontend.outputs.maternal') }}">Maternal</a>
-                    <a class="dropdown-item" href="{{ route('frontend.outputs.child') }}">Child</a>
+                    <a class="dropdown-item {{ Request::path() == 'outputs/maternal' ? 'active' : '' }}" 
+                    href="{{ route('frontend.outputs.maternal') }}">Maternal</a>
+                    <a class="dropdown-item {{ Request::path() == 'outputs/child' ? 'active' : '' }}" href="{{ route('frontend.outputs.child') }}">Child</a>
                   </div>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('frontend.outputs') }}">Outputs</a>
-                </li> --}}
-                <li class="nav-item">
+                <li class="nav-item {{ Request::path() == 'outcomes' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.outcomes') }}">Outcomes</a>
                 </li>
                  

@@ -12,8 +12,13 @@
   <div class="row">
     <div class="col-xl-2 col-lg-3 col-sm-4">
       <div class="tab-col-title">{!! str_replace('_', ' ', $key) !!}</div>
+{{-- <<<<<<< HEAD
       <div class="tab-col-subtitle"></div>
       <div class="canvas-holder">
+======= --}}
+      <div class="tab-col-subtitle specific-date"></div>
+      <div class="canvas-holder">
+{{-- >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
         <div class="progress-bar-v" id="goal-chart-{{
 				$key}}">
 					
@@ -30,8 +35,13 @@
     </div> {{-- col-xs-2 --}}
     <div class="col-xl-5 offset-xl-1 pr-xl-0 col-lg-6 col-sm-8">
       <div class="tab-col-title">People Counselled on {!! str_replace('_', ' ', $key) !!}</div>
+{{-- <<<<<<< HEAD
       <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
       <div class="canvas-holder">
+======= --}}
+      <div class="tab-col-subtitle area-date">Jan 14 - Feb 18</div>
+      <div class="canvas-holder">
+{{-- >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
         <svg id="line-chart-{{$counter}}"></svg>
       </div>
     </div> {{-- col-xs-5 --}}

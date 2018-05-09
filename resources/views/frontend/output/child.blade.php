@@ -104,10 +104,10 @@ var colors = [
               maintainAspectRatio: false,
               scales: {
                   xAxes: [{
-                      stacked: true,
+                      stacked: false,
                   }],
                   yAxes: [{
-                      stacked: true
+                      stacked: false
                   }]
               },
 
@@ -162,17 +162,8 @@ var colors = [
             url: '/outputs/maternal-main-chart',
             data: data,
             success: function (res) {
-                dataSets = { 
-                    labels: res.labels, 
-                    datasets: [{
-                        label: res.pointers,
-                        data: res.datasets,
-                        backgroundColor: 'rgb(29, 192, 255)',
-                    }]
-                };
-
                 title = res.title;
-
+                dataSets = res.dataSets
                 if (window.mainChart != undefined) {
                     window.mainChart.destroy();
                 }
@@ -201,7 +192,7 @@ var colors = [
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
-
+    var startDate, endDate;
     function trendAnalysisChart(id, data_value) {
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
@@ -216,11 +207,13 @@ var colors = [
         temp.value = data_value.values[i];
         if(max < temp.value)
           max = temp.value;
-
         dataCSV.push(temp);
+        if(i == 0)
+          startDate = temp.date;
+        if(i == data_value.values.length - 1)
+          endDate = temp.date;
       };
 
-      origDataCSV = dataCSV;
 
       dataCSV.forEach(function(d) {
         d.value = d.value / max;
@@ -379,5 +372,10 @@ var colors = [
         prevEl: '.swiper-button-prev',
       },
     });
+  </script>
+
+  <script>
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
   </script>
 @endsection

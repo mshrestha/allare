@@ -221,8 +221,17 @@ class OutputController extends Controller
 			$labels = $data->pluck('period_name');
 			$datasets = $data->pluck('value');
 			$data = $data->toArray();
-			$dghs_data = count($data['DGHS']);
-			$dgfp_data = count($data['DGFP']);
+
+			if(!isset($data['DGHS'])) {
+				$data['DGHS'] = [];
+			}
+
+			if(!isset($data['DGFP'])) {
+				$data['DGFP'] = [];
+			}
+
+			$dghs_data = (isset($data['DGHS'])) ? count($data['DGHS']) : 0;
+			$dgfp_data = (isset($data['DGFP'])) ? count($data['DGFP']) : 0;
 
 			if($dghs_data > $dgfp_data) {
 				$loop_data_used = 'DGHS';
@@ -231,12 +240,7 @@ class OutputController extends Controller
 				$loop_data_used = 'DGFP';
 				$next_data_used = 'DGHS';
 			}
-			// $final_data = [
-			// 	'DGHS' => array(),
-			// 	'DGFP' => array(),
-			// ];
 
-			// dd($data[$next_data_used]);
 			for ($i=0; $i < count($data[$loop_data_used]); $i++) { 
 
 				if(!$this->existsInArray($data[$next_data_used], $data[$loop_data_used][$i]['period'])) {
@@ -244,18 +248,37 @@ class OutputController extends Controller
 				}
 			}
 
-
 			for ($i=0; $i < count($data[$next_data_used]); $i++) { 
 				if(!$this->existsInArray($data[$loop_data_used], $data[$next_data_used][$i]['period'])) {
 					array_push($data[$loop_data_used], $data[$next_data_used][$i]);
 				}
 			}
 
-			$final_data[0]['data'] = array_pluck($data['DGHS'], 'value');
-			$final_data[1]['data'] = array_pluck($data['DGFP'], 'value');
-
+			$final_data['DGHS']= array_pluck($data['DGHS'], 'value');
+			$final_data['DGFP'] = array_pluck($data['DGFP'], 'value');
 			$labels = array_pluck($data['DGHS'], 'period_name');
-			$datasets = $final_data;
+			$title = $data_table[0]['name'];
+
+			$response = [
+				'labels' => $labels,
+				'datasets' => [
+					[
+						'label' => ['DGHS'],
+						'data' => $final_data['DGHS'],
+						'backgroundColor' => '#81ddc6' 
+					],[
+						'label' => ['DGFP'],
+						'data' => $final_data['DGFP'],
+						'backgroundColor' => '#008091'
+					]
+				]
+			];
+
+			return response()->json([
+				'department' => 'both', 
+				'title' => $title, 
+				'dataSets' => $response
+			]);
 		} else {
 			$model = 'App\Models\Data\\' . $data_table[0]['model'];
 			$ou = ($data_table[0]['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
@@ -268,13 +291,29 @@ class OutputController extends Controller
 			$data = $query->orderBy('period')->get();
 			$labels = $data->pluck('period_name');
 			$datasets = $data->pluck('value');
+
+			$pointers = ($request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
+			$title = $data_table[0]['name'];
+			$backgroundColor = ($request->department_id == 'DGHS') ? '#81ddc6' : '#008091';
+			$response = [
+				'labels' => $labels,
+				'datasets' => [
+					[
+						'label' => $pointers,
+						'data' => $datasets,
+						'backgroundColor' => $backgroundColor
+					]
+				]
+			];
+
+			return response()->json([
+				'department' => $request->department_id, 
+				'title' => $title, 
+				'dataSets' => $response
+			]);
 		}
 
-		
-		$pointers = (empty($request->department_id) || $request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
-		$title = $data_table[0]['name'];
 
-		return response()->json(['pointers' => $pointers, 'title' => $title, 'labels' => $labels, 'datasets' => $datasets]);
 	}
 
 	private function existsInArray($arr, $val) {

@@ -61,7 +61,7 @@ class OutcomeController extends Controller
 		$CcMaleTotal = CcCrTotalMale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
 		$CcFemaleTotal = CcCrTotalFemale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
 		$CcTotalChild = $CcMaleTotal + $CcFemaleTotal;
-
+		$periods = [];
 		foreach($indicators as $indicator => $indicatorName) {
 			$counter = 0;
 			$dataSet[$indicatorName] = [];
@@ -74,6 +74,7 @@ class OutcomeController extends Controller
 				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
 				// dd($datum_goal);
 				if(count($data[$indicator]) > 1) {
+					$periods = $datum->pluck('period');
 					$dataSet[$indicatorName][$counter]['title'] = $indictData['model'];
 					$dataSet[$indicatorName][$counter]['periods'] = $datum->pluck('period');
 					$dataSet[$indicatorName][$counter]['goal_period'] = $datum_goal->period;
@@ -104,7 +105,7 @@ class OutcomeController extends Controller
 		}
 
 		
-		// dd($CcTotalChild);
+		
 
 		$goal_analysis = [];
 		foreach ($goals as $goalKey => $goalValue) {
