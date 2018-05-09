@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @section('content')
+
 	<div class="container">
 		<!-- Slider main container -->
 		<!-- Swiper -->
@@ -77,7 +79,10 @@
     				</ul>
     			</div>
     			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
-    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;"></div>
+    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
+    					<div id="zoomctrl">
+					    </div>
+    				</div>
     				<div id="overdiv">
     					<span class="legend-text" id="low-text"></span>
     					<span class="legend-text" id="avg-text"></span>
@@ -468,7 +473,50 @@
 		window.myPie = new Chart(ctx, config);
 	// window.myPie.canvas.parentNode.style.height = '128px';
 	}
+	function ZoomControl(controlDiv, map) {
 
+	  // Creating divs & styles for custom zoom control
+	  controlDiv.style.padding = '5px';
+
+	  // Set CSS for the control wrapper
+	  var controlWrapper = document.createElement('div');
+	  controlWrapper.style.backgroundColor = 'white';
+	  controlWrapper.style.borderStyle = 'solid';
+	  controlWrapper.style.borderColor = 'gray';
+	  controlWrapper.style.borderWidth = '1px';
+	  controlWrapper.style.cursor = 'pointer';
+	  controlWrapper.style.textAlign = 'center';
+	  controlWrapper.style.width = '32px'; 
+	  controlWrapper.style.height = '64px';
+	  controlDiv.appendChild(controlWrapper);
+
+	  // Set CSS for the zoomIn
+	  var zoomInButton = document.createElement('div');
+	  zoomInButton.style.width = '32px'; 
+	  zoomInButton.style.height = '32px';
+	  /* Change this to be the .png image you want to use */
+	  /*zoomInButton.style.backgroundImage = 'url("http://placehold.it/32/00ff00")';*/
+	  controlWrapper.appendChild(zoomInButton);
+
+	  // Set CSS for the zoomOut
+	  var zoomOutButton = document.createElement('div');
+	  zoomOutButton.style.width = '32px'; 
+	  zoomOutButton.style.height = '32px';
+	  /* Change this to be the .png image you want to use */
+	  /*zoomOutButton.style.backgroundImage = 'url("http://placehold.it/32/0000ff")';*/
+	  controlWrapper.appendChild(zoomOutButton);
+
+	  // Setup the click event listener - zoomIn
+	  google.maps.event.addDomListener(zoomInButton, 'click', function() {
+	    map.setZoom(map.getZoom() + 1);
+	  });
+
+	  // Setup the click event listener - zoomOut
+	  google.maps.event.addDomListener(zoomOutButton, 'click', function() {
+	    map.setZoom(map.getZoom() - 1);
+	  });  
+
+	}
 
     function initMap() {
       $.ajax({
@@ -477,164 +525,171 @@
 	      data: {"model": "CcMrAncNutriCounsel"},
 	      success: function (res) {
 	      	if(res['dataExists']) {
-	      		
-						if(res['reverse']) {
-							$('#low-text').html('Major Problem');
-							$('#avg-text').html('Severe Problem');
-							$('#high-text').html('Critical Problem');
-						} else {
-							$('#low-text').html('Critical Problem');
-							$('#avg-text').html('Severe Problem');
-							$('#high-text').html('Major Problem');
-						}
+				if(res['reverse']) {
+					$('#low-text').html('Major Problem');
+					$('#avg-text').html('Severe Problem');
+					$('#high-text').html('Critical Problem');
+				} else {
+					$('#low-text').html('Critical Problem');
+					$('#avg-text').html('Severe Problem');
+					$('#high-text').html('Major Problem');
+				}
+
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
 			        zoom: 6.5,
 			        scrollwheel: true,
 			        styles: [{
-												"featureType": "administrative",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "administrative.province",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "landscape",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "poi",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "road",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "road.highway",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "road.arterial",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "road.local",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "transit",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "water",
-												"elementType": "geometry",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "water",
-												"elementType": "labels",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}],
-			        	zoomControl: true,
+							"featureType": "administrative",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "administrative.province",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "landscape",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "poi",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "road",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "road.highway",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "road.arterial",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "road.local",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "transit",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "water",
+							"elementType": "geometry",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "water",
+							"elementType": "labels",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}],
+			        	zoomControl: false,
 			          zoomControlOptions: {
 			              position: google.maps.ControlPosition.LEFT_BOTTOM
 			          },
 		          scaleControl: true,
-		          streetViewControl: true,
-		          streetViewControlOptions: {
-		              position: google.maps.ControlPosition.LEFT_BOTTOM
-		          },
+		          streetViewControl: false,
+		          noClear: true,
+    			  disableDefaultUI:true
+
 		      	});
 
+		      	// var zoomControlDiv = document.createElement('div');
+		      	var zoomControlDiv = document.getElementById('zoomctrl');
+				var zoomControl = new ZoomControl(zoomControlDiv, map);
+
+				zoomControlDiv.index = 1;
+				map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(zoomControlDiv);
+
 		        // Set a blank infoWindow to be used for each to state on click
-						var infoWindow = new google.maps.InfoWindow({
-							content: ""
-						});
+				var infoWindow = new google.maps.InfoWindow({
+					content: ""
+				});
 
-						// Create the state data layer and load the GeoJson Data
-						var stateLayer = new google.maps.Data();
-						
-						{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
-						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+				// Create the state data layer and load the GeoJson Data
+				var stateLayer = new google.maps.Data();
+				
+				{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
+				stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
 
-						// Set and apply styling to the stateLayer
-						stateLayer.setStyle(function(feature) {
-							var ids = feature.getProperty('ids').split('-');
-							var id = ids[0];
-							if(res['server'] == 'community')
-								id = ids[1];
-							var value = parseInt(res['minimalData'][id]);
-							var localColor = '';
-							if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
-								localColor = scoreColors['low'];
-							} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
-								localColor = scoreColors['average'];
-							} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
-								localColor = scoreColors['high'];
-							}
-							color = feature.getProperty('color');
-							return {
-								fillColor: localColor,
-								fillOpacity: 1,
-								strokeColor: '#fff',
-								strokeWeight: 1.5,
-								zIndex: 1
-							};
-						});
+				// Set and apply styling to the stateLayer
+				stateLayer.setStyle(function(feature) {
+					var ids = feature.getProperty('ids').split('-');
+					var id = ids[0];
+					if(res['server'] == 'community')
+						id = ids[1];
+					var value = parseInt(res['minimalData'][id]);
+					var localColor = '';
+					if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
+						localColor = scoreColors['low'];
+					} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
+						localColor = scoreColors['average'];
+					} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
+						localColor = scoreColors['high'];
+					}
+					color = feature.getProperty('color');
+					return {
+						fillColor: localColor,
+						fillOpacity: 1,
+						strokeColor: '#fff',
+						strokeWeight: 1.5,
+						zIndex: 1
+					};
+				});
 
-						// Add mouseover and mouse out styling for the GeoJSON State data
-						stateLayer.addListener('mouseover', function(e) {
-							ids = e.feature.getProperty('ids').split('-');
-							id = ids[0];
-							if(res['server'] == 'community')
-								id = ids[1];
-							value = res['minimalData'][id];
-							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
-							var anchor = new google.maps.MVCObject();
-				    	anchor.set("position", e.latLng);
-				    	infoWindow.open(map, anchor);
-							stateLayer.overrideStyle(e.feature, {
-								// fillColor: e.feature.getProperty('color'),
-								strokeColor: '#000',
-								// strokeColor: e.feature.getProperty('color'),
-								strokeWeight: 2,
-								zIndex: 2
-							});
-						});
+				// Add mouseover and mouse out styling for the GeoJSON State data
+				stateLayer.addListener('mouseover', function(e) {
+					ids = e.feature.getProperty('ids').split('-');
+					id = ids[0];
+					if(res['server'] == 'community')
+						id = ids[1];
+					value = res['minimalData'][id];
+					infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
+					var anchor = new google.maps.MVCObject();
+		    	anchor.set("position", e.latLng);
+		    	infoWindow.open(map, anchor);
+					stateLayer.overrideStyle(e.feature, {
+						// fillColor: e.feature.getProperty('color'),
+						strokeColor: '#000',
+						// strokeColor: e.feature.getProperty('color'),
+						strokeWeight: 2,
+						zIndex: 2
+					});
+				});
 
-						stateLayer.addListener('mouseout', function(e) {
-							stateLayer.overrideStyle(e.feature, {
-								strokeColor: '#fff',
-								strokeWeight: 1.5,
-								zIndex: 1
-							});
-						});
+				stateLayer.addListener('mouseout', function(e) {
+					stateLayer.overrideStyle(e.feature, {
+						strokeColor: '#fff',
+						strokeWeight: 1.5,
+						zIndex: 1
+					});
+				});
 						
 		        // Final step here sets the stateLayer GeoJSON data onto the map
-						stateLayer.setMap(map);
+				stateLayer.setMap(map);
 	      	}else{
 
 	      	}

@@ -371,3 +371,7 @@ g.grid text {
   stroke: #9f9f9f;
 }
 
+div#zoomctrl {
+    margin-bottom: 30px;
+    margin-left: -70px;
+}
