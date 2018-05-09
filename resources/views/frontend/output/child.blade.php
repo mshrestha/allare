@@ -199,12 +199,13 @@ var colors = [
 
       var dataCSV = [];
       var max = 0;
+      var origValues = [];
+      var processedValues = [];
+      console.log(data_value);
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
         temp.date = data_value.periods[i];
         temp.value = data_value.values[i];
-        if(max < temp.value)
-          max = temp.value;
         dataCSV.push(temp);
         if(i == 0)
           startDate = temp.date;
@@ -212,12 +213,19 @@ var colors = [
           endDate = temp.date;
       };
 
-
       dataCSV.forEach(function(d) {
-        d.value = d.value / max;
+        temp = 0;
+        if(d.value.includes('E')){
+            parts = d.value.split('E');
+            temp = (parseFloat(parts[0]) * Math.pow(10,parseFloat(parts[1])));
+        }
+        else
+            temp = parseInt(d.value);
+        if(max < parseInt(temp))
+          max = d.value;
       });
 
-       var margin = {top: 20, right: 20, bottom: 20, left: 60},
+       var margin = {top: 20, right: 20, bottom: 20, left: 90},
           width = 500 - margin.left - margin.right,
           height = 300 - margin.top - margin.bottom;
 
@@ -230,11 +238,7 @@ var colors = [
       //     .range([0, width]);
 
       var y = d3.scale.linear()
-          .domain([0, d3.max(origDataCSV, function(d) {return d.value; })])
-          .range([height, 0]);
-
-      var y = d3.scale.linear()
-          .domain([0, d3.max(origDataCSV, function(d) {return d.value; })])
+          .domain([0, max])
           .range([height, 0]);
 
       var xAxis = d3.svg.axis()
@@ -252,6 +256,8 @@ var colors = [
           .outerTickSize(0)
           .ticks(5)
           .tickPadding(20);
+          // .tickValues(processedValues)
+          // .tickFormat(function(x){return origValues[processedValues.indexOf(x)];});
 
       var area = d3.svg.area()
           .x(function(d) { return x(d.date); })
@@ -265,7 +271,7 @@ var colors = [
           .attr("class", "areachart")
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+      
       svg.append("path")
           .datum(dataCSV)
           .attr("class", "area")
@@ -274,6 +280,8 @@ var colors = [
       svg.append("g")
           .attr("class", "grid")
           .call(yAxis)
+
+      
     }
 
     function pieChart(id, data_value, labels) {
@@ -295,10 +303,11 @@ var colors = [
             .attr("transform", "translate(" + r + "," + r + ")")
 
       var arc = d3.svg.arc()
+          .innerRadius(0)
           .outerRadius(r);
 
-      var pie = d3.layout.pie()
-          .value(function(d) { return d.value; });    
+      var pie = d3.layout.pie().sort(null);
+      pie.value(function(d) { return d.value; });    
 
       var arcs = vis.selectAll("g.slice")     
         .data(pie)                          
@@ -317,9 +326,8 @@ var colors = [
             })
             .attr("text-anchor", "middle")                         
             .text(function(d, i) { return dataCSV[i].label; })
-            .style("fill", function(d, i) { if(i==0) return color[1]; else return color[0]; } )
-            .style("font-size", "13px")
-            .style("font-weight", "bold");
+            .style("fill", function(d, i) { if(i==0) return '#ffffff'; else return '#000000'; } )
+            .style("font-size", "13px");
       // var config = {
       //   type: 'pie',
       //   data: {
