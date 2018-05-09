@@ -263,13 +263,14 @@ class OutputController extends Controller
 				'labels' => $labels,
 				'datasets' => [
 					[
-						'label' => ['DGHS'],
-						'data' => $final_data['DGHS'],
-						'backgroundColor' => '#81ddc6' 
-					],[
 						'label' => ['DGFP'],
 						'data' => $final_data['DGFP'],
 						'backgroundColor' => '#008091'
+					],
+					[
+						'label' => ['DGHS'],
+						'data' => $final_data['DGHS'],
+						'backgroundColor' => '#81ddc6' 
 					]
 				]
 			];
