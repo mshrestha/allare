@@ -62,18 +62,18 @@
         	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
     				<ul class="map-filter mb-0">
     					<li class="list-head">MATERNAL HEALTH</li>
-							<li><a href="#" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given')">Counselling Given</a></li>
-							<li><a href="#" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed')">IFA Distributed</a></li>
-							<li><a href="#" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured')">Weight Measured</a></li>
+							<li><a href="#" id="counselling" class="maplinks inactive" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Counselling Given</a></li>
+							<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">IFA Distributed</a></li>
+							<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
 							<li class="list-head">Child health</li>
-							<li><a href="#" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given')">IMCI Counselling Given</a></li>
-							<li><a href="#" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed')">Supplements Distributed</a></li>
+							<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
+							<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
     				</ul>
     				<ul class="map-filter outcome mb-0">
 							<li class="list-head green">OUTCOME</li>
-							<li class="list-head" onclick="getMapData('ImciStunting', 'STUNING')">STUNING</li>
-							<li class="list-head" onclick="getMapData('ImciWasting', 'WASTING')">WASTING</li>
-							<li class="list-head" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING')">BREASTFEEDING</li>
+							<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNING</li>
+							<li class="list-head" id="wasting" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</li>
+							<li class="list-head" id="breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING', '#breastfeeding')">BREASTFEEDING</li>
     				</ul>
     			</div>
     			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
@@ -785,8 +785,9 @@
   </script>
 
   <script>
-  	const getMapData = (model, item) => {
-  		console.log(model);
+  	const getMapData = (model, item, id) => {
+  		$('.maplinks').removeClass('active').addClass('inactive');
+      $(id).removeClass('inactive').addClass('active');
   		$.ajax({
 	      type: 'get',
 	      url: '/dashboard_specific_map',
