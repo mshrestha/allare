@@ -239,10 +239,12 @@
       dataCSV.forEach(function(d) {
         d.date = d3.time.format("%Y").parse(d.date);
       });
-
+      var parentDiv = document.getElementById('area-chart-'+id);
+      var w = parentDiv.clientWidth,                        
+      h = parentDiv.clientHeight;  
       var margin = {top: 20, right: 20, bottom: 30, left: 50},
-          width = 500 - margin.left - margin.right,
-          height = 300 - margin.top - margin.bottom;
+          width = w - margin.left - margin.right,
+          height = h - margin.top - margin.bottom;
 
       var x = d3.time.scale()
                 .range([0, width])

@@ -22,7 +22,10 @@
     <link rel="stylesheet" href="{{asset('css\swiper.min.css')}}">
     
     <link rel="stylesheet" href="{{asset('css\style.css')}}">
-
+  
+  <script>
+    console.log = function() {}
+  </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -112,6 +115,7 @@
             $('body').addClass('dashboard-design');
             $('.dashboard-design').prepend('<div class="design-test"></div>')
         });
+        
       </script>
   </body>
 </html>

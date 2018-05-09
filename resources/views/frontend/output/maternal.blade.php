@@ -189,8 +189,19 @@ function charts(datasets, labels) {
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
+    // window.addEventListener("resize", redraw);
+
+    // function redraw() {
+    //   @foreach($trend_analysis as $key => $analysis)
+    //     pieChart({{ $key }}, {{ $analysis['percent'] }}, {!! $analysis['labels'] !!})
+    //     var arr = {!! json_encode($analysis) !!};
+    //     trendAnalysisChart('{{ $key }}', arr)
+    //   @endforeach
+    // }
+
     var startDate, endDate;
     function trendAnalysisChart(id, data_value) {
+      $("#line-chart-"+id).html('');
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
@@ -223,10 +234,12 @@ function charts(datasets, labels) {
         if(max < parseInt(temp))
           max = d.value;
       });
-
-       var margin = {top: 20, right: 20, bottom: 20, left: 90},
-          width = 500 - margin.left - margin.right,
-          height = 300 - margin.top - margin.bottom;
+      var parentDiv = document.getElementById('area-chart-'+id);
+      var w = parentDiv.clientWidth,                        
+      h = parentDiv.clientHeight;      
+      var margin = {top: 20, right: 20, bottom: 20, left: 90},
+          width = w - margin.left - margin.right,
+          height = h - margin.top - margin.bottom;
 
       var x = d3.time.scale()
                 .range([0, width])
@@ -287,9 +300,10 @@ function charts(datasets, labels) {
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
-      var w = 300,                        
-      h = 300,                            
-      r = 100,                            
+      var parentDiv = document.getElementById('pie-chart-'+id);
+      var w = parentDiv.clientWidth,                        
+      h = parentDiv.clientHeight,                            
+      r = Math.min(w, h) / 2,                             
       color = ['#fba69c', '#d2d2d2'];     
       dataCSV = [{"label": data_value+"%", "value": data_value}, 
                 {"label":  100 - data_value+"%", "value": 100 - data_value}]
