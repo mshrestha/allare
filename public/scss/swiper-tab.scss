@@ -15,8 +15,22 @@
     color: #FFF;
     text-transform: uppercase;
     text-decoration: none;
+    
 		&.active {
 		    background: #ffa69c;
+		    position: relative;
+		    &:before{
+		    	width: 0;
+			    height: 0;
+			    border-left: 5px solid transparent;
+			    border-right: 5px solid transparent;
+			    border-bottom: 5px solid #ededed;
+			    content: "";
+			    bottom: 0;
+			    left: 50%;
+			    margin-left: -3px;
+			    position: absolute;
+		    }
 		}
 	}
 	.list-inline-item:not(:last-child) {

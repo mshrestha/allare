@@ -23,7 +23,7 @@
 				$key}}">
 					
 					<div class="goal" style="height: {{$incomplete}}%;">
-						{{$analysis['goal']}}
+						{{-- {{$analysis['goal']}} --}}
 					</div>
 					
 					<div class="current grow-v-animation" style="height: {{$complete}}%;">
