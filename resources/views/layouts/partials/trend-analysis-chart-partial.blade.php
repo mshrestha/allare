@@ -1,6 +1,6 @@
 <div class="swiper-slide" data-hash="slide{{$key}}">
   <div class="row">
-    <div class="col-xl-2 col-lg-3 col-sm-4">
+    <div class="col-xl-3 col-lg-3 col-sm-4">
       <div class="tab-col-title">{{$analysis['name']}}</div>
 {{-- <<<<<<< HEAD
       <div class="tab-col-subtitle"> {{strtoupper($analysis['current_month'])}}</div>
@@ -12,7 +12,7 @@
 				<svg id="chart-area-{{ $key }}"></svg>
 			</div>
     </div> {{-- col-xs-2 --}}
-    <div class="col-xl-5 offset-xl-1 pr-xl-0 col-lg-6 col-sm-8">
+    <div class="col-xl-5 pr-xl-0 col-lg-6 col-sm-8">
       <div class="tab-col-title">People Counselled on {{$analysis['name']}}</div>
 {{-- <<<<<<< HEAD
       <div class="tab-col-subtitle">Jan 14 - Feb 18</div>

@@ -7110,7 +7110,20 @@ body {
     font-size: 12px;
     color: #535353;
     line-height: 12px;
-    padding: 8px 15px; }
+    padding: 8px 15px;
+    position: relative;
+    text-decoration: none; }
+    .map-view-container .map-filter li a.active:before {
+      display: block;
+      width: 0;
+      height: 0;
+      content: "";
+      position: absolute;
+      right: 0;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-right: 15px solid #cccccc;
+      top: 0; }
   .map-view-container .map-filter li.list-head {
     text-transform: uppercase;
     color: #FFF;
@@ -7251,7 +7264,8 @@ body {
 
 .tab-col-subtitle {
   color: #a0a0a0;
-  font-size: 14px; }
+  font-size: 14px;
+  margin-bottom: 10px; }
 
 .swiper-tab-nav .list-inline {
   margin-bottom: 0; }
@@ -7260,6 +7274,8 @@ body {
   padding: 12px 15px; }
   .tab-content .swiper-slide .pie-chart .slice:first-child text {
     fill: #FFF !important; }
+  .tab-content .swiper-slide .pie-chart {
+    margin-top: 15px; }
 
 .custom-select {
   background-image: url("../images/select-img.png");
