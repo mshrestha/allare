@@ -186,7 +186,7 @@
 						@foreach($maternal_trend_analysis as $key => $maternal_trend)
 						<div class="col-md-6 col-lg-4">
 							<h4>{{ $maternal_trend['name'] }}</h4>
-							<div id="canvas-holder" class="canvas-holder">
+							<div class="canvas-holder">
 								<canvas id="chart-area-maternal-{{ $key }}"></canvas>
 							</div>
 						</div>
@@ -200,7 +200,7 @@
 						@foreach($child_trend_analysis as $key => $child_trend)
 						<div class="col-md-6 col-lg-4">
 							<h4>{{ $child_trend['name'] }}</h4>
-							<div id="canvas-holder" class="canvas-holder">
+							<div class="canvas-holder">
 								<canvas id="chart-area-child-{{ $key }}"></canvas>
 							</div>
 						</div>
@@ -592,10 +592,10 @@
 				maternal = res['maternal'];
 				output = '';
 				for (var i = 0; i < child.length; i++) {
-					output += '<div id="canvas-holder" class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-child-'+[i]+'"></canvas></div>';
+					output += '<div class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-child-'+[i]+'"></canvas></div>';
 				};
 				for (var i = 0; i < maternal.length; i++) {
-					output += '<div id="canvas-holder" class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-maternal-'+[i]+'"></canvas></div>';
+					output += '<div class="canvas-holder canvas-holder-division"><canvas id="chart-area-division-maternal-'+[i]+'"></canvas></div>';
 				};
 				$('#division-piecharts').html(output);
 

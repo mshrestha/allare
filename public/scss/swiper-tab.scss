@@ -42,5 +42,8 @@
 .tab-content{
 	.swiper-slide {
 	    padding: 12px 15px;
+	    .pie-chart .slice:first-child text {
+			    fill: #FFF !important;
+			}
 	}
 } 

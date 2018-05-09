@@ -7,7 +7,7 @@
     <div class="tab-content mt-3">
       <div class="row">
         <div class="col-12">
-          <div class="box-heading float-left ml-0">CHILD</div>
+          <div class="box-heading float-left ml-0 mr-1">CHILD</div>
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
