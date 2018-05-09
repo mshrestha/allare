@@ -301,10 +301,11 @@ function charts(datasets, labels) {
             .attr("transform", "translate(" + r + "," + r + ")")
 
       var arc = d3.svg.arc()
+          .innerRadius(0)
           .outerRadius(r);
 
-      var pie = d3.layout.pie()
-          .value(function(d) { return d.value; });    
+      var pie = d3.layout.pie().sort(null);
+      pie.value(function(d) { return d.value; });    
 
       var arcs = vis.selectAll("g.slice")     
         .data(pie)                          

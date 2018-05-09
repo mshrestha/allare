@@ -303,10 +303,11 @@ var colors = [
             .attr("transform", "translate(" + r + "," + r + ")")
 
       var arc = d3.svg.arc()
+          .innerRadius(0)
           .outerRadius(r);
 
-      var pie = d3.layout.pie()
-          .value(function(d) { return d.value; });    
+      var pie = d3.layout.pie().sort(null);
+      pie.value(function(d) { return d.value; });    
 
       var arcs = vis.selectAll("g.slice")     
         .data(pie)                          
@@ -325,9 +326,8 @@ var colors = [
             })
             .attr("text-anchor", "middle")                         
             .text(function(d, i) { return dataCSV[i].label; })
-            .style("fill", function(d, i) { if(i==0) return color[1]; else return color[0]; } )
-            .style("font-size", "13px")
-            .style("font-weight", "bold");
+            .style("fill", function(d, i) { if(i==0) return '#ffffff'; else return '#000000'; } )
+            .style("font-size", "13px");
       // var config = {
       //   type: 'pie',
       //   data: {
