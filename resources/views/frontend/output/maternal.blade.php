@@ -97,18 +97,13 @@ function charts(datasets, labels) {
                 display: true,
                 text: labels
             },
-            // tooltips: {
-            //  mode: 'index',
-            //  intersect: false
-            // },
-            // responsive: true,
             maintainAspectRatio: false,
             scales: {
                 xAxes: [{
-                    stacked: true,
+                    stacked: false,
                 }],
                 yAxes: [{
-                    stacked: true
+                    stacked: false
                 }]
             },
             // Container for pan options
@@ -161,17 +156,8 @@ function charts(datasets, labels) {
             url: '/outputs/maternal-main-chart',
             data: data,
             success: function (res) {
-                dataSets = { 
-                    labels: res.labels, 
-                    datasets: [{
-                        label: res.pointers,
-                        data: res.datasets,
-                        backgroundColor: 'rgb(29, 192, 255)',
-                    }]
-                };
-
                 title = res.title;
-
+                dataSets = res.dataSets
                 if (window.mainChart != undefined) {
                     window.mainChart.destroy();
                 }
