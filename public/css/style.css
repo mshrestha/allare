@@ -7245,6 +7245,8 @@ body {
 
 .tab-content .swiper-slide {
   padding: 12px 15px; }
+  .tab-content .swiper-slide .pie-chart .slice:first-child text {
+    fill: #FFF !important; }
 
 .custom-select {
   background-image: url("../images/select-img.png");

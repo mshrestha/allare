@@ -4,7 +4,7 @@
 	
 	<div class="row">
 		<div class="col-md-3">
-			<div id="canvas-holder">
+			<div class="canvas-holder">
 				<div class="progress-bar-v" id="goal-chart-{{
 				$key}}">
 					<div class="goal" style="height: 30%;">
@@ -26,7 +26,7 @@
 			</div>
 		</div>
 		<div class="col-md-6">
-			<div id="canvas-holder">
+			<div class="canvas-holder">
 				<canvas id="line-chart-{{$key}}"></canvas>
 			</div>
 		</div>

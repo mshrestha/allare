@@ -44,7 +44,7 @@
 
 		</div> --}}
 		
-		<div id="canvas-holder-h" class="d-md-none-">
+		<div class="canvas-holder-h d-md-none-">
 			<div class="progress-bar-h" id="goal-chart-h-{{
 			$key}}">
 				

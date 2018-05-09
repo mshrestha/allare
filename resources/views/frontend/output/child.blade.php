@@ -7,7 +7,7 @@
     <div class="tab-content mt-3">
       <div class="row">
         <div class="col-12">
-          <div class="box-heading float-left ml-0">CHILD</div>
+          <div class="box-heading float-left ml-0 mr-1">CHILD</div>
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
@@ -190,7 +190,7 @@ var colors = [
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
-
+    var startDate, endDate;
     function trendAnalysisChart(id, data_value) {
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
@@ -205,11 +205,13 @@ var colors = [
         temp.value = data_value.values[i];
         if(max < temp.value)
           max = temp.value;
-
         dataCSV.push(temp);
+        if(i == 0)
+          startDate = temp.date;
+        if(i == data_value.values.length - 1)
+          endDate = temp.date;
       };
 
-      origDataCSV = dataCSV;
 
       dataCSV.forEach(function(d) {
         d.value = d.value / max;
@@ -368,5 +370,10 @@ var colors = [
         prevEl: '.swiper-button-prev',
       },
     });
+  </script>
+
+  <script>
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
   </script>
 @endsection

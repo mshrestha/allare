@@ -7,7 +7,7 @@
     <div class="tab-content mt-3">
       <div class="row">
         <div class="col-12">
-          <div class="box-heading float-left ml-0">OUTCOMES</div>
+          <div class="box-heading float-left ml-0 mr-1">OUTCOMES</div>
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
@@ -205,6 +205,7 @@
       @endphp
     @endforeach
 
+    var startDate, endDate;
     function trendAnalysisChart(id, data_value) {
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
@@ -213,6 +214,7 @@
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
 
       var dataCSV = [];
+
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
         if(data_value.periods[i] == '1993-1994') {
@@ -224,9 +226,12 @@
         }else {
           temp.date = data_value.periods[i];
         }
+        if(i == 0)
+          startDate = temp.date;
+        if(i == data_value.values.length - 1)
+          endDate = temp.date;
         temp.value = data_value.values[i];
         dataCSV.push(temp);
-        console.log(temp);
       };
       
 
@@ -320,6 +325,8 @@
 
   <script>
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    $('.tab-col-subtitle').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
+    $('.specific-date').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
+
+    $('.area-date').html(startDate + ' - ' + endDate);
   </script>
 @endsection

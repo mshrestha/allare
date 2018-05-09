@@ -8,7 +8,7 @@
     <div class="tab-content mt-3">
       <div class="row">
         <div class="col-12">
-          <div class="box-heading float-left ml-0">MATERNAL</div>
+          <div class="box-heading float-left ml-0 mr-1">MATERNAL</div>
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
@@ -188,8 +188,7 @@ function charts(datasets, labels) {
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
-    
-
+    var startDate, endDate;
     function trendAnalysisChart(id, data_value) {
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
@@ -200,25 +199,31 @@ function charts(datasets, labels) {
       var max = 0;
       var origValues = [];
       var processedValues = [];
+      console.log(data_value);
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
         temp.date = data_value.periods[i];
         temp.value = data_value.values[i];
-        if(max < temp.value)
-          max = temp.value;
-
         dataCSV.push(temp);
+        if(i == 0)
+          startDate = temp.date;
+        if(i == data_value.values.length - 1)
+          endDate = temp.date;
       };
 
-      origDataCSV = dataCSV;
-
       dataCSV.forEach(function(d) {
-        origValues.push(d.value);
-        processedValues.push(d.value/max);
-        d.value = d.value / max;
+        temp = 0;
+        if(d.value.includes('E')){
+            parts = d.value.split('E');
+            temp = (parseFloat(parts[0]) * Math.pow(10,parseFloat(parts[1])));
+        }
+        else
+            temp = parseInt(d.value);
+        if(max < parseInt(temp))
+          max = d.value;
       });
 
-       var margin = {top: 20, right: 20, bottom: 20, left: 60},
+       var margin = {top: 20, right: 20, bottom: 20, left: 90},
           width = 500 - margin.left - margin.right,
           height = 300 - margin.top - margin.bottom;
 
@@ -231,14 +236,8 @@ function charts(datasets, labels) {
       //     .range([0, width]);
 
       var y = d3.scale.linear()
-          .domain([0, d3.max(origDataCSV, function(d) {return d.value; })])
+          .domain([0, max])
           .range([height, 0]);
-
-      var ydash = d3.scale.linear()
-          .domain([0, d3.max(dataCSV, function(d) {return d.value; })])
-          .range([height, 0]);
-
-      console.log(max);
 
       var xAxis = d3.svg.axis()
           .scale(x)
@@ -261,7 +260,7 @@ function charts(datasets, labels) {
       var area = d3.svg.area()
           .x(function(d) { return x(d.date); })
           .y0(height)
-          .y1(function(d) { return ydash(d.value); })
+          .y1(function(d) { return y(d.value); })
           .interpolate(interpolateTypes[6]);
 
       var svg = d3.select("#line-chart-"+id)
@@ -323,9 +322,8 @@ function charts(datasets, labels) {
             })
             .attr("text-anchor", "middle")                         
             .text(function(d, i) { return dataCSV[i].label; })
-            .style("fill", function(d, i) { if(i==0) return color[1]; else return color[0]; } )
+            .style("fill", function(d, i) { if(i==0) return '#ffffff'; else return '#000000'; } )
             .style("font-size", "13px")
-            .style("font-weight", "bold");
       // var config = {
       //   type: 'pie',
       //   data: {
@@ -370,17 +368,13 @@ function charts(datasets, labels) {
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
-      },
-       onSlideChangeEnd: function (swiper) {
-          console.log('slide change end - after');
-          console.log(swiper);
-          console.log(swiper.activeIndex);
-          //after Event use it for your purpose
-          if (swiper.activeIndex == 1) {
-              //First Slide is active
-              console.log('First slide active')
-          }
       }
     });
+     
+  </script>
+
+  <script>
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
   </script>
 @endsection
