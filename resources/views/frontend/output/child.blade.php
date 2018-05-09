@@ -96,21 +96,19 @@ var colors = [
                   display: true,
                   text: labels
               },
-              // tooltips: {
-              //  mode: 'index',
-              //  intersect: false
-              // },
-              // responsive: true,
               maintainAspectRatio: false,
               scales: {
                   xAxes: [{
                       stacked: false,
+                      gridLines : {
+                          display : false
+                      },
+                      barPercentage: 1.0
                   }],
                   yAxes: [{
                       stacked: false
                   }]
               },
-
               // Container for pan options
               pan: {
                   // Boolean to enable panning
@@ -144,7 +142,7 @@ var colors = [
       $("#indicator_id").val("iycf_counselling");
       var indicator_id = $("#indicator_id").val();
       
-      $("#department_id").val("DGHS");
+      $("#department_id").val("both");
       var department_id = $("#department_id").val();
       
       var output = 'child';

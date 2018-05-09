@@ -101,6 +101,9 @@ function charts(datasets, labels) {
             scales: {
                 xAxes: [{
                     stacked: false,
+                    gridLines : {
+                        display : false
+                    }
                 }],
                 yAxes: [{
                     stacked: false
@@ -135,10 +138,10 @@ function charts(datasets, labels) {
       $("#period_id").val("LAST_6_MONTHS");
       var period_id = $("#period_id").val();
       
-      $("#indicator_id").val("maternal_counselling");
+      $("#indicator_id").val("plw_who_receive_ifas");
       var indicator_id = $("#indicator_id").val();
       
-      $("#department_id").val("DGHS");
+      $("#department_id").val("both");
       var department_id = $("#department_id").val();
       
       var output = 'maternal';
