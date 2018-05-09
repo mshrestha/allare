@@ -480,10 +480,7 @@
 
 	  // Set CSS for the control wrapper
 	  var controlWrapper = document.createElement('div');
-	  controlWrapper.style.backgroundColor = 'white';
-	  controlWrapper.style.borderStyle = 'solid';
-	  controlWrapper.style.borderColor = 'gray';
-	  controlWrapper.style.borderWidth = '1px';
+	  controlWrapper.style.backgroundColor = '#ededed';
 	  controlWrapper.style.cursor = 'pointer';
 	  controlWrapper.style.textAlign = 'center';
 	  controlWrapper.style.width = '32px'; 
@@ -495,7 +492,9 @@
 	  zoomInButton.style.width = '32px'; 
 	  zoomInButton.style.height = '32px';
 	  /* Change this to be the .png image you want to use */
-	  /*zoomInButton.style.backgroundImage = 'url("http://placehold.it/32/00ff00")';*/
+	  zoomInButton.style.background = 'url("images/plus.png") no-repeat';
+	  zoomInButton.style.backgroundSize = '90%';
+	  // zoomInButton.style.backgroundRepeat = 'none';
 	  controlWrapper.appendChild(zoomInButton);
 
 	  // Set CSS for the zoomOut
@@ -503,7 +502,9 @@
 	  zoomOutButton.style.width = '32px'; 
 	  zoomOutButton.style.height = '32px';
 	  /* Change this to be the .png image you want to use */
-	  /*zoomOutButton.style.backgroundImage = 'url("http://placehold.it/32/0000ff")';*/
+	  zoomOutButton.style.background = 'url("images/minus.png") no-repeat';
+	  zoomOutButton.style.backgroundSize = '90%';
+
 	  controlWrapper.appendChild(zoomOutButton);
 
 	  // Setup the click event listener - zoomIn
