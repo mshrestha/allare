@@ -11,13 +11,13 @@
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a href="#slide0">STUNTING</a>
+                <a href="#slide0" class="swipernav nav-slide0 active">STUNTING</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide1">WASTING</a>
+                <a href="#slide1" class="swipernav nav-slide1">WASTING</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide2">EXCLUSIVE BREASTFEEDING</a>
+                <a href="#slide2" class="swipernav nav-slide2">EXCLUSIVE BREASTFEEDING</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
@@ -328,5 +328,17 @@
     $('.specific-date').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
 
     $('.area-date').html(startDate + ' - ' + endDate);
+  </script>
+
+  <script> 
+    if(location.hash.slice(1)) {
+      $('.swipernav').removeClass('active');
+      $('.nav-'+ location.hash.slice(1)).addClass('active');
+    }
+
+    $(window).on('hashchange',function(){ 
+        $('.swipernav').removeClass('active');
+        $('.nav-'+ location.hash.slice(1)).addClass('active');
+    });
   </script>
 @endsection

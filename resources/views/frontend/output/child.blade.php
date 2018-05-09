@@ -11,10 +11,10 @@
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a href="#slide0">IMCI COUNSELING</a>
+                <a href="#slide0" class="swipernav nav-slide0 active">IMCI COUNSELING</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide1">SUPPLEMENTS</a>
+                <a href="#slide1" class="swipernav nav-slide1">SUPPLEMENTS</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
@@ -375,5 +375,16 @@ var colors = [
   <script>
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
+  </script>
+  <script> 
+    if(location.hash.slice(1)) {
+      $('.swipernav').removeClass('active');
+      $('.nav-'+ location.hash.slice(1)).addClass('active');
+    }
+
+    $(window).on('hashchange',function(){ 
+        $('.swipernav').removeClass('active');
+        $('.nav-'+ location.hash.slice(1)).addClass('active');
+    });
   </script>
 @endsection

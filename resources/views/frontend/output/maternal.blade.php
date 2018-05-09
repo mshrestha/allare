@@ -12,13 +12,13 @@
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a href="#slide0">Counselling</a>
+                <a href="#slide0" class="swipernav nav-slide0 active">Counselling</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide1">IFA DISTRIBUTION</a>
+                <a href="#slide1" class="swipernav nav-slide1">IFA DISTRIBUTION</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide2">WEIGHT MEASUREMENT</a>
+                <a href="#slide2" class="swipernav nav-slide2">WEIGHT MEASUREMENT</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
@@ -55,7 +55,6 @@
 <script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 
 <script>
-// $('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
 });
@@ -88,7 +87,7 @@ var colors = [
 ]
 
 function charts(datasets, labels) {
-    console.log(datasets);
+    // console.log(datasets);
     window.mainChart = new Chart(mainChartCtx, {
         type: 'bar',
         data: datasets,
@@ -200,7 +199,7 @@ function charts(datasets, labels) {
       var max = 0;
       var origValues = [];
       var processedValues = [];
-      console.log(data_value);
+      // console.log(data_value);
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
         temp.date = data_value.periods[i];
@@ -377,5 +376,17 @@ function charts(datasets, labels) {
   <script>
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
+  </script>
+
+  <script> 
+    if(location.hash.slice(1)) { 
+      $('.swipernav').removeClass('active');
+      $('.nav-'+ location.hash.slice(1)).addClass('active');
+    }
+
+    $(window).on('hashchange',function(){ 
+        $('.swipernav').removeClass('active');
+        $('.nav-'+ location.hash.slice(1)).addClass('active');
+    });
   </script>
 @endsection
