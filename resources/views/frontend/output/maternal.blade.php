@@ -319,9 +319,8 @@ function charts(datasets, labels) {
             })
             .attr("text-anchor", "middle")                         
             .text(function(d, i) { return dataCSV[i].label; })
-            .style("fill", function(d, i) { if(i==0) return color[1]; else return color[0]; } )
+            .style("fill", function(d, i) { if(i==0) return '#ffffff'; else return '#000000'; } )
             .style("font-size", "13px")
-            .style("font-weight", "bold");
       // var config = {
       //   type: 'pie',
       //   data: {
