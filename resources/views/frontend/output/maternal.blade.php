@@ -8,7 +8,7 @@
     <div class="tab-content mt-3">
       <div class="row">
         <div class="col-12">
-          <div class="box-heading float-left ml-0 mr-1">MATERNAL</div>
+          <div class="box-heading float-left ml-0">MATERNAL</div>
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
@@ -365,9 +365,18 @@ function charts(datasets, labels) {
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
+      },
+       onSlideChangeEnd: function (swiper) {
+          console.log('slide change end - after');
+          console.log(swiper);
+          console.log(swiper.activeIndex);
+          //after Event use it for your purpose
+          if (swiper.activeIndex == 1) {
+              //First Slide is active
+              console.log('First slide active')
+          }
       }
     });
-     
   </script>
 
   <script>
