@@ -6,7 +6,7 @@
       <div class="tab-col-subtitle"> {{strtoupper($analysis['current_month'])}}</div>
 ======= --}}
       <div class="tab-col-subtitle specific-date"> {{strtoupper($analysis['current_month'])}}</div>
-      <div class="canvas-holder pie-chart">
+      <div class="canvas-holder pie-chart" id="pie-chart-{{ $key }}">
       {{-- <div id="canvas-holder">
 >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
 				<svg id="chart-area-{{ $key }}"></svg>
@@ -19,7 +19,7 @@
       <div class="canvas-holder">
 ======= --}}
       <div class="tab-col-subtitle area-date">Jan 14 - Feb 18</div>
-      <div class="canvas-holder">
+      <div class="canvas-holder" id="area-chart-{{ $key }}">
 {{-- >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
 				<svg id="line-chart-{{ $key }}"></svg>
 			</div>

@@ -8,17 +8,17 @@
     <div class="tab-content mt-3">
       <div class="row">
         <div class="col-12">
-          <div class="box-heading float-left ml-0 mr-1">MATERNAL</div>
+          <div class="box-heading float-left ml-0">MATERNAL</div>
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a href="#slide0">Counselling</a>
+                <a href="#slide0" class="swipernav nav-slide0 active">Counselling</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide1">IFA DISTRIBUTION</a>
+                <a href="#slide1" class="swipernav nav-slide1">IFA DISTRIBUTION</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide2">WEIGHT MEASUREMENT</a>
+                <a href="#slide2" class="swipernav nav-slide2">WEIGHT MEASUREMENT</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
@@ -55,7 +55,6 @@
 <script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 
 <script>
-// $('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
 });
@@ -88,7 +87,7 @@ var colors = [
 ]
 
 function charts(datasets, labels) {
-    console.log(datasets);
+    // console.log(datasets);
     window.mainChart = new Chart(mainChartCtx, {
         type: 'bar',
         data: datasets,
@@ -189,8 +188,19 @@ function charts(datasets, labels) {
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
+    // window.addEventListener("resize", redraw);
+
+    // function redraw() {
+    //   @foreach($trend_analysis as $key => $analysis)
+    //     pieChart({{ $key }}, {{ $analysis['percent'] }}, {!! $analysis['labels'] !!})
+    //     var arr = {!! json_encode($analysis) !!};
+    //     trendAnalysisChart('{{ $key }}', arr)
+    //   @endforeach
+    // }
+
     var startDate, endDate;
     function trendAnalysisChart(id, data_value) {
+      $("#line-chart-"+id).html('');
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
@@ -200,7 +210,7 @@ function charts(datasets, labels) {
       var max = 0;
       var origValues = [];
       var processedValues = [];
-      console.log(data_value);
+      // console.log(data_value);
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
         temp.date = data_value.periods[i];
@@ -223,10 +233,12 @@ function charts(datasets, labels) {
         if(max < parseInt(temp))
           max = d.value;
       });
-
-       var margin = {top: 20, right: 20, bottom: 20, left: 90},
-          width = 500 - margin.left - margin.right,
-          height = 300 - margin.top - margin.bottom;
+      var parentDiv = document.getElementById('area-chart-'+id);
+      var w = parentDiv.clientWidth,                        
+      h = parentDiv.clientHeight;      
+      var margin = {top: 20, right: 20, bottom: 20, left: 90},
+          width = w - margin.left - margin.right,
+          height = h - margin.top - margin.bottom;
 
       var x = d3.time.scale()
                 .range([0, width])
@@ -287,9 +299,10 @@ function charts(datasets, labels) {
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
-      var w = 300,                        
-      h = 300,                            
-      r = 100,                            
+      var parentDiv = document.getElementById('pie-chart-'+id);
+      var w = parentDiv.clientWidth,                        
+      h = parentDiv.clientHeight,                            
+      r = Math.min(w, h) / 2,                             
       color = ['#fba69c', '#d2d2d2'];     
       dataCSV = [{"label": data_value+"%", "value": data_value}, 
                 {"label":  100 - data_value+"%", "value": 100 - data_value}]
@@ -301,10 +314,11 @@ function charts(datasets, labels) {
             .attr("transform", "translate(" + r + "," + r + ")")
 
       var arc = d3.svg.arc()
+          .innerRadius(0)
           .outerRadius(r);
 
-      var pie = d3.layout.pie()
-          .value(function(d) { return d.value; });    
+      var pie = d3.layout.pie().sort(null);
+      pie.value(function(d) { return d.value; });    
 
       var arcs = vis.selectAll("g.slice")     
         .data(pie)                          
@@ -369,13 +383,34 @@ function charts(datasets, labels) {
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
+      },
+       onSlideChangeEnd: function (swiper) {
+          console.log('slide change end - after');
+          console.log(swiper);
+          console.log(swiper.activeIndex);
+          //after Event use it for your purpose
+          if (swiper.activeIndex == 1) {
+              //First Slide is active
+              console.log('First slide active')
+          }
       }
     });
-     
   </script>
 
   <script>
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
+  </script>
+
+  <script> 
+    if(location.hash.slice(1)) { 
+      $('.swipernav').removeClass('active');
+      $('.nav-'+ location.hash.slice(1)).addClass('active');
+    }
+
+    $(window).on('hashchange',function(){ 
+        $('.swipernav').removeClass('active');
+        $('.nav-'+ location.hash.slice(1)).addClass('active');
+    });
   </script>
 @endsection

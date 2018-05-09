@@ -11,13 +11,13 @@
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a href="#slide0">STUNTING</a>
+                <a href="#slide0" class="swipernav nav-slide0 active">STUNTING</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide1">WASTING</a>
+                <a href="#slide1" class="swipernav nav-slide1">WASTING</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide2">EXCLUSIVE BREASTFEEDING</a>
+                <a href="#slide2" class="swipernav nav-slide2">EXCLUSIVE BREASTFEEDING</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
@@ -239,10 +239,12 @@
       dataCSV.forEach(function(d) {
         d.date = d3.time.format("%Y").parse(d.date);
       });
-
+      var parentDiv = document.getElementById('area-chart-'+id);
+      var w = parentDiv.clientWidth,                        
+      h = parentDiv.clientHeight;  
       var margin = {top: 20, right: 20, bottom: 30, left: 50},
-          width = 500 - margin.left - margin.right,
-          height = 300 - margin.top - margin.bottom;
+          width = w - margin.left - margin.right,
+          height = h - margin.top - margin.bottom;
 
       var x = d3.time.scale()
                 .range([0, width])
@@ -328,5 +330,17 @@
     $('.specific-date').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
 
     $('.area-date').html(startDate + ' - ' + endDate);
+  </script>
+
+  <script> 
+    if(location.hash.slice(1)) {
+      $('.swipernav').removeClass('active');
+      $('.nav-'+ location.hash.slice(1)).addClass('active');
+    }
+
+    $(window).on('hashchange',function(){ 
+        $('.swipernav').removeClass('active');
+        $('.nav-'+ location.hash.slice(1)).addClass('active');
+    });
   </script>
 @endsection
