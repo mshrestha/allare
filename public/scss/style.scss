@@ -11,6 +11,8 @@
 @import "./swiper-tab.scss";
 @import "./output.scss";
 
+@import "./google-map.scss";
+
 // design test need to remove
 @media (min-width: 1200px){
 	.container {
@@ -19,9 +21,9 @@
 }
 
 .design-test {
-		display: none;
-		top: 0;
-		left: 0;
+	display: none;
+	top: 0;
+	left: 0;
     width: 100%;
     height: 200%;
     position: absolute;
