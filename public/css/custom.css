@@ -375,3 +375,22 @@ div#zoomctrl {
     margin-bottom: 30px;
     margin-left: -70px;
 }
+
+div.pie-legend .legend-text {
+  display: block;
+  font-size: 11px;
+}
+div.pie-legend .legend-text:before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 10px;
+  margin-right: 10px;
+  background: #FFF;
+}
+div.pie-legend span#current-text:before {
+  background: #fba69c;
+}
+div.pie-legend span#other-text:before {
+  background: #d2d2d2;
+}

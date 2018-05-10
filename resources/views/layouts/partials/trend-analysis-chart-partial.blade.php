@@ -11,6 +11,10 @@
 >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
 				<svg id="chart-area-{{ $key }}"></svg>
 			</div>
+			<div class="pie-legend">
+				<span class="legend-text" id="current-text">{{$analysis['name']}} Given</span>
+				<span class="legend-text" id="other-text">Total Patients Visited</span>
+			</div>
     </div> {{-- col-xs-2 --}}
     <div class="col-xl-6 pr-xl-0 col-lg-6 col-sm-8">
       <div class="tab-col-title">People Counselled on {{$analysis['name']}}</div>
