@@ -742,11 +742,11 @@
 	</script>
 	{{-- radial progress --}}
 	<script>
+	// 	new RadialProgressChart('#maternal-health', {series: [24, 85]});
+	// new RadialProgressChart('#child-health', {series: [24, 85]});
+
 	var mainChart = new RadialProgressChart('#maternal-health', {
 		diameter: 100,
-		shadow: {
-			width: 0
-		},
 		stroke:{
 			width: 10,
 			gap: 3
@@ -843,9 +843,6 @@
 ======= */ ?>
 	  var mainChart = new RadialProgressChart('#child-health', {
 	  	diameter: 100,
-	  	shadow: {
-	  		width: 0
-	  	},
 	  	stroke:{
 	  		width: 10,
 	  		gap: 3
@@ -877,6 +874,7 @@
 			],
 		}
 	});
+
 	</script>
 	{{-- radial progress end --}}
 {{-- >>>>>>> a1835801bf0f5809dc712799bb9b94300fef4d1c --}}
