@@ -745,8 +745,23 @@
 	// 	new RadialProgressChart('#maternal-health', {series: [24, 85]});
 	// new RadialProgressChart('#child-health', {series: [24, 85]});
 
+    // Firefox 1.0+
+    var isFirefox = typeof InstallTrigger !== 'undefined';
+
+    // Safari 3.0+ "[object HTMLElementConstructor]" 
+    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+
+    var shadowWidth = 0;
+    if (isFirefox || isSafari) {
+			var shadowWidth = 0.0001;    	
+    }
+
+
 	var mainChart = new RadialProgressChart('#maternal-health', {
 		diameter: 100,
+		shadow: {
+			width: shadowWidth
+		},
 		stroke:{
 			width: 10,
 			gap: 3
@@ -843,6 +858,9 @@
 ======= */ ?>
 	  var mainChart = new RadialProgressChart('#child-health', {
 	  	diameter: 100,
+	  	shadow: {
+	  		width: shadowWidth
+	  	},
 	  	stroke:{
 	  		width: 10,
 	  		gap: 3
