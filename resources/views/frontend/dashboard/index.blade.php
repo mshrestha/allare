@@ -480,7 +480,7 @@
 
 	  // Set CSS for the control wrapper
 	  var controlWrapper = document.createElement('div');
-	  controlWrapper.style.backgroundColor = '#ededed';
+	  controlWrapper.style.backgroundColor = 'transparent';
 	  controlWrapper.style.cursor = 'pointer';
 	  controlWrapper.style.textAlign = 'center';
 	  controlWrapper.style.width = '32px'; 
@@ -674,9 +674,9 @@
 		    	infoWindow.open(map, anchor);
 					stateLayer.overrideStyle(e.feature, {
 						// fillColor: e.feature.getProperty('color'),
-						strokeColor: '#000',
+						strokeColor: '#CCC',
 						// strokeColor: e.feature.getProperty('color'),
-						strokeWeight: 2,
+						strokeWeight: 1,
 						zIndex: 2
 					});
 				});
