@@ -293,6 +293,16 @@ class DashboardController extends Controller
 			],
 		];
 
+		$outcomes['vitamin suppliment'] = [];
+		$outcomes['vitamin suppliment']['title'] = 'Vitamin Supplement';
+		$outcomes['vitamin suppliment']['goal_values'] = $child_trend_analysis[1]['percent'];
+		$outcomes['vitamin suppliment']['min'] = 0;
+		$outcomes['vitamin suppliment']['max'] = 100;
+		$outcomes['vitamin suppliment']['goal'] = 'Goal 100% by 2021';
+		$outcomes['vitamin suppliment']['direction'] = 1;
+		$outcomes['vitamin suppliment']['limit'] = 100;
+		$outcomes['vitamin suppliment']['target'] = 100;
+		$outcomes['vitamin suppliment']['goal_text'] = "Increase intake of Vitamin Suppliments";
 		// $geoJsons = json_encode($this->getGeoJsons());
 		// dd($geoJsons);
 		// dd($maternal_trend_analysis);
