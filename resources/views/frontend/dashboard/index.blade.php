@@ -486,7 +486,7 @@
 
 	  // Set CSS for the control wrapper
 	  var controlWrapper = document.createElement('div');
-	  controlWrapper.style.backgroundColor = '#ededed';
+	  controlWrapper.style.backgroundColor = 'transparent';
 	  controlWrapper.style.cursor = 'pointer';
 	  controlWrapper.style.textAlign = 'center';
 	  controlWrapper.style.width = '32px'; 
@@ -680,9 +680,9 @@
 		    	infoWindow.open(map, anchor);
 					stateLayer.overrideStyle(e.feature, {
 						// fillColor: e.feature.getProperty('color'),
-						strokeColor: '#000',
+						strokeColor: '#CCC',
 						// strokeColor: e.feature.getProperty('color'),
-						strokeWeight: 2,
+						strokeWeight: 1,
 						zIndex: 2
 					});
 				});
@@ -748,10 +748,25 @@
 	</script>
 	{{-- radial progress --}}
 	<script>
+	// 	new RadialProgressChart('#maternal-health', {series: [24, 85]});
+	// new RadialProgressChart('#child-health', {series: [24, 85]});
+
+    // Firefox 1.0+
+    var isFirefox = typeof InstallTrigger !== 'undefined';
+
+    // Safari 3.0+ "[object HTMLElementConstructor]" 
+    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+
+    var shadowWidth = 0;
+    if (isFirefox || isSafari) {
+			var shadowWidth = 0.0001;    	
+    }
+
+
 	var mainChart = new RadialProgressChart('#maternal-health', {
 		diameter: 100,
 		shadow: {
-			width: 0
+			width: shadowWidth
 		},
 		stroke:{
 			width: 10,
@@ -850,7 +865,7 @@
 	  var mainChart = new RadialProgressChart('#child-health', {
 	  	diameter: 100,
 	  	shadow: {
-	  		width: 0
+	  		width: shadowWidth
 	  	},
 	  	stroke:{
 	  		width: 10,
@@ -888,6 +903,7 @@
 			],
 		}
 	});
+
 	</script>
 	{{-- radial progress end --}}
 {{-- >>>>>>> a1835801bf0f5809dc712799bb9b94300fef4d1c --}}
