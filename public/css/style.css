@@ -7216,8 +7216,10 @@ body {
     min-width: 50px; }
     @media (min-width: 1200px) {
       .input-wrapper .input-training span.number, .input-wrapper .input-qa span.number, .input-wrapper .input-supply-management span.number, .input-wrapper .input-reporting span.number {
-        width: 32%; } }
+        width: 32%;
+        vertical-align: top; } }
   .input-wrapper .input-training span.number-txt, .input-wrapper .input-qa span.number-txt, .input-wrapper .input-supply-management span.number-txt, .input-wrapper .input-reporting span.number-txt {
+    margin-top: 8px;
     display: inline-block;
     width: 60%;
     font-size: 12px;
@@ -7229,12 +7231,14 @@ body {
   .input-wrapper .input-supply-management span.number {
     width: 24%; }
   .input-wrapper .input-qa span.number {
-    width: 24%; }
+    width: 24%;
+    vertical-align: top; }
     @media (min-width: 1200px) {
       .input-wrapper .input-qa span.number {
         width: 20%; } }
   .input-wrapper .input-qa span.number-txt {
-    width: 53%; }
+    width: 53%;
+    vertical-align: top; }
 
 #maternal-health, #child-health {
   font-size: 10px !important; }

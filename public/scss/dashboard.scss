@@ -150,12 +150,12 @@
 	    font-size: 15px;
 	   	&:last-child{
 	   		border: none !important;
-	   	} 
+	   	}
 		}
 		li.list-head.green {
 	    background: #8ec89a;
 	    color: #FFF;
-		}	
+		}
 		&.outcome{
 			li{
 				color: #e6e6e6;
@@ -166,7 +166,7 @@
 			    &.green {
 				    background: #8ec89a;
 				    color: #FFF;
-					}	
+					}
 				}
 			}
 		}
@@ -203,7 +203,7 @@
 }
 
 .map-wrapper {
-	@include media-breakpoint-up(md) { 
+	@include media-breakpoint-up(md) {
 	  height: 422px;
 	  margin-top: -29px;
 	}
@@ -211,7 +211,7 @@
 }
 
 
-// input 
+// input
 .input-wrapper{
 	background: #e0e0e0;
 	.input-wrapper-inner{
@@ -260,12 +260,14 @@
 		    width: 24%;
 				max-width: 50px;
 		    min-width: 50px;
-		    @include media-breakpoint-up(xl) { 
+		    @include media-breakpoint-up(xl) {
 			    width: 32%;
+          vertical-align: top;
 			  }
 		}
 
 		span.number-txt {
+        margin-top: 8px;
 		    display: inline-block;
 		    width: 60%;
 		    font-size: 12px;
@@ -277,7 +279,7 @@
 		@include media-breakpoint-up(xl) {
 			padding-left: 50px;
 		}
-		
+
 	}
 	.input-supply-management{
 		span.number{
@@ -287,13 +289,15 @@
 	.input-qa{
 		span.number {
 			width: 24%;
-			@include media-breakpoint-up(xl) { 
+      vertical-align: top;
+			@include media-breakpoint-up(xl) {
 	    	width: 20%;
 			}
 		}
 
 		span.number-txt {
 			width: 53%;
+      vertical-align: top;
 	  }
 	}
 }
