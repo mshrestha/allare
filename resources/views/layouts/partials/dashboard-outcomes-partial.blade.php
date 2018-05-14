@@ -12,10 +12,10 @@
 	<div class="col-12 outcome-progress-col">
 		<div class="report-heading row">
 			<div class="report-icon col-2 pr-1">
-				@if (strpos(strtolower($key), 'stunting') !== false) 
+				@if (strpos(strtolower($key), 'stunting') !== false)
 				<span class="icon-children icon"></span>
 				{{-- <img src="{{ asset('images\stunting.svg') }}" alt=""> --}}
-				@elseif (strpos(strtolower($key), 'wasting') !== false) 
+				@elseif (strpos(strtolower($key), 'wasting') !== false)
 				<span class="icon-children icon"></span>
 				{{-- <img src="{{ asset('images\wasting.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'breastfeed') !== false)
@@ -31,11 +31,11 @@
 		{{-- <div id="canvas-holder" class="d-none d-md-block">
 			<div class="progress-bar-v" id="goal-chart-{{
 			$key}}">
-				
+
 				<div class="goal" style="height: {{$incomplete}}%;">
 					{{$analysis['goal']}}
 				</div>
-				
+
 				<div class="current grow-v-animation" style="height: {{$complete}}%;">
 					{{$analysis['goal_values']}}  %
 				</div>
@@ -43,15 +43,15 @@
 			</div>
 
 		</div> --}}
-		
+
 		<div class="canvas-holder-h d-md-none-">
 			<div class="progress-bar-h" id="goal-chart-h-{{
 			$key}}">
-				
+
 				<div class="goal" style="width: {{$incomplete}}%;">
 					{{-- {{$analysis['goal']}} --}}
 				</div>
-				
+
 				<div class="current grow-h-animation" style="width: {{$complete}}%;">
 					{{$analysis['goal_values']}}  %
 				</div>
