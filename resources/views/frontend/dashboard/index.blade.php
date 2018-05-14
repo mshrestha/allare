@@ -135,8 +135,15 @@
 			  	<div class="col-sm-6 col-md-12 col-lg-3 col-xl-4 input-box input-supply-management">
 			  		<h6 class="mb-0">SUPPLY MANAGEMENT</h6>
 			  		<div class="row">
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities providing quality Nut reporting</span></div>
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Health workers trained </span></div>
+			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in IFA Tablets</span></div>
+			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in Scales / Height board </span></div>
+			  		</div>
+			  		<div class="row">
+			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities awaiting counselling material</span></div>
+			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in F-75 and F-100 therapeutic </span></div>
+			  		</div>
+			  		<div class="row">
+			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in MUAC tapes</span></div>
 			  		</div>
 			  	</div>{{-- input-box input-qa --}}
 			  </div>
