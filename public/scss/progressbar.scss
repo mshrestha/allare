@@ -18,8 +18,17 @@
   width: 73%;
   float: left;
   margin-right: 2%;
-  &#goal-chart-h-Stunting{
+  position: relative;
+  &#goal-chart-h-Stunting, &#goal-chart-h-Wasting{
     display: flex;
+  }
+  .target{
+    right: 0%;
+    position: absolute;
+    z-index: 19;
+    width: 4px;
+    height: 24px;
+    background: #80dec7;
   }
 }
 .tgtxt{

@@ -47,6 +47,7 @@
 		<div class="canvas-holder-h d-md-none-">
 			<div class="progress-bar-h" id="goal-chart-h-{{
 			$key}}">
+				<div class="target" style="right: 20%;"></div>
 
 				<div class="goal" style="width: {{$incomplete}}%;">
 					{{-- {{$analysis['goal']}} --}}

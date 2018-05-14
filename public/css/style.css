@@ -6832,9 +6832,17 @@ body {
 .progress-bar-h {
   width: 73%;
   float: left;
-  margin-right: 2%; }
-  .progress-bar-h#goal-chart-h-Stunting {
+  margin-right: 2%;
+  position: relative; }
+  .progress-bar-h#goal-chart-h-Stunting, .progress-bar-h#goal-chart-h-Wasting {
     display: flex; }
+  .progress-bar-h .target {
+    right: 0%;
+    position: absolute;
+    z-index: 19;
+    width: 4px;
+    height: 24px;
+    background: #80dec7; }
 
 .tgtxt {
   float: left;
