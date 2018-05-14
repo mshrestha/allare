@@ -12,7 +12,7 @@
 	      	<div class="output-col col-md-7 col-lg-8 pb-3">
 	      		<div class="row"  data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
 	      			<div class="col-sm-12">
-	      				<div class="box-heading float-left">National output</div>
+	      				<div class="box-heading float-left">National outcomes</div>
 	      				<div class="view-on-map float-right swiper-button-next">VIEW ON MAP</div>
 	      			</div>
 	      		</div> {{-- row --}}
@@ -20,7 +20,7 @@
 	      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 	      				<div id="maternal-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
 	      				<div class="legend row">
-	      					<div class="conselling-given col-6">Conselling Given</div>
+	      					<div class="conselling-given col-6">Maternal Nutrition Conselling</div>
 	      					<div class="ifa-distributed col-6">IFA Distributed</div>
 	      					<div class="weight-measured col-6">Weight Measured</div>
 	      				</div> {{-- legend --}}
@@ -28,8 +28,9 @@
 	      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
 	      				<div id="child-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
 	      				<div class="legend row">
-	      					<div class="imci-counselling col-10 offset-2">IMCI Counselling Given</div>
+	      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
 	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
+	      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
 	      				</div> {{-- legend --}}
 	      			</div>
 	      		</div> {{-- row --}}
@@ -37,16 +38,16 @@
 	      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
 	      		<div class="row">
 	      			<div class="col-12">
-	      				<div class="box-heading float-left">OUTCOME</div>
+	      				<div class="box-heading float-left">IMPACT</div>
 	      			</div>
 	      		</div>
 	      		<div class="row">
 	      				@foreach($outcomes as $key => $analysis)
 									@include('layouts.partials.dashboard-outcomes-partial')
 								@endforeach
-								<div class="col-12 outcome-note">
+								{{-- <div class="col-12 outcome-note">
 									Our goal is to reduce malnutrition and improve nutritional status of the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban areas of Bangladesh.
-								</div>
+								</div> --}}
 	      		</div>
 	      	</div> {{-- col-md-4 --}}
       	</div>
@@ -63,13 +64,14 @@
         <div class="row">
         	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
     				<ul class="map-filter mb-0">
-    					<li class="list-head">MATERNAL HEALTH</li>
+    					<li class="list-head">MATERNAL NUTRITION</li>
 							<li><a href="#" id="counselling" class="maplinks inactive" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Counselling Given</a></li>
 							<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">IFA Distributed</a></li>
 							<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
-							<li class="list-head">Child health</li>
+							<li class="list-head">CHILD NUTRITION</li>
 							<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
 							<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
+
     				</ul>
     				<ul class="map-filter outcome mb-0">
 							<li class="list-head green">OUTCOME</li>
@@ -109,9 +111,13 @@
 			  <div class="row">
 			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 input-box input-reporting">
 			  		<h6>REPORTING</h6>
-			  		<div><span class="report-lable">FWC</span> <span class="yes">Yes</span> <span class="no">No</span></div>
+			  		{{-- <div><span class="report-lable">FWC</span> <span class="yes">Yes</span> <span class="no">No</span></div>
 			  		<div><span class="report-lable">MCHN</span> <span class="yes">Yes</span> <span class="no">No</span></div>
-			  		<div><span class="report-lable">SAM</span> <span class="yes">Yes</span> <span class="no">No</span></div>
+			  		<div><span class="report-lable">SAM</span> <span class="yes">Yes</span> <span class="no">No</span></div> --}}
+
+			  		<div><span class="report-lable">FWC</span> <span class="number">65%</span></div>
+			  		<div><span class="report-lable">MCHN</span> <span class="number">65%</span></div>
+			  		<div><span class="report-lable">SAM</span> <span class="number">65%</span></div>
 			  	</div>{{-- input-box input-reporting --}}
 			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-training">
 			  		<div class="input-trainning-inner">
@@ -151,11 +157,11 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-6">
-						<h3>Maternal Health</h3>
+						<h3>Maternal Nutrition</h3>
 						{{-- <div id="maternal-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div> --}}
 					</div>
 					<div class="col-sm-6">
-						<h3>Child Health</h3>
+						<h3>Child Nutrition</h3>
 						{{-- <div id="child-health" style="width: 100%; max-width: 300px; margin: 20px auto;"></div> --}}
 					</div>
 				</div> {{-- /.row --}}
@@ -778,7 +784,7 @@
 		],
 		center: {
 			content: [
-			'MATERNAL','HEALTH'
+			'MATERNAL','NUTRITION'
 			],
 		}
 	});
@@ -861,19 +867,24 @@
 	    max: 100,
 	    series: [
 	    {
-			labelStart: '', //IMCI Counselling Given     
-			value: {{ $child_trend_analysis[0]['percent'] }},
-			color: '#008091',
-		},
-		{
-      		labelStart: '', //Child Health
-      		value: {{ $child_trend_analysis[1]['percent'] }},
-      		color: '#0c4a60',
-      	},
+				labelStart: '', //IMCI Counselling Given     
+				value: {{ $child_trend_analysis[0]['percent'] }},
+				color: '#81ddc6',
+			},
+			{
+	  		labelStart: '', //Child Health
+	  		value: {{ $child_trend_analysis[1]['percent'] }},
+	  		color: '#008091',
+	  	},
+	  	{
+	  		labelStart: '', //Child Health
+	  		value: {{ $child_trend_analysis[0]['percent'] }},
+	  		color: '#0c4a60'
+	  	},
 		],
 		center: {
 			content: [
-				'CHILD', 'HEALTH'
+				'CHILD', 'NUTRITION'
 			],
 		}
 	});

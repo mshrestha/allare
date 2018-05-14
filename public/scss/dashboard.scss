@@ -28,9 +28,12 @@
 		background-color: #0c4a60;
 	}
 	.imci-counselling:before{
-		background-color: #008091;
+		background-color: #81ddc6;
 	}
 	.supplements-distributed:before{
+		background-color: #008091;
+	}
+	.child-growth:before{
 		background-color: #0c4a60;
 	}
 }
@@ -247,7 +250,7 @@
 		    background: #999999;
 		}
 	}
-	.input-training, .input-qa, .input-supply-management{
+	.input-training, .input-qa, .input-supply-management, .input-reporting{
 		span.number {
 		    font-size: 27px;
 		    font-weight: 300;
