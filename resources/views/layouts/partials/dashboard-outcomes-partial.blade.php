@@ -21,7 +21,7 @@
 				@elseif (strpos(strtolower($key), 'breastfeed') !== false)
 				<span class="icon-breastfeeding icon"></span>
 				{{-- <img src="{{ asset('images\breastfeed.svg') }}" alt=""> --}}
-				@elseif (strpos(strtolower($key), 'supplement') !== false)
+				@elseif (strpos(strtolower($key), 'suppliment') !== false)
 				<span class="icon-suppliment icon"></span>
 				{{-- <img src="{{ asset('images\supplement.svg') }}" alt=""> --}}
 				@endif
