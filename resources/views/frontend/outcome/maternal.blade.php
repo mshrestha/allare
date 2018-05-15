@@ -233,7 +233,7 @@ function charts(datasets, labels) {
         if(max < parseInt(temp))
           max = d.value;
       });
-      var parentDiv = document.getElementById('area-chart-'+id);
+      var parentDiv = document.getElementById('output-area-chart-'+id);
       var w = parentDiv.clientWidth,                        
       h = parentDiv.clientHeight;      
       var margin = {top: 20, right: 20, bottom: 20, left: 90},

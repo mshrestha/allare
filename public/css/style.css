@@ -7308,9 +7308,14 @@ div#zoomctrl div {
   .tab-content .swiper-slide .pie-chart {
     margin-top: 15px; }
   .tab-content .swiper-slide .area-chart {
-    height: 200px; }
+    height: 300px; }
     @media (min-width: 768px) {
       .tab-content .swiper-slide .area-chart {
+        width: 87%; } }
+  .tab-content .swiper-slide .output-area-chart {
+    height: 200px; }
+    @media (min-width: 768px) {
+      .tab-content .swiper-slide .output-area-chart {
         width: 87%; } }
 
 .custom-select {
