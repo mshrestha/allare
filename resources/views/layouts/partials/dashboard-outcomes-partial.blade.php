@@ -22,8 +22,8 @@
 				<span class="icon-breastfeeding icon"></span>
 				{{-- <img src="{{ asset('images\breastfeed.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'suppliment') !== false)
-				<span class="icon-suppliment icon"></span>
-				{{-- <img src="{{ asset('images\supplement.svg') }}" alt=""> --}}
+				{{-- <span class="icon-suppliment icon"></span> --}}
+				<img src="{{ asset('images\supplement.svg') }}" alt="">
 				@endif
 			</div>
 			<div class="txt-icon col-10 pl-0">

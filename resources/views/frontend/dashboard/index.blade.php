@@ -20,9 +20,10 @@
 	      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 	      				<div id="maternal-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
 	      				<div class="legend row">
-	      					<div class="conselling-given col-6">Maternal Nutrition Conselling</div>
-	      					<div class="ifa-distributed col-6">IFA Distributed</div>
-	      					<div class="weight-measured col-6">Weight Measured</div>
+	      					<div class="conselling-given col-10 offset-2">Maternal Nutrition Conselling</div>
+	      					<div class="ifa-distributed col-10 offset-2">IFA Distributed</div>
+	      					<div class="weight-measured col-10 offset-2">Weight Measured</div>
+	      					<div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div>
 	      				</div> {{-- legend --}}
 	      			</div>
 	      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
@@ -31,6 +32,7 @@
 	      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
 	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
 	      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
+	      					<div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div>
 	      				</div> {{-- legend --}}
 	      			</div>
 	      		</div> {{-- row --}}
@@ -796,13 +798,21 @@
 			{
 				labelStart: '', // IFA Distributed
 				value: {{ $maternal_trend_analysis[1]['percent'] }},
-				color: '#008091',
+				// color: '#008091',
+				color: '#137f91',
 			},
 			{
 				labelStart: '', // Weight Measured
 				value: {{ $maternal_trend_analysis[2]['percent'] }},
-				color: "#0c4a60"
-			}
+				// color: "#0c4a60"
+				color: "#005e6f"
+			},
+			{
+				labelStart: '', //Exclusive Breastfeeding
+				value: {{ $maternal_trend_analysis[0]['percent'] }},
+				// color: '#004962',
+				color: "#003d48"
+			},
 		],
 		center: {
 			content: [
@@ -896,12 +906,17 @@
 			{
 	  		labelStart: '', //Child Health
 	  		value: {{ $child_trend_analysis[1]['percent'] }},
-	  		color: '#008091',
+	  		color: '#137f91',
 	  	},
 	  	{
-	  		labelStart: '', //Child Health
+	  		labelStart: '', //Child Growth Monitoring
 	  		value: {{ $child_trend_analysis[0]['percent'] }},
-	  		color: '#0c4a60'
+	  		color: '#005e6f'
+	  	},
+	  	{
+	  		labelStart: '', //Minimum acceptable diet
+	  		value: {{ $child_trend_analysis[1]['percent'] }},
+	  		color: '#003d48'
 	  	},
 		],
 		center: {
