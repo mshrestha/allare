@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+  <div class="white-bg"></div>
 	<div class="container">
 
     {{-- tabcontent start  --}}
