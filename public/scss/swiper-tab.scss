@@ -68,5 +68,11 @@
 					width: 87%;
 				}
 			}
+			.output-area-chart{
+				height: 200px;
+				@include media-breakpoint-up(md) {
+					width: 87%;
+				}
+			}
 	}
 } 
