@@ -64,7 +64,7 @@
                   </div>
                 </li>
                 <li class="nav-item {{ Request::path() == 'outcomes' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('frontend.outcomes') }}">Outcomes</a>
+                    <a class="nav-link" href="{{ route('frontend.outcomes') }}">Impacts</a>
                 </li>
                  
               </ul>
