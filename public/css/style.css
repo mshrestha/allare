@@ -6830,7 +6830,7 @@ body {
   background-image: url("../images/loading-strip-v.png"); }
 
 .progress-bar-h {
-  width: 73%;
+  width: 100%;
   float: left;
   margin-right: 2%;
   position: relative; }
@@ -6846,10 +6846,28 @@ body {
 
 .tgtxt {
   float: left;
-  width: 25%;
+  width: 100%;
   font-size: 12px;
   color: #808080;
-  line-height: 13px; }
+  line-height: 13px;
+  margin-top: 10px;
+  position: relative; }
+  .tgtxt .target {
+    position: absolute;
+    top: -15px;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-bottom: 5px solid #063d48;
+    transform: translateX(5px); }
+    .tgtxt .target:before {
+      content: "";
+      height: 24px;
+      width: 1px;
+      background: #063d48;
+      display: block;
+      margin-top: -24px; }
 
 .progress-bar-h .current, .progress-bar-v .current {
   width: 80%;

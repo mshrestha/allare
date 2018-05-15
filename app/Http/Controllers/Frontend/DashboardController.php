@@ -301,7 +301,7 @@ class DashboardController extends Controller
 		$outcomes['vitamin suppliment']['goal'] = 'Goal 100% by 2021';
 		$outcomes['vitamin suppliment']['direction'] = 1;
 		$outcomes['vitamin suppliment']['limit'] = 100;
-		$outcomes['vitamin suppliment']['target'] = 100;
+		$outcomes['vitamin suppliment']['target'] = 0;
 		$outcomes['vitamin suppliment']['goal_text'] = "Increase intake of Vitamin Suppliments";
 		// $geoJsons = json_encode($this->getGeoJsons());
 		// dd($geoJsons);
