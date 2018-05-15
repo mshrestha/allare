@@ -33,7 +33,7 @@
                 $counter = 0;
               @endphp
               @foreach($trend_analysis as $key => $analysis)
-                @include('frontend.outcome.partials.outcome-trend-analysis-partial')
+                @include('frontend.impact.partials.outcome-trend-analysis-partial')
                 @php
                 $counter = $counter + 1;
               @endphp

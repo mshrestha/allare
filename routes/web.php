@@ -98,16 +98,16 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/dashboard_specific_map', 'DashboardController@getMapData')->name('dashboard-specific-map');
 
 	// Outputs 
-	Route::get('/outputs', 'OutputController@indexAction')->name('outputs');
-	Route::get('/outputs/maternal', 'OutputController@indexAction')->name('outputs.maternal');
-	Route::post('/outputs/maternal-main-chart', 'OutputController@maternalMainChart')->name('outputs.maternal.mainchart');
+	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
+	Route::get('/outcomes/maternal', 'OutcomeController@indexAction')->name('outcomes.maternal');
+	Route::post('/outcomes/maternal-main-chart', 'OutcomeController@maternalMainChart')->name('outcomes.maternal.mainchart');
 
 	// Output Child
-	Route::get('/outputs/child', 'OutputController@indexChild')->name('outputs.child');
+	Route::get('/outcomes/child', 'OutcomeController@indexChild')->name('outcomes.child');
 
 	// Outcomes
-	Route::get('/outcomes', 'OutcomeController@secondIndexAction')->name('outcomes');
-	Route::post('/outcomes/get-outcome-data', 'OutcomeController@getOutcomeData')->name('get-outcome-data');	
+	Route::get('/impacts', 'ImpactController@secondIndexAction')->name('impacts');
+	Route::post('/impacts/get-outcome-data', 'ImpactController@getOutcomeData')->name('get-outcome-data');	
 });
 
 Route::get('excel-test', function () {

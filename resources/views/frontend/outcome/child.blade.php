@@ -4,21 +4,17 @@
     @include('layouts.partials.main-chart-partial')
 
     {{-- tabcontent start  --}}
-
     <div class="tab-content mt-3">
       <div class="row">
         <div class="col-12">
-          <div class="box-heading float-left ml-0 mr-1">MATERNAL</div>
+          <div class="box-heading float-left ml-0 mr-1">CHILD</div>
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a href="#slide0" class="swipernav nav-slide0 active">Counselling</a>
+                <a href="#slide0" class="swipernav nav-slide0 active">IMCI COUNSELING</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide1" class="swipernav nav-slide1">IFA DISTRIBUTION</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#slide2" class="swipernav nav-slide2">WEIGHT MEASUREMENT</a>
+                <a href="#slide1" class="swipernav nav-slide1">SUPPLEMENTS</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
@@ -28,7 +24,7 @@
         <div class="col-12">
           {{-- tab slide swiper --}}
           <!-- Swiper -->
-          <div class="swiper-container swiper-tab" id="swiper-tab">
+          <div class="swiper-container swiper-tab" id="swiper-tab-child-output">
             <div class="swiper-wrapper">
               @foreach($trend_analysis as $key => $analysis)
                 @include('layouts.partials.trend-analysis-chart-partial')
@@ -43,20 +39,24 @@
           {{-- tab slide swiper end --}}
         </div>
       </div>
-      
-
   </div>
-
   {{-- tabcontent end --}}
+
+
+    {{-- @foreach($trend_analysis as $key => $analysis)
+      @include('layouts.partials.trend-analysis-chart-partial')
+    @endforeach --}}
   </div>
 @endsection
 
 @section('outjavascript')
 <script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
-
+<script src="//d3js.org/d3.v3.min.js"></script>
 <script>
+// $('.side-filter-div').height($('#mainChart').height()-30+8);
 $(document).ready(function() {
     $('#affected-id').parent().hide();
+    
 });
 
 var affectedExists = 0;
@@ -86,65 +86,66 @@ var colors = [
     'rgba(252, 129, 64, 0.8)',
 ]
 
-function charts(datasets, labels) {
-    // console.log(datasets);
-    window.mainChart = new Chart(mainChartCtx, {
-        type: 'bar',
-        data: datasets,
-        options: {
-            title: {
-                display: true,
-                text: labels
-            },
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                    stacked: false,
-                    gridLines : {
-                        display : false
-                    },
-                    barPercentage: 1.0
-                }],
-                yAxes: [{
-                    stacked: false
-                }]
-            },
-            // Container for pan options
-            pan: {
-                // Boolean to enable panning
-                enabled: true,
+  function charts(datasets, labels) {
+      // console.log(datasets);
+      window.mainChart = new Chart(mainChartCtx, {
+          type: 'bar',
+          data: datasets,
+          options: {
+              title: {
+                  display: true,
+                  text: labels
+              },
+              maintainAspectRatio: false,
+              scales: {
+                  xAxes: [{
+                      stacked: false,
+                      gridLines : {
+                          display : false
+                      },
+                      barPercentage: 1.0
+                  }],
+                  yAxes: [{
+                      stacked: false
+                  }]
+              },
+              // Container for pan options
+              pan: {
+                  // Boolean to enable panning
+                  enabled: true,
 
-                // Panning directions. Remove the appropriate direction to disable
-                // Eg. 'y' would only allow panning in the y direction
-                mode: 'xy'
-            },
+                  // Panning directions. Remove the appropriate direction to disable
+                  // Eg. 'y' would only allow panning in the y direction
+                  mode: 'xy'
+              },
 
-            // Container for zoom options
-            zoom: {
-                // Boolean to enable zooming
-                enabled: false,
+              // Container for zoom options
+              zoom: {
+                  // Boolean to enable zooming
+                  enabled: false,
 
-                // Zooming directions. Remove the appropriate direction to disable
-                // Eg. 'y' would only allow zooming in the y direction
-                mode: 'xy',
-            }
-        }
-    });
+                  // Zooming directions. Remove the appropriate direction to disable
+                  // Eg. 'y' would only allow zooming in the y direction
+                  mode: 'xy',
+              }
+          }
+      });
   }
-    $(document).ready(function() {
+  
+  $(document).ready(function() {
       $("#organisation_unit_id").val("mykF7AaZv9R.mykF7AaZv9R");
       var organisation_unit_id = $("#organisation_unit_id").val();
 
       $("#period_id").val("LAST_6_MONTHS");
       var period_id = $("#period_id").val();
       
-      $("#indicator_id").val("plw_who_receive_ifas");
+      $("#indicator_id").val("iycf_counselling");
       var indicator_id = $("#indicator_id").val();
       
       $("#department_id").val("both");
       var department_id = $("#department_id").val();
       
-      var output = 'maternal';
+      var output = 'child';
 
       var data = 'organisation_unit_id='+organisation_unit_id+'&period_id='+period_id+'&indicator_id='+indicator_id+'&department_id='+department_id+'&output='+output;
       data += "&_token={{ Session::token() }}";
@@ -153,10 +154,10 @@ function charts(datasets, labels) {
 
     });
 
-    function main_chart_data(data) {
+  function main_chart_data(data) {
         $.ajax({
             type: 'POST',
-            url: '/outputs/maternal-main-chart',
+            url: '/outcomes/maternal-main-chart',
             data: data,
             success: function (res) {
                 title = res.title;
@@ -175,7 +176,8 @@ function charts(datasets, labels) {
 
     $('#main-chart-form').on('submit', function() {
         var data = $(this).serialize();
-        data += '&output=maternal';
+        data += '&output=child';
+        console.log(data);
 
         main_chart_data(data);
 
@@ -188,19 +190,8 @@ function charts(datasets, labels) {
         trendAnalysisChart('{{ $key }}', arr)
     @endforeach
 
-    // window.addEventListener("resize", redraw);
-
-    // function redraw() {
-    //   @foreach($trend_analysis as $key => $analysis)
-    //     pieChart({{ $key }}, {{ $analysis['percent'] }}, {!! $analysis['labels'] !!})
-    //     var arr = {!! json_encode($analysis) !!};
-    //     trendAnalysisChart('{{ $key }}', arr)
-    //   @endforeach
-    // }
-
     var startDate, endDate;
     function trendAnalysisChart(id, data_value) {
-      $("#line-chart-"+id).html('');
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
@@ -210,7 +201,7 @@ function charts(datasets, labels) {
       var max = 0;
       var origValues = [];
       var processedValues = [];
-      // console.log(data_value);
+      console.log(data_value);
       for (var i = 0; i < data_value.values.length; i++) {
         temp = {};
         temp.date = data_value.periods[i];
@@ -236,7 +227,7 @@ function charts(datasets, labels) {
       var parentDiv = document.getElementById('area-chart-'+id);
       var w = parentDiv.clientWidth,                        
       h = parentDiv.clientHeight;      
-      var margin = {top: 20, right: 20, bottom: 20, left: 90},
+       var margin = {top: 20, right: 20, bottom: 20, left: 90},
           width = w - margin.left - margin.right,
           height = h - margin.top - margin.bottom;
 
@@ -302,8 +293,9 @@ function charts(datasets, labels) {
       var parentDiv = document.getElementById('pie-chart-'+id);
       var w = parentDiv.clientWidth,                        
       h = parentDiv.clientHeight,                            
-      r = Math.min(w, h) / 2,                             
+      r = Math.min(w, h) / 2,                            
       color = ['#fba69c', '#d2d2d2'];     
+      console.log(w, h, r);
       dataCSV = [{"label": data_value+"%", "value": data_value}, 
                 {"label":  100 - data_value+"%", "value": 100 - data_value}]
       var vis = d3.select('#chart-area-'+ id)
@@ -338,7 +330,7 @@ function charts(datasets, labels) {
             .attr("text-anchor", "middle")                         
             .text(function(d, i) { return dataCSV[i].label; })
             .style("fill", function(d, i) { if(i==0) return '#ffffff'; else return '#000000'; } )
-            .style("font-size", "13px")
+            .style("font-size", "13px");
       // var config = {
       //   type: 'pie',
       //   data: {
@@ -348,11 +340,14 @@ function charts(datasets, labels) {
       //         100 - data_value,
       //       ],
       //       backgroundColor: [
-      //         '#fba69c'
+      //         '#fba69c',
       //       ],
       //       label: 'Dataset 1'
       //     }],
-          
+      //     // labels: [
+      //     //   labels[0],
+      //     //   labels[1],
+      //     // ]
       //   },
       //   options: {
       //     responsive: false,
@@ -360,8 +355,7 @@ function charts(datasets, labels) {
       //       render: 'percentage',
       //       fontColor: ['white', '#fba69c'],
       //       precision: 2
-      //     },
-      //     tooltips: false
+      //     }
       //   }
       // };
 
@@ -369,9 +363,11 @@ function charts(datasets, labels) {
       // window.myPie = new Chart(ctx, config);
     }
   </script>
+
+  
   <script src="{{asset('js/swiper.min.js')}}"></script>
   <script>
-     var swiper = new Swiper('#swiper-tab', {
+     var swiper = new Swiper('#swiper-tab-child-output', {
       spaceBetween: 30,
       hashNavigation: {
         watchState: true,
@@ -384,16 +380,6 @@ function charts(datasets, labels) {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
-       onSlideChangeEnd: function (swiper) {
-          console.log('slide change end - after');
-          console.log(swiper);
-          console.log(swiper.activeIndex);
-          //after Event use it for your purpose
-          if (swiper.activeIndex == 1) {
-              //First Slide is active
-              console.log('First slide active')
-          }
-      }
     });
   </script>
 
@@ -401,9 +387,8 @@ function charts(datasets, labels) {
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
   </script>
-
   <script> 
-    if(location.hash.slice(1)) { 
+    if(location.hash.slice(1)) {
       $('.swipernav').removeClass('active');
       $('.nav-'+ location.hash.slice(1)).addClass('active');
     }
