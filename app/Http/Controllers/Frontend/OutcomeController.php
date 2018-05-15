@@ -33,7 +33,7 @@ class OutcomeController extends Controller
 			'maternal_counselling' => 'Maternal Counselling',
 			'plw_who_receive_ifas' => 'Plw who receive ifas',
 			'pregnant_women_weighed' => 'Pregnant women weighed',
-			'exclusive_breastfeeding' => 'Increase in exclusive breastfeeding',
+			'exclusive_breastfeeding' => 'Exclusive breastfeeding',
 		];
 
 		$total_patient_last_month = CcMrTotalPatient::orderBy('period', 'desc')->where('organisation_unit', 'dNLjKwsVjod')->first();
@@ -68,14 +68,14 @@ class OutcomeController extends Controller
 
 
 		//Pregnant women weighed
-		// $pregnant_women_weighed_data = $data['pregnant_women_weighed'][0];
-		// $pregnant_women_weighed_model = 'App\Models\Data\\' . $pregnant_women_weighed_data['model'];
-		// $pregnant_women_weighed_last_month = $pregnant_women_weighed_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
-		// $pregnant_women_weighed_yearly = $pregnant_women_weighed_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
-		// $pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$pregnant_women_weighed_yearly->value) * 100;
-		// $pregnant_women_weighed_all_periods = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('period');
-		// $pregnant_women_weighed_all_values = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('value');
-		// $pregnant_women_weighed_month = $pregnant_women_weighed_last_month->period_name;
+		$exclusive_breastfeeding_data = $data['exclusive_breastfeeding'][0];
+		$exclusive_breastfeeding_model = 'App\Models\Data\\' . $exclusive_breastfeeding_data['model'];
+		$exclusive_breastfeeding_last_month = $exclusive_breastfeeding_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
+		$exclusive_breastfeeding_yearly = $exclusive_breastfeeding_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
+		$exclusive_breastfeeding_percent = ($exclusive_breastfeeding_last_month->value/$exclusive_breastfeeding_yearly->value) * 100;
+		$exclusive_breastfeeding_all_periods = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('period');
+		$exclusive_breastfeeding_all_values = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('value');
+		$exclusive_breastfeeding_month = $exclusive_breastfeeding_last_month->period_name;
 
 		$trend_analysis = [
 			[
@@ -108,6 +108,16 @@ class OutcomeController extends Controller
 				'labels' => json_encode(['Pregnant women weighed in ' .$pregnant_women_weighed_month, 'Pregnant women weighed yearly']),
 				'current_month' => $pregnant_women_weighed_month
 			],
+			[
+				'name' => 'Exclusive breastfeeding',
+				'month' => 'Exclusive breastfeeding - ' . $exclusive_breastfeeding_month,
+				'percent' => round($exclusive_breastfeeding_percent),
+				'periods' => $exclusive_breastfeeding_all_periods,
+				'values' => $exclusive_breastfeeding_all_values,
+				'title' => 'Exclusive breastfeeding',
+				'labels' => json_encode(['Exclusive breastfeeding in ' .$exclusive_breastfeeding_month, 'Exclusive breastfeeding yearly']),
+				'current_month' => $exclusive_breastfeeding_month
+			],
 		];
 
 		return view('frontend.outcome.maternal', 
@@ -132,7 +142,7 @@ class OutcomeController extends Controller
 		$data = config('data.child');
 		$indicators = [
 			'iycf_counselling' => 'IYCF Counselling',
-			'child_growth_monitoring' => 'Child growth monitoring',
+			// 'child_growth_monitoring' => 'Child growth monitoring',
 			'vitamin_a_supplementation' => 'Vitamin A supplementation',
 		];
 

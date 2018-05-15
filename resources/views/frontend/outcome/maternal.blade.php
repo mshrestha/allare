@@ -20,6 +20,9 @@
               <li class="list-inline-item">
                 <a href="#slide2" class="swipernav nav-slide2">WEIGHT MEASUREMENT</a>
               </li>
+              <li class="list-inline-item">
+                <a href="#slide3" class="swipernav nav-slide3">Excessive Breastfeeding</a>
+              </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
         </div>

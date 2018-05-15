@@ -37,7 +37,7 @@ return [
 		],
 		'exclusive_breastfeeding' => [
 			[
-				'name'  	=> 'Increase in exclusive breastfeeding',
+				'name'  	=> 'Exclusive breastfeeding',
 				'model'		=> 'CcCrExclusiveBreastFeeding',
 				'table'		=> 'cc_cr_exclusive_breast_feeding',
 				'server'	=> 'community',
