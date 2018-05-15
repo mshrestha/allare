@@ -2,26 +2,18 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Data\CcMrAncNutriCounsel;
+use App\Models\Data\CcMrTotalPatient;
+use App\Models\Data\ImciTotalChild;
 use App\Models\OrganisationUnit;
 use App\Traits\PeriodHelper;
-
-use App\Models\Data\ImciStuntingPercent;
-use App\Models\Data\ImciWastingPercent;
-use App\Models\Data\ImciTotalChild;
-use App\Models\Data\CcCrExclusiveBreastFeeding;
-use App\Models\Data\CcCrTotalMale;
-use App\Models\Data\CcCrTotalFemale;
-
-use App\Models\Data\BdhsStunting;
-use App\Models\Data\BdhsWasting;
-use App\Models\Data\BdhsExclusiveBreastfeeding;
-
+use Illuminate\Http\Request;
 
 class OutcomeController extends Controller
 {
 	use PeriodHelper;
+
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$periods = $this->getPeriodYears();
@@ -36,109 +28,94 @@ class OutcomeController extends Controller
 		$periodData = explode(";", $periodData);
 		sort($periodData);
 
-		$keys = array_reverse(array_keys($flipped_period));
-		$keyPeriods = implode(';',$keys);
-
-		$data = config('data.outcomes');
-		$current_year = date('Y');
+		$data = config('data.maternal');
 		$indicators = [
-			'imci_stunting' => 'Stunting',
-			'imci_wasting' => 'Wasting',
-			'exclusive_breastfeeding' => 'Exclusive_Breastfeeding',
+			'maternal_counselling' => 'Maternal Counselling',
+			'plw_who_receive_ifas' => 'Plw who receive ifas',
+			'pregnant_women_weighed' => 'Pregnant women weighed',
+			'exclusive_breastfeeding' => 'Increase in exclusive breastfeeding',
 		];
 
-		$goals = [
-			'imci_stunting' => 'BdhsStunting',
-			'imci_wasting' => 'BdhsWasting',
-			'exclusive_breastfeeding' => 'BdhsExclusiveBreastfeeding',
+		$total_patient_last_month = CcMrTotalPatient::orderBy('period', 'desc')->where('organisation_unit', 'dNLjKwsVjod')->first();
+
+		//Maternal counselling percentage
+		$counselling_data = $data['maternal_counselling'][0];
+		$counselling_model = 'App\Models\Data\\' . $counselling_data['model'];
+		$counselling_last_month = $counselling_model::where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
+		$counselling_percent = ($counselling_last_month->value/$total_patient_last_month->value) * 100;
+		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
+		$counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		$counselling_month_maternal = $counselling_last_month->period_name;
+
+		//Plw who receive ifas
+		$plw_who_receive_ifas_data = $data['plw_who_receive_ifas'][0];
+		$plw_who_receive_ifas_model = 'App\Models\Data\\' . $plw_who_receive_ifas_data['model'];
+		$plw_who_receive_ifas_last_month = $plw_who_receive_ifas_model::where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
+		$plw_who_receive_ifas_percent = ($plw_who_receive_ifas_last_month->value/$total_patient_last_month->value) * 100;
+		$plw_who_receive_ifas_all_periods = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
+		$plw_who_receive_ifas_all_values = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		$plw_who_receive_ifas_month = $plw_who_receive_ifas_last_month->period_name;
+
+		//Pregnant women weighed
+		$pregnant_women_weighed_data = $data['pregnant_women_weighed'][0];
+		$pregnant_women_weighed_model = 'App\Models\Data\\' . $pregnant_women_weighed_data['model'];
+		$pregnant_women_weighed_last_month = $pregnant_women_weighed_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
+		$pregnant_women_weighed_yearly = $pregnant_women_weighed_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
+		$pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$pregnant_women_weighed_yearly->value) * 100;
+		$pregnant_women_weighed_all_periods = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('period');
+		$pregnant_women_weighed_all_values = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('value');
+		$pregnant_women_weighed_month = $pregnant_women_weighed_last_month->period_name;
+
+
+		//Pregnant women weighed
+		// $pregnant_women_weighed_data = $data['pregnant_women_weighed'][0];
+		// $pregnant_women_weighed_model = 'App\Models\Data\\' . $pregnant_women_weighed_data['model'];
+		// $pregnant_women_weighed_last_month = $pregnant_women_weighed_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
+		// $pregnant_women_weighed_yearly = $pregnant_women_weighed_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
+		// $pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$pregnant_women_weighed_yearly->value) * 100;
+		// $pregnant_women_weighed_all_periods = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('period');
+		// $pregnant_women_weighed_all_values = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('value');
+		// $pregnant_women_weighed_month = $pregnant_women_weighed_last_month->period_name;
+
+		$trend_analysis = [
+			[
+				'name' => 'Counseling',
+				'month' => 'Maternal Counselling Given - '. $counselling_month_maternal,
+				'percent' => round($counselling_percent),
+				'periods' => $counselling_all_periods,
+				'values' => $counselling_all_values,
+				'title' => 'Counseling',
+				'labels' => json_encode(['Maternal Counselling Given '.$counselling_month_maternal, 'Total patient in ' .$counselling_month_maternal]),
+				'current_month' => $counselling_month_maternal
+			],
+			[
+				'name' => 'IFA Distribution',
+				'month' => 'PLW who receive IFA\'s - '. $plw_who_receive_ifas_month,
+				'percent' => round($plw_who_receive_ifas_percent),
+				'periods' => $plw_who_receive_ifas_all_periods,
+				'values' => $plw_who_receive_ifas_all_values,
+				'title' => 'IFA Distribution',
+				'labels' => json_encode(['PLW who receive IFA\'s in '. $plw_who_receive_ifas_month, 'Total patient in '.$plw_who_receive_ifas_month]),
+				'current_month' => $plw_who_receive_ifas_month
+			],
+			[
+				'name' => 'Weight Measurement',
+				'month' => 'Pregnant women weighed - ' . $pregnant_women_weighed_month,
+				'percent' => round($pregnant_women_weighed_percent),
+				'periods' => $pregnant_women_weighed_all_periods,
+				'values' => $pregnant_women_weighed_all_values,
+				'title' => 'Weight Measurement',
+				'labels' => json_encode(['Pregnant women weighed in ' .$pregnant_women_weighed_month, 'Pregnant women weighed yearly']),
+				'current_month' => $pregnant_women_weighed_month
+			],
 		];
-		$ou = 'dNLjKwsVjod';
 
-		$data = config('data.outcomes');
-		$dataSet = [];
-
-		$imciTotalChild = ImciTotalChild::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcMaleTotal = CcCrTotalMale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcFemaleTotal = CcCrTotalFemale::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first()->value;
-		$CcTotalChild = $CcMaleTotal + $CcFemaleTotal;
-		$periods = [];
-		foreach($indicators as $indicator => $indicatorName) {
-			$counter = 0;
-			$dataSet[$indicatorName] = [];
-			foreach ($data[$indicator] as $keyIndict => $indictData) {
-				$ou = 'dNLjKwsVjod';
-				$model = 'App\Models\Data\\' . $indictData['model'];
-				$goal_model = 'App\Models\Data\\'.$goals[$indicator];
-				$datum = $model::whereIn('period', $periodData)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->get();
-				// $datum_goal = $model::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first();
-				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
-				// dd($datum_goal);
-				if(count($data[$indicator]) > 1) {
-					$periods = $datum->pluck('period');
-					$dataSet[$indicatorName][$counter]['title'] = $indictData['model'];
-					$dataSet[$indicatorName][$counter]['periods'] = $datum->pluck('period');
-					$dataSet[$indicatorName][$counter]['goal_period'] = $datum_goal->period;
-					$dataSet[$indicatorName][$counter]['values'] = $datum->pluck('value');	
-					if($indictData['model'] == 'ImciExclusiveBreastFeeding')
-						// $dataSet[$indicatorName][$counter]['goal_values'] = ($datum_goal->value / $imciTotalChild) * 100;
-						$dataSet[$indicatorName][$counter]['goal_values'] = $datum_goal->value;
-					else
-						$dataSet[$indicatorName][$counter]['goal_values'] = $datum_goal->value;
-						// $dataSet[$indicatorName][$counter]['goal_values'] = ($datum_goal->value / $CcTotalChild) * 100;
-					$dataSet[$indicatorName][$counter]['goal'] = 'Goal 65% by 2021';
-
-					$counter++;
-				}else{
-					$dataSet[$indicatorName]['title'] = $indictData['model'];
-					$dataSet[$indicatorName]['periods'] = $datum->pluck('period');
-					$dataSet[$indicatorName]['goal_period'] = $datum_goal->period;
-					$dataSet[$indicatorName]['goal_values'] = $datum_goal->value;
-					// $dataSet[$indicatorName]['goal_values'] = $datum_goal->value / $imciTotalChild * 100;
-					$dataSet[$indicatorName]['values'] = $datum->pluck('value');	
-					if($indictData['model'] == 'ImciStunting')
-						$dataSet[$indicatorName]['goal'] = 'Goal 25% by 2021';
-					else
-						$dataSet[$indicatorName]['goal'] = 'Goal < 10% by 2021';
-
-				}
-			}
-		}
-
-		
-		
-
-		$goal_analysis = [];
-		foreach ($goals as $goalKey => $goalValue) {
-			$counter = 0;
-			$goal_analysis[$goalValue] = [];
-			foreach ($data[$goalKey] as $dataKey => $dataValue) {
-				$ou = 'dNLjKwsVjod';
-				$model = 'App\Models\Data\\' . $dataValue['model'];
-				$datum = $model::where('period', $current_year)->where('organisation_unit', $ou)->whereNull('category_option_combo')->orderBy('period', 'asc')->first();
-
-				if(count($data[$goalKey]) > 1) {
-					$goal_analysis[$goalValue][$counter]['title'] = $dataValue['model'];
-					$goal_analysis[$goalValue][$counter]['periods'] = $datum->period;
-					if($dataValue['model'] == 'ImciExclusiveBreastFeeding')
-						$goal_analysis[$goalValue][$counter]['values'] = ($datum->value / $imciTotalChild) * 100;
-					else
-						$goal_analysis[$goalValue][$counter]['values'] = ($datum->value / $CcTotalChild) * 100;
-
-					$counter++;
-				}else{
-					$goal_analysis[$goalValue]['title'] = $dataValue['model'];
-					$goal_analysis[$goalValue]['periods'] = $datum->period;
-					$goal_analysis[$goalValue]['values'] = $datum->value;	
-				}
-			}
-		}
-		
-		$trend_analysis = $dataSet;
-
-		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods', 'indicators'));
+		return view('frontend.outcome.maternal', 
+			compact('trend_analysis','organisation_units','periods','indicators')
+		);
 	}
 
-	public function secondIndexAction() {
+	public function indexChild() {
 		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$periods = $this->getPeriodYears();
 		$flipped_period = array_flip($periods);
@@ -152,147 +129,213 @@ class OutcomeController extends Controller
 		$periodData = explode(";", $periodData);
 		sort($periodData);
 
-		$keys = array_reverse(array_keys($flipped_period));
-		$keyPeriods = implode(';',$keys);
-
-		$data = config('data.outcomes');
-		$current_year = date('Y');
-
+		$data = config('data.child');
 		$indicators = [
-			'Stunting' => 'BdhsStunting',
-			'Wasting' => 'BdhsWasting',
-			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
+			'iycf_counselling' => 'IYCF Counselling',
+			'child_growth_monitoring' => 'Child growth monitoring',
+			'vitamin_a_supplementation' => 'Vitamin A supplementation',
 		];
-		$ou = 'dNLjKwsVjod';
 
-		$data = config('data.outcomes');
-		$dataSet = [];
 
-		foreach($indicators as $indicator => $indicatorName) {
-			$counter = 0;
-			$dataSet[$indicator] = [];
-			
-				$ou = 'dNLjKwsVjod';
-				
-				$goal_model = 'App\Models\Data\\'.$indicators[$indicator];
-				$datum = $goal_model::orderBy('period', 'asc')->get();
-				
-				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
-				// dd($datum_goal);
-				$dataSet[$indicator]['title'] = $indicator;
-				$dataSet[$indicator]['periods'] = $datum->pluck('period');
-				$dataSet[$indicator]['goal_period'] = $datum_goal->period;
-				$dataSet[$indicator]['goal_values'] = $datum_goal->value;
-				$dataSet[$indicator]['min'] = $goal_model::min('value');
-				$dataSet[$indicator]['max'] = $goal_model::max('value');
+		// IMCI total children
+		$counselling_data = $this->calculateMonthlyPercentage($data['iycf_counselling'][0], $periodData);
+		$counselling_percent = $counselling_data['percent'];
+		$counselling_all_values = $counselling_data['all_values'];
+		$counselling_all_periods = $counselling_data['all_periods'];
+		$counselling_month_child = $counselling_data['month'];
 
-				
-				$dataSet[$indicator]['values'] = $datum->pluck('value');	
-				if($indicators[$indicator] == 'BdhsStunting') {
-					$dataSet[$indicator]['limit'] = 25;
-					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
-					$dataSet[$indicator]['direction'] = -1;
-					$dataSet[$indicator]['goal_text'] = "Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021";
-				}
-				else if($indicators[$indicator] == 'BdhsWasting') {
-					$dataSet[$indicator]['goal'] = 'Goal < 10% by 2021';
-					$dataSet[$indicator]['limit'] = 10;
-					$dataSet[$indicator]['direction'] = -1;
-					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
-				}
-				else {
-					$dataSet[$indicator]['goal'] = 'Goal 65% by 2021';
-					$dataSet[$indicator]['direction'] = 1;
-					$dataSet[$indicator]['limit'] = 65;
-					$dataSet[$indicator]['goal_text'] = "Increase prevalence of exclusive breastfeeding";
-				}
-		}
 		
-		$trend_analysis = $dataSet;
+		// Vitamin A supplimentation
+		$vitamin_a_supplimentation_data = $this->calculateMonthlyPercentage($data['vitamin_a_supplementation'][0], $periodData);
+		$vitamin_a_supplementation_percent = $vitamin_a_supplimentation_data['percent'];
+		$vitamin_a_supplementation_all_values = $vitamin_a_supplimentation_data['all_values'];
+		$vitamin_a_supplementation_all_periods = $vitamin_a_supplimentation_data['all_periods'];
+		$vitamin_a_supplementation_month = $vitamin_a_supplimentation_data['month'];
 
-		return view('frontend.outcome.index', compact('trend_analysis', 'organisation_units', 'periods', 'indicators'));
+		$trend_analysis = [
+			[
+				'name' => 'IMCI Counseling',
+				'title' => 'IMCI Counselling',
+				'month' => 'IYCF counselling - '. $counselling_month_child,
+				'percent' => round($counselling_percent),
+				'periods' => $counselling_all_periods,
+				'values' => $counselling_all_values,
+				'labels' => json_encode(['IMCI Counselling given '. $counselling_month_child, 'IMCI Counselling yearly']),
+				'current_month' => $counselling_month_child
+			],
+			// [
+			// 	'name' => 'Child Growth',
+			// 	'month' => 'Child growth monitoring',
+			// 	'percent' => round($plw_who_receive_ifas_percent),
+			// 	'periods' => $plw_who_receive_ifas_all_periods,
+			// 	'values' => $plw_who_receive_ifas_all_values
+			// ],
+			[
+				'name' => 'Supplements',
+				'title' => 'Food Supplimentation',
+				'month' => 'Food Supplimentation - '. $vitamin_a_supplementation_month,
+				'percent' => round($vitamin_a_supplementation_percent),
+				'periods' => $vitamin_a_supplementation_all_periods,
+				'values' => $vitamin_a_supplementation_all_values,
+				'labels' => json_encode(['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplimentation yearly']),
+				'current_month' => $vitamin_a_supplementation_month
+			],
+		];
+
+		return view('frontend.outcome.child', 
+			compact('trend_analysis','organisation_units','periods','indicators')
+		);
 	}
 
-	public function getOutcomeData(Request $request) {
-		$data = config('data.outcomes');
-		$requestData = $request->all();
+	public function calculateMonthlyPercentage($data, $periodData) {
+		$model = 'App\Models\Data\\' . $data['model'];
+		$last_month = $model::where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->whereNull('category_option_combo')->first();
+		$yearly = $model::where('organisation_unit', 'dNLjKwsVjod')->where('period', date('Y'))->whereNull('category_option_combo')->orderBy('period', 'desc')->first();
+
+		$percent = ($last_month->value/$yearly->value) * 100;
+
+		$all_periods = $model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
+		$all_values = $model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		$month = $last_month->period_name;
+
+		return compact('percent', 'all_periods', 'all_values', 'month');
+	}
+
+	public function maternalMainChart(Request $request) {
 		$indicator = $request->indicator_id;
+		$department = $request->department_id;
+		if($request->department_id == 'both') {
+			$department = ['DGHS', 'DGFP'];
+		}
 
+		if($request->output == 'maternal') {
+			$data_table = config('data.maternal.'.$indicator);
+		} else {
+			$data_table = config('data.child.'.$indicator);
+		}
+
+		$periods = $this->getPeriodArray($request->period_id);
+
+		$organisation_unit = explode('.', $request->organisation_unit_id);
 		$source = $request->department_id;
-		$organisation = explode('.', $request->organisation_unit_id);
 
-		$labels = [];
-		$vals = [];
-		$dataVals = [];
-		$titles = [];
-		$count = 0;
+		
+		if($request->department_id == 'both') {
+			$model = 'App\Models\Data\\' . $data_table[0]['model'];
+			$ou = ($data_table[0]['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
+			$query = $model::whereIn('period', $periods);
+			$query->whereIn('source', $department);
+			$query->where('organisation_unit', $ou);
+			if($indicator !== 'pregnant_women_weighed') {	
+				$query->whereNull('category_option_combo');
+			}
+			$data = $query->orderBy('period')->get()->groupBy('source');
+			$labels = $data->pluck('period_name');
+			$datasets = $data->pluck('value');
+			$data = $data->toArray();
 
-		$mixed = 0;
-		foreach ($data[$indicator] as $keyIndict => $indictData) {
-			if($indictData['server'] == 'central')
-				$ou = $organisation[0];
-			if($indictData['server'] == 'community')
-				$ou = $organisation[1];
-			$pe = $this->getPeriodArray($request->period_id);
-			// dd($pe);
-			$all_table_datas = [];
-			// $labels = [];
-			$titles[$count] = $indictData['model'];
-			$count += 1;
-			$vals[$keyIndict] = [];
-			
-			$model = 'App\Models\Data\\' . $indictData['model'];
-			$datum = $model::whereIn('period', $pe)->where('source', $source)->where('organisation_unit', $ou)->whereNull('category_option_combo')->get();
-			foreach ($datum as $key => $value) {
-				// print_r($dataVals[$keyIndict]); echo '<br />';
-				if($value['value'] != '' || $value['value'] != NULL) {
-					if(!in_array($value['period_name'], $labels))
-						array_push($labels, $value['period_name']);
-					array_push($vals[$keyIndict], $value['value']);
+			if(!isset($data['DGHS'])) {
+				$data['DGHS'] = [];
+			}
+
+			if(!isset($data['DGFP'])) {
+				$data['DGFP'] = [];
+			}
+
+			$dghs_data = (isset($data['DGHS'])) ? count($data['DGHS']) : 0;
+			$dgfp_data = (isset($data['DGFP'])) ? count($data['DGFP']) : 0;
+
+			if($dghs_data > $dgfp_data) {
+				$loop_data_used = 'DGHS';
+				$next_data_used = 'DGFP';
+			} else {
+				$loop_data_used = 'DGFP';
+				$next_data_used = 'DGHS';
+			}
+
+			for ($i=0; $i < count($data[$loop_data_used]); $i++) { 
+
+				if(!$this->existsInArray($data[$next_data_used], $data[$loop_data_used][$i]['period'])) {
+					array_push($data[$next_data_used], $data[$loop_data_used][$i]);
 				}
 			}
-		}
-		
-		$keys = array_keys($vals);
-		
-		if(count($vals) > 1) {
-			$counter = 0;
-			$mixed = 1;
-			// $dataVals = array_fill(0, count($labels), []);
-			foreach ($vals as $key => $value) {
-				$vals[$key] = array_reverse($vals[$key]);
-				$vals[$counter] = $vals[$key];
-				unset($vals[$key]);
-				// $vals[$counter] = $value;
-				
-				// foreach($value as $keyVal=>$val) {
-				// 	// print_r($keyVal.'-'.$val); echo '<br />';
-				// 	$dataVals[$counter][] = $value[$counter];	
-				// 	// break;
-				// 	$counter += 1;
-				// }
-				// unset($vals[$key]);
 
-				$counter += 1;
+			for ($i=0; $i < count($data[$next_data_used]); $i++) { 
+				if(!$this->existsInArray($data[$loop_data_used], $data[$next_data_used][$i]['period'])) {
+					array_push($data[$loop_data_used], $data[$next_data_used][$i]);
+				}
 			}
-			$dataVals = $vals;
-		} else {
-			$dataVals = $vals[0];
-		}
-		// dd($dataVals);
-		// exit();
-		// dd($titles);
-		// exit();
-		
-		$labels = array_reverse($labels);
-		// $dataVals = array_reverse($dataVals);
-		return array(
-				'labels' => $labels,
-				'data' => $dataVals,
-				'titles' => $titles,
-				'mixed' => $mixed
-			);
 
+			$final_data['DGHS']= array_pluck($data['DGHS'], 'value');
+			$final_data['DGFP'] = array_pluck($data['DGFP'], 'value');
+			$labels = array_pluck($data['DGHS'], 'period_name');
+			$title = $data_table[0]['name'];
+
+			$response = [
+				'labels' => $labels,
+				'datasets' => [
+					[
+						'label' => ['DGFP'],
+						'data' => $final_data['DGFP'],
+						'backgroundColor' => '#008091'
+					],
+					[
+						'label' => ['DGHS'],
+						'data' => $final_data['DGHS'],
+						'backgroundColor' => '#81ddc6' 
+					]
+				]
+			];
+
+			return response()->json([
+				'department' => 'both', 
+				'title' => $title, 
+				'dataSets' => $response
+			]);
+		} else {
+			$model = 'App\Models\Data\\' . $data_table[0]['model'];
+			$ou = ($data_table[0]['server'] == 'central') ? $organisation_unit[0] : $organisation_unit[1];
+			$query = $model::whereIn('period', $periods);
+			$query->where('source', $department);
+			$query->where('organisation_unit', $ou);
+			if($indicator !== 'pregnant_women_weighed') {	
+				$query->whereNull('category_option_combo');
+			}
+			$data = $query->orderBy('period')->get();
+			$labels = $data->pluck('period_name');
+			$datasets = $data->pluck('value');
+
+			$pointers = ($request->department_id == 'both') ? ['DGHS','DGFP'] : $request->department_id;
+			$title = $data_table[0]['name'];
+			$backgroundColor = ($request->department_id == 'DGHS') ? '#81ddc6' : '#008091';
+			$response = [
+				'labels' => $labels,
+				'datasets' => [
+					[
+						'label' => $pointers,
+						'data' => $datasets,
+						'backgroundColor' => $backgroundColor
+					]
+				]
+			];
+
+			return response()->json([
+				'department' => $request->department_id, 
+				'title' => $title, 
+				'dataSets' => $response
+			]);
+		}
+
+
+	}
+
+	private function existsInArray($arr, $val) {
+		for ($i=0; $i < count($arr); $i++) { 
+			if($arr[$i]['period'] == $val) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private function getPeriodArray($period) {

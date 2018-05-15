@@ -34,6 +34,15 @@ return [
 				'server'	=> 'community',
 				'api_id'	=> 'WfrGlt9gYxW.OJd05AWCFTk'
 			],
+		],
+		'exclusive_breastfeeding' => [
+			[
+				'name'  	=> 'Increase in exclusive breastfeeding',
+				'model'		=> 'CcCrExclusiveBreastFeeding',
+				'table'		=> 'cc_cr_exclusive_breast_feeding',
+				'server'	=> 'community',
+				'api_id'	=> 'jxtGrMi58Zx'	
+			]
 		]
 	],
 	'child' => [
@@ -110,14 +119,14 @@ return [
 				'model'		=> 'CcCrExclusiveBreastFeeding',
 				'table'		=> 'cc_cr_exclusive_breast_feeding',
 				'server'	=> 'community',
-				'source'  => 'DGHS',
+				'source'  	=> 'DGHS',
 				'api_id'	=> 'jxtGrMi58Zx'	
 			],
 			'imci_exclusice_breast_feeding' => [
 				'model'		=> 'ImciExclusiveBreastFeeding',
 				'table'		=> 'imci_exclusice_breast_feeding',
 				'server'	=> 'central',
-				'source'  => 'DGHS',
+				'source' 	=> 'DGHS',
 				'api_id'	=> 'LSNFSyDR2Ec'	
 			],
 		]
