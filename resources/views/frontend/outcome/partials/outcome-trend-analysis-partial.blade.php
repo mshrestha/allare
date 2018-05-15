@@ -68,6 +68,11 @@
         </li>
         
       </ul>
+      <div class="row">
+        <div class="col-12 outcome-note">
+          Our goal is to reduce malnutrition and improve nutritional status of the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban areas of Bangladesh.
+        </div>
+      </div>
 
     </div>
   </div>

@@ -38,6 +38,7 @@
                 $counter = $counter + 1;
               @endphp
               @endforeach
+
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination invisible"></div>  

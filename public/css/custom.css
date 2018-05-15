@@ -394,3 +394,14 @@ div.pie-legend span#current-text:before {
 div.pie-legend span#other-text:before {
   background: #d2d2d2;
 }
+
+.outcome-note{
+  background: #AAAAAA;
+  color: #FFF;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 300;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 20px;
+}
