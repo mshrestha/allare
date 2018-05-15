@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Unicef</title>
-  
+
     <!-- Bootstrap -->
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
     {{-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> --}}
-    {{-- 
+    {{--
       <!-- Optional theme -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> 
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     --}}
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css\icomoon\style.css')}}">
@@ -20,9 +20,9 @@
     {{-- swiper --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/css/swiper.min.css"> --}}
     <link rel="stylesheet" href="{{asset('css\swiper.min.css')}}">
-    
+
     <link rel="stylesheet" href="{{asset('css\style.css')}}">
-  
+
   <script>
     console.log = function() {}
   </script>
@@ -42,7 +42,7 @@
         <div class="row">
           <nav class="navbar navbar-expand-lg navbar-light navbar-red mb-0 pb-0 pt-0 col-12">
             <a class="navbar-brand" href="/dashboard">
-               <img src="{{asset('images\logo.png')}}"> 
+               <img src="{{asset('images\logo.png')}}">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -58,7 +58,7 @@
                     Outcomes
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item {{ Request::path() == 'outcomes/maternal' ? 'active' : '' }}" 
+                    <a class="dropdown-item {{ Request::path() == 'outcomes/maternal' ? 'active' : '' }}"
                     href="{{ route('frontend.outcomes.maternal') }}">Maternal</a>
                     <a class="dropdown-item {{ Request::path() == 'outcomes/child' ? 'active' : '' }}" href="{{ route('frontend.outcomes.child') }}">Child</a>
                   </div>
@@ -66,7 +66,7 @@
                 <li class="nav-item {{ Request::path() == 'outcomes' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.impacts') }}">Impacts</a>
                 </li>
-                 
+
               </ul>
                 <!-- <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -83,7 +83,7 @@
     <!-- Latest compiled and minified JavaScript -->
     {{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>  --}}
     <script src="{{asset('js\jquery-3.3.1.min.js')}}"></script>
-    
+
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> --}}
     <script src="{{asset('js\popper.min.js')}}"></script>
 
@@ -109,13 +109,5 @@
     </script>
 
     @yield('outjavascript')
-     <script>
-        // design qa
-        $(document).ready(function(){
-            $('body').addClass('dashboard-design');
-            $('.dashboard-design').prepend('<div class="design-test"></div>')
-        });
-        
-      </script>
   </body>
 </html>

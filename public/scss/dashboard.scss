@@ -303,6 +303,9 @@
 }
 #maternal-health, #child-health{
 	font-size: 10px !important;
+  width: 100%;
+  max-width: 285px; 
+  margin: 7px auto;
 }
 div#zoomctrl div{
 	background-color: transparent !important;

@@ -16,14 +16,14 @@
 				<span class="icon-children icon"></span>
 				{{-- <img src="{{ asset('images\stunting.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'wasting') !== false)
-				<span class="icon-children icon"></span>
+				<span class="icon-wasting icon"></span>
 				{{-- <img src="{{ asset('images\wasting.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'breastfeed') !== false)
 				<span class="icon-breastfeeding icon"></span>
 				{{-- <img src="{{ asset('images\breastfeed.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'suppliment') !== false)
-				{{-- <span class="icon-suppliment icon"></span> --}}
-				<img src="{{ asset('images\supplement.svg') }}" alt="">
+				<span class="icon-supplement icon"></span>
+				{{-- <img src="{{ asset('images\supplement.svg') }}" alt=""> --}}
 				@endif
 			</div>
 			<div class="txt-icon col-10 pl-0">
