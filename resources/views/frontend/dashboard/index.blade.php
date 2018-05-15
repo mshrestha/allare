@@ -161,7 +161,7 @@
 			<div class="nationalOutputWrap">
 				<div class="slideTrigger">Show map</div>
 				<div class="slideInContainer">
-					map 
+					map
 					<div>test</div>
 				</div>
 				<div class="row">
@@ -190,14 +190,14 @@
 					<div class="col-lg-4">
 						<h3 id="division-name" class="mb-2"></h3>
 						<div class="outer-legend mb-1" id="legend-for-data">
-							<div class="legend legend-1">This month</div> 
-							<div class="legend legend-2">Rest of the year</div> 
+							<div class="legend legend-1">This month</div>
+							<div class="legend legend-2">Rest of the year</div>
 						</div>
 						<div class="piecharts" id="division-piecharts"></div>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="output-dashboard">
 				<h1><b>National Outputs</b></h1>
 				<div id="maternal-health" class="mt-5">
@@ -274,17 +274,17 @@
 		$('#legend-for-data').hide();
 	});
 
-	@foreach($maternal_trend_analysis as $key => $maternal_trend) 
+	@foreach($maternal_trend_analysis as $key => $maternal_trend)
 		pieChart(
-			'maternal-' + '{{$key }}', 
-			{{ $maternal_trend['percent'] }}, 
+			'maternal-' + '{{$key }}',
+			{{ $maternal_trend['percent'] }},
 			{!! $maternal_trend['labels'] !!}
 		)
 	@endforeach
 
 	@foreach($child_trend_analysis as $key => $child_trend)
 		pieChart(
-			'child-' + '{{$key }}', 
+			'child-' + '{{$key }}',
 			{{ $child_trend['percent'] }},
 			{!! $child_trend['labels'] !!}
 		)
@@ -295,7 +295,7 @@
 			return Math.round(Math.random() * 100);
 		};
 
-	// for aligning label of pie chart 
+	// for aligning label of pie chart
 	isArray = Array.isArray ?
 	function (obj) {
 	return Array.isArray(obj);
@@ -347,7 +347,7 @@
 				generateLabels: (chart) => {
 
 					chart.legend.afterFit = function () {
-						var width = this.width; 
+						var width = this.width;
 						console.log(this);
 
 						this.lineWidths = this.lineWidths.map( () => this.width-0 );
@@ -393,13 +393,13 @@
 		window.myPie = new Chart(ctx, config);
 	}
 
-	function doughChart(id, data_value, labels, title) {    
+	function doughChart(id, data_value, labels, title) {
 		Chart.pluginService.register({
 			beforeDraw: function (chart) {
 				if (chart.config.options.elements.center) {
 			        //Get ctx from string
 			        var ctx = chart.chart.ctx;
-			        
+
 					//Get options from the center object in options
 					var centerConfig = chart.config.options.elements.center;
 					var fontStyle = centerConfig.fontStyle || 'Arial';
@@ -409,7 +409,7 @@
 					var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
 			        //Start with a base font of 30px
 			        ctx.font = "30px " + fontStyle;
-			        
+
 					//Get the width of the string and also the width of the element minus 10 to give it 5px side padding
 					var stringWidth = ctx.measureText(txt).width;
 					var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
@@ -467,7 +467,7 @@
 	  	display: true,
 	  	text: title,
 					// fontSize: 15,
-					wrap: true, 
+					wrap: true,
 				},
 				legend: {
 					display: false
@@ -498,13 +498,13 @@
 	  controlWrapper.style.backgroundColor = 'transparent';
 	  controlWrapper.style.cursor = 'pointer';
 	  controlWrapper.style.textAlign = 'center';
-	  controlWrapper.style.width = '32px'; 
+	  controlWrapper.style.width = '32px';
 	  controlWrapper.style.height = '64px';
 	  controlDiv.appendChild(controlWrapper);
 
 	  // Set CSS for the zoomIn
 	  var zoomInButton = document.createElement('div');
-	  zoomInButton.style.width = '32px'; 
+	  zoomInButton.style.width = '32px';
 	  zoomInButton.style.height = '32px';
 	  /* Change this to be the .png image you want to use */
 	  zoomInButton.style.background = 'url("images/plus.png") no-repeat';
@@ -514,7 +514,7 @@
 
 	  // Set CSS for the zoomOut
 	  var zoomOutButton = document.createElement('div');
-	  zoomOutButton.style.width = '32px'; 
+	  zoomOutButton.style.width = '32px';
 	  zoomOutButton.style.height = '32px';
 	  /* Change this to be the .png image you want to use */
 	  zoomOutButton.style.background = 'url("images/minus.png") no-repeat';
@@ -530,7 +530,7 @@
 	  // Setup the click event listener - zoomOut
 	  google.maps.event.addDomListener(zoomOutButton, 'click', function() {
 	    map.setZoom(map.getZoom() - 1);
-	  });  
+	  });
 
 	}
 
@@ -647,7 +647,7 @@
 
 				// Create the state data layer and load the GeoJson Data
 				var stateLayer = new google.maps.Data();
-				
+
 				{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
 				stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
 
@@ -703,13 +703,13 @@
 						zIndex: 1
 					});
 				});
-						
+
 		        // Final step here sets the stateLayer GeoJSON data onto the map
 				stateLayer.setMap(map);
 	      	}else{
 
 	      	}
-	      	
+
 	      },
 	      error: function(res) {
 	        console.log('failed')
@@ -763,12 +763,12 @@
     // Firefox 1.0+
     var isFirefox = typeof InstallTrigger !== 'undefined';
 
-    // Safari 3.0+ "[object HTMLElementConstructor]" 
+    // Safari 3.0+ "[object HTMLElementConstructor]"
     var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
 
     var shadowWidth = 0;
     if (isFirefox || isSafari) {
-			var shadowWidth = 0.0001;    	
+			var shadowWidth = 0.0001;
     }
 
 
@@ -791,24 +791,24 @@
 		max: 100,
 		series: [
 			{
-				labelStart: '', //Counselling Given
+				labelStart: {{ $maternal_trend_analysis[0]['percent'] }} + '%', //Counselling Given
 				value: {{ $maternal_trend_analysis[0]['percent'] }},
 				color: '#81ddc6',
 			},
 			{
-				labelStart: '', // IFA Distributed
+				labelStart: {{ $maternal_trend_analysis[1]['percent'] }} + '%', // IFA Distributed
 				value: {{ $maternal_trend_analysis[1]['percent'] }},
 				// color: '#008091',
 				color: '#137f91',
 			},
 			{
-				labelStart: '', // Weight Measured
+				labelStart: {{ $maternal_trend_analysis[2]['percent'] }} + '%', // Weight Measured
 				value: {{ $maternal_trend_analysis[2]['percent'] }},
 				// color: "#0c4a60"
 				color: "#005e6f"
 			},
 			{
-				labelStart: '', //Exclusive Breastfeeding
+				labelStart: {{ $maternal_trend_analysis[0]['percent'] }} + '%', //Exclusive Breastfeeding
 				value: {{ $maternal_trend_analysis[0]['percent'] }},
 				// color: '#004962',
 				color: "#003d48"
@@ -842,7 +842,7 @@
 			    max: 100,
 	        series: [
 	          {
-	          	labelStart: '', //IMCI Counselling Given     
+	          	labelStart: '', //IMCI Counselling Given
 	          	value: 55,
 	          	color: '#008091',
 	        //   	color: {
@@ -851,7 +851,7 @@
 					    //     y1: '0%',
 					    //     x2: '100%',
 					    //     y2: '100%',
-					    //     spreadMethod: 'pad' // reflect, repeat, pad 
+					    //     spreadMethod: 'pad' // reflect, repeat, pad
 					    //   },
 					    //   stops: [{
 					    //     offset: '0%',
@@ -899,22 +899,22 @@
 	    max: 100,
 	    series: [
 	    {
-				labelStart: '', //IMCI Counselling Given     
+				labelStart: {{ $child_trend_analysis[0]['percent'] }} + '%', //IMCI Counselling Given
 				value: {{ $child_trend_analysis[0]['percent'] }},
 				color: '#81ddc6',
 			},
 			{
-	  		labelStart: '', //Child Health
+	  		labelStart: {{ $child_trend_analysis[1]['percent'] }} + '%', //Child Health
 	  		value: {{ $child_trend_analysis[1]['percent'] }},
 	  		color: '#137f91',
 	  	},
 	  	{
-	  		labelStart: '', //Child Growth Monitoring
+	  		labelStart: {{ $child_trend_analysis[0]['percent'] }} + '%', //Child Growth Monitoring
 	  		value: {{ $child_trend_analysis[0]['percent'] }},
 	  		color: '#005e6f'
 	  	},
 	  	{
-	  		labelStart: '', //Minimum acceptable diet
+	  		labelStart: {{ $child_trend_analysis[1]['percent'] }} + '%', //Minimum acceptable diet
 	  		value: {{ $child_trend_analysis[1]['percent'] }},
 	  		color: '#003d48'
 	  	},
@@ -965,7 +965,7 @@
 	      data: {"model": model},
 	      success: function (res) {
 	      	if(res['dataExists']) {
-	      		
+
 						if(res['reverse']) {
 							$('#low-text').html('Major Problem');
 							$('#avg-text').html('Severe Problem');
@@ -1064,7 +1064,7 @@
 
 						// Create the state data layer and load the GeoJson Data
 						var stateLayer = new google.maps.Data();
-						
+
 						{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
 						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
 
@@ -1120,13 +1120,13 @@
 								zIndex: 1
 							});
 						});
-						
+
 		        // Final step here sets the stateLayer GeoJSON data onto the map
 						stateLayer.setMap(map);
 	      	}else{
 
 	      	}
-	      	
+
 	      },
 	      error: function(res) {
 	        console.log('failed')

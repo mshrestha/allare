@@ -7254,6 +7254,12 @@ body {
 div#zoomctrl div {
   background-color: transparent !important; }
 
+.rbc-label-start {
+  fill: #FFF;
+  font-weight: normal;
+  font-size: 7px;
+  transform: translateX(-6px) translateY(0.2px); }
+
 .swiper-tab {
   background: #fff; }
   .swiper-tab .swiper-pagination {
@@ -7403,7 +7409,7 @@ div#zoomctrl div {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1172px; } }
+    max-width: 1600px; } }
 .design-test {
   display: none;
   top: 0;
