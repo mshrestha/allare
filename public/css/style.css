@@ -7078,7 +7078,7 @@ body {
 .outcome-col {
   background: #e6e6e6; }
   .outcome-col .outcome-progress-col {
-    margin-top: 23px; }
+    margin-top: 20px; }
 
 .report-icon {
   margin-top: 0px; }
@@ -7291,7 +7291,7 @@ div#zoomctrl div {
   font-size: 14px;
   text-transform: uppercase;
   margin-top: 5px;
-  line-height: 11px; }
+  line-height: 13px; }
 
 .tab-col-subtitle {
   color: #a0a0a0;
