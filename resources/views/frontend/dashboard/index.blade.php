@@ -117,9 +117,36 @@
 			  		<div><span class="report-lable">MCHN</span> <span class="yes">Yes</span> <span class="no">No</span></div>
 			  		<div><span class="report-lable">SAM</span> <span class="yes">Yes</span> <span class="no">No</span></div> --}}
 
-			  		<div><span class="report-lable">FWC</span> <span class="number">65%</span></div>
-			  		<div><span class="report-lable">MCHN</span> <span class="number">65%</span></div>
-			  		<div><span class="report-lable">SAM</span> <span class="number">65%</span></div>
+			  		<div>
+			  			<span class="report-lable">FWC</span> 
+			  			<div class="progress-bar-h">
+								<div class="goal" style="width: 10%;">
+								</div>
+								<div class="current grow-h-animation" style="width: 30%;">
+									30%
+								</div>
+							</div> {{-- progress-bar-h --}}
+			  		</div>
+			  		<div>
+			  			<span class="report-lable">MCHN</span> 
+			  			<div class="progress-bar-h">
+								<div class="goal" style="width: 10%;">
+								</div>
+								<div class="current grow-h-animation" style="width: 65%;">
+									65%
+								</div>
+							</div> {{-- progress-bar-h --}}
+			  		</div>
+			  		<div>
+			  			<span class="report-lable">SAM</span> 
+			  			<div class="progress-bar-h">
+								<div class="goal" style="width: 10%;">
+								</div>
+								<div class="current grow-h-animation" style="width: 65%;">
+									65%
+								</div>
+							</div> {{-- progress-bar-h --}}
+			  		</div>
 			  	</div>{{-- input-box input-reporting --}}
 			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-training">
 			  		<div class="input-trainning-inner">
