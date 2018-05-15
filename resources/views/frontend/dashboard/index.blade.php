@@ -57,7 +57,7 @@
       <div class="swiper-slide container map-view-container">
         <div class="row justify-content-between">
         	<div class="col-6 col-md-4 col-lg-3 col-xl-2 pr-0 pl-0 d-block">
-    				<div class="box-heading float-left d-block ml-0">National output</div>
+    				<div class="box-heading float-left d-block ml-0">National Outcomes</div>
     			</div>
         	<div class="col-md-2 col-6">
     				<div class="view-on-map float-right swiper-button-prev">VIEW DATA</div>
@@ -76,7 +76,7 @@
 
     				</ul>
     				<ul class="map-filter outcome mb-0">
-							<li class="list-head green">OUTCOME</li>
+							<li class="list-head green">IMPACTS</li>
 							<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNING</li>
 							<li class="list-head" id="wasting" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</li>
 							<li class="list-head" id="breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING', '#breastfeeding')">BREASTFEEDING</li>
