@@ -2,14 +2,14 @@
 
 @section('content')
 
-	<div class="container right-bg">
+	<div class="container">
 		<!-- Slider main container -->
 		<!-- Swiper -->
   <div class="swiper-container">
     <div class="swiper-wrapper">
     	<div class="swiper-slide container dataview">
       	<div class="row">
-	      	<div class="output-col col-md-7 col-lg-8 pb-4">
+	      	<div class="output-col col-md-7 col-lg-8 pb-3">
 	      		<div class="row"  data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
 	      			<div class="col-sm-12">
 	      				<div class="box-heading float-left">National outcomes</div>
@@ -18,7 +18,7 @@
 	      		</div> {{-- row --}}
 	      		<div class="row">
 	      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-	      				<div id="maternal-health"></div>
+	      				<div id="maternal-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
 	      				<div class="legend row">
 	      					<div class="conselling-given col-10 offset-2">Maternal Nutrition Conselling</div>
 	      					<div class="ifa-distributed col-10 offset-2">IFA Distributed</div>
@@ -27,7 +27,7 @@
 	      				</div> {{-- legend --}}
 	      			</div>
 	      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
-	      				<div id="child-health"></div>
+	      				<div id="child-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
 	      				<div class="legend row">
 	      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
 	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
@@ -57,7 +57,7 @@
       <div class="swiper-slide container map-view-container">
         <div class="row justify-content-between">
         	<div class="col-6 col-md-4 col-lg-3 col-xl-2 pr-0 pl-0 d-block">
-    				<div class="box-heading float-left d-block ml-0">National output</div>
+    				<div class="box-heading float-left d-block ml-0">National Outcomes</div>
     			</div>
         	<div class="col-md-2 col-6">
     				<div class="view-on-map float-right swiper-button-prev">VIEW DATA</div>
@@ -76,7 +76,7 @@
 
     				</ul>
     				<ul class="map-filter outcome mb-0">
-							<li class="list-head green">OUTCOME</li>
+							<li class="list-head green">IMPACTS</li>
 							<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNING</li>
 							<li class="list-head" id="wasting" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</li>
 							<li class="list-head" id="breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING', '#breastfeeding')">BREASTFEEDING</li>
@@ -104,7 +104,7 @@
   </div> {{-- swiper-container --}}
 	</div> {{-- container --}}
 
-	<div class="input-wrapper bottom-footer ">
+	<div class="input-wrapper">
 		<div class="container">
 			<div class="input-wrapper-inner">
 			  <div class="row">
