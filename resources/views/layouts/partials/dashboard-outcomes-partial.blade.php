@@ -11,24 +11,26 @@
 
 	<div class="col-12 outcome-progress-col">
 		<div class="report-heading row">
-			<div class="report-icon col-2 pr-1">
-				@if (strpos(strtolower($key), 'stunting') !== false)
-				<span class="icon-children icon"></span>
-				{{-- <img src="{{ asset('images\stunting.svg') }}" alt=""> --}}
-				@elseif (strpos(strtolower($key), 'wasting') !== false)
-				<span class="icon-wasting icon"></span>
-				{{-- <img src="{{ asset('images\wasting.svg') }}" alt=""> --}}
-				@elseif (strpos(strtolower($key), 'breastfeed') !== false)
-				<span class="icon-breastfeeding icon"></span>
-				{{-- <img src="{{ asset('images\breastfeed.svg') }}" alt=""> --}}
-				@elseif (strpos(strtolower($key), 'suppliment') !== false)
-				<span class="icon-supplement icon"></span>
-				{{-- <img src="{{ asset('images\supplement.svg') }}" alt=""> --}}
-				@endif
-			</div>
-			<div class="txt-icon col-10 pl-0">
-				<h6 class="mb-0">{!! str_replace('_', ' ', $key) !!}</h6>
-				<div>{{$analysis['goal_text']}}</div>
+			<div class="txt-icon col-12">
+				<div class="report-icon" style="float: left; margin-right: 10px;">
+					@if (strpos(strtolower($key), 'stunting') !== false)
+					<span class="icon-children icon"></span>
+					{{-- <img src="{{ asset('images\stunting.svg') }}" alt=""> --}}
+					@elseif (strpos(strtolower($key), 'wasting') !== false)
+					<span class="icon-wasting icon"></span>
+					{{-- <img src="{{ asset('images\wasting.svg') }}" alt=""> --}}
+					@elseif (strpos(strtolower($key), 'breastfeed') !== false)
+					<span class="icon-breastfeeding icon"></span>
+					{{-- <img src="{{ asset('images\breastfeed.svg') }}" alt=""> --}}
+					@elseif (strpos(strtolower($key), 'suppliment') !== false)
+					<span class="icon-supplement icon"></span>
+					{{-- <img src="{{ asset('images\supplement.svg') }}" alt=""> --}}
+					@endif
+				</div>
+				<div class="outcome-icon-dis" style="float: left;">
+					<h6 class="mb-0">{!! str_replace('_', ' ', $key) !!}</h6>
+					<div>{{$analysis['goal_text']}}</div>
+				</div>
 			</div>
 		</div>
 		{{-- <div id="canvas-holder" class="d-none d-md-block">

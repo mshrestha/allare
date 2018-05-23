@@ -18,7 +18,7 @@
 	      		</div> {{-- row --}}
 	      		<div class="row">
 	      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-	      				<div id="maternal-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
+	      				<div id="maternal-health" style="width: 100%;"></div>
 	      				<div class="legend row">
 	      					<div class="conselling-given col-10 offset-2">Maternal Nutrition Conselling</div>
 	      					<div class="ifa-distributed col-10 offset-2">IFA Distributed</div>
@@ -27,7 +27,7 @@
 	      				</div> {{-- legend --}}
 	      			</div>
 	      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
-	      				<div id="child-health" style="width: 100%; max-width: 285px; margin: 7px auto;"></div>
+	      				<div id="child-health" style="width: 100%;"></div>
 	      				<div class="legend row">
 	      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
 	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>

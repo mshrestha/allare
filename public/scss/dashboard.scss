@@ -71,11 +71,23 @@
 	background: #e6e6e6;
 	.outcome-progress-col{
 		margin-top: 20px;
+		@media(min-height: 900px){
+			margin-top: 35px;
+		}
 	}
 }
 
 .report-icon{
 	margin-top: 0px;
+}
+.txt-icon {
+	.report-icon{
+		max-width: 100%;
+		width: 36px;
+	}
+	.outcome-icon-dis{
+		width: calc(100% - 50px);
+	}
 }
 .outcome-col{
 	.report-heading{
@@ -307,6 +319,10 @@
   max-width: 285px; 
   margin: 7px auto;
   position: relative;
+  @media(min-height: 900px){
+		margin-top: 45px;
+		margin-bottom: 35px;
+  }
 }
 #maternal-health:before, #child-health:before{
   background: url('../images/maternal.png') no-repeat center bottom;
