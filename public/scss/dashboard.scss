@@ -312,18 +312,19 @@
   background: url('../images/maternal.png') no-repeat center bottom;
   background-size: contain;
 	content: "";
-	width: 50px;
+	width: 40px;
 	height: 60px;
 	top: 50%;
 	left: 50%;
 	display: block;
 	position: absolute;
-	margin-left: -25px;
+	margin-left: -20px;
 	margin-top: -62px;
 }
 #child-health:before{
-  background: url('../images/baby.png') no-repeat center;
+  background: url('../images/baby.png') no-repeat center bottom;
   background-size: contain;
+  background-position: center bottom;
 }
 div#zoomctrl div{
 	background-color: transparent !important;
