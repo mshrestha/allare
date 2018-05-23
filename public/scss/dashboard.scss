@@ -306,6 +306,24 @@
   width: 100%;
   max-width: 285px; 
   margin: 7px auto;
+  position: relative;
+}
+#maternal-health:before, #child-health:before{
+  background: url('../images/maternal.png') no-repeat center bottom;
+  background-size: contain;
+	content: "";
+	width: 50px;
+	height: 60px;
+	top: 50%;
+	left: 50%;
+	display: block;
+	position: absolute;
+	margin-left: -25px;
+	margin-top: -62px;
+}
+#child-health:before{
+  background: url('../images/baby.png') no-repeat center;
+  background-size: contain;
 }
 div#zoomctrl div{
 	background-color: transparent !important;
