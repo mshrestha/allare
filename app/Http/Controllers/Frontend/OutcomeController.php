@@ -79,12 +79,12 @@ class OutcomeController extends Controller
 
 		$trend_analysis = [
 			[
-				'name' => 'Counseling',
+				'name' => 'Counselling',
 				'month' => 'Maternal Counselling Given - '. $counselling_month_maternal,
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
 				'values' => $counselling_all_values,
-				'title' => 'Counseling',
+				'title' => 'Counselling',
 				'labels' => json_encode(['Maternal Counselling Given '.$counselling_month_maternal, 'Total patient in ' .$counselling_month_maternal]),
 				'current_month' => $counselling_month_maternal
 			],
@@ -143,7 +143,7 @@ class OutcomeController extends Controller
 		$indicators = [
 			'iycf_counselling' => 'IYCF Counselling',
 			// 'child_growth_monitoring' => 'Child growth monitoring',
-			'vitamin_a_supplementation' => 'Vitamin A supplimentation',
+			'vitamin_a_supplementation' => 'Vitamin A supplementation',
 		];
 
 
@@ -164,7 +164,7 @@ class OutcomeController extends Controller
 
 		$trend_analysis = [
 			[
-				'name' => 'IMCI Counseling',
+				'name' => 'IMCI Counselling',
 				'title' => 'IMCI Counselling',
 				'month' => 'IYCF counselling - '. $counselling_month_child,
 				'percent' => round($counselling_percent),
@@ -181,13 +181,13 @@ class OutcomeController extends Controller
 			// 	'values' => $plw_who_receive_ifas_all_values
 			// ],
 			[
-				'name' => 'Suppliments',
-				'title' => 'Food Supplimentation',
-				'month' => 'Food Supplimentation - '. $vitamin_a_supplementation_month,
+				'name' => 'Supplements',
+				'title' => 'Food Supplementation',
+				'month' => 'Food Supplementation - '. $vitamin_a_supplementation_month,
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,
 				'values' => $vitamin_a_supplementation_all_values,
-				'labels' => json_encode(['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplimentation yearly']),
+				'labels' => json_encode(['Food Supplementation in '. $vitamin_a_supplementation_month, 'Food Supplementation yearly']),
 				'current_month' => $vitamin_a_supplementation_month
 			],
 		];

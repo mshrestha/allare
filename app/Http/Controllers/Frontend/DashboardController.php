@@ -60,7 +60,7 @@ class DashboardController extends Controller
 					[
 						'image' => 'qa-child.svg',
 						'percent' => "65%",
-						'text' => 'Facilities providing quality IYCF/Maternal counseling'
+						'text' => 'Facilities providing quality IYCF/Maternal counselling'
 					],
 					[
 						'image' => 'qa-paper.svg',
@@ -237,12 +237,12 @@ class DashboardController extends Controller
 
 		$maternal_trend_analysis = [
 			[
-				'name' => 'Counseling',
+				'name' => 'Counselling',
 				'month' => 'Maternal Counselling Given - '. $counselling_month_maternal,
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
 				'values' => $counselling_all_values,
-				'title' => 'Counseling',
+				'title' => 'Counselling',
 				'labels' => json_encode(['Maternal Counselling Given '.$counselling_month_maternal, 'Total patient ' .$counselling_month_maternal]),
 			],
 			[
@@ -267,7 +267,7 @@ class DashboardController extends Controller
 
 		$child_trend_analysis = [
 			[
-				'name' => 'IMCI Counseling',
+				'name' => 'IMCI Counselling',
 				'title' => 'IMCI Counselling',
 				'month' => 'IYCF counselling - '. $counselling_month_child,
 				'percent' => round($counselling_percent),
@@ -283,26 +283,26 @@ class DashboardController extends Controller
 			// 	'values' => $plw_who_receive_ifas_all_values
 			// ],
 			[
-				'name' => 'Suppliments',
+				'name' => 'Supplements',
 				'title' => 'Food Supplementation',
 				'month' => 'Food Supplementation - '. $vitamin_a_supplementation_month,
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,
 				'values' => $vitamin_a_supplementation_all_values,
-				'labels' => json_encode(['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplementation yearly']),
+				'labels' => json_encode(['Food Supplrmentation in '. $vitamin_a_supplementation_month, 'Food Supplementation yearly']),
 			],
 		];
 
-		$outcomes['vitamin suppliment'] = [];
-		$outcomes['vitamin suppliment']['title'] = 'Vitamin A Supplement';
-		$outcomes['vitamin suppliment']['goal_values'] = $child_trend_analysis[1]['percent'];
-		$outcomes['vitamin suppliment']['min'] = 0;
-		$outcomes['vitamin suppliment']['max'] = 100;
-		$outcomes['vitamin suppliment']['goal'] = 'Goal 100% by 2021';
-		$outcomes['vitamin suppliment']['direction'] = 1;
-		$outcomes['vitamin suppliment']['limit'] = 100;
-		$outcomes['vitamin suppliment']['target'] = 0;
-		$outcomes['vitamin suppliment']['goal_text'] = "Increase intake of Vitamin Supplements";
+		$outcomes['vitamin A supplement'] = [];
+		$outcomes['vitamin A supplement']['title'] = 'Vitamin A Supplement';
+		$outcomes['vitamin A supplement']['goal_values'] = $child_trend_analysis[1]['percent'];
+		$outcomes['vitamin A supplement']['min'] = 0;
+		$outcomes['vitamin A supplement']['max'] = 100;
+		$outcomes['vitamin A supplement']['goal'] = 'Goal 100% by 2021';
+		$outcomes['vitamin A supplement']['direction'] = 1;
+		$outcomes['vitamin A supplement']['limit'] = 100;
+		$outcomes['vitamin A supplement']['target'] = 0;
+		$outcomes['vitamin A supplement']['goal_text'] = "Increase intake of Vitamin Supplements";
 		// $geoJsons = json_encode($this->getGeoJsons());
 		// dd($geoJsons);
 		// dd($maternal_trend_analysis);
@@ -390,7 +390,7 @@ class DashboardController extends Controller
 
 		$child_trend_analysis = [
 			[
-				'name' => 'IMCI Counseling',
+				'name' => 'IMCI Counselling',
 				'title' => 'IMCI Counselling',
 				'month' => 'IYCF counselling - '. $counselling_month_child,
 				'percent' => round($counselling_percent),
@@ -412,7 +412,7 @@ class DashboardController extends Controller
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,
 				'values' => $vitamin_a_supplementation_all_values,
-				'labels' => (['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplementation yearly']),
+				'labels' => (['Food Supplementation in '. $vitamin_a_supplementation_month, 'Food Supplementation yearly']),
 			],
 		];
 		return $child_trend_analysis;
@@ -473,12 +473,12 @@ class DashboardController extends Controller
 
 		$maternal_trend_analysis = [
 			[
-				'name' => 'Counseling',
+				'name' => 'Counselling',
 				'month' => 'Maternal Counselling Given - '. $counselling_month_maternal,
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
 				'values' => $counselling_all_values,
-				'title' => 'Counseling',
+				'title' => 'Counselling',
 				'labels' => (['Maternal Counselling Given '.$counselling_month_maternal, 'Total patient ' .$counselling_month_maternal]),
 			],
 			[

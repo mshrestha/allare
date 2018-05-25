@@ -11,7 +11,7 @@
           <div class="swiper-tab-nav">
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a href="#slide0" class="swipernav nav-slide0 active">IMCI COUNSELING</a>
+                <a href="#slide0" class="swipernav nav-slide0 active">IMCI COUNSELLING</a>
               </li>
               <li class="list-inline-item">
                 <a href="#slide1" class="swipernav nav-slide1">SUPPLEMENTS</a>

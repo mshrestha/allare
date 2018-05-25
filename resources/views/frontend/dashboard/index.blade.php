@@ -72,7 +72,7 @@
 							<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
 							<li class="list-head">CHILD NUTRITION</li>
 							<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
-							<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Suppliments Distributed</a></li>
+							<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
 
     				</ul>
     				<ul class="map-filter outcome mb-0">
@@ -158,7 +158,7 @@
 			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-qa">
 			  		<h6 class="mb-0">QUALITY ASSESSMENT</h6>
 			  		<div><span class="number">65%</span><span class="number-txt">Facilities receiving SS&amp;M</span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing IYCF/ Maternal counseling</span></div>
+			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing IYCF/ Maternal counselling</span></div>
 			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing quality Nut reporting</span></div>
 			  	</div>{{-- input-box input-qa --}}
 			  	<div class="col-sm-6 col-md-12 col-lg-3 col-xl-4 input-box input-supply-management">
