@@ -124,6 +124,7 @@ class DashboardController extends Controller
 			'Stunting' => 'BdhsStunting',
 			'Wasting' => 'BdhsWasting',
 			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
+			'Vitamin A Supplements' => 'BdhsVitaminA',
 		];
 		$ou = 'dNLjKwsVjod';
 
@@ -145,28 +146,41 @@ class DashboardController extends Controller
 				$dataSet[$indicator]['periods'] = $datum->pluck('period');
 				$dataSet[$indicator]['goal_period'] = $datum_goal->period;
 				$dataSet[$indicator]['goal_values'] = $datum_goal->value;
-				$dataSet[$indicator]['min'] = $goal_model::min('value');
-				$dataSet[$indicator]['max'] = $goal_model::max('value');
+				$dataSet[$indicator]['min'] = 0;//$goal_model::min('value');
+				$dataSet[$indicator]['max'] = 100;//m$goal_model::max('value');
 				$dataSet[$indicator]['values'] = $datum->pluck('value');	
 				if($indicators[$indicator] == 'BdhsStunting') {
-					$dataSet[$indicator]['limit'] = 25;
-					$dataSet[$indicator]['target'] = 35;
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 25;
 					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
 					$dataSet[$indicator]['direction'] = -1;
 					$dataSet[$indicator]['goal_text'] = "Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021";
+					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
+					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
 				}
 				else if($indicators[$indicator] == 'BdhsWasting') {
 					$dataSet[$indicator]['goal'] = 'Goal < 10% by 2021';
-					$dataSet[$indicator]['limit'] = 10;
-					$dataSet[$indicator]['target'] = 26;
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 10;
 					$dataSet[$indicator]['direction'] = -1;
 					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
+					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
+					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+				}
+				else if($indicators[$indicator] == 'BdhsVitaminA') {
+					$dataSet[$indicator]['goal'] = 'Goal 100% by 2021';
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 1;
+					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['goal_text'] = "Two-dose coverage for 2016: 99%";
+					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
+					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
 				}
 				else {
 					$dataSet[$indicator]['goal'] = 'Goal 65% by 2021';
 					$dataSet[$indicator]['direction'] = 1;
-					$dataSet[$indicator]['limit'] = 65;
-					$dataSet[$indicator]['target'] = 20;
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 35;
 					$dataSet[$indicator]['goal_text'] = "Increase prevalence of exclusive breastfeeding";
 				}
 		}
@@ -293,16 +307,6 @@ class DashboardController extends Controller
 			],
 		];
 
-		$outcomes['vitamin A supplement'] = [];
-		$outcomes['vitamin A supplement']['title'] = 'Vitamin A Supplement';
-		$outcomes['vitamin A supplement']['goal_values'] = $child_trend_analysis[1]['percent'];
-		$outcomes['vitamin A supplement']['min'] = 0;
-		$outcomes['vitamin A supplement']['max'] = 100;
-		$outcomes['vitamin A supplement']['goal'] = 'Goal 100% by 2021';
-		$outcomes['vitamin A supplement']['direction'] = 1;
-		$outcomes['vitamin A supplement']['limit'] = 100;
-		$outcomes['vitamin A supplement']['target'] = 0;
-		$outcomes['vitamin A supplement']['goal_text'] = "Increase intake of Vitamin Supplements";
 		// $geoJsons = json_encode($this->getGeoJsons());
 		// dd($geoJsons);
 		// dd($maternal_trend_analysis);
