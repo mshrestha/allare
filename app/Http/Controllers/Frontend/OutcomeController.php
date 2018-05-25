@@ -143,7 +143,7 @@ class OutcomeController extends Controller
 		$indicators = [
 			'iycf_counselling' => 'IYCF Counselling',
 			// 'child_growth_monitoring' => 'Child growth monitoring',
-			'vitamin_a_supplementation' => 'Vitamin A supplementation',
+			'vitamin_a_supplementation' => 'Vitamin A supplimentation',
 		];
 
 

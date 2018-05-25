@@ -283,7 +283,7 @@ class DashboardController extends Controller
 			// 	'values' => $plw_who_receive_ifas_all_values
 			// ],
 			[
-				'name' => 'Supplements',
+				'name' => 'Suppliments',
 				'title' => 'Food Supplimentation',
 				'month' => 'Food Supplimentation - '. $vitamin_a_supplementation_month,
 				'percent' => round($vitamin_a_supplementation_percent),
@@ -294,7 +294,7 @@ class DashboardController extends Controller
 		];
 
 		$outcomes['vitamin suppliment'] = [];
-		$outcomes['vitamin suppliment']['title'] = 'Vitamin Supplement';
+		$outcomes['vitamin suppliment']['title'] = 'Vitamin Suppliment';
 		$outcomes['vitamin suppliment']['goal_values'] = $child_trend_analysis[1]['percent'];
 		$outcomes['vitamin suppliment']['min'] = 0;
 		$outcomes['vitamin suppliment']['max'] = 100;
