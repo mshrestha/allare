@@ -93,7 +93,7 @@ return [
 				'model'		=> 'ImciStuntingPercent',
 				'table'		=> 'imci_stunting_percent',
 				'server'	=> 'central',
-				'source'  => 'DGHS',
+				'source'  	=> 'DGHS',
 				'api_id'	=> 'Pd6AH5koIb3'	
 			],
 		],
@@ -110,7 +110,7 @@ return [
 				'model'		=> 'ImciWastingPercent',
 				'table'		=> 'imci_wasting_percent',
 				'server'	=> 'central',
-				'source'  => 'DGHS',
+				'source'  	=> 'DGHS',
 				'api_id'	=> 'wzLKMAyhQPp'	
 			],
 		],

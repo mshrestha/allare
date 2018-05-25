@@ -265,6 +265,8 @@ class DashboardController extends Controller
 			],
 		];
 
+		// dd($maternal_trend_analysis);
+
 		$child_trend_analysis = [
 			[
 				'name' => 'IMCI Counselling',
@@ -303,10 +305,134 @@ class DashboardController extends Controller
 		$outcomes['vitamin A supplement']['limit'] = 100;
 		$outcomes['vitamin A supplement']['target'] = 0;
 		$outcomes['vitamin A supplement']['goal_text'] = "Increase intake of Vitamin Supplements";
-		// $geoJsons = json_encode($this->getGeoJsons());
-		// dd($geoJsons);
-		// dd($maternal_trend_analysis);
-		return view('frontend.dashboard.index', compact('sidebarContents', 'outcomes', 'maternal_trend_analysis', 'child_trend_analysis'));
+
+		return view('frontend.dashboard.index', compact('sidebarContents', 'outcomes', 'maternal_trend_analysis', 'child_trend_analysis', 'organisation_units', 'periods'));
+	}
+
+	public function ajaxCircularChart(Request $request) {
+
+		$organisation_unit = explode('.', $request->organisation_unit);	
+		$periods = $this->getPeriodYears();
+		$flipped_period = array_flip($periods);
+
+		$periodData = '';
+		foreach ($flipped_period as $key => $value) {
+			$periodData .= $value.';';
+		}
+		
+		$periodData = rtrim($periodData, ';');
+		$periodData = explode(";", $periodData);
+		sort($periodData);
+
+		$data = config('data.maternal');
+		$total_patient_last_month = CcMrTotalPatient::orderBy('period', 'desc')->where('organisation_unit', $organisation_unit[1])->where('period', $request->period)->first();
+
+		//Maternal counselling percentage
+		$counselling_data = $data['maternal_counselling'][0];
+		$counselling_model = 'App\Models\Data\\' . $counselling_data['model'];
+		$counselling_last_month = $counselling_model::where('organisation_unit', $organisation_unit[1])->orderBy('period', 'desc')->where('period', $request->period)->first();
+		// dd($counselling_last_month);
+		$counselling_percent = ($counselling_last_month->value/$total_patient_last_month->value) * 100;
+		// $counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', $organisation_unit[1])->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
+		// $counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', $organisation_unit[1])->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		$counselling_month_maternal = $counselling_last_month->period_name;
+
+		//Plw who receive ifas
+		$plw_who_receive_ifas_data = $data['plw_who_receive_ifas'][0];
+		$plw_who_receive_ifas_model = 'App\Models\Data\\' . $plw_who_receive_ifas_data['model'];
+		$plw_who_receive_ifas_last_month = $plw_who_receive_ifas_model::where('organisation_unit', $organisation_unit[1])->orderBy('period', 'desc')->where('period', $request->period)->first();
+		$plw_who_receive_ifas_percent = ($plw_who_receive_ifas_last_month->value/$total_patient_last_month->value) * 100;
+		// $plw_who_receive_ifas_all_periods = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', $organisation_unit[1])->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
+		// $plw_who_receive_ifas_all_values = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', $organisation_unit[1])->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
+		$plw_who_receive_ifas_month = $plw_who_receive_ifas_last_month->period_name;
+
+		//Pregnant women weighed
+		$pregnant_women_weighed_data = $data['pregnant_women_weighed'][0];
+		$pregnant_women_weighed_model = 'App\Models\Data\\' . $pregnant_women_weighed_data['model'];
+		$pregnant_women_weighed_last_month = $pregnant_women_weighed_model::where('period', $total_patient_last_month->period)->where('organisation_unit', $organisation_unit[1])->orderBy('period', 'desc')->first();
+		$pregnant_women_weighed_yearly = $pregnant_women_weighed_model::where('period', date('Y'))->where('organisation_unit', $organisation_unit[1])->orderBy('period', 'desc')->first();
+		$pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$pregnant_women_weighed_yearly->value) * 100;
+		// $pregnant_women_weighed_all_periods = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', $organisation_unit[1])->orderBy('period', 'asc')->pluck('period');
+		// $pregnant_women_weighed_all_values = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', $organisation_unit[1])->orderBy('period', 'asc')->pluck('value');
+		$pregnant_women_weighed_month = $pregnant_women_weighed_last_month->period_name;
+
+		
+		$data = config('data.child');
+		
+		// IMCI total children
+		$imci_total_children_data = $this->calculateMonthlyPercentage($data['iycf_counselling'][0], $periodData, $organisation_unit[0]);
+		$imci_total_children_percent = $imci_total_children_data['percent'];
+		$imci_total_children_all_values = $imci_total_children_data['all_values'];
+		$imci_total_children_all_periods = $imci_total_children_data['all_periods'];
+		$imci_total_children_month_child = $imci_total_children_data['month'];
+
+		
+		// Vitamin A supplimentation
+		$vitamin_a_supplimentation_data = $this->calculateMonthlyPercentage($data['vitamin_a_supplementation'][0], $periodData, $organisation_unit[1]);
+		$vitamin_a_supplementation_percent = $vitamin_a_supplimentation_data['percent'];
+		$vitamin_a_supplementation_all_values = $vitamin_a_supplimentation_data['all_values'];
+		$vitamin_a_supplementation_all_periods = $vitamin_a_supplimentation_data['all_periods'];
+		$vitamin_a_supplementation_month = $vitamin_a_supplimentation_data['month'];
+
+		$maternal_trend_analysis = [
+			[
+				'name' => 'Counselling',
+				'month' => 'Maternal Counselling Given - '. $counselling_month_maternal,
+				'percent' => round($counselling_percent),
+				// 'periods' => $counselling_all_periods,
+				// 'values' => $counselling_all_values,
+				'title' => 'Counselling',
+				'labels' => json_encode(['Maternal Counselling Given '.$counselling_month_maternal, 'Total patient ' .$counselling_month_maternal]),
+			],
+			[
+				'name' => 'IFA Distribution',
+				'month' => 'PLW who receive IFA\'s - '. $plw_who_receive_ifas_month,
+				'percent' => round($plw_who_receive_ifas_percent),
+				// 'periods' => $plw_who_receive_ifas_all_periods,
+				// 'values' => $plw_who_receive_ifas_all_values,
+				'title' => 'IFA Distribution',
+				'labels' => json_encode(['PLW who receive IFA\'s in '. $plw_who_receive_ifas_month, 'Total patient '.$plw_who_receive_ifas_month]),
+			],
+			[
+				'name' => 'Weight Measurement',
+				'month' => 'Pregnant women weighed - ' . $pregnant_women_weighed_month,
+				'percent' => round($pregnant_women_weighed_percent),
+				// 'periods' => $pregnant_women_weighed_all_periods,
+				// 'values' => $pregnant_women_weighed_all_values,
+				'title' => 'Weight Measurement',
+				'labels' => json_encode(['Pregnant women weighed in ' .$pregnant_women_weighed_month, 'Pregnant women weighed yearly']),
+			],
+		];
+
+		$child_trend_analysis = [
+			[
+				'name' => 'IMCI Counselling',
+				'title' => 'IMCI Counselling',
+				'month' => 'IYCF counselling - '. $imci_total_children_month_child,
+				'percent' => round($imci_total_children_percent),
+				// 'periods' => $counselling_all_periods,
+				// 'values' => $counselling_all_values,
+				'labels' => json_encode(['IMCI Counselling given '. $imci_total_children_month_child, 'IMCI Counselling yearly']),
+			],
+			// [
+			// 	'name' => 'Child Growth',
+			// 	'month' => 'Child growth monitoring',
+			// 	'percent' => round($plw_who_receive_ifas_percent),
+			// 	'periods' => $plw_who_receive_ifas_all_periods,
+			// 	'values' => $plw_who_receive_ifas_all_values
+			// ],
+			[
+				'name' => 'Supplements',
+				'title' => 'Food Supplementation',
+				'month' => 'Food Supplementation - '. $vitamin_a_supplementation_month,
+				'percent' => round($vitamin_a_supplementation_percent),
+				// 'periods' => $vitamin_a_supplementation_all_periods,
+				// 'values' => $vitamin_a_supplementation_all_values,
+				'labels' => json_encode(['Food Supplrmentation in '. $vitamin_a_supplementation_month, 'Food Supplementation yearly']),
+			],
+		];
+
+		return $maternal_trend_analysis;
 	}
 
 	public function calculateMonthlyPercentage($data, $periodData, $ou) {

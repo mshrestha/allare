@@ -35,6 +35,28 @@
 	      					<div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div>
 	      				</div> {{-- legend --}}
 	      			</div>
+
+	      			<div>
+	      				<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
+							<div class="form-group">
+								<select name="organisation_unit" class="custom-select national_outcomes_filter_form_fields" required>
+									@foreach($organisation_units as $organisation_unit)
+									<option value="{{ $organisation_unit->central_api_id }}.{{ $organisation_unit->community_api_id }}">{{ $organisation_unit->name }}</option>
+									@endforeach
+								</select>	
+							</div>
+							<div class="form-group">
+								<select class="custom-select national_outcomes_filter_form_fields" name="period" id="period_id" required>
+				                    <option value="">Periods</option>
+				                    <option value="LAST_MONTH">Last month</option>
+				                    <option value="LAST_6_MONTHS">Last 6 months</option>
+				                    @foreach($periods as $key => $period)
+				                    	<option value="{{ $period }}">{{ $period }}</option>
+				                    @endforeach
+				                </select>
+							</div>
+	      				</form>
+					</div>
 	      		</div> {{-- row --}}
 	      	</div> {{-- output col-md-8 --}}
 	      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
@@ -44,12 +66,9 @@
 	      			</div>
 	      		</div>
 	      		<div class="row">
-	      				@foreach($outcomes as $key => $analysis)
-									@include('layouts.partials.dashboard-outcomes-partial')
-								@endforeach
-								{{-- <div class="col-12 outcome-note">
-									Our goal is to reduce malnutrition and improve nutritional status of the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban areas of Bangladesh.
-								</div> --}}
+      				@foreach($outcomes as $key => $analysis)
+						@include('layouts.partials.dashboard-outcomes-partial')
+					@endforeach
 	      		</div>
 	      	</div> {{-- col-md-4 --}}
       	</div>
@@ -75,6 +94,8 @@
 							<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
 
     				</ul>
+
+
     				<ul class="map-filter outcome mb-0">
 							<li class="list-head green">IMPACTS</li>
 							<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li>
@@ -289,8 +310,11 @@
 
 
 @section('outjavascript')
-<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
-
+	<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
+	<script src="{{asset('js/swiper.min.js')}}"></script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkyw2RR6Cy0hsAOE4-um5lZg5TV6c8bbQ&callback=initMap">
+	</script>
 
 	<script>
 		scoreColors = {"high": "#0b495e", "average": "#137f91", "low": "#81ddc5"};
@@ -301,124 +325,22 @@
 		$('#legend-for-data').hide();
 	});
 
-	@foreach($maternal_trend_analysis as $key => $maternal_trend)
-		pieChart(
-			'maternal-' + '{{$key }}',
-			{{ $maternal_trend['percent'] }},
-			{!! $maternal_trend['labels'] !!}
-		)
-	@endforeach
+	$('.national_outcomes_filter_form_fields').on('change', function() {
+		$('#national_outcomes_filter_form').submit();
+	})
 
-	@foreach($child_trend_analysis as $key => $child_trend)
-		pieChart(
-			'child-' + '{{$key }}',
-			{{ $child_trend['percent'] }},
-			{!! $child_trend['labels'] !!}
-		)
-	@endforeach
+  	$('#national_outcomes_filter_form').on('submit', function() {
+  		$.ajax({
+  			type: $(this).attr('method'),
+  			url: $(this).attr('action'),
+  			data: $(this).serialize(),
+  			success: function (res) {
+  				console.log(res)
+  			}
+  		})
 
-	function pieChart(id, data_value, labels) {
-		var randomScalingFactor = function() {
-			return Math.round(Math.random() * 100);
-		};
-
-	// for aligning label of pie chart
-	isArray = Array.isArray ?
-	function (obj) {
-	return Array.isArray(obj);
-	} :
-	function (obj) {
-	return Object.prototype.toString.call(obj) === '[object Array]';
-	};
-
-	getValueAtIndexOrDefault = (value, index, defaultValue) => {
-	if (value === undefined || value === null) {
-		return defaultValue;
-	}
-
-	if (this.isArray(value)) {
-		return index < value.length ? value[index] : defaultValue;
-	}
-
-	return value;
-	};
-
-	var config = {
-	type: 'pie',
-	data: {
-		datasets: [{
-			data: [
-			data_value,
-			100 - data_value,
-			],
-			backgroundColor: [
-			'rgb(29, 192, 255)',
-			],
-			label: 'Dataset 1'
-		}],
-		labels: [
-		labels[0],
-		labels[1],
-		]
-	},
-	responsive: true,
-	pieceLabel: {
-		render: 'percentage',
-		fontColor: ['white', 'rgb(29, 192, 255)'],
-		precision: 2
-	},
-	options: {
-		legend: {
-			display: true,
-			labels: {
-				generateLabels: (chart) => {
-
-					chart.legend.afterFit = function () {
-						var width = this.width;
-						console.log(this);
-
-						this.lineWidths = this.lineWidths.map( () => this.width-0 );
-
-						this.options.labels.padding = 10;
-						this.options.labels.boxWidth = 15;
-					};
-
-					var data = chart.data;
-				          //https://github.com/chartjs/Chart.js/blob/1ef9fbf7a65763c13fa4bdf42bf4c68da852b1db/src/controllers/controller.doughnut.js
-				          if (data.labels.length && data.datasets.length) {
-				          	return data.labels.map((label, i) => {
-				          		var meta = chart.getDatasetMeta(0);
-				          		var ds = data.datasets[0];
-				          		var arc = meta.data[i];
-				          		var custom = arc && arc.custom || {};
-				          		var getValueAtIndexOrDefault = this.getValueAtIndexOrDefault;
-				          		var arcOpts = chart.options.elements.arc;
-				          		var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-				          		var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-				          		var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-
-				          		return {
-				          			text: label,
-				          			fillStyle: fill,
-				          			strokeStyle: stroke,
-				          			lineWidth: bw,
-				          			hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-
-				                // Extra data used for toggling the correct item
-				                index: i
-				            };
-				        });
-				          }
-				          return [];
-				      }
-				  }
-				}
-			}
-		};
-
-		var ctx = document.getElementById('chart-area-'+ id).getContext('2d');
-		window.myPie = new Chart(ctx, config);
-	}
+  		return false;
+  	})
 
 	function doughChart(id, data_value, labels, title) {
 		Chart.pluginService.register({
@@ -779,9 +701,7 @@
 
 	</script>
 
-	<script async defer
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkyw2RR6Cy0hsAOE4-um5lZg5TV6c8bbQ&callback=initMap">
-	</script>
+	
 	{{-- radial progress --}}
 	<script>
 	// 	new RadialProgressChart('#maternal-health', {series: [24, 85]});
@@ -847,65 +767,7 @@
 			],
 		}
 	});
-	  // for child health
-<?php /* <<<<<<< HEAD
-	   var mainChart = new RadialProgressChart('#child-health', {
-	        diameter: 100,
-	        shadow: {
-	        	width: 0
-	        },
-	        stroke:{
-	        	width: 13,
-	        	gap: 3
-	        },
-	         animation: {
-			        // duration: int (default: 1750),
-			        // delay: int (between each ring, default: 200)
-			        duration: 2000,
-			        delay: 300
 
-			    },
-			    min: 0,
-			    max: 100,
-	        series: [
-	          {
-	          	labelStart: '', //IMCI Counselling Given
-	          	value: 55,
-	          	color: '#008091',
-	        //   	color: {
-					    //   linearGradient: {
-					    //     x1: '0%',
-					    //     y1: '0%',
-					    //     x2: '100%',
-					    //     y2: '100%',
-					    //     spreadMethod: 'pad' // reflect, repeat, pad
-					    //   },
-					    //   stops: [{
-					    //     offset: '0%',
-					    //     'stop-color': '#fe08b5',
-					    //     'stop-opacity': 1
-					    //   }, {
-					    //     offset: '100%',
-					    //     'stop-color': '#000000',
-					    //     'stop-opacity': 1
-					    //   }]
-					    // }
-	          },
-	          {
-	          	labelStart: '', //Child Health
-	          	value: 70,
-	          	color: '#0c4a60',
-	          },
-	        ],
-	        center: {
-				    content: [
-				    	'CHILD', 'HEALTH'],
-				  }
-	      }
-	  );
-  </script>
-  {{-- radial progress end --}}
-======= */ ?>
 	  var mainChart = new RadialProgressChart('#child-health', {
 	  	diameter: 100,
 	  	shadow: {
@@ -954,16 +816,14 @@
 	});
 
 	</script>
-	{{-- radial progress end --}}
-{{-- >>>>>>> a1835801bf0f5809dc712799bb9b94300fef4d1c --}}
+
 	<script>
 		$('.slideTrigger').click(function(){
 			TweenMax.staggerTo(".slideInContainer", 1, {left:'0', backgroundColor: "#CCC", ease:Power4.easeInOut});
 		});
 	</script>
-	{{-- swiper js --}}
-	{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/js/swiper.min.js"></script> --}}
-	<script src="{{asset('js/swiper.min.js')}}"></script>
+
+	
 
 	<!-- Initialize Swiper -->
   <script>
@@ -1007,72 +867,72 @@
 			        zoom: 6.5,
 			        scrollwheel: true,
 			        styles: [{
-												"featureType": "administrative",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "administrative.province",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "landscape",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "poi",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "road",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "road.highway",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "road.arterial",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "road.local",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "transit",
-												"elementType": "all",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "water",
-												"elementType": "geometry",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}, {
-												"featureType": "water",
-												"elementType": "labels",
-												"stylers": [{
-													"color": "#ededed"
-												}]
-											}],
+							"featureType": "administrative",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "administrative.province",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "landscape",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "poi",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "road",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "road.highway",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "road.arterial",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "road.local",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "transit",
+							"elementType": "all",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "water",
+							"elementType": "geometry",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}, {
+							"featureType": "water",
+							"elementType": "labels",
+							"stylers": [{
+								"color": "#ededed"
+							}]
+						}],
 			        zoomControl: true,
 		          zoomControlOptions: {
 		              position: google.maps.ControlPosition.LEFT_BOTTOM

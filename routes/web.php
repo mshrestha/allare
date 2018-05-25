@@ -96,6 +96,7 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/dashboard_maps', 'DashboardController@getGeoJsons')->name('dashboard-maps');
 	Route::get('/dashboard_percents', 'DashboardController@getPercentTrend')->name('dashboard-percents');
 	Route::get('/dashboard_specific_map', 'DashboardController@getMapData')->name('dashboard-specific-map');
+	Route::get('/dashboard/circular-chart', 'DashboardController@ajaxCircularChart')->name('dashboard.circular-chart');
 
 	// Outputs 
 	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
