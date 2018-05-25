@@ -1,108 +1,150 @@
 @extends('layouts.app')
 
 @section('content')
+	<div class="swiper-container-outer">
+		<div class="container">
+			<!-- Slider main container -->
+			<!-- Swiper -->
+		  <div class="swiper-container">
+		    <div class="swiper-wrapper">
+		    	<div class="swiper-slide container dataview">
+		      	<div class="row">
+			      	<div class="output-col col-md-7 col-lg-8 pb-3">
+			      		<div class="row"  data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
+			      			<div class="col-sm-12">
+			      				<div class="box-heading float-left">National outcomes</div>
+			      				<div class="view-on-map float-right swiper-button-next">VIEW ON MAP</div>
+			      			</div>
+			      		</div> {{-- row --}}
+			      		<div class="row">
+			      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+			      				<div id="maternal-health" style="width: 100%;"></div>
+			      				<div class="legend row">
+			      					<div class="conselling-given col-10 offset-2">Maternal Nutrition Counselling</div>
+			      					<div class="ifa-distributed col-10 offset-2">IFA Distributed</div>
+			      					<div class="weight-measured col-10 offset-2">Weight Measured</div>
+			      					<div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div>
+			      				</div> {{-- legend --}}
+			      			</div>
+			      			<div class="col-sm-6" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+			      				<div id="child-health" style="width: 100%;"></div>
+			      				<div class="legend row">
+			      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
+			      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
+			      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
+			      					<div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div>
+			      				</div> {{-- legend --}}
+			      			</div>
+			      		</div> {{-- row --}}
+			      		<div class="row mt-4">
+			      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+			      				<label for="">Select the Division</label>
+				      			<div class="input-group">
+				                {{-- <div class="input-group-prepend">
+				                    <label class="input-group-text" for="period-id">Periods</label>
+				                </div> --}}
+				                <select class="custom-select" name="period_id" id="period_id" required>
+				                    <option value="">Divisions</option>
+				                    <option value="">Barisal Division</option>
+				                    <option value="">Chittagong Division</option>
+				                    <option value="">Dhaka Division</option>
+				                    <option value="">Khulna Division</option>
+				                    <option value="">Mymensingh Division</option>
+				                    <option value="">Rajshahi Division</option>
+				                    <option value="">Rangpur Division</option>
+				                    <option value="">Sylhet Division</option>
+				                    <option value="">X organizationunits for delete</option>
+				                    {{-- @foreach($periods as $key => $period)
+				                    	<option value="{{ $key }}">{{ $period }}</option>
+				                    @endforeach --}}
+				                </select>
+				            </div>
+			      			</div>
+			      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+			      				<label for="">Select the Timeline</label>
+				      			<div class="input-group">
+				                {{-- <div class="input-group-prepend">
+				                    <label class="input-group-text" for="period-id">Periods</label>
+				                </div> --}}
+				                <select class="custom-select" name="period_id" id="period_id" required>
+				                    <option value="">Periods</option>
+				                    <option value="LAST_MONTH">Last month</option>
+				                    <option value="LAST_6_MONTHS">Last 6 months</option>
+				                    {{-- @foreach($periods as $key => $period)
+				                    	<option value="{{ $key }}">{{ $period }}</option>
+				                    @endforeach --}}
+				                </select>
+				            </div>
+			      			</div>
+			      		</div> {{-- row --}}
+			      	</div> {{-- output col-md-8 --}}
+			      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
+			      		<div class="row">
+			      			<div class="col-12">
+			      				<div class="box-heading float-left">IMPACT</div>
+			      			</div>
+			      		</div>
+			      		<div class="row">
+			      				@foreach($outcomes as $key => $analysis)
+											@include('layouts.partials.dashboard-outcomes-partial')
+										@endforeach
+										{{-- <div class="col-12 outcome-note">
+											Our goal is to reduce malnutrition and improve nutritional status of the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban areas of Bangladesh.
+										</div> --}}
+			      		</div>
+			      	</div> {{-- col-md-4 --}}
+		      	</div>
+		      </div> {{-- data view --}}
+		      <div class="swiper-slide container map-view-container">
+		        <div class="row justify-content-between">
+		        	<div class="col-6 col-md-4 col-lg-3 col-xl-2 pr-0 pl-0 d-block">
+		    				<div class="box-heading float-left d-block ml-0">National Outcomes</div>
+		    			</div>
+		        	<div class="col-md-2 col-6">
+		    				<div class="view-on-map float-right swiper-button-prev">VIEW DATA</div>
+		    			</div>
+		        </div>
+		        <div class="row">
+		        	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
+		    				<ul class="map-filter mb-0">
+		    					<li class="list-head">MATERNAL NUTRITION</li>
+									<li><a href="#" id="counselling" class="maplinks inactive" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Counselling Given</a></li>
+									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">IFA Distributed</a></li>
+									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
+									<li class="list-head">CHILD NUTRITION</li>
+									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
+									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
 
-	<div class="container">
-		<!-- Slider main container -->
-		<!-- Swiper -->
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
-    	<div class="swiper-slide container dataview">
-      	<div class="row">
-	      	<div class="output-col col-md-7 col-lg-8 pb-3">
-	      		<div class="row"  data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
-	      			<div class="col-sm-12">
-	      				<div class="box-heading float-left">National outcomes</div>
-	      				<div class="view-on-map float-right swiper-button-next">VIEW ON MAP</div>
-	      			</div>
-	      		</div> {{-- row --}}
-	      		<div class="row">
-	      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-	      				<div id="maternal-health" style="width: 100%;"></div>
-	      				<div class="legend row">
-	      					<div class="conselling-given col-10 offset-2">Maternal Nutrition Counselling</div>
-	      					<div class="ifa-distributed col-10 offset-2">IFA Distributed</div>
-	      					<div class="weight-measured col-10 offset-2">Weight Measured</div>
-	      					<div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div>
-	      				</div> {{-- legend --}}
-	      			</div>
-	      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
-	      				<div id="child-health" style="width: 100%;"></div>
-	      				<div class="legend row">
-	      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
-	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
-	      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
-	      					<div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div>
-	      				</div> {{-- legend --}}
-	      			</div>
-	      		</div> {{-- row --}}
-	      	</div> {{-- output col-md-8 --}}
-	      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
-	      		<div class="row">
-	      			<div class="col-12">
-	      				<div class="box-heading float-left">IMPACT</div>
-	      			</div>
-	      		</div>
-	      		<div class="row">
-	      				@foreach($outcomes as $key => $analysis)
-									@include('layouts.partials.dashboard-outcomes-partial')
-								@endforeach
-								{{-- <div class="col-12 outcome-note">
-									Our goal is to reduce malnutrition and improve nutritional status of the children, adolescents, pregnant &amp; lactating women, elderly, poor and underserved population of both rural and urban areas of Bangladesh.
-								</div> --}}
-	      		</div>
-	      	</div> {{-- col-md-4 --}}
-      	</div>
-      </div> {{-- data view --}}
-      <div class="swiper-slide container map-view-container">
-        <div class="row justify-content-between">
-        	<div class="col-6 col-md-4 col-lg-3 col-xl-2 pr-0 pl-0 d-block">
-    				<div class="box-heading float-left d-block ml-0">National Outcomes</div>
-    			</div>
-        	<div class="col-md-2 col-6">
-    				<div class="view-on-map float-right swiper-button-prev">VIEW DATA</div>
-    			</div>
-        </div>
-        <div class="row">
-        	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
-    				<ul class="map-filter mb-0">
-    					<li class="list-head">MATERNAL NUTRITION</li>
-							<li><a href="#" id="counselling" class="maplinks inactive" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Counselling Given</a></li>
-							<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">IFA Distributed</a></li>
-							<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
-							<li class="list-head">CHILD NUTRITION</li>
-							<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
-							<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
-
-    				</ul>
-    				<ul class="map-filter outcome mb-0">
-							<li class="list-head green">IMPACTS</li>
-							<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li>
-							<li class="list-head" id="wasting" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</li>
-							<li class="list-head" id="breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING', '#breastfeeding')">BREASTFEEDING</li>
-    				</ul>
-    			</div>
-    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
-    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
-    					<div id="zoomctrl">
-					    </div>
-    				</div>
-    				<div id="overdiv">
-    					<span class="legend-text" id="low-text"></span>
-    					<span class="legend-text" id="avg-text"></span>
-    					<span class="legend-text" id="high-text"></span>
-    				</div>
-    			</div>
-        </div>
-      </div> {{-- swiper-slide --}}
-    </div> {{-- swiper-wrrapper --}}
-    <!-- Add Pagination -->
-    <div class="swiper-pagination swiper-pagination-white"></div>
-    <!-- Add Navigation -->
-    <div class="swiper-button-prev swiper-button-white"></div>
-    <div class="swiper-button-next swiper-button-white"></div>
-  </div> {{-- swiper-container --}}
-	</div> {{-- container --}}
+		    				</ul>
+		    				<ul class="map-filter outcome mb-0">
+									<li class="list-head green">IMPACTS</li>
+									<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li>
+									<li class="list-head" id="wasting" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</li>
+									<li class="list-head" id="breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING', '#breastfeeding')">BREASTFEEDING</li>
+		    				</ul>
+		    			</div>
+		    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
+		    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
+		    					<div id="zoomctrl">
+							    </div>
+		    				</div>
+		    				<div id="overdiv">
+		    					<span class="legend-text" id="low-text"></span>
+		    					<span class="legend-text" id="avg-text"></span>
+		    					<span class="legend-text" id="high-text"></span>
+		    				</div>
+		    			</div>
+		        </div>
+		      </div> {{-- swiper-slide --}}
+		    </div> {{-- swiper-wrrapper --}}
+		    <!-- Add Pagination -->
+		    <div class="swiper-pagination swiper-pagination-white"></div>
+		    <!-- Add Navigation -->
+		    <div class="swiper-button-prev swiper-button-white"></div>
+		    <div class="swiper-button-next swiper-button-white"></div>
+		  </div> {{-- swiper-container --}}
+		</div> {{-- container --}}
+	</div>
 
 	<div class="input-wrapper">
 		<div class="container">
