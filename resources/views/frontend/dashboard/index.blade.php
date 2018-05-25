@@ -30,7 +30,7 @@
 	      				<div id="child-health" style="width: 100%;"></div>
 	      				<div class="legend row">
 	      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
-	      					<div class="supplements-distributed col-10 offset-2">Suppliments Distributed</div>
+	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
 	      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
 	      					<div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div>
 	      				</div> {{-- legend --}}

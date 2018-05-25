@@ -14,7 +14,7 @@
                 <a href="#slide0" class="swipernav nav-slide0 active">IMCI COUNSELING</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide1" class="swipernav nav-slide1">SUPPLIMENTS</a>
+                <a href="#slide1" class="swipernav nav-slide1">SUPPLEMENTS</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
