@@ -120,7 +120,12 @@
 									<li class="list-head green">IMPACTS</li>
 									<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li>
 									<li class="list-head" id="wasting" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</li>
-									<li class="list-head" id="breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING', '#breastfeeding')">BREASTFEEDING</li>
+									<li class="list-head" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">ANEMIA</li>
+		    				</ul>
+		    				<ul class="map-filter mb-0">
+									<li class="list-head">INTERMEDIATE</li>
+									<li><a href="#">Exclusive Breastfeeding</a></li>
+									<li><a href="#">Min. Acceptable diet</a></li>
 		    				</ul>
 		    			</div>
 		    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
