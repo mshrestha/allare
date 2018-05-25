@@ -7468,7 +7468,7 @@ div#zoomctrl div {
   font: 12px/25px "Roboto", sans-serif;
   border-radius: 0; }
   .custom-select:focus {
-    border-color: transparent;
+    border-color: #CED4DA;
     box-shadow: none; }
 
 .side-filter-div {

@@ -6,6 +6,15 @@
       <div class="tab-col-subtitle"> {{strtoupper($analysis['current_month'])}}</div>
 ======= --}}
       <div class="tab-col-subtitle specific-date"> {{strtoupper($analysis['current_month'])}}</div>
+      <div class="row">
+	    	<div class="input-group mb-1 col-6 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+	        <select class="custom-select gry-borderd" name="period_id">
+	            <option value="">Periods</option>
+	            <option value="LAST_MONTH">Last month</option>
+	            <option value="LAST_6_MONTHS">Last 6 months</option>
+	        </select>
+	      </div>
+      </div>
       <div class="canvas-holder pie-chart" id="pie-chart-{{ $key }}">
       {{-- <div id="canvas-holder">
 >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
