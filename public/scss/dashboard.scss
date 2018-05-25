@@ -10,15 +10,17 @@
 .swiper-container-outer{
 	position: relative;
 }
-.swiper-container-outer:after {
-    content: "";
-    width: 18px;
-    height: 100%;
-    top: 0;
-    right: 0;
-    background: #e6e6e6;
-    position: absolute;
-    z-index: 0;
+@include media-breakpoint-up(md) {
+	.swiper-container-outer:after {
+	    content: "";
+	    width: 200px;
+	    height: 100%;
+	    top: 0;
+	    right: 0;
+	    background: #e6e6e6;
+	    position: absolute;
+	    z-index: 0;
+	}
 }
 .legend{
 	color: #535353;
