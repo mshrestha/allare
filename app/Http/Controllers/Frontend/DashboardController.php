@@ -284,17 +284,17 @@ class DashboardController extends Controller
 			// ],
 			[
 				'name' => 'Suppliments',
-				'title' => 'Food Supplimentation',
-				'month' => 'Food Supplimentation - '. $vitamin_a_supplementation_month,
+				'title' => 'Food Supplementation',
+				'month' => 'Food Supplementation - '. $vitamin_a_supplementation_month,
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,
 				'values' => $vitamin_a_supplementation_all_values,
-				'labels' => json_encode(['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplimentation yearly']),
+				'labels' => json_encode(['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplementation yearly']),
 			],
 		];
 
 		$outcomes['vitamin suppliment'] = [];
-		$outcomes['vitamin suppliment']['title'] = 'Vitamin Suppliment';
+		$outcomes['vitamin suppliment']['title'] = 'Vitamin A Supplement';
 		$outcomes['vitamin suppliment']['goal_values'] = $child_trend_analysis[1]['percent'];
 		$outcomes['vitamin suppliment']['min'] = 0;
 		$outcomes['vitamin suppliment']['max'] = 100;
@@ -302,7 +302,7 @@ class DashboardController extends Controller
 		$outcomes['vitamin suppliment']['direction'] = 1;
 		$outcomes['vitamin suppliment']['limit'] = 100;
 		$outcomes['vitamin suppliment']['target'] = 0;
-		$outcomes['vitamin suppliment']['goal_text'] = "Increase intake of Vitamin Suppliments";
+		$outcomes['vitamin suppliment']['goal_text'] = "Increase intake of Vitamin Supplements";
 		// $geoJsons = json_encode($this->getGeoJsons());
 		// dd($geoJsons);
 		// dd($maternal_trend_analysis);
@@ -406,13 +406,13 @@ class DashboardController extends Controller
 			// 	'values' => $plw_who_receive_ifas_all_values
 			// ],
 			[
-				'name' => 'Suppliments',
-				'title' => 'Food Supplimentation',
-				'month' => 'Food Supplimentation - '. $vitamin_a_supplementation_month,
+				'name' => 'Supplements',
+				'title' => 'Food Supplementation',
+				'month' => 'Food Supplementation - '. $vitamin_a_supplementation_month,
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,
 				'values' => $vitamin_a_supplementation_all_values,
-				'labels' => (['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplimentation yearly']),
+				'labels' => (['Food Supplimentation in '. $vitamin_a_supplementation_month, 'Food Supplementation yearly']),
 			],
 		];
 		return $child_trend_analysis;
