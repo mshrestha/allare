@@ -30,7 +30,7 @@
 	      				<div id="child-health" style="width: 100%;"></div>
 	      				<div class="legend row">
 	      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
-	      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
+	      					<div class="supplements-distributed col-10 offset-2">Suppliments Distributed</div>
 	      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
 	      					<div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div>
 	      				</div> {{-- legend --}}
@@ -72,7 +72,7 @@
 							<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
 							<li class="list-head">CHILD NUTRITION</li>
 							<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
-							<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
+							<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Suppliments Distributed</a></li>
 
     				</ul>
     				<ul class="map-filter outcome mb-0">

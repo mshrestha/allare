@@ -181,7 +181,7 @@ class OutcomeController extends Controller
 			// 	'values' => $plw_who_receive_ifas_all_values
 			// ],
 			[
-				'name' => 'Supplements',
+				'name' => 'Suppliments',
 				'title' => 'Food Supplimentation',
 				'month' => 'Food Supplimentation - '. $vitamin_a_supplementation_month,
 				'percent' => round($vitamin_a_supplementation_percent),
