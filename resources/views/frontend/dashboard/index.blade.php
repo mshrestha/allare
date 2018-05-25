@@ -752,7 +752,7 @@
 					if(res['server'] == 'community')
 						id = ids[1];
 					value = res['minimalData'][id];
-					infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
+					infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
 					var anchor = new google.maps.MVCObject();
 		    	anchor.set("position", e.latLng);
 		    	infoWindow.open(map, anchor);
@@ -1169,7 +1169,8 @@
 							if(res['server'] == 'community')
 								id = ids[1];
 							value = res['minimalData'][id];
-							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
+							console.log(value);
+							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
 							var anchor = new google.maps.MVCObject();
 				    	anchor.set("position", e.latLng);
 				    	infoWindow.open(map, anchor);
