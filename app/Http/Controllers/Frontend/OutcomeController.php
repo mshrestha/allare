@@ -153,7 +153,7 @@ class OutcomeController extends Controller
 		$counselling_all_values = $counselling_data['all_values'];
 		$counselling_all_periods = $counselling_data['all_periods'];
 		$counselling_month_child = $counselling_data['month'];
-
+		// dd($counselling_data);
 		
 		// Vitamin A supplimentation
 		$vitamin_a_supplimentation_data = $this->calculateMonthlyPercentage($data['vitamin_a_supplementation'][0], $periodData);

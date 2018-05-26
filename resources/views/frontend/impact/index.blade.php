@@ -217,7 +217,7 @@
 
       var dataCSV = [];
 
-      for (var i = 0; i < data_value.values.length; i++) {
+      for (var i = data_value.values.length - 1; i > 0; i--) {
         temp = {};
         if(data_value.periods[i] == '1993-1994') {
           temp.date = '1994';
@@ -250,7 +250,7 @@
 
       var x = d3.time.scale()
                 .range([0, width])
-                .domain([d3.max(dataCSV, function(d) { return d.date; }), d3.min(dataCSV, function(d) { return d.date; })]);
+                .domain([d3.min(dataCSV, function(d) { return d.date; }), d3.max(dataCSV, function(d) { return d.date; })]);
 
       // var x = d3.scale.linear()
       //     .domain([0, d3.max(dataCSV, function(d) { return d.date; })])
