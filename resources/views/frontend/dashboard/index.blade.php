@@ -255,7 +255,7 @@
   			url: $(this).attr('action'),
   			data: $(this).serialize(),
   			success: function (res) {
-  				console.log(res)
+  				// console.log(res)
   				$('#maternal-health').html('');
   				$('#child-health').html('');
 
