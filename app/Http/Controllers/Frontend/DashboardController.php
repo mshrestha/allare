@@ -44,107 +44,11 @@ class DashboardController extends Controller
 	use OrganisationHelper;
 
 	public function indexAction() {
-		$sidebarContents = $this->sidebarContents();
-
 		$organisation_units = OrganisationUnit::where('level', 2)->get();
+		$sidebarContents = $this->sidebarContents();
+		$outcomes = $this->dashboardImpacts();
 		$periods = $this->getPeriodYears();
-		$flipped_period = array_flip($periods);
 
-		$periodData = '';
-		foreach ($flipped_period as $key => $value) {
-			$periodData .= $value.';';
-		}
-		
-		$periodData = rtrim($periodData, ';');
-		$periodData = explode(";", $periodData);
-		sort($periodData);
-
-		$keys = array_reverse(array_keys($flipped_period));
-		$keyPeriods = implode(';',$keys);
-
-		$data = config('data.outcomes');
-		$current_year = date('Y');
-
-		$indicators = [
-			'Stunting' => 'BdhsStunting',
-			'Wasting' => 'BdhsWasting',
-			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
-			'Vitamin A Supplements' => 'BdhsVitaminA',
-		];
-		$ou = 'dNLjKwsVjod';
-
-		$data = config('data.outcomes');
-		$dataSet = [];
-
-		foreach($indicators as $indicator => $indicatorName) {
-			$counter = 0;
-			$dataSet[$indicator] = [];
-			
-				$ou = 'dNLjKwsVjod';
-				
-				$goal_model = 'App\Models\Data\\'.$indicators[$indicator];
-				$datum = $goal_model::orderBy('period', 'asc')->get();
-				
-				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
-				// dd($datum_goal);
-				$dataSet[$indicator]['title'] = $indicator;
-				$dataSet[$indicator]['periods'] = $datum->pluck('period');
-				$dataSet[$indicator]['goal_period'] = $datum_goal->period;
-				$dataSet[$indicator]['goal_values'] = $datum_goal->value;
-				$dataSet[$indicator]['min'] = 0;//$goal_model::min('value');
-				$dataSet[$indicator]['max'] = 100;//m$goal_model::max('value');
-				$dataSet[$indicator]['values'] = $datum->pluck('value');	
-				if($indicators[$indicator] == 'BdhsStunting') {
-					$dataSet[$indicator]['limit'] = 100;
-					$dataSet[$indicator]['target'] = 25;
-					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
-					$dataSet[$indicator]['direction'] = -1;
-					$dataSet[$indicator]['goal_text'] = "Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021";
-					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
-					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
-				}
-				else if($indicators[$indicator] == 'BdhsWasting') {
-					$dataSet[$indicator]['goal'] = 'Goal < 10% by 2021';
-					$dataSet[$indicator]['limit'] = 100;
-					$dataSet[$indicator]['target'] = 10;
-					$dataSet[$indicator]['direction'] = -1;
-					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
-					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
-					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
-				}
-				else if($indicators[$indicator] == 'BdhsVitaminA') {
-					$dataSet[$indicator]['goal'] = 'Goal 100% by 2021';
-					$dataSet[$indicator]['limit'] = 100;
-					$dataSet[$indicator]['target'] = 1;
-					$dataSet[$indicator]['direction'] = -1;
-					$dataSet[$indicator]['goal_text'] = "Two-dose coverage for 2016: 99%";
-					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
-					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
-				}
-				else {
-					$dataSet[$indicator]['goal'] = 'Goal 65% by 2021';
-					$dataSet[$indicator]['direction'] = 1;
-					$dataSet[$indicator]['limit'] = 100;
-					$dataSet[$indicator]['target'] = 35;
-					$dataSet[$indicator]['goal_text'] = "Increase prevalence of exclusive breastfeeding";
-				}
-		}
-		
-		$outcomes = $dataSet;
-		
-		$periods = $this->getPeriodYears();
-		$flipped_period = array_flip($periods);
-
-		$periodData = '';
-		foreach ($flipped_period as $key => $value) {
-			$periodData .= $value.';';
-		}
-		
-		$periodData = rtrim($periodData, ';');
-		$periodData = explode(";", $periodData);
-		sort($periodData);
-
-		$data = config('data.maternal');
 		$total_patient_last_month = CcMrTotalPatient::orderBy('period', 'desc')->where('organisation_unit', 'dNLjKwsVjod')->first();
 
 		$maternal_nutrition_data = [
@@ -364,6 +268,73 @@ class DashboardController extends Controller
 		$month = $last_month->period_name;
 
 		return compact('percent', 'all_periods', 'all_values', 'month');
+	}
+
+	public function dashboardImpacts() {
+		$indicators = [
+			'Stunting' => 'BdhsStunting',
+			'Wasting' => 'BdhsWasting',
+			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
+			'Vitamin A Supplements' => 'BdhsVitaminA',
+		];
+
+		$dataSet = [];
+
+		foreach($indicators as $indicator => $indicatorName) {
+			$counter = 0;
+			$dataSet[$indicator] = [];
+			
+				$ou = 'dNLjKwsVjod';
+				
+				$goal_model = 'App\Models\Data\\'.$indicators[$indicator];
+				$datum = $goal_model::orderBy('period', 'asc')->get();
+				
+				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
+				// dd($datum_goal);
+				$dataSet[$indicator]['title'] = $indicator;
+				$dataSet[$indicator]['periods'] = $datum->pluck('period');
+				$dataSet[$indicator]['goal_period'] = $datum_goal->period;
+				$dataSet[$indicator]['goal_values'] = $datum_goal->value;
+				$dataSet[$indicator]['min'] = 0;//$goal_model::min('value');
+				$dataSet[$indicator]['max'] = 100;//m$goal_model::max('value');
+				$dataSet[$indicator]['values'] = $datum->pluck('value');	
+				if($indicators[$indicator] == 'BdhsStunting') {
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 25;
+					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
+					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['goal_text'] = "Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021";
+					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
+					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+				}
+				else if($indicators[$indicator] == 'BdhsWasting') {
+					$dataSet[$indicator]['goal'] = 'Goal < 10% by 2021';
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 10;
+					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
+					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
+					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+				}
+				else if($indicators[$indicator] == 'BdhsVitaminA') {
+					$dataSet[$indicator]['goal'] = 'Goal 100% by 2021';
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 1;
+					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['goal_text'] = "Two-dose coverage for 2016: 99%";
+					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
+					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+				}
+				else {
+					$dataSet[$indicator]['goal'] = 'Goal 65% by 2021';
+					$dataSet[$indicator]['direction'] = 1;
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 35;
+					$dataSet[$indicator]['goal_text'] = "Increase prevalence of exclusive breastfeeding";
+				}
+		}
+
+		return $dataSet;
 	}
 
 	public function getGeoJsons() {
