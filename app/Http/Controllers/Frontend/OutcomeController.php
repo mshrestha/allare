@@ -126,7 +126,7 @@ class OutcomeController extends Controller
 	}
 
 	public function indexChild() {
-		$organisation_units = OrganisationUnit::where('level', 2)->get();
+		$organisation_units = OrganisationUnit::whereIn('level', [1, 2])->get();
 		$periods = $this->getPeriodYears();
 		$flipped_period = array_flip($periods);
 
