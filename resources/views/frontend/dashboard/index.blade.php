@@ -34,47 +34,6 @@
 			      				</div> {{-- legend --}}
 			      			</div>
 							
-							<div class="row mt-4">
-				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-				      				<label for="">Select the Division</label>
-					      			<div class="input-group">
-					                {{-- <div class="input-group-prepend">
-					                    <label class="input-group-text" for="period-id">Periods</label>
-					                </div> --}}
-					                <select class="custom-select" name="period_id" id="period_id" required>
-					                    <option value="">Divisions</option>
-					                    <option value="">Barisal Division</option>
-					                    <option value="">Chittagong Division</option>
-					                    <option value="">Dhaka Division</option>
-					                    <option value="">Khulna Division</option>
-					                    <option value="">Mymensingh Division</option>
-					                    <option value="">Rajshahi Division</option>
-					                    <option value="">Rangpur Division</option>
-					                    <option value="">Sylhet Division</option>
-					                    <option value="">X organizationunits for delete</option>
-					                    {{-- @foreach($periods as $key => $period)
-					                    	<option value="{{ $key }}">{{ $period }}</option>
-					                    @endforeach --}}
-					                </select>
-					            </div>
-				      			</div>
-				      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
-				      				<label for="">Select the Timeline</label>
-					      			<div class="input-group">
-					                {{-- <div class="input-group-prepend">
-					                    <label class="input-group-text" for="period-id">Periods</label>
-					                </div> --}}
-					                <select class="custom-select" name="period_id" id="period_id" required>
-					                    <option value="">Periods</option>
-					                    <option value="LAST_MONTH">Last month</option>
-					                    <option value="LAST_6_MONTHS">Last 6 months</option>
-					                    {{-- @foreach($periods as $key => $period)
-					                    	<option value="{{ $key }}">{{ $period }}</option>
-					                    @endforeach --}}
-					                </select>
-					            </div>
-				      			</div>
-				      		</div> {{-- row --}}
 
 			      			{{-- <div>
 			      				<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
@@ -98,6 +57,32 @@
 			      				</form>
 							</div> --}}
 			      		</div> {{-- row --}}
+
+			      		<div class="row mt-4">
+				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+				      				<label for="">Select the Division</label>
+					      			<div class="input-group">
+						                <select class="custom-select" name="period_id" id="period_id" required>
+						                	@foreach($organisation_units as $organisation_unit)
+						                    <option value="">{{ $organisation_unit->name }}</option>
+						                    @endforeach
+						                </select>
+						            </div>
+				      			</div>
+				      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+				      				<label for="">Select the Timeline</label>
+					      			<div class="input-group">
+						                <select class="custom-select" name="period_id" id="period_id" required>
+						                    <option value="">Periods</option>
+						                    <option value="LAST_MONTH">Last month</option>
+						                    <option value="LAST_6_MONTHS">Last 6 months</option>
+						                    @foreach($periods as $key => $period)
+						                    	<option value="{{ $key }}">{{ $period }}</option>
+						                    @endforeach
+						                </select>
+						            </div>
+				      			</div>
+				      		</div> {{-- row --}}
 			      	</div> {{-- output col-md-8 --}}
 			      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
 			      		<div class="row">
