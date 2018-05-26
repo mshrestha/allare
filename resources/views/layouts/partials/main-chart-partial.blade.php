@@ -11,7 +11,9 @@
 	                <select class="custom-select" id="organisation_unit_id" name="organisation_unit_id" required>
 	                    <option value="">Divisions</option>
 	                	@foreach($organisation_units as $organisation_unit)
-	                    <option value="{{ $organisation_unit->central_api_id }}.{{ $organisation_unit->community_api_id }}">{{ $organisation_unit->name }}</option>
+	                		@if($organisation_unit->name != 'X organizationunits for delete')
+	                    	<option value="{{ $organisation_unit->central_api_id }}.{{ $organisation_unit->community_api_id }}">{{ $organisation_unit->name }}</option>
+                    	@endif
 	                	@endforeach
 	                </select>
 

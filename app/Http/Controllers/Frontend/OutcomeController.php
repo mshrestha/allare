@@ -15,10 +15,10 @@ class OutcomeController extends Controller
 	use PeriodHelper;
 
 	public function indexAction() {
-		$organisation_units = OrganisationUnit::where('level', 2)->get();
+		$organisation_units = OrganisationUnit::whereIn('level', [1, 2])->get();
 		$periods = $this->getPeriodYears();
 		$flipped_period = array_flip($periods);
-
+		// dd($organisation_units);
 		$periodData = '';
 		foreach ($flipped_period as $key => $value) {
 			$periodData .= $value.';';
@@ -263,16 +263,21 @@ class OutcomeController extends Controller
 				$next_data_used = 'DGHS';
 			}
 
+			// dd($data);
 			for ($i=0; $i < count($data[$loop_data_used]); $i++) { 
 
 				if(!$this->existsInArray($data[$next_data_used], $data[$loop_data_used][$i]['period'])) {
-					array_push($data[$next_data_used], $data[$loop_data_used][$i]);
+					$newData = $data[$loop_data_used][$i];
+					$newData['value'] = 0;
+					array_push($data[$next_data_used], $newData);
 				}
 			}
 
 			for ($i=0; $i < count($data[$next_data_used]); $i++) { 
 				if(!$this->existsInArray($data[$loop_data_used], $data[$next_data_used][$i]['period'])) {
-					array_push($data[$loop_data_used], $data[$next_data_used][$i]);
+					$newData = $data[$next_data_used][$i];
+					$newData['value'] = 0;
+					array_push($data[$loop_data_used], $newData);
 				}
 			}
 
