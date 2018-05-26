@@ -203,28 +203,28 @@ function charts(datasets, labels) {
 
     var startDate, endDate;
     function trendAnalysisChart(id, data_value) {
-      $("#line-chart-"+id).html('');
       var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
-
       var dataCSV = [];
       var max = 0;
       var origValues = [];
       var processedValues = [];
-      // console.log(data_value);
-      for (var i = 0; i < data_value.values.length; i++) {
+      startDate = data_value.periods[0];
+      endDate = data_value.periods[data_value.periods.length];
+      for (var i = data_value.values.length - 1; i > 0; i--) {
+        if(i == 0) {
+          console.log('zero');
+          console.log(data_value.periods[i]);
+        }
         temp = {};
         temp.date = data_value.periods[i];
         temp.value = data_value.values[i];
         dataCSV.push(temp);
-        if(i == 0)
-          startDate = temp.date;
-        if(i == data_value.values.length - 1)
-          endDate = temp.date;
       };
-
+      maxDate = 0;
+      minDate = 999999;
       dataCSV.forEach(function(d) {
         temp = 0;
         if(d.value.includes('E')){
@@ -235,18 +235,21 @@ function charts(datasets, labels) {
             temp = parseInt(d.value);
         if(max < parseInt(temp))
           max = d.value;
+        if(maxDate < parseInt(d.date))
+          maxDate = parseInt(d.date);
+        if(minDate > parseInt(d.date))
+          minDate = parseInt(d.date);
       });
       var parentDiv = document.getElementById('output-area-chart-'+id);
       var w = parentDiv.clientWidth,                        
       h = parentDiv.clientHeight;      
-      var margin = {top: 20, right: 20, bottom: 20, left: 90},
+       var margin = {top: 20, right: 20, bottom: 20, left: 90},
           width = w - margin.left - margin.right,
           height = h - margin.top - margin.bottom;
 
       var x = d3.time.scale()
                 .range([0, width])
-                .domain([d3.max(dataCSV, function(d) { return d.date; }), d3.min(dataCSV, function(d) { return d.date; })]);
-
+                .domain([minDate, maxDate]);
       // var x = d3.scale.linear()
       //     .domain([0, d3.max(dataCSV, function(d) { return d.date; })])
       //     .range([0, width]);

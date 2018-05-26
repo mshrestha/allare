@@ -196,23 +196,22 @@ var colors = [
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
-      console.log(data_value);
       var dataCSV = [];
       var max = 0;
       var origValues = [];
       var processedValues = [];
-      console.log(data_value);
-      for (var i = 0; i < data_value.values.length; i++) {
+      startDate = data_value.periods[0];
+      endDate = data_value.periods[data_value.periods.length];
+      for (var i = data_value.values.length - 1; i > 0; i--) {
+        if(i == 0) {
+          console.log('zero');
+          console.log(data_value.periods[i]);
+        }
         temp = {};
         temp.date = data_value.periods[i];
         temp.value = data_value.values[i];
         dataCSV.push(temp);
-        if(i == 0)
-          startDate = temp.date;
-        if(i == data_value.values.length - 1)
-          endDate = temp.date;
       };
-
       maxDate = 0;
       minDate = 999999;
       dataCSV.forEach(function(d) {
@@ -239,8 +238,7 @@ var colors = [
 
       var x = d3.time.scale()
                 .range([0, width])
-                .domain([maxDate, minDate]);
-      console.log(maxDate, minDate);
+                .domain([minDate, maxDate]);
       // var x = d3.scale.linear()
       //     .domain([0, d3.max(dataCSV, function(d) { return d.date; })])
       //     .range([0, width]);
@@ -288,12 +286,6 @@ var colors = [
       svg.append("g")
           .attr("class", "grid")
           .call(yAxis)
-
-
-      svg.append("g")
-          .attr("class", "grid")
-          .call(xAxis)
-
       
     }
 
