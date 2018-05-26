@@ -8,12 +8,6 @@
     <title>Unicef</title>
 
     <!-- Bootstrap -->
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
-    {{-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> --}}
-    {{--
-      <!-- Optional theme -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    --}}
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css\icomoon\style.css')}}">
     <link rel="stylesheet" href="{{asset('css\custom.css')}}">
@@ -63,7 +57,7 @@
                     <a class="dropdown-item {{ Request::path() == 'outcomes/child' ? 'active' : '' }}" href="{{ route('frontend.outcomes.child') }}">Child</a>
                   </div>
                 </li>
-                <li class="nav-item {{ Request::path() == 'outcomes' ? 'active' : '' }}">
+                <li class="nav-item {{ Request::path() == 'impacts' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.impacts') }}">Impacts</a>
                 </li>
 
