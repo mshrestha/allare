@@ -285,52 +285,92 @@ class ImporterController extends Controller
     }
 
     public function importDGFPCsv() {
-        $address = 'FPMIS2017.xlsx';
+        $address = 'FPMIS.xlsx';
         Excel::load($address, function($reader) {
             $results = $reader->get();
-            $data = config('datamodel');
-            $dataArray['cc_cr_exclusive_breast_feeding'] = [];
-            $dataArray['cc_mr_anc_ifa_distribution'] = [];
-            $dataArray['imci_counselling'] = [];
-            $dataArray['imci_stunting'] = [];
-            $dataArray['imci_wasting'] = [];
-            foreach ($results as $result) {
-                if($result['district'] != '') {
-                    if (strpos(strtolower($result['district']), 'district') === false) {
-                        $unit = [];
-                        $organization = OrganisationUnit::where('name', $result['district'])->first();
-                        $ou = $organization->central_api_id;
-                        $periods = explode(' ', $result['month']);
-                        $pe = $periods[1].$this->getMonth($periods[0]);
-                        $source = 'DGFP';
-                        $unit['organisation_unit'] = $ou;
-                        $unit['category_option_combo'] = NULL;
-                        $unit['period'] = $pe;
-                        $unit['period_name'] = $result['month'];
-                        $unit['source'] = 'DGFP';
-                        $unit['server'] = 'central';
-                        $unit['import_date'] = date('Y-m-d');
-                        $unit['created_at'] = date('Y-m-d H:i:s');
-                        $unit['updated_at'] = date('Y-m-d H:i:s');
-                        
-                        $unit['value'] = $result['counseling_on_iycf_ifa_vitamin_a_hand_washing'];
-                        array_push($dataArray['imci_counselling'], $unit);
-
-                        $unit['value'] = $result['received_ifa_pregnant_child_mother'];
-                        array_push($dataArray['cc_mr_anc_ifa_distribution'], $unit);
-
-                        $unit['value'] = $result['exclusive_breast_feeding_up_to_6_months'];
-                        array_push($dataArray['cc_cr_exclusive_breast_feeding'], $unit);
-
-                        $unit['value'] = $result['identifying_child_stunting'];
-                        array_push($dataArray['imci_stunting'], $unit);
-
-                        $unit['value'] = $result['identifying_child_wasting'];
-                        array_push($dataArray['imci_wasting'], $unit);
-                    }
-                }
-            }
             
+            $data = config('datamodel');
+            $dataArray['a_n_c1s'] = [];
+            $dataArray['a_n_c2s'] = [];
+            $dataArray['a_n_c3s'] = [];
+            $dataArray['a_n_c4s'] = [];
+            $dataArray['p_n_c1s'] = [];
+            $dataArray['p_n_c2s'] = [];
+            $dataArray['p_n_c3s'] = [];
+            $dataArray['p_n_c4s'] = [];
+            // $dataArray['cc_mr_anc_ifa_distribution'] = [];
+            // $dataArray['imci_counselling'] = [];
+            // $dataArray['cc_cr_exclusive_breast_feeding'] = [];
+            // $dataArray['imci_stunting'] = [];
+            // $dataArray['imci_wasting'] = [];
+            $counter = 0;
+            foreach ($results as $result) {
+                // dd($result);
+                $unit = [];
+                $orgName = $result['division'];
+                if(strcasecmp('bangladesh', strtolower($result['division'])) !== 0)
+                    $orgName = $orgName.' division';
+                $orgName = ucwords($orgName);
+                $organization = OrganisationUnit::where('name', $orgName)->first();
+                $ou = $organization->central_api_id;
+                $pe = (int)$result['date'];
+                // $periods = explode(' ', $result['month']);
+                // $pe = $periods[1].$this->getMonth($periods[0]);
+                $source = 'DGFP';
+                $unit['organisation_unit'] = $ou;
+                $unit['category_option_combo'] = NULL;
+                $unit['period'] = $pe;
+                $unit['period_name'] = $this->getPeriodName(substr($result['date'], -2), substr($result['date'], 0, 4));
+                
+                $unit['source'] = 'DGFP';
+                $unit['server'] = 'central';
+                $unit['import_date'] = date('Y-m-d');
+                $unit['created_at'] = date('Y-m-d H:i:s');
+                $unit['updated_at'] = date('Y-m-d H:i:s');
+                
+                $unit['value'] = $result['anc_1'];
+                array_push($dataArray['a_n_c1s'], $unit);
+
+                $unit['value'] = $result['anc_2'];
+                array_push($dataArray['a_n_c2s'], $unit);
+
+                $unit['value'] = $result['anc_3'];
+                array_push($dataArray['a_n_c3s'], $unit);
+
+                $unit['value'] = $result['anc_4'];
+                array_push($dataArray['a_n_c4s'], $unit);
+
+                $unit['value'] = $result['pnc_1'];
+                array_push($dataArray['p_n_c1s'], $unit);
+
+                $unit['value'] = $result['pnc_2'];
+                array_push($dataArray['p_n_c2s'], $unit);
+
+                $unit['value'] = $result['pnc_3'];
+                array_push($dataArray['p_n_c3s'], $unit);
+
+                $unit['value'] = $result['pnc_4'];
+                array_push($dataArray['p_n_c4s'], $unit);
+
+
+
+                // $unit['value'] = $result['number_of_pregnant_woman_received_ifa'];
+                // array_push($dataArray['cc_mr_anc_ifa_distribution'], $unit);
+
+                // $unit['value'] = $result['exclusive_breast_feeding_up_to_6_months'];
+                // array_push($dataArray['cc_cr_exclusive_breast_feeding'], $unit);
+
+                // $unit['value'] = $result['identifying_child_stunting'];
+                // array_push($dataArray['imci_stunting'], $unit);
+
+                // $unit['value'] = $result['identifying_child_wasting'];
+                // array_push($dataArray['imci_wasting'], $unit);
+
+                // $unit['value'] = $result['counseling_on_iycf_ifavitamin_a_hand_washing'];
+                // array_push($dataArray['imci_counselling'], $unit);
+                
+            }
+            // dd($dataArray);
             foreach ($dataArray as $key => $value) {
                 for ($i=0; $i < count($data); $i++) { 
                     if($data[$i]['table'] == $key) {
@@ -339,57 +379,58 @@ class ImporterController extends Controller
                     }
                 }
             }
+            dd('done');
         });
     }
 
-    private function getMonth($monthName) {
-        switch (strtolower($monthName)) {
-            case 'january':
-                return '01';
+    private function getPeriodName($month, $year) {
+        switch ($month) {
+            case '01':
+                return 'January '.$year;
                 break;
 
-            case 'february':
-                return '02';
+            case '02':
+                return 'Febraury '.$year;
                 break;
 
-            case 'march':
-                return '03';
+            case '03':
+                return 'March '.$year;
                 break;
 
-            case 'april':
-                return '04';
+            case '04':
+                return 'April '.$year;
                 break;
 
-            case 'may':
-                return '05';
+            case '05':
+                return 'May '.$year;
                 break;
 
-            case 'june':
-                return '06';
+            case '06':
+                return 'June '.$year;
                 break;
 
-            case 'july':
-                return '07';
+            case '07':
+                return 'July '.$year;
                 break;
 
-            case 'august':
-                return '08';
+            case '08':
+                return 'August '.$year;
                 break;
 
-            case 'september':
-                return '09';
+            case '09':
+                return 'September '.$year;
                 break;
 
-            case 'october':
-                return '10';
+            case '10':
+                return 'October '.$year;
                 break;
 
-            case 'november':
-                return '11';
+            case '11':
+                return 'November '.$year;
                 break;
 
-            case 'december':
-                return '12';
+            case '12':
+                return 'December '.$year;
                 break;
         }
     }

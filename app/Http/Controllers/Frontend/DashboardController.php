@@ -632,10 +632,14 @@ class DashboardController extends Controller
 				$server = $datamodel[$i]['server'];
 		}
 		$pe = date('Y').date('m', strtotime('-1 month'));
-		$pe = '201802';
+		// $pe = '201804';
 		$organisations = $this->getOrganisations($server);
 		// dd($organisations);
-		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', NULL)->get();
+		$category = NULL;
+		if($data['model'] == 'CcMrWeightInKgAnc')
+			$category = 'OJd05AWCFTk';
+		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
+		// dd($responseData);
 		$dataArr = [];
 		$valueArr = [];
 		for ($i=0; $i < count($responseData); $i++) { 
@@ -655,6 +659,9 @@ class DashboardController extends Controller
 			$reverse = true;
 		} else if(strcasecmp($data['model'], 'CcCrExclusiveBreastFeeding') == 0){
 			$text = 'Children breastfed: ';
+			$reverse = true;
+		} else if(strcasecmp($data['model'], 'ImciAnemia') == 0){
+			$text = 'Children suffering from Anemia: ';
 			$reverse = true;
 		}
 

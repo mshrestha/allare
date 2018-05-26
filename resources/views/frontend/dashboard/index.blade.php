@@ -33,8 +33,50 @@
 			      					<div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div>
 			      				</div> {{-- legend --}}
 			      			</div>
+							
+							<div class="row mt-4">
+				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+				      				<label for="">Select the Division</label>
+					      			<div class="input-group">
+					                {{-- <div class="input-group-prepend">
+					                    <label class="input-group-text" for="period-id">Periods</label>
+					                </div> --}}
+					                <select class="custom-select" name="period_id" id="period_id" required>
+					                    <option value="">Divisions</option>
+					                    <option value="">Barisal Division</option>
+					                    <option value="">Chittagong Division</option>
+					                    <option value="">Dhaka Division</option>
+					                    <option value="">Khulna Division</option>
+					                    <option value="">Mymensingh Division</option>
+					                    <option value="">Rajshahi Division</option>
+					                    <option value="">Rangpur Division</option>
+					                    <option value="">Sylhet Division</option>
+					                    <option value="">X organizationunits for delete</option>
+					                    {{-- @foreach($periods as $key => $period)
+					                    	<option value="{{ $key }}">{{ $period }}</option>
+					                    @endforeach --}}
+					                </select>
+					            </div>
+				      			</div>
+				      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+				      				<label for="">Select the Timeline</label>
+					      			<div class="input-group">
+					                {{-- <div class="input-group-prepend">
+					                    <label class="input-group-text" for="period-id">Periods</label>
+					                </div> --}}
+					                <select class="custom-select" name="period_id" id="period_id" required>
+					                    <option value="">Periods</option>
+					                    <option value="LAST_MONTH">Last month</option>
+					                    <option value="LAST_6_MONTHS">Last 6 months</option>
+					                    {{-- @foreach($periods as $key => $period)
+					                    	<option value="{{ $key }}">{{ $period }}</option>
+					                    @endforeach --}}
+					                </select>
+					            </div>
+				      			</div>
+				      		</div> {{-- row --}}
 
-			      			<div>
+			      			{{-- <div>
 			      				<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
 									<div class="form-group">
 										<select name="organisation_unit" class="custom-select national_outcomes_filter_form_fields" required>
@@ -54,7 +96,7 @@
 						                </select>
 									</div>
 			      				</form>
-							</div>
+							</div> --}}
 			      		</div> {{-- row --}}
 			      	</div> {{-- output col-md-8 --}}
 			      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
@@ -96,14 +138,21 @@
 
 							<ul class="map-filter outcome mb-0">
 									<li class="list-head green">IMPACTS</li>
-									<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li>
-									<li class="list-head" id="wasting" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</li>
-									<li class="list-head" id="breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'BREASTFEEDING', '#breastfeeding')">BREASTFEEDING</li>
-							</ul>
-						</div>
-						<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
-							<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
-								<div id="zoomctrl">
+									<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</a></li>
+									{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
+									<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</a></li>
+									<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('ImciAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
+		    				</ul>
+		    				<ul class="map-filter mb-0">
+									<li class="list-head">INTERMEDIATE</li>
+									<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding'
+									)">Exclusive Breastfeeding</a></li>
+									<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
+		    				</ul>
+		    			</div>
+		    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
+		    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
+		    					<div id="zoomctrl">
 							    </div>
 							</div>
 							<div id="overdiv">
@@ -732,11 +781,13 @@
   	const getMapData = (model, item, id) => {
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
+      console.log(model, item, id);
   		$.ajax({
 	      type: 'get',
 	      url: '/dashboard_specific_map',
 	      data: {"model": model},
 	      success: function (res) {
+	      	console.log(res);
 	      	if(res['dataExists']) {
 
 						if(res['reverse']) {
@@ -874,7 +925,7 @@
 								id = ids[1];
 							value = res['minimalData'][id];
 							console.log(value);
-							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+							infoWindow.setContent('<div style="line-height::;.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
 							var anchor = new google.maps.MVCObject();
 				    	anchor.set("position", e.latLng);
 				    	infoWindow.open(map, anchor);
