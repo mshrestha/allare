@@ -212,7 +212,7 @@ function charts(datasets, labels) {
       var origValues = [];
       var processedValues = [];
       startDate = data_value.periods[0];
-      endDate = data_value.periods[data_value.periods.length];
+      endDate = data_value.periods[data_value.periods.length - 1];
       for (var i = data_value.values.length - 1; i > 0; i--) {
         if(i == 0) {
           console.log('zero');
