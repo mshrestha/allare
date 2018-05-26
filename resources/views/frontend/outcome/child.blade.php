@@ -196,7 +196,7 @@ var colors = [
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
-
+      console.log(data_value);
       var dataCSV = [];
       var max = 0;
       var origValues = [];
@@ -213,6 +213,8 @@ var colors = [
           endDate = temp.date;
       };
 
+      maxDate = 0;
+      minDate = 999999;
       dataCSV.forEach(function(d) {
         temp = 0;
         if(d.value.includes('E')){
@@ -223,6 +225,10 @@ var colors = [
             temp = parseInt(d.value);
         if(max < parseInt(temp))
           max = d.value;
+        if(maxDate < parseInt(d.date))
+          maxDate = parseInt(d.date);
+        if(minDate > parseInt(d.date))
+          minDate = parseInt(d.date);
       });
       var parentDiv = document.getElementById('output-area-chart-'+id);
       var w = parentDiv.clientWidth,                        
@@ -233,8 +239,8 @@ var colors = [
 
       var x = d3.time.scale()
                 .range([0, width])
-                .domain([d3.max(dataCSV, function(d) { return d.date; }), d3.min(dataCSV, function(d) { return d.date; })]);
-
+                .domain([maxDate, minDate]);
+      console.log(maxDate, minDate);
       // var x = d3.scale.linear()
       //     .domain([0, d3.max(dataCSV, function(d) { return d.date; })])
       //     .range([0, width]);
@@ -282,6 +288,11 @@ var colors = [
       svg.append("g")
           .attr("class", "grid")
           .call(yAxis)
+
+
+      svg.append("g")
+          .attr("class", "grid")
+          .call(xAxis)
 
       
     }
