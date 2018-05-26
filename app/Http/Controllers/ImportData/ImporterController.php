@@ -51,7 +51,7 @@ class ImporterController extends Controller
             }
 
             // $pe = '201803;201804';
-            $this->getPeriods();
+            $pe = $this->getPeriods();
             // dd($pe);
             $pe = $pe['years_months_string'];
             for($j = 0; $j < count($ou); $j++) {
@@ -66,7 +66,7 @@ class ImporterController extends Controller
                 $responses = json_decode($responses);
                 
                 // dd($url);
-                dd($responses);
+                // dd($responses);
                 $metaData = $responses->metaData;
                 
                 $co = $metaData->dimensions->co;

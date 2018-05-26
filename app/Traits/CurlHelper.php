@@ -14,7 +14,7 @@ trait CurlHelper
         'headers' => array(
           "Accept: application/json",
           "content-type: application/x-www-form-urlencoded",
-          "Authorization: Basic ".base64_encode('view:DGHS1234')
+          "Authorization: Basic ".base64_encode('view:DGHS@1234')
           // "Authorization: Basic ".base64_encode('demo:1e6db50c-0fee-11e5-98d0-3c15c2c6caf6')
         )
       ));

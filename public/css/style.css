@@ -7041,6 +7041,19 @@ body {
 .swiper-pagination.swiper-pagination-bullets {
   display: none; }
 
+.swiper-container-outer {
+  position: relative; }
+
+@media (min-width: 768px) {
+  .swiper-container-outer:after {
+    content: "";
+    width: 200px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: #e6e6e6;
+    position: absolute;
+    z-index: 0; } }
 .legend {
   color: #535353;
   font-size: 12px;
@@ -7455,7 +7468,7 @@ div#zoomctrl div {
   font: 12px/25px "Roboto", sans-serif;
   border-radius: 0; }
   .custom-select:focus {
-    border-color: transparent;
+    border-color: #CED4DA;
     box-shadow: none; }
 
 .side-filter-div {
@@ -7530,7 +7543,7 @@ div#zoomctrl div {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1600px; } }
+    max-width: 100%; } }
 @media screen and (min-width: 900px) and (min-height: 800px) {
   .swiper-wrapper .output-col, .filter-col, #mapdiv {
     min-height: 70vh; }
