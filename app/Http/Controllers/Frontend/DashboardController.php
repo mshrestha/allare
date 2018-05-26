@@ -47,19 +47,19 @@ class DashboardController extends Controller
 		$organisation_units = OrganisationUnit::where('level', 2)->get();
 		$sidebarContents = $this->sidebarContents();
 		$outcomes = $this->dashboardImpacts();
-		$periods = $this->getPeriodYears();
-
-		$total_patient_last_month = CcMrTotalPatient::orderBy('period', 'desc')->where('organisation_unit', 'dNLjKwsVjod')->first();
+		$periods = [ 2018, 2017, 2016 ];
+		$bangladesh_ou = ['dNLjKwsVjod', 'dNLjKwsVjod'];
+		$current_period = $periods[0];
 
 		$maternal_nutrition_data = [
-			'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage()),
-			'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage()),
+			'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($bangladesh_ou, $current_period)),
+			'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($bangladesh_ou, $current_period)),
 			'weight_measured' => 0,
 			'exclusive_breastfeeding' => 0
 		];
 
 		$child_nutrition_data = [
-			'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage()),
+			'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage($bangladesh_ou, $current_period)),
 			'supplements_distributed' => 0,
 			'child_growth_monitoring' => 0,
 			'minimum_acceptable_diet' => 0
@@ -69,26 +69,41 @@ class DashboardController extends Controller
 	}
 
 	public function ajaxCircularChart(Request $request) {
-		//
+		$organisation_unit = explode('.', $request->organisation_unit);
+		$maternal_nutrition_data = [
+			'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $request->period)),
+			'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($organisation_unit, $request->period)),
+			'weight_measured' => 0,
+			'exclusive_breastfeeding' => 0
+		];
+
+		$child_nutrition_data = [
+			'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage($organisation_unit, $request->period)),
+			'supplements_distributed' => 0,
+			'child_growth_monitoring' => 0,
+			'minimum_acceptable_diet' => 0
+		];
+
+		return [$maternal_nutrition_data, $child_nutrition_data];
 	}
 
-	public function calculate_IYCF_counselling_percentage() {
+	public function calculate_IYCF_counselling_percentage($organisation_unit, $period) {
 		//DHIS iycf counselling calculation
 		//Numerator : Kazi-Central -> IMCI Counseling
 		//Denominator : Kazi-Central->IMCI Male + IMCI Female
 		
-		$imci_male = ImciMale::where('organisation_unit', 'dNLjKwsVjod')
+		$imci_male = ImciMale::where('organisation_unit', $organisation_unit[1])
 						->whereNull('category_option_combo')
 						->where('source', 'DGHS')
-						->where('period', date('Y'))->first();
-		$imci_female = ImciFemale::where('organisation_unit', 'dNLjKwsVjod')
+						->where('period', $period)->first();
+		$imci_female = ImciFemale::where('organisation_unit', $organisation_unit[1])
 						->whereNull('category_option_combo')
 						->where('source', 'DGHS')
-						->where('period', date('Y'))->first();
-		$imci_counselling = ImciCounselling::where('organisation_unit', 'dNLjKwsVjod')
+						->where('period', $period)->first();
+		$imci_counselling = ImciCounselling::where('organisation_unit', $organisation_unit[1])
 						->whereNull('category_option_combo')
 						->where('source', 'DGHS')
-						->where('period', date('Y'))->first();
+						->where('period', $period)->first();
 
 		$dhis_numerator = $imci_counselling->value;
 		$dhis_denominator = $imci_male->value + $imci_female->value;
@@ -98,48 +113,48 @@ class DashboardController extends Controller
 		//Denominator -> ANC1+ANC2+ANC3+ANC4 + PNC 1+ PNC 2+ PNC 3 + PNC4
 		
 		$iycf_counselling = ImciCounselling::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc1 = ANC1::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc2 = ANC2::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc3 = ANC3::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc4 = ANC4::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$pnc1 = PNC1::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$pnc2 = PNC2::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$pnc3 = PNC3::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$pnc4 = PNC4::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 
@@ -151,33 +166,34 @@ class DashboardController extends Controller
 		return $iycf_counselling_percent;
 	}
 
-	public function calculate_IFA_distribution_percentage() {
-		// DHIS calculation
+	public function calculate_IFA_distribution_percentage($organisation_unit, $period) {
+		//DHIS calculation
 		//Numerator -> Kazi-Comm->cc_MR_ANC_IFA_Distribution
 		//Denominator -> Kazi->comm-> cc_MR_ANC_1+2+3+4 
 		
-		$cc_mr_anc_ifa_distribution = CcMrAncIfaDistribution::where('organisation_unit', 'dNLjKwsVjod')
+		$cc_mr_anc_ifa_distribution = CcMrAncIfaDistribution::where('organisation_unit', $organisation_unit[0])
 						->whereNull('category_option_combo')
 						->where('source', 'DGHS')
-						->where('period', date('Y'))->first();
+						->where('period', $period)->first();
+		
 		$anc1_dghs = ANC1::where('source', 'DGHS')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', date('Y'))
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
 		$anc2_dghs = ANC2::where('source', 'DGHS')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', date('Y'))
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
 		$anc3_dghs = ANC3::where('source', 'DGHS')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', date('Y'))
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
 		$anc4_dghs = ANC4::where('source', 'DGHS')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', date('Y'))
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
 
@@ -189,28 +205,28 @@ class DashboardController extends Controller
 		//Numerator -> Number of Pregnant Woman received IFA 
 		//Denominator -> ANC1 + ANC2 + ANC3 + ANC4
 		$number_of_pregnant_woman_received_ifa = CcMrAncIfaDistribution::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc1_dgfp = ANC1::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc2_dgfp = ANC2::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc3_dgfp = ANC3::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc4_dgfp = ANC4::where('source', 'DGFP')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', 'LIKE', '%' . 2017 . '%')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
 					->whereNull('category_option_combo')
 					->sum('value');
 
@@ -222,33 +238,34 @@ class DashboardController extends Controller
 		return $ifa_distribution_percent;
 	}
 
-	public function calculate_Maternal_nutrition_counseling_pergentage() {
+	public function calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $period) {
 		//Dhis formula
 		// Numerator: kazi->comm->cc_MR_ANC_Nutri_counsel
 		// Denominator : Kazi->comm-> cc_MR_ANC_1+2+3+4
 		
-		$cc_mr_anc_nutri_counsel = CcMrAncNutriCounsel::where('organisation_unit', 'dNLjKwsVjod')
-						->whereNull('category_option_combo')
-						->where('source', 'DGHS')
-						->where('period', date('Y'))->first();
+		$cc_mr_anc_nutri_counsel = CcMrAncNutriCounsel::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
 		$anc1_dghs = ANC1::where('source', 'DGHS')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', date('Y'))
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
 		$anc2_dghs = ANC2::where('source', 'DGHS')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', date('Y'))
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
 		$anc3_dghs = ANC3::where('source', 'DGHS')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', date('Y'))
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
 		$anc4_dghs = ANC4::where('source', 'DGHS')
-					->where('organisation_unit', 'dNLjKwsVjod')
-					->where('period', date('Y'))
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
 		$dhis_calculate = ($cc_mr_anc_nutri_counsel->value / ($anc1_dghs->value + $anc2_dghs->value + $anc3_dghs->value + $anc4_dghs->value)) * 100;
@@ -371,6 +388,145 @@ class DashboardController extends Controller
 		$returnArr['child'] = $this->getChildPercent($periodData, $ids[0], $ids[1]);
 		$returnArr['maternal'] = $this->getMaternalPercent($periodData, $ids[0], $ids[1]);
 		return $returnArr;
+	}
+
+	public function sidebarContents() {
+		$sidebarContents = [
+			'Training' => 
+			[
+				'title' => 'Departments that have trained health workers on CCTN with P4P',
+				'items' => [
+					[
+						'image' => 'training.svg',
+						'percent' => "65%",
+						'text' => 'Health workers trained'
+					],
+					[
+						'image' => 'training-check.svg',
+						'percent' => "65%",
+						'text' => 'Health workers who succeeded'
+					]
+				]
+			],
+			'Quality Assessment' => 
+			[
+				'title' => 'Quality Control & Supportive Supervision',
+				'items' => [
+					[
+						'image' => 'qa.svg',
+						'percent' => "65%",
+						'text' => 'Facilities receiving SS&M'
+					],
+					[
+						'image' => 'qa-child.svg',
+						'percent' => "65%",
+						'text' => 'Facilities providing quality IYCF/Maternal counselling'
+					],
+					[
+						'image' => 'qa-paper.svg',
+						'percent' => "65%",
+						'text' => 'Facilities providing quality Nut reporting'
+					]
+				]
+			],
+			'Supply Management' => 
+			[
+				'title' => 'Ensure adequate nutrition supplies to facilites',
+				'items' => [
+					[
+						'image' => 'supplement.svg',
+						'percent' => "65%",
+						'text' => 'Facilities requiring IFA tablets'
+					],
+					[
+						'image' => 'supplement-paper.svg',
+						'percent' => "65%",
+						'text' => 'Facilities requiring counselling materials'
+					],
+					[
+						'image' => 'supplement-tape.svg',
+						'percent' => "65%",
+						'text' => 'Facilities requiring MUAC tapes'
+					],
+					[
+						'image' => 'supplement-weight.svg',
+						'percent' => "65%",
+						'text' => 'Facilities requiring Scales / height board'
+					],
+					[
+						'image' => 'supplement-bottle.svg',
+						'percent' => "65%",
+						'text' => 'Facilities requiring F-75 and F-100 therapeutic feeding'
+					]
+				]
+			]
+		];
+
+		return $sidebarContents;
+	}
+
+	public function getMapData(Request $request) {
+		$data = $request->all();
+		$datamodel = config('datamodel');
+		$model = 'App\Models\Data\\' . $data['model'];
+		$server = 'central';
+		for ($i=0; $i < count($datamodel); $i++) { 
+			if($datamodel[$i]['model'] == $data['model'])
+				$server = $datamodel[$i]['server'];
+		}
+		$pe = date('Y').date('m', strtotime('-1 month'));
+		// $pe = '201804';
+		$organisations = $this->getOrganisations($server);
+		// dd($organisations);
+		$category = NULL;
+		if($data['model'] == 'CcMrWeightInKgAnc')
+			$category = 'OJd05AWCFTk';
+		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
+		// dd($responseData);
+		$dataArr = [];
+		$valueArr = [];
+		for ($i=0; $i < count($responseData); $i++) { 
+			$dataArr[$responseData[$i]['organisation_unit']] = $responseData[$i]['value'];
+			if($responseData[$i]['organisation_unit'] != 'dNLjKwsVjod')
+				array_push($valueArr, $responseData[$i]['value']);
+		}
+		$ranges = $this->getThreeRanges($valueArr);
+
+		$text = 'People reached: ';
+		$reverse = false;
+		if(strcasecmp($data['model'], 'ImciStunting') == 0){
+			$text = 'Children suffering from Stunting: ';
+			$reverse = true;
+		} else if(strcasecmp($data['model'], 'ImciStunting') == 0){
+			$text = 'Children suffering from Wasting: ';
+			$reverse = true;
+		} else if(strcasecmp($data['model'], 'CcCrExclusiveBreastFeeding') == 0){
+			$text = 'Children breastfed: ';
+			$reverse = true;
+		} else if(strcasecmp($data['model'], 'ImciAnemia') == 0){
+			$text = 'Children suffering from Anemia: ';
+			$reverse = true;
+		}
+
+		// dd($valueArr);
+		if(count($valueArr) <= 0){
+			return array(
+				'dataExists' => false,
+			);
+		}else{
+			return array(
+				'dataExists' => true,
+				'modelData' => $responseData,
+				'minimalData' => $dataArr,
+				'server' => $server,
+				'min' => count($ranges)>0?$ranges['min']:0,
+				'q1' => count($ranges)>0?$ranges['q1']:0,
+				'q2' => count($ranges)>0?$ranges['q2']:0,
+				'max' => count($ranges)>0?$ranges['max']:0,
+				'text' => $text,
+				'reverse' => $reverse
+			);
+		}
 	}
 
 	private function getChildPercent($periodData, $central_api_id, $community_api_id) {
@@ -516,145 +672,6 @@ class DashboardController extends Controller
 		];
 
 		return $maternal_trend_analysis;
-	}
-
-	public function sidebarContents() {
-		$sidebarContents = [
-			'Training' => 
-			[
-				'title' => 'Departments that have trained health workers on CCTN with P4P',
-				'items' => [
-					[
-						'image' => 'training.svg',
-						'percent' => "65%",
-						'text' => 'Health workers trained'
-					],
-					[
-						'image' => 'training-check.svg',
-						'percent' => "65%",
-						'text' => 'Health workers who succeeded'
-					]
-				]
-			],
-			'Quality Assessment' => 
-			[
-				'title' => 'Quality Control & Supportive Supervision',
-				'items' => [
-					[
-						'image' => 'qa.svg',
-						'percent' => "65%",
-						'text' => 'Facilities receiving SS&M'
-					],
-					[
-						'image' => 'qa-child.svg',
-						'percent' => "65%",
-						'text' => 'Facilities providing quality IYCF/Maternal counselling'
-					],
-					[
-						'image' => 'qa-paper.svg',
-						'percent' => "65%",
-						'text' => 'Facilities providing quality Nut reporting'
-					]
-				]
-			],
-			'Supply Management' => 
-			[
-				'title' => 'Ensure adequate nutrition supplies to facilites',
-				'items' => [
-					[
-						'image' => 'supplement.svg',
-						'percent' => "65%",
-						'text' => 'Facilities requiring IFA tablets'
-					],
-					[
-						'image' => 'supplement-paper.svg',
-						'percent' => "65%",
-						'text' => 'Facilities requiring counselling materials'
-					],
-					[
-						'image' => 'supplement-tape.svg',
-						'percent' => "65%",
-						'text' => 'Facilities requiring MUAC tapes'
-					],
-					[
-						'image' => 'supplement-weight.svg',
-						'percent' => "65%",
-						'text' => 'Facilities requiring Scales / height board'
-					],
-					[
-						'image' => 'supplement-bottle.svg',
-						'percent' => "65%",
-						'text' => 'Facilities requiring F-75 and F-100 therapeutic feeding'
-					]
-				]
-			]
-		];
-
-		return $sidebarContents;
-	}
-
-	public function getMapData(Request $request) {
-		$data = $request->all();
-		$datamodel = config('datamodel');
-		$model = 'App\Models\Data\\' . $data['model'];
-		$server = 'central';
-		for ($i=0; $i < count($datamodel); $i++) { 
-			if($datamodel[$i]['model'] == $data['model'])
-				$server = $datamodel[$i]['server'];
-		}
-		$pe = date('Y').date('m', strtotime('-1 month'));
-		// $pe = '201804';
-		$organisations = $this->getOrganisations($server);
-		// dd($organisations);
-		$category = NULL;
-		if($data['model'] == 'CcMrWeightInKgAnc')
-			$category = 'OJd05AWCFTk';
-		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
-		// dd($responseData);
-		$dataArr = [];
-		$valueArr = [];
-		for ($i=0; $i < count($responseData); $i++) { 
-			$dataArr[$responseData[$i]['organisation_unit']] = $responseData[$i]['value'];
-			if($responseData[$i]['organisation_unit'] != 'dNLjKwsVjod')
-				array_push($valueArr, $responseData[$i]['value']);
-		}
-		$ranges = $this->getThreeRanges($valueArr);
-
-		$text = 'People reached: ';
-		$reverse = false;
-		if(strcasecmp($data['model'], 'ImciStunting') == 0){
-			$text = 'Children suffering from Stunting: ';
-			$reverse = true;
-		} else if(strcasecmp($data['model'], 'ImciStunting') == 0){
-			$text = 'Children suffering from Wasting: ';
-			$reverse = true;
-		} else if(strcasecmp($data['model'], 'CcCrExclusiveBreastFeeding') == 0){
-			$text = 'Children breastfed: ';
-			$reverse = true;
-		} else if(strcasecmp($data['model'], 'ImciAnemia') == 0){
-			$text = 'Children suffering from Anemia: ';
-			$reverse = true;
-		}
-
-		// dd($valueArr);
-		if(count($valueArr) <= 0){
-			return array(
-				'dataExists' => false,
-			);
-		}else{
-			return array(
-				'dataExists' => true,
-				'modelData' => $responseData,
-				'minimalData' => $dataArr,
-				'server' => $server,
-				'min' => count($ranges)>0?$ranges['min']:0,
-				'q1' => count($ranges)>0?$ranges['q1']:0,
-				'q2' => count($ranges)>0?$ranges['q2']:0,
-				'max' => count($ranges)>0?$ranges['max']:0,
-				'text' => $text,
-				'reverse' => $reverse
-			);
-		}
 	}
 
 	private function getThreeRanges($valueArray) {

@@ -58,31 +58,31 @@
 							</div> --}}
 			      		</div> {{-- row --}}
 
+			      		<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
 			      		<div class="row mt-4">
-				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-				      				<label for="">Select the Division</label>
-					      			<div class="input-group">
-						                <select class="custom-select" name="period_id" id="period_id" required>
-						                	@foreach($organisation_units as $organisation_unit)
-						                    <option value="">{{ $organisation_unit->name }}</option>
-						                    @endforeach
-						                </select>
-						            </div>
-				      			</div>
-				      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
-				      				<label for="">Select the Timeline</label>
-					      			<div class="input-group">
-						                <select class="custom-select" name="period_id" id="period_id" required>
-						                    <option value="">Periods</option>
-						                    <option value="LAST_MONTH">Last month</option>
-						                    <option value="LAST_6_MONTHS">Last 6 months</option>
-						                    @foreach($periods as $key => $period)
-						                    	<option value="{{ $key }}">{{ $period }}</option>
-						                    @endforeach
-						                </select>
-						            </div>
-				      			</div>
-				      		</div> {{-- row --}}
+			      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+			      				<label for="">Select the Division</label>
+				      			<div class="input-group">
+					                <select class="custom-select national_outcomes_filter_form_fields" id="period_id" name="organisation_unit" required>
+					                	<option value="dNLjKwsVjod.dNLjKwsVjod">Bangladesh</option>
+					                	@foreach($organisation_units as $organisation_unit)
+					                    <option value="{{ $organisation_unit->central_api_id .'.'. $organisation_unit->community_api_id}}">{{ $organisation_unit->name }}</option>
+					                    @endforeach
+					                </select>
+					            </div>
+			      			</div>
+			      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+			      				<label for="">Select the Timeline</label>
+				      			<div class="input-group">
+					                <select class="custom-select national_outcomes_filter_form_fields" id="period_id" name="period" required>
+					                    @foreach($periods as $key => $period)
+					                    	<option value="{{ $period }}">{{ $period }}</option>
+					                    @endforeach
+					                </select>
+					            </div>
+			      			</div>
+			      		</div> {{-- row --}}
+			      		</form>
 			      	</div> {{-- output col-md-8 --}}
 			      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
 			      		<div class="row">
@@ -244,9 +244,6 @@
 	</script>
 
 	<script>
-	$(document).ready(function(){
-		$('#legend-for-data').hide();
-	});
 
 	$('.national_outcomes_filter_form_fields').on('change', function() {
 		$('#national_outcomes_filter_form').submit();
@@ -259,6 +256,19 @@
   			data: $(this).serialize(),
   			success: function (res) {
   				console.log(res)
+  				$('#maternal-health').html('');
+  				$('#child-health').html('');
+
+  				curcularCharts(
+			    	res[0].maternal_nutrition_counseling,
+			    	res[0].ifa_distribution,
+			    	res[0].weight_measured,
+			    	res[0].exclusive_breastfeeding,
+			    	res[1].iycf_counselling,
+			    	res[1].supplements_distributed,
+			    	res[1].child_growth_monitoring,
+			    	res[1].minimum_acceptable_diet,
+			    );
   			}
   		})
 
@@ -627,114 +637,126 @@
 	
 	{{-- radial progress --}}
 	<script>
-	// 	new RadialProgressChart('#maternal-health', {series: [24, 85]});
-	// new RadialProgressChart('#child-health', {series: [24, 85]});
+		// new RadialProgressChart('#maternal-health', {series: [24, 85]});
+		// new RadialProgressChart('#child-health', {series: [24, 85]});
 
-    // Firefox 1.0+
-    var isFirefox = typeof InstallTrigger !== 'undefined';
+	    // Firefox 1.0+
+	    curcularCharts(
+	    	{{ $maternal_nutrition_data['maternal_nutrition_counseling'] }},
+	    	{{ $maternal_nutrition_data['ifa_distribution'] }},
+	    	{{ $maternal_nutrition_data['weight_measured'] }},
+	    	{{ $maternal_nutrition_data['exclusive_breastfeeding'] }},
+	    	{{ $child_nutrition_data['iycf_counselling'] }},
+	    	{{ $child_nutrition_data['supplements_distributed'] }},
+	    	{{ $child_nutrition_data['child_growth_monitoring'] }},
+	    	{{ $child_nutrition_data['minimum_acceptable_diet'] }},
+	    );
 
-    // Safari 3.0+ "[object HTMLElementConstructor]"
-    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+	    function curcularCharts(maternal_nutrition_counseling, ifa_distribution, weight_measured, exclusive_breastfeeding, iycf_counselling, supplements_distributed, child_growth_monitoring, minimum_acceptable_diet) {
+	    	var isFirefox = typeof InstallTrigger !== 'undefined';
 
-    var shadowWidth = 0;
-    if (isFirefox || isSafari) {
-			var shadowWidth = 0.0001;
-    }
+		    // Safari 3.0+ "[object HTMLElementConstructor]"
+		    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+
+		    var shadowWidth = 0;
+		    if (isFirefox || isSafari) {
+					var shadowWidth = 0.0001;
+		    }
 
 
-	var mainChart = new RadialProgressChart('#maternal-health', {
-		diameter: 100,
-		shadow: {
-			width: shadowWidth
-		},
-		stroke:{
-			width: 10,
-			gap: 3
-		},
-		animation: {
-			// duration: int (default: 1750),
-			// delay: int (between each ring, default: 200)
-			duration: 2000,
-			delay: 300
-		},
-		min: 0,
-		max: 100,
-		series: [
-			{
-				labelStart: {{ $maternal_nutrition_data['maternal_nutrition_counseling'] }} + '%', //maternal_nutrition_counseling
-				value: {{ $maternal_nutrition_data['maternal_nutrition_counseling'] }},
-				color: '#81ddc6',
-			},
-			{
-				labelStart: {{ $maternal_nutrition_data['ifa_distribution'] }} + '%', // IFA Distributed
-				value: {{ $maternal_nutrition_data['ifa_distribution'] }},
-				color: '#137f91',
-			},
-			{
-				labelStart: {{ $maternal_nutrition_data['weight_measured'] }} + '%', // Weight Measured
-				value: {{ $maternal_nutrition_data['weight_measured'] }},
-				color: "#005e6f"
-			},
-			{
-				labelStart: {{ $maternal_nutrition_data['exclusive_breastfeeding'] }} + '%', //Exclusive Breastfeeding
-				value: {{ $maternal_nutrition_data['exclusive_breastfeeding'] }},
-				color: "#003d48"
-			},
-		],
-		center: {
-			content: [
-			'', 'MATERNAL','NUTRITION'
-			],
-		}
-	});
+			var mainChart = new RadialProgressChart('#maternal-health', {
+				diameter: 100,
+				shadow: {
+					width: shadowWidth
+				},
+				stroke:{
+					width: 10,
+					gap: 3
+				},
+				animation: {
+					// duration: int (default: 1750),
+					// delay: int (between each ring, default: 200)
+					duration: 2000,
+					delay: 300
+				},
+				min: 0,
+				max: 100,
+				series: [
+					{
+						labelStart: maternal_nutrition_counseling + '%', //maternal_nutrition_counseling
+						value: maternal_nutrition_counseling,
+						color: '#81ddc6',
+					},
+					{
+						labelStart: ifa_distribution + '%', // IFA Distributed
+						value: ifa_distribution,
+						color: '#137f91',
+					},
+					{
+						labelStart: weight_measured + '%', // Weight Measured
+						value: weight_measured,
+						color: "#005e6f"
+					},
+					{
+						labelStart: exclusive_breastfeeding + '%', //Exclusive Breastfeeding
+						value: exclusive_breastfeeding,
+						color: "#003d48"
+					},
+				],
+				center: {
+					content: [
+					'', 'MATERNAL','NUTRITION'
+					],
+				}
+			});
 
-	  var mainChart = new RadialProgressChart('#child-health', {
-	  	diameter: 100,
-	  	shadow: {
-	  		width: shadowWidth
-	  	},
-	  	stroke:{
-	  		width: 10,
-	  		gap: 3
-	  	},
-	  	animation: {
-	        // duration: int (default: 1750),
-	        // delay: int (between each ring, default: 200)
-	        duration: 2000,
-	        delay: 300
+			var mainChart = new RadialProgressChart('#child-health', {
+			  	diameter: 100,
+			  	shadow: {
+			  		width: shadowWidth
+			  	},
+			  	stroke:{
+			  		width: 10,
+			  		gap: 3
+			  	},
+			  	animation: {
+			        // duration: int (default: 1750),
+			        // delay: int (between each ring, default: 200)
+			        duration: 2000,
+			        delay: 300
 
-	    },
-	    min: 0,
-	    max: 100,
-	    series: [
-	    {
-			labelStart: {{ $child_nutrition_data['iycf_counselling'] }} + '%', //IYCF Counselling
-			value: {{ $child_nutrition_data['iycf_counselling'] }},
-			color: '#81ddc6',
-		},
-		{
-	  		labelStart: {{ $child_nutrition_data['supplements_distributed'] }} + '%', //supplementss
-	  		value: {{ $child_nutrition_data['supplements_distributed'] }},
-	  		color: '#137f91',
-	  	},
-	  	{
-	  		labelStart: {{ $child_nutrition_data['child_growth_monitoring'] }} + '%', //Child Growth Monitoring
-	  		value: {{ $child_nutrition_data['child_growth_monitoring'] }},
-	  		color: '#005e6f'
-	  	},
-	  	{
-	  		labelStart: {{ $child_nutrition_data['minimum_acceptable_diet'] }} + '%', //Minimum acceptable diet
-	  		value: {{ $child_nutrition_data['minimum_acceptable_diet'] }},
-	  		color: '#003d48'
-	  	},
-		],
-		center: {
-			content: [
-				'', 'CHILD', 'NUTRITION'
-			],
-		}
-	});
-
+			    },
+			    min: 0,
+			    max: 100,
+			    series: [
+			    {
+					labelStart: iycf_counselling + '%', //IYCF Counselling
+					value: iycf_counselling,
+					color: '#81ddc6',
+				},
+				{
+			  		labelStart: supplements_distributed + '%', //supplementss
+			  		value: supplements_distributed,
+			  		color: '#137f91',
+			  	},
+			  	{
+			  		labelStart: child_growth_monitoring + '%', //Child Growth Monitoring
+			  		value: child_growth_monitoring,
+			  		color: '#005e6f'
+			  	},
+			  	{
+			  		labelStart: minimum_acceptable_diet + '%', //Minimum acceptable diet
+			  		value: minimum_acceptable_diet,
+			  		color: '#003d48'
+			  	},
+				],
+				center: {
+					content: [
+						'', 'CHILD', 'NUTRITION'
+					],
+				}
+			});
+	    } 
 	</script>
 
 	<script>
