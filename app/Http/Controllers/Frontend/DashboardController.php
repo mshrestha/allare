@@ -521,7 +521,10 @@ class DashboardController extends Controller
 		// $pe = '201804';
 		$organisations = $this->getOrganisations($server);
 		// dd($organisations);
-		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', NULL)->get();
+		$category = NULL;
+		if($data['model'] == 'CcMrWeightInKgAnc')
+			$category = 'OJd05AWCFTk';
+		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
 		// dd($responseData);
 		$dataArr = [];
 		$valueArr = [];
