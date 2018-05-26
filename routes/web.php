@@ -111,7 +111,7 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::post('/impacts/get-outcome-data', 'ImpactController@getOutcomeData')->name('get-outcome-data');	
 });
 
-Route::get('/test', 'Frontend\DashboardController@calculate_Maternal_nutrition_counseling_pergentage');
+// Route::get('/test', 'Frontend\DashboardController@calculate_Maternal_nutrition_counseling_pergentage');
 
 Route::get('excel-test', function () {
 		// dd(getcwd ());

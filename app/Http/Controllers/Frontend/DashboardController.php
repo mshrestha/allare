@@ -50,7 +50,6 @@ class DashboardController extends Controller
 		$periods = [ 2018, 2017, 2016 ];
 		$bangladesh_ou = ['dNLjKwsVjod', 'dNLjKwsVjod'];
 		$current_period = $periods[0];
-
 		$maternal_nutrition_data = [
 			'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($bangladesh_ou, $current_period)),
 			'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($bangladesh_ou, $current_period)),
