@@ -133,7 +133,7 @@ var colors = [
   }
   
   $(document).ready(function() {
-      $("#organisation_unit_id").val("mykF7AaZv9R.mykF7AaZv9R");
+      $("#organisation_unit_id").val("dNLjKwsVjod.dNLjKwsVjod");
       var organisation_unit_id = $("#organisation_unit_id").val();
 
       $("#period_id").val("LAST_6_MONTHS");
