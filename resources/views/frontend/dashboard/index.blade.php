@@ -118,14 +118,16 @@
 		    				</ul>
 		    				<ul class="map-filter outcome mb-0">
 									<li class="list-head green">IMPACTS</li>
-									<li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li>
-									<li class="list-head" id="wasting" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</li>
-									<li class="list-head" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">ANEMIA</li>
+									<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</a></li>
+									{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
+									<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</a></li>
+									<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('ImciAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
 		    				</ul>
 		    				<ul class="map-filter mb-0">
 									<li class="list-head">INTERMEDIATE</li>
-									<li><a href="#">Exclusive Breastfeeding</a></li>
-									<li><a href="#">Min. Acceptable diet</a></li>
+									<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding'
+									)">Exclusive Breastfeeding</a></li>
+									<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
 		    				</ul>
 		    			</div>
 		    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
@@ -1033,11 +1035,13 @@
   	const getMapData = (model, item, id) => {
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
+      console.log(model, item, id);
   		$.ajax({
 	      type: 'get',
 	      url: '/dashboard_specific_map',
 	      data: {"model": model},
 	      success: function (res) {
+	      	console.log(res);
 	      	if(res['dataExists']) {
 
 						if(res['reverse']) {
@@ -1175,7 +1179,7 @@
 								id = ids[1];
 							value = res['minimalData'][id];
 							console.log(value);
-							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+							infoWindow.setContent('<div style="line-height::;.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
 							var anchor = new google.maps.MVCObject();
 				    	anchor.set("position", e.latLng);
 				    	infoWindow.open(map, anchor);

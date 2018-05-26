@@ -184,4 +184,11 @@ return [
 		'source'  => 'DGHS',
 		'api_id'	=> 'slH9CUqYAc2'	
 	],
+	[
+		'model'		=> 'ImciAnemia',
+		'table'		=> 'imci_anemias',
+		'server'	=> 'central',
+		'source'  => 'DGHS',
+		'api_id'	=> 'GZWzBoEhi1S'	
+	],
 ];
