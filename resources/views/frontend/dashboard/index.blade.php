@@ -10,7 +10,7 @@
 			      	<div class="output-col col-md-7 col-lg-8 pb-3">
 			      		<div class="row"  data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
 			      			<div class="col-sm-12">
-			      				<div class="box-heading float-left">National outcomes</div>
+			      				<div class="box-heading float-left outputs-heading">NATIONAL OUTCOMES</div>
 			      				<div class="view-on-map float-right swiper-button-next">VIEW ON MAP</div>
 			      			</div>
 			      		</div> {{-- row --}}
@@ -33,29 +33,6 @@
 			      					{{-- <div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
-							
-
-			      			{{-- <div>
-			      				<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
-									<div class="form-group">
-										<select name="organisation_unit" class="custom-select national_outcomes_filter_form_fields" required>
-											@foreach($organisation_units as $organisation_unit)
-											<option value="{{ $organisation_unit->central_api_id }}.{{ $organisation_unit->community_api_id }}">{{ $organisation_unit->name }}</option>
-											@endforeach
-										</select>	
-									</div>
-									<div class="form-group">
-										<select class="custom-select national_outcomes_filter_form_fields" name="period" id="period_id" required>
-						                    <option value="">Periods</option>
-						                    <option value="LAST_MONTH">Last month</option>
-						                    <option value="LAST_6_MONTHS">Last 6 months</option>
-						                    @foreach($periods as $key => $period)
-						                    	<option value="{{ $period }}">{{ $period }}</option>
-						                    @endforeach
-						                </select>
-									</div>
-			      				</form>
-							</div> --}}
 			      		</div> {{-- row --}}
 
 			      		<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
@@ -63,7 +40,7 @@
 			      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 			      				<label for="">Select the Division</label>
 				      			<div class="input-group">
-					                <select class="custom-select national_outcomes_filter_form_fields" id="division_id" name="organisation_unit" required>
+					                <select class="custom-select national_outcomes_filter_form_fields country_division_field" id="division_id" name="organisation_unit" required>
 					                	<option value="dNLjKwsVjod.dNLjKwsVjod">Bangladesh</option>
 					                	@foreach($organisation_units as $organisation_unit)
 						                	@if($organisation_unit->name !== 'X organizationunits for delete')
@@ -248,7 +225,15 @@
 	<script>
 
 	$('.national_outcomes_filter_form_fields').on('change', function() {
-		$('#national_outcomes_filter_form').submit();
+		$('#national_outcomes_filter_form').submit();	
+	})
+
+	$('.country_division_field').on('change', function() {
+		if($(this).val() == 'dNLjKwsVjod.dNLjKwsVjod') {
+			$('.outputs-heading').html('NATIONAL OUTCOMES');
+		} else {
+			$('.outputs-heading').html('DIVISION OUTCOMES');
+		}
 	})
 
   	$('#national_outcomes_filter_form').on('submit', function() {
