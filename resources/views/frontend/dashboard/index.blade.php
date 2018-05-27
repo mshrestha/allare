@@ -156,7 +156,17 @@
 						</div> {{-- progress-bar-h --}}
 			  		</div>
 			  		<div>
-			  			<span class="report-lable">MCHN</span> 
+			  			<span class="report-lable">CC</span> 
+			  			<div class="progress-bar-h">
+							<div class="goal" style="width: 10%;">
+							</div>
+							<div class="current grow-h-animation" style="width: 44%;">
+								44%
+							</div>
+						</div> {{-- progress-bar-h --}}
+			  		</div>
+			  		<div>
+			  			<span class="report-lable">IMCI-N Corner</span> 
 			  			<div class="progress-bar-h">
 							<div class="goal" style="width: 10%;">
 							</div>
@@ -170,8 +180,8 @@
 			  			<div class="progress-bar-h">
 							<div class="goal" style="width: 10%;">
 							</div>
-							<div class="current grow-h-animation" style="width: 65%;">
-								65%
+							<div class="current grow-h-animation" style="width: 56%;">
+								56%
 							</div>
 						</div> {{-- progress-bar-h --}}
 			  		</div>

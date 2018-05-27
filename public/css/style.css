@@ -7243,7 +7243,7 @@ body {
   .input-wrapper .input-box.input-reporting div {
     margin-bottom: 5px; }
     .input-wrapper .input-box.input-reporting div span.report-lable {
-      width: 38%;
+      width: 100%;
       display: inline-block; }
     .input-wrapper .input-box.input-reporting div span.yes, .input-wrapper .input-box.input-reporting div span.no {
       width: 44px;
