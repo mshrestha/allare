@@ -63,10 +63,12 @@
 			      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 			      				<label for="">Select the Division</label>
 				      			<div class="input-group">
-					                <select class="custom-select national_outcomes_filter_form_fields" id="period_id" name="organisation_unit" required>
+					                <select class="custom-select national_outcomes_filter_form_fields" id="division_id" name="organisation_unit" required>
 					                	<option value="dNLjKwsVjod.dNLjKwsVjod">Bangladesh</option>
 					                	@foreach($organisation_units as $organisation_unit)
-					                    <option value="{{ $organisation_unit->central_api_id .'.'. $organisation_unit->community_api_id}}">{{ $organisation_unit->name }}</option>
+						                	@if($organisation_unit->name !== 'X organizationunits for delete')
+						                    	<option value="{{ $organisation_unit->central_api_id .'.'. $organisation_unit->community_api_id}}">{{ $organisation_unit->name }}</option>
+					                    	@endif
 					                    @endforeach
 					                </select>
 					            </div>

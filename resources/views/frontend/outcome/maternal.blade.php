@@ -97,14 +97,14 @@
 	    		maintainAspectRatio: false,
 	    		scales: {
 	    			xAxes: [{
-	    				stacked: false,
+	    				stacked: true,
 	    				gridLines : {
 	    					display : false
 	    				},
 	    				barPercentage: 1.0
 	    			}],
 	    			yAxes: [{
-	    				stacked: false
+	    				stacked: true
 	    			}]
 	    		},
 	            // Container for pan options
