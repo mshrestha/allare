@@ -99,12 +99,14 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	Route::get('/dashboard/circular-chart', 'DashboardController@ajaxCircularChart')->name('dashboard.circular-chart');
 
 	// Outputs 
-	Route::get('/outcomes', 'OutcomeController@indexAction')->name('outcomes');
-	Route::get('/outcomes/maternal', 'OutcomeController@indexAction')->name('outcomes.maternal');
-	Route::post('/outcomes/maternal-main-chart', 'OutcomeController@maternalMainChart')->name('outcomes.maternal.mainchart');
+	Route::get('/outputs', 'OutcomeController@indexAction')->name('outcomes');
+	Route::get('/outputs/maternal', 'OutcomeController@indexAction')->name('outcomes.maternal');
+	Route::get('/outputs/maternal/load-period-wise-data', 'OutcomeController@loadPeriodWiseMaternalData')->name('outcomes.maternal.load-period-wise-data');
+	Route::post('/outputs/maternal-main-chart', 'OutcomeController@maternalMainChart')->name('outcomes.maternal.mainchart');
 
 	// Output Child
-	Route::get('/outcomes/child', 'OutcomeController@indexChild')->name('outcomes.child');
+	Route::get('/outputs/child', 'OutcomeController@indexChild')->name('outcomes.child');
+	Route::get('/outputs/child/load-period-wise-data', 'OutcomeController@loadPeriodWiseChildData')->name('outcomes.child.load-period-wise-data');
 
 	// Outcomes
 	Route::get('/impacts', 'ImpactController@secondIndexAction')->name('impacts');
