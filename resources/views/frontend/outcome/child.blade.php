@@ -56,7 +56,7 @@
 
 		$.ajax({
 			type: 'GET',
-			url: '/outcomes/child/load-period-wise-data', 
+			url: '/outputs/child/load-period-wise-data', 
 			data: { model : model, period: $this.val() },
 			success: function (res) {
 				$('#chart-area-'+ res.key).html('');
@@ -151,7 +151,7 @@
 	function main_chart_data(data) {
 		$.ajax({
 			type: 'POST',
-			url: '/outcomes/maternal-main-chart',
+			url: '/outputs/maternal-main-chart',
 			data: data,
 			success: function (res) {
 				title = res.title;

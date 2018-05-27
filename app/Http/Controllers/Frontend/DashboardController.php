@@ -69,20 +69,35 @@ class DashboardController extends Controller
 
 	public function ajaxCircularChart(Request $request) {
 		$organisation_unit = explode('.', $request->organisation_unit);
-		$maternal_nutrition_data = [
-			'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $request->period)),
-			'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($organisation_unit, $request->period)),
-			'weight_measured' => 0,
-			'exclusive_breastfeeding' => 0
-		];
+		if($request->organisation_unit == 'R1GAfTe6Mkb.op5gbhjVCRk') {
+			$maternal_nutrition_data = [
+				'maternal_nutrition_counseling' => 0,
+				'ifa_distribution' => 0,
+				'weight_measured' => 0,
+				'exclusive_breastfeeding' => 0
+			];
 
-		$child_nutrition_data = [
-			'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage($organisation_unit, $request->period)),
-			'supplements_distributed' => 0,
-			'child_growth_monitoring' => 0,
-			'minimum_acceptable_diet' => 0
-		];
+			$child_nutrition_data = [
+				'iycf_counselling' => 0,
+				'supplements_distributed' => 0,
+				'child_growth_monitoring' => 0,
+				'minimum_acceptable_diet' => 0
+			];
+		} else {
+			$maternal_nutrition_data = [
+				'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $request->period)),
+				'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($organisation_unit, $request->period)),
+				'weight_measured' => 0,
+				// 'exclusive_breastfeeding' => 0
+			];
 
+			$child_nutrition_data = [
+				'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage($organisation_unit, $request->period)),
+				// 'supplements_distributed' => 0,
+				'child_growth_monitoring' => 0,
+				// 'minimum_acceptable_diet' => 0
+			];
+		}
 		return [$maternal_nutrition_data, $child_nutrition_data];
 	}
 

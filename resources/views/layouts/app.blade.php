@@ -47,14 +47,14 @@
                 <li class="nav-item {{ Request::path() == 'dashboard' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.dashboard') }}">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown {{ (Request::path() == 'outcomes/maternal' || Request::path() == 'outcomes/child') ? 'active' : '' }}">
+                <li class="nav-item dropdown {{ (Request::path() == 'outputs/maternal' || Request::path() == 'outputs/child') ? 'active' : '' }}">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Outcomes
+                    Outputs
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item {{ Request::path() == 'outcomes/maternal' ? 'active' : '' }}"
+                    <a class="dropdown-item {{ Request::path() == 'outputs/maternal' ? 'active' : '' }}"
                     href="{{ route('frontend.outcomes.maternal') }}">Maternal</a>
-                    <a class="dropdown-item {{ Request::path() == 'outcomes/child' ? 'active' : '' }}" href="{{ route('frontend.outcomes.child') }}">Child</a>
+                    <a class="dropdown-item {{ Request::path() == 'outputs/child' ? 'active' : '' }}" href="{{ route('frontend.outcomes.child') }}">Child</a>
                   </div>
                 </li>
                 <li class="nav-item {{ Request::path() == 'impacts' ? 'active' : '' }}">

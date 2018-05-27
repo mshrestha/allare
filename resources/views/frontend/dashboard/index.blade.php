@@ -21,16 +21,16 @@
 			      					<div class="conselling-given col-10 offset-2">Maternal Nutrition Counselling</div>
 			      					<div class="ifa-distributed col-10 offset-2">IFA Distributed</div>
 			      					<div class="weight-measured col-10 offset-2">Weight Measured</div>
-			      					<div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div>
+			      					{{-- <div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
 			      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
 			      				<div id="child-health" style="width: 100%;"></div>
 			      				<div class="legend row">
 			      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
-			      					<div class="supplements-distributed col-10 offset-2">Supplements Distributed</div>
+			      					{{-- <div class="supplements-distributed col-10 offset-2">Supplements Distributed</div> --}}
 			      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
-			      					<div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div>
+			      					{{-- <div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
 							
@@ -699,11 +699,11 @@
 						value: weight_measured,
 						color: "#005e6f"
 					},
-					{
-						labelStart: exclusive_breastfeeding + '%', //Exclusive Breastfeeding
-						value: exclusive_breastfeeding,
-						color: "#003d48"
-					},
+					// {
+					// 	labelStart: exclusive_breastfeeding + '%', //Exclusive Breastfeeding
+					// 	value: exclusive_breastfeeding,
+					// 	color: "#003d48"
+					// },
 				],
 				center: {
 					content: [
@@ -736,21 +736,21 @@
 					value: iycf_counselling,
 					color: '#81ddc6',
 				},
-				{
-			  		labelStart: supplements_distributed + '%', //supplementss
-			  		value: supplements_distributed,
-			  		color: '#137f91',
-			  	},
+				// {
+			 //  		labelStart: supplements_distributed + '%', //supplementss
+			 //  		value: supplements_distributed,
+			 //  		color: '#137f91',
+			 //  	},
 			  	{
 			  		labelStart: child_growth_monitoring + '%', //Child Growth Monitoring
 			  		value: child_growth_monitoring,
 			  		color: '#005e6f'
 			  	},
-			  	{
-			  		labelStart: minimum_acceptable_diet + '%', //Minimum acceptable diet
-			  		value: minimum_acceptable_diet,
-			  		color: '#003d48'
-			  	},
+			  	// {
+			  	// 	labelStart: minimum_acceptable_diet + '%', //Minimum acceptable diet
+			  	// 	value: minimum_acceptable_diet,
+			  	// 	color: '#003d48'
+			  	// },
 				],
 				center: {
 					content: [
