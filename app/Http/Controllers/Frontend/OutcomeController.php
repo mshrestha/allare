@@ -593,6 +593,11 @@ class OutcomeController extends Controller
 			$final_data['DGFP'] = array_pluck($data['DGFP'], 'value');
 			$labels = array_pluck($data['DGHS'], 'period_name');
 			$title = $data_table[0]['name'];
+			if(strcasecmp(strtolower($title), 'imci counselling') == 0)
+				$title = 'IYCF Counselling';
+			if(strcasecmp(strtolower($title), 'food supplimentation') == 0)
+				$title = 'Vitamin A Supplementation';
+			// dd($title);
 
 			$response = [
 				'labels' => $labels,
