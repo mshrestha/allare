@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
+	<div>
+		<span class="box-heading box-heading-main mt-3">Child Health</span>
+	</div>
 	@include('layouts.partials.main-chart-partial')
 
 	{{-- tabcontent start  --}}
