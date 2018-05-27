@@ -19,6 +19,14 @@
 
   <script>
     console.log = function() {}
+    if (typeof console._commandLineAPI !== 'undefined') {
+      console.API = console._commandLineAPI; //chrome
+    } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
+        console.API = console._inspectorCommandLineAPI; //Safari
+    } else if (typeof console.clear !== 'undefined') {
+        console.API = console;
+    }
+    
   </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
