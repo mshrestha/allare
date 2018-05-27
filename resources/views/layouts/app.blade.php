@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{asset('css\style.css')}}">
 
   <script>
-    // console.log = function() {}
+    console.log = function() {}
   </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
