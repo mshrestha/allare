@@ -242,7 +242,7 @@
 		if($(this).val() == 'dNLjKwsVjod.dNLjKwsVjod') {
 			$('.outputs-heading').html('NATIONAL OUTCOMES');
 		} else {
-			$('.outputs-heading').html('DIVISION OUTCOMES');
+			$('.outputs-heading').html($('.country_division_field :selected').text() + ' OUTCOMES');
 		}
 	})
 
