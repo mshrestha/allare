@@ -71,17 +71,17 @@ class DashboardController extends Controller
 		$organisation_unit = explode('.', $request->organisation_unit);
 		if($request->organisation_unit == 'R1GAfTe6Mkb.op5gbhjVCRk') {
 			$maternal_nutrition_data = [
-				'maternal_nutrition_counseling' => 0,
-				'ifa_distribution' => 0,
-				'weight_measured' => 0,
-				'exclusive_breastfeeding' => 0
+				'maternal_nutrition_counseling' => 0.01,
+				'ifa_distribution' => 0.01,
+				'weight_measured' => 0.01,
+				'exclusive_breastfeeding' => 0.01
 			];
 
 			$child_nutrition_data = [
-				'iycf_counselling' => 0,
-				'supplements_distributed' => 0,
-				'child_growth_monitoring' => 0,
-				'minimum_acceptable_diet' => 0
+				'iycf_counselling' => 0.01,
+				'supplements_distributed' => 0.01,
+				'child_growth_monitoring' => 0.01,
+				'minimum_acceptable_diet' => 0.01
 			];
 		} else {
 			$maternal_nutrition_data = [

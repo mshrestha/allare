@@ -685,18 +685,18 @@
 				max: 100,
 				series: [
 					{
-						labelStart: maternal_nutrition_counseling + '%', //maternal_nutrition_counseling
+						labelStart: ~~maternal_nutrition_counseling + '%', //maternal_nutrition_counseling
 						value: maternal_nutrition_counseling,
 						color: '#81ddc6',
 					},
 					{
-						labelStart: ifa_distribution + '%', // IFA Distributed
+						labelStart: ~~ifa_distribution + '%', // IFA Distributed
 						value: ifa_distribution,
 						color: '#137f91',
 					},
 					{
-						labelStart: weight_measured + '%', // Weight Measured
-						value: weight_measured,
+						labelStart: ~~weight_measured + '%', // Weight Measured
+						value: 0.01,
 						color: "#005e6f"
 					},
 					// {
@@ -732,7 +732,7 @@
 			    max: 100,
 			    series: [
 			    {
-					labelStart: iycf_counselling + '%', //IYCF Counselling
+					labelStart: ~~iycf_counselling + '%', //IYCF Counselling
 					value: iycf_counselling,
 					color: '#81ddc6',
 				},
@@ -742,8 +742,8 @@
 			 //  		color: '#137f91',
 			 //  	},
 			  	{
-			  		labelStart: child_growth_monitoring + '%', //Child Growth Monitoring
-			  		value: child_growth_monitoring,
+			  		labelStart: ~~child_growth_monitoring + '%', //Child Growth Monitoring
+			  		value: 0.01,
 			  		color: '#005e6f'
 			  	},
 			  	// {
@@ -759,6 +759,7 @@
 				}
 			});
 	    } 
+	    // console.API.clear();
 	</script>
 
 	<script>
