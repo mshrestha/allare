@@ -696,7 +696,7 @@
 					},
 					{
 						labelStart: weight_measured + '%', // Weight Measured
-						value: 1,
+						value: weight_measured,
 						color: "#005e6f"
 					},
 					// {
@@ -743,7 +743,7 @@
 			 //  	},
 			  	{
 			  		labelStart: child_growth_monitoring + '%', //Child Growth Monitoring
-			  		value: 1,
+			  		value: child_growth_monitoring,
 			  		color: '#005e6f'
 			  	},
 			  	// {
