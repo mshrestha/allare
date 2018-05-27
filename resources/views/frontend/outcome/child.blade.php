@@ -50,6 +50,7 @@
 
 <script>
 	function loadPeriodWiseData($this, model) {
+
 		$.ajax({
 			type: 'GET',
 			url: '/outcomes/child/load-period-wise-data', 
@@ -61,6 +62,8 @@
 				pieChart(res.key, res.percent)
 				var arr = res;
 				trendAnalysisChart(res.key, arr)
+				$('.area-date').html($('#trend_period_id').find(':selected').text());
+				$('.specific-date').html($('#trend_period_id').find(':selected').text());
 			}
 		})
 	}
@@ -340,8 +343,9 @@
 </script>
 
 <script>
-	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	$('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
+	// var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	// $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
+	$('.area-date').html($('#trend_period_id').find(':selected').text());	
 </script>
 <script> 
 	if(location.hash.slice(1)) {

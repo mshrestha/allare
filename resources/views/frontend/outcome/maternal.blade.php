@@ -69,6 +69,8 @@
 				pieChart(res.key, res.percent)
 				var arr = res;
 				trendAnalysisChart(res.key, arr)
+				$('.area-date').html($('#trend_period_id').find(':selected').text());
+				$('.specific-date').html($('#trend_period_id').find(':selected').text());
 			}
 		})
 	}
