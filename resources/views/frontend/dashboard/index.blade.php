@@ -10,7 +10,7 @@
 			      	<div class="output-col col-md-7 col-lg-8 pb-3">
 			      		<div class="row"  data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
 			      			<div class="col-sm-12">
-			      				<div class="box-heading float-left outputs-heading">NATIONAL OUTCOMES</div>
+			      				<div class="box-heading float-left outputs-heading">NATIONAL OUTPUTS</div>
 			      				<div class="view-on-map float-right swiper-button-next">VIEW ON MAP</div>
 			      			</div>
 			      		</div> {{-- row --}}
@@ -240,9 +240,9 @@
 
 	$('.country_division_field').on('change', function() {
 		if($(this).val() == 'dNLjKwsVjod.dNLjKwsVjod') {
-			$('.outputs-heading').html('NATIONAL OUTCOMES');
+			$('.outputs-heading').html('NATIONAL OUTPUTS');
 		} else {
-			$('.outputs-heading').html($('.country_division_field :selected').text() + ' OUTCOMES');
+			$('.outputs-heading').html($('.country_division_field :selected').text() + ' OUTPUTS');
 		}
 	})
 
