@@ -45,6 +45,10 @@
 					                	@foreach($organisation_units as $organisation_unit)
 						                	@if($organisation_unit->name !== 'X organizationunits for delete')
 						                    	<option value="{{ $organisation_unit->central_api_id .'.'. $organisation_unit->community_api_id}}">{{ $organisation_unit->name }}</option>
+						                    	@if($organisation_unit->name == 'Barisal Division')
+						                    		<option class="pl-5" value="xNcsJeRMUCM.xNcsJeRMUCM">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barguna District</option>
+						                    		<option class="pl-5" value="uOU0jtyD1PZ.uOU0jtyD1PZ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barisal District</option>
+						                    	@endif
 					                    	@endif
 					                    @endforeach
 					                </select>
@@ -525,27 +529,35 @@
 				});
 
 				// Create the state data layer and load the GeoJson Data
+				var anotherLayer = new google.maps.Data();
 				var stateLayer = new google.maps.Data();
+				
+				
 
 				{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
+				anotherLayer.loadGeoJson("{{asset('js/barisal.geojson')}}");
 				stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
-
+				
 				// Set and apply styling to the stateLayer
 				stateLayer.setStyle(function(feature) {
-					var ids = feature.getProperty('ids').split('-');
-					var id = ids[0];
-					if(res['server'] == 'community')
-						id = ids[1];
-					var value = parseInt(res['minimalData'][id]);
-					var localColor = '';
-					if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
-						localColor = scoreColors['low'];
-					} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
-						localColor = scoreColors['average'];
-					} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
-						localColor = scoreColors['high'];
+					var localColor = '#ededed';
+					if(feature.getProperty('name') != 'Barisal Division') {
+						var ids = feature.getProperty('ids').split('-');
+						var id = ids[0];
+						if(res['server'] == 'community')
+							id = ids[1];
+						var value = parseInt(res['minimalData'][id]);
+						var localColor = '';
+						if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
+							localColor = scoreColors['low'];
+						} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
+							localColor = scoreColors['average'];
+						} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
+							localColor = scoreColors['high'];
+						}	
 					}
-					color = feature.getProperty('color');
+					
+					// color = feature.getProperty('color');
 					return {
 						fillColor: localColor,
 						fillOpacity: 1,
@@ -555,25 +567,81 @@
 					};
 				});
 
+				anotherLayer.setStyle(function(feature) {
+					var localColor = feature.getProperty('color');
+					if(feature.getProperty('name') == 'Barisal District' || feature.getProperty('name') == 'Barguna District') {
+						var ids = feature.getProperty('ids').split('-');
+						var id = ids[0];
+						if(res['server'] == 'community')
+							id = ids[1];
+						var value = parseInt(res['minimalData'][id]);
+						// var localColor = '';
+						if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
+							localColor = scoreColors['low'];
+						} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
+							localColor = scoreColors['average'];
+						} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
+							localColor = scoreColors['high'];
+						}
+					}
+					
+					return {
+						fillColor: localColor,
+						fillOpacity: 1,
+						strokeColor: '#fff',
+						strokeWeight: 1.5,
+						zIndex: 3
+					};
+				});
+
 				// Add mouseover and mouse out styling for the GeoJSON State data
 				stateLayer.addListener('mouseover', function(e) {
-					ids = e.feature.getProperty('ids').split('-');
-					id = ids[0];
-					if(res['server'] == 'community')
-						id = ids[1];
-					value = res['minimalData'][id];
-					infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
-					var anchor = new google.maps.MVCObject();
-		    	anchor.set("position", e.latLng);
-		    	infoWindow.open(map, anchor);
-					stateLayer.overrideStyle(e.feature, {
-						// fillColor: e.feature.getProperty('color'),
-						strokeColor: '#CCC',
-						// strokeColor: e.feature.getProperty('color'),
-						strokeWeight: 1,
-						zIndex: 2
-					});
+					if(e.feature.getProperty('name') != 'Barisal Division') {
+						ids = e.feature.getProperty('ids').split('-');
+						id = ids[0];
+						if(res['server'] == 'community')
+							id = ids[1];
+						value = res['minimalData'][id];
+						infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+						var anchor = new google.maps.MVCObject();
+			    	anchor.set("position", e.latLng);
+			    	infoWindow.open(map, anchor);
+						stateLayer.overrideStyle(e.feature, {
+							// fillColor: e.feature.getProperty('color'),
+							strokeColor: '#CCC',
+							// strokeColor: e.feature.getProperty('color'),
+							strokeWeight: 1,
+							zIndex: 1
+						});
+					}
+					
 				});
+
+				
+
+				anotherLayer.addListener('mouseover', function(e) {
+					console.log(e.feature.getProperty('name'));
+					if(e.feature.getProperty('name') == 'Barisal District' || e.feature.getProperty('name') == 'Barguna District') {
+						ids = e.feature.getProperty('ids').split('-');
+						id = ids[0];
+						if(res['server'] == 'community')
+							id = ids[1];
+						value = res['minimalData'][id];
+						infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+						var anchor = new google.maps.MVCObject();
+			    	anchor.set("position", e.latLng);
+			    	infoWindow.open(map, anchor);
+						anotherLayer.overrideStyle(e.feature, {
+							// fillColor: e.feature.getProperty('color'),
+							strokeColor: '#000',
+							// strokeColor: e.feature.getProperty('color'),
+							strokeWeight: 1,
+							zIndex: 5
+						});
+					}
+					
+				});
+
 
 				stateLayer.addListener('mouseout', function(e) {
 					stateLayer.overrideStyle(e.feature, {
@@ -583,8 +651,23 @@
 					});
 				});
 
+				anotherLayer.addListener('mouseout', function(e) {
+					anotherLayer.overrideStyle(e.feature, {
+						strokeColor: '#fff',
+						strokeWeight: 1.5,
+						zIndex: 3
+					});
+				});
+
 		        // Final step here sets the stateLayer GeoJSON data onto the map
 				stateLayer.setMap(map);
+				anotherLayer.setMap(map);
+				// stateLayer.addListener('mouseclick', function(e) {
+				// 	if(e.feature.getProperty('name') == 'Barisal Division') {
+				// 		anotherLayer.setMap(map);
+				// 	}
+					
+				// });
 	      	}else{
 
 	      	}

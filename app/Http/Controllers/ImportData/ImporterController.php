@@ -418,8 +418,10 @@ class ImporterController extends Controller
             $dataArray['imci_stunting'] = [];
             $dataArray['imci_wasting'] = [];
             $counter = 0;
+            $orgs = [];
             foreach ($results as $result) {
                 // dd($result);
+                
                 $unit = [];
                 $orgName = $result['district'];
                 if(strcasecmp('bangladesh', strtolower($result['district'])) !== 0)
@@ -427,6 +429,7 @@ class ImporterController extends Controller
                 $orgName = ucwords($orgName);
                 $organization = OrganisationUnit::where('name', $orgName)->first();
                 $ou = $organization->central_api_id;
+                // array_push($orgs, $ou);
                 $pe = (int)$result['date'];
                 // $periods = explode(' ', $result['month']);
                 // $pe = $periods[1].$this->getMonth($periods[0]);
@@ -434,7 +437,10 @@ class ImporterController extends Controller
                 $unit['organisation_unit'] = $ou;
                 $unit['category_option_combo'] = NULL;
                 $unit['period'] = $pe;
-                $unit['period_name'] = $this->getPeriodName(substr($result['date'], -2), substr($result['date'], 0, 4));
+                if(strlen($pe) == 4)
+                    $unit['period_name'] = $pe;
+                else if(strlen($pe) > 4)
+                    $unit['period_name'] = $this->getPeriodName(substr($result['date'], -2), substr($result['date'], 0, 4));
                 
                 $unit['source'] = 'DGFP';
                 $unit['server'] = 'central';
@@ -482,9 +488,9 @@ class ImporterController extends Controller
 
                 $unit['value'] = $result['counseling_on_iycf_ifavitamin_a_hand_washing'];
                 array_push($dataArray['imci_counselling'], $unit);
-                
+                array_push($orgs, $unit['period_name']);
             }
-            // dd($dataArray);
+            // dd($orgs);
             foreach ($dataArray as $key => $value) {
                 for ($i=0; $i < count($data); $i++) { 
                     if($data[$i]['table'] == $key) {
