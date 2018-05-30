@@ -22,6 +22,7 @@ Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 	Route::get('/mapImport', 'ImporterController@mapImport');
 	Route::get('/organisation-unit-importer', 'OrganisationUnitImporterController@import');
 	Route::get('/category-option-combo-importer', 'CategoryOptionComboImporterController@import');
+	Route::get('/getDistrict', 'ImporterController@importDistrict');
 });
 
 
