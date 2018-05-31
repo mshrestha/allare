@@ -225,6 +225,85 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="input-wrapper">
+		<div class="container">
+			<div class="standard-wrapper-inner">
+				<div class="row">
+					<div class="col-12"><div class="box-heading float-left">Technical Standards</div></div></div>
+					<div class="row">
+				  	<div class="col-sm-12 col-md-12 col-lg-12 standard-box standard-reporting">
+				  		<div id="accordion">
+				  			@php
+				  				$cardCounter = 1;
+				  			@endphp
+				  			@foreach($standards as $firstKey => $standard)
+								  <div class="card">
+								    <div class="card-header" id="heading{{$cardCounter}}">
+								      <h5 class="mb-0">
+								      	<i class="fas fa-angle-right"></i>
+								        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$cardCounter}}" aria-expanded="true" aria-controls="collapse{{$cardCounter}}">
+								          {{$firstKey}}
+								        </button>
+								      </h5>
+								    </div>
+											
+								    <div id="collapse{{$cardCounter}}" class="collapse" aria-labelledby="heading{{$cardCounter}}" data-parent="#accordion">
+								      <div class="card-body">
+								        <table class="table table-striped">
+							        	<tr>
+							        		<th>Level</th>
+							        		<td class="">{{$standard['level']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Indicator</th>
+							        		<td>{{$standard['indicator']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Definition</th>
+							        		<td>{{$standard['definition']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Target</th>
+							        		<td>{{$standard['target']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Frequency</th>
+							        		<td>{{$standard['frequency']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Collection point</th>
+							        		<th>Person responsible for recording data</th>
+							        		<th>Person responsible for reporting data </th>
+							        		<th>Methods for recording</th>
+							        		<th>Methods for recording</th>
+							        	</tr>
+							        	@foreach($standard['table_data'] as $table_data)
+							        		<tr>
+							        			@foreach($table_data as $datumKey => $datum)
+							        				@if($datumKey == 0)
+							        					<th>{{$datum}}</th>
+							        				@else
+							        					<td>{{$datum}}</td>
+						        					@endif
+							        			@endforeach
+							        		</tr>
+							        	@endforeach
+							        </table>
+								      </div>
+								    </div>
+								  </div>
+								  @php
+								  	$cardCounter += 1;
+								  @endphp
+							  @endforeach
+							</div>
+				  	</div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
 
