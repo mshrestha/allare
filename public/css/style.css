@@ -7606,4 +7606,27 @@ div#zoomctrl div {
   background: #FFF;
   z-index: -1; }
 
+html {
+  position: relative;
+  min-height: 100%; }
+
+body {
+  position: static;
+  padding-bottom: 50px; }
+
+footer {
+  background: #5d5d5d;
+  padding: 15px 15px;
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  height: 50px;
+  line-height: 20px; }
+  footer ul.footer-menu.list-inline {
+    margin: 0;
+    padding: 0; }
+  footer ul.footer-menu.list-inline a {
+    color: #fff;
+    text-decoration: none; }
+
 /*# sourceMappingURL=style.css.map */

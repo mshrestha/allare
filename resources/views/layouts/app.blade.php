@@ -81,6 +81,24 @@
     </div> {{-- /.header-full --}}
     @yield('content')
 
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <ul class="footer-menu list-inline">
+              <li class="list-inline-item"><a href="#">Dashboard</a></li>
+              <li class="list-inline-item"><a href="#">Impact</a></li>
+              <li class="list-inline-item"><a href="#">Output Maternal</a></li>
+              <li class="list-inline-item"><a href="#">Output Child</a></li>
+              <li class="list-inline-item"><a href="#">Technical Standards</a></li>
+              <li class="list-inline-item"><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+    </footer>
+
 
     <!-- Latest compiled and minified JavaScript -->
     {{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>  --}}
