@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{asset('css\style.css')}}">
 
   <script>
-    // console.log = function() {}
+    console.log = function() {}
     if (typeof console._commandLineAPI !== 'undefined') {
       console.API = console._commandLineAPI; //chrome
     } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
