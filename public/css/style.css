@@ -7400,6 +7400,33 @@ div#zoomctrl div {
 .table th.has-border, .table td.has-border {
   border: 1px solid #b1b1b1; }
 
+.tab-outer-wrapper {
+  background: #ededed; }
+  .tab-outer-wrapper .standard-wrapper-inner {
+    padding: 0 15px; }
+  .tab-outer-wrapper .nav-tabs .nav-link {
+    font-size: 15px;
+    color: #666;
+    font-weight: 500; }
+  .tab-outer-wrapper .nav-tabs .nav-link.active, .tab-outer-wrapper .nav-tabs .nav-item.show .nav-link {
+    border: none;
+    border-radius: 0;
+    background: #ffffff;
+    color: #666; }
+  .tab-outer-wrapper .tab-content > .active {
+    background: #FFF; }
+  .tab-outer-wrapper .nav-tabs {
+    border: none; }
+  .tab-outer-wrapper .nav-tabs .nav-item {
+    margin-bottom: -3px;
+    border-color: transparent; }
+  .tab-outer-wrapper .nav-tabs .nav-link:hover, .tab-outer-wrapper .nav-tabs .nav-link:focus {
+    border-color: transparent; }
+  .tab-outer-wrapper .table-striped tbody tr:nth-of-type(odd) {
+    background-color: white; }
+  .tab-outer-wrapper .table th {
+    font-weight: 500; }
+
 .swiper-tab {
   background: #fff; }
   .swiper-tab .swiper-pagination {

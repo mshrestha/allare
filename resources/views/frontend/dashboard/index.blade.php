@@ -225,11 +225,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="input-wrapper">
+	<div class="input-wrapper tab-outer-wrapper">
 		<div class="container">
 			<div class="standard-wrapper-inner">
 				<div class="row">
-					<div class="col-12"><div class="box-heading float-left ml-0">Technical Standards</div></div></div>
+					<div class="col-12"><div class="box-heading float-left">Technical Standards</div></div></div>
 						<div class="row">
 							<div class="col-12">
 								<ul class="nav nav-tabs" id="standard-tab" role="tablist">
