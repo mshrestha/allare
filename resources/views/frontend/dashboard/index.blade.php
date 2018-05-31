@@ -230,10 +230,10 @@
 		<div class="container">
 			<div class="standard-wrapper-inner">
 				<div class="row">
-					<div class="col-12"><div class="box-heading float-left">Technical Standards</div></div></div>
+					<div class="col-12"><div class="box-heading float-left ml-0">Technical Standards</div></div></div>
 					<div class="row">
 				  	<div class="col-sm-12 col-md-12 col-lg-12 standard-box standard-reporting">
-				  		<div id="accordion">
+				  		<div id="accordion" class="transparent-accordion">
 				  			@php
 				  				$cardCounter = 1;
 				  			@endphp
@@ -253,42 +253,48 @@
 								        <table class="table table-striped">
 							        	<tr>
 							        		<th>Level</th>
-							        		<td class="">{{$standard['level']}}</td>
+							        		<td class="" colspan="4">{{$standard['level']}}</td>
 							        	</tr>
 							        	<tr>
 							        		<th>Indicator</th>
-							        		<td>{{$standard['indicator']}}</td>
+							        		<td colspan="4">{{$standard['indicator']}}</td>
 							        	</tr>
 							        	<tr>
 							        		<th>Definition</th>
-							        		<td>{{$standard['definition']}}</td>
+							        		<td colspan="4">{{$standard['definition']}}</td>
 							        	</tr>
 							        	<tr>
 							        		<th>Target</th>
-							        		<td>{{$standard['target']}}</td>
+							        		<td colspan="4">{{$standard['target']}}</td>
 							        	</tr>
 							        	<tr>
 							        		<th>Frequency</th>
-							        		<td>{{$standard['frequency']}}</td>
+							        		<td colspan="4">{{$standard['frequency']}}</td>
 							        	</tr>
 							        	<tr>
-							        		<th>Collection point</th>
-							        		<th>Person responsible for recording data</th>
-							        		<th>Person responsible for reporting data </th>
-							        		<th>Methods for recording</th>
-							        		<th>Methods for recording</th>
+							        		<th class="has-border">Collection point</th>
+							        		<th class="has-border">Person responsible for recording data</th>
+							        		<th class="has-border">Person responsible for reporting data </th>
+							        		<th class="has-border">Methods for recording</th>
+							        		<th class="has-border">Methods for recording</th>
 							        	</tr>
 							        	@foreach($standard['table_data'] as $table_data)
 							        		<tr>
 							        			@foreach($table_data as $datumKey => $datum)
 							        				@if($datumKey == 0)
-							        					<th>{{$datum}}</th>
+							        					<th class="has-border">{{$datum}}</th>
 							        				@else
-							        					<td>{{$datum}}</td>
+							        					<td class="has-border">{{$datum}}</td>
 						        					@endif
 							        			@endforeach
 							        		</tr>
 							        	@endforeach
+							        		<tr>
+							        			<td colspan="5">
+							        				<h4>Technical Standards</h4>
+							        				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex molestiae ab maxime, necessitatibus, nobis, aliquid similique natus odit commodi doloremque culpa omnis laudantium tempora autem voluptates quas aspernatur temporibus quam!</p>
+							        			</td>
+							        		</tr>
 							        </table>
 								      </div>
 								    </div>

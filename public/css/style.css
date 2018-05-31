@@ -7397,6 +7397,9 @@ div#zoomctrl div {
   100% {
     opacity: 1;
     -ms-transform: translate(0px, 0px); } }
+.table th.has-border, .table td.has-border {
+  border: 1px solid #b1b1b1; }
+
 .swiper-tab {
   background: #fff; }
   .swiper-tab .swiper-pagination {
@@ -7530,6 +7533,20 @@ div#zoomctrl div {
 
 .bargraph-div {
   background: #FFF; }
+
+.transparent-accordion .card {
+  background: transparent;
+  border: none; }
+.transparent-accordion .card-header {
+  background: transparent;
+  border: none;
+  padding: 0px 0px; }
+.transparent-accordion button.btn.btn-link {
+  width: 100%;
+  text-align: left;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none; }
 
 #mapdiv .gm-style > .gmnoprint > .gmnoprint div[title="Zoom in"] {
   top: 2px !important;

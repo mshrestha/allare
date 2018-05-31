@@ -1,3 +1,4 @@
+// css output is in css/style.css
 // @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "./bootstrap-4.1.0/scss/bootstrap.scss";
 // custom varriables
@@ -10,6 +11,7 @@
 
 @import "./swiper-tab.scss";
 @import "./output.scss";
+@import "./transparent-accordion";
 
 @import "./google-map.scss";
 
