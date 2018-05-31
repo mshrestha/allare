@@ -98,7 +98,7 @@
 			    	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
 							<ul class="map-filter mb-0">
 								<li class="list-head">MATERNAL NUTRITION</li>
-									<li><a href="#" id="counselling" class="maplinks inactive" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Counselling Given</a></li>
+									<li><a href="#" id="counselling" class="maplinks active" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Counselling Given</a></li>
 									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">IFA Distributed</a></li>
 									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
 									<li class="list-head">CHILD NUTRITION</li>
