@@ -488,24 +488,60 @@ class DashboardController extends Controller
 			if($datamodel[$i]['model'] == $data['model'])
 				$server = $datamodel[$i]['server'];
 		}
-		$pe = date('Y').date('m', strtotime('-1 month'));
-		// $pe = '201804';
+		// $pe = date('Y').date('m', strtotime('-1 month'));
+		$pe = '201804';
 		$organisations = $this->getOrganisations($server);
 		// dd($organisations);
 		$category = NULL;
 		if($data['model'] == 'CcMrWeightInKgAnc')
 			$category = 'OJd05AWCFTk';
+		// dd($pe);
 		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
 		// dd($responseData);
+		
+
+		$centArr = [];
+		$sum = 0;
+		$centralDistricts = (config('static'))['centDistrict'];
+		// dd($centralDistricts);
+		$foundArr = [];
+		for ($i=0; $i < count($centralDistricts); $i++) { 
+			for ($j=0; $j < count($responseData); $j++) { 
+				if($responseData[$j]['organisation_unit'] == $centralDistricts[$i]) {
+					array_push($centArr, $responseData[$j]['value']);
+					$sum += $responseData[$j]['value'];
+				}
+			}
+			array_push($foundArr, $centralDistricts[$i]);
+		}
+
+		
+
+
 		$dataArr = [];
 		$valueArr = [];
+		$val = 0;
+
+		for ($i=0; $i < count($foundArr) ; $i++) { 
+			$dataArr[$foundArr[$i]] = 0;
+		}
+
 		for ($i=0; $i < count($responseData); $i++) { 
+			if($responseData[$i]['organisation_unit'] == 'mykF7AaZv9R') {
+				if($sum != 0) {
+					$responseData[$i]['value'] = $sum;
+					$val = $responseData[$i]['value'];
+				}
+			}
 			$dataArr[$responseData[$i]['organisation_unit']] = $responseData[$i]['value'];
 			if($responseData[$i]['organisation_unit'] != 'dNLjKwsVjod')
 				array_push($valueArr, $responseData[$i]['value']);
+			
 		}
+		// dd($val, $sum);
 		$ranges = $this->getThreeRanges($valueArr);
-
+		$districtRanges = $this->getThreeRanges($centArr);
+		// dd($districtRanges);
 		$text = 'People reached: ';
 		$reverse = false;
 		if(strcasecmp($data['model'], 'ImciStunting') == 0){
@@ -537,7 +573,12 @@ class DashboardController extends Controller
 				'q1' => count($ranges)>0?$ranges['q1']:0,
 				'q2' => count($ranges)>0?$ranges['q2']:0,
 				'max' => count($ranges)>0?$ranges['max']:0,
+				'mindistrict' => count($districtRanges)>0?$districtRanges['min']:0,
+				'q1district' => count($districtRanges)>0?$districtRanges['q1']:0,
+				'q2district' => count($districtRanges)>0?$districtRanges['q2']:0,
+				'maxdistrict' => count($districtRanges)>0?$districtRanges['max']:0,
 				'text' => $text,
+				'emptydistricts' => true,
 				'reverse' => $reverse
 			);
 		}

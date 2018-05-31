@@ -14,7 +14,7 @@ trait OrganisationHelper
     for ($i=0; $i < count($organisations); $i++) { 
       // if(in_array($organisations[$i], $orgArray))
       //   array_push($orgArray, $organisations[$i]);
-      if($organisations[$i]->level < 3 || $organisations[$i]->central_api_id == 'xNcsJeRMUCM' || $organisations[$i]->central_api_id == 'uOU0jtyD1PZ')
+      if($organisations[$i]->level < 3 || $organisations[$i]->central_api_id == 'xNcsJeRMUCM' || $organisations[$i]->central_api_id == 'uOU0jtyD1PZ' || $organisations[$i]->central_api_id == 'EdOWA8sKh2p' || $organisations[$i]->central_api_id == 'WNCBZLbFD70' || $organisations[$i]->central_api_id == 'bEiL5HnmKZO' || $organisations[$i]->central_api_id == 'aLbPgj33QnT')
       if(!$this->existsInArray($orgArray, $organisations[$i])) {
         array_push($orgArray, $organisations[$i]);
         if($server == 'community') {
