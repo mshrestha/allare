@@ -7112,7 +7112,7 @@ body {
 .outcome-col {
   background: #e6e6e6; }
   .outcome-col .outcome-progress-col {
-    margin-top: 20px; }
+    margin-top: 15px; }
     @media (min-height: 900px) {
       .outcome-col .outcome-progress-col {
         margin-top: 35px; } }
