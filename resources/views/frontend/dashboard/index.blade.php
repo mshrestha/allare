@@ -48,6 +48,10 @@
 						                    	@if($organisation_unit->name == 'Barisal Division')
 						                    		<option class="pl-5" value="xNcsJeRMUCM.xNcsJeRMUCM">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barguna District</option>
 						                    		<option class="pl-5" value="uOU0jtyD1PZ.uOU0jtyD1PZ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barisal District</option>
+						                    		<option class="pl-5" value="EdOWA8sKh2p.EdOWA8sKh2p">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bhola District</option>
+						                    		<option class="pl-5" value="WNCBZLbFD70.WNCBZLbFD70">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jhalokati District</option>
+						                    		<option class="pl-5" value="bEiL5HnmKZO.bEiL5HnmKZO">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Patuakhali District</option>
+						                    		<option class="pl-5" value="aLbPgj33QnT.aLbPgj33QnT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pirojpur District</option>
 						                    	@endif
 					                    	@endif
 					                    @endforeach
@@ -418,10 +422,10 @@
 	}
 
     function initMap() {
-      $.ajax({
+			$.ajax({
 	      type: 'get',
 	      url: '/dashboard_specific_map',
-	      data: {"model": "CcMrAncNutriCounsel"},
+	      data: {"model": 'CcMrAncNutriCounsel'},
 	      success: function (res) {
 	      	console.log(res);
 	      	if(res['dataExists']) {
@@ -577,13 +581,17 @@
 									id = ids[1];
 								var value = parseInt(res['minimalData'][id]);
 								// var localColor = '';
-								if(value >= parseInt(res['mindistrict']) && value < parseInt(res['q1district'])) {
-									localColor = scoreColors['low'];
-								} else if(value >= parseInt(res['q1district']) && value < parseInt(res['q2district'])) {
-									localColor = scoreColors['average'];
-								} else if(value >= parseInt(res['q2district']) && value <= parseInt(res['maxdistrict'])) {
-									localColor = scoreColors['high'];
+								localColor = scoreColors['low'];
+								if(!res['emptydistricts']) {
+									if(value >= parseInt(res['mindistrict']) && value < parseInt(res['q1district'])) {
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['q1district']) && value < parseInt(res['q2district'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['q2district']) && value <= parseInt(res['maxdistrict'])) {
+										localColor = scoreColors['high'];
+									}
 								}
+								
 							// }
 							
 							return {
@@ -645,8 +653,16 @@
 							if(res['server'] == 'community')
 								id = ids[1];
 							value = res['minimalData'][id];
-							console.log(value);
-							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+							console.log(res);
+							if(isNaN(value))
+								value = 'N/A';
+							else
+								value = parseInt(value);
+
+							if(res['emptydistricts'] && value == 0) {
+								value = 'N/A';
+							}
+							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 							var anchor = new google.maps.MVCObject();
 				    	anchor.set("position", e.latLng);
 				    	infoWindow.open(map, anchor);
