@@ -161,7 +161,7 @@ class ImpactController extends Controller
 		$indicators = [
 			'Stunting prevalence in children under 5 years old' => 'BdhsStunting',
 			'Wasting prevalence in children under 5 years old' => 'BdhsWasting',
-			'Prevalence of Anemia in Women of Reproductive Age' => 'BdhsAnemia',
+			// 'Prevalence of Anemia in Women of Reproductive Age' => 'BdhsAnemia',
 			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
 		];
 		$ou = 'dNLjKwsVjod';
