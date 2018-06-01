@@ -52,8 +52,7 @@
 <script src="//d3js.org/d3.v3.min.js"></script>
 
 <script>
-	function loadPeriodWiseData($this, model) {
-
+	function loadPeriodWiseData($this, model, id) {
 		$.ajax({
 			type: 'GET',
 			url: '/outputs/child/load-period-wise-data', 
@@ -65,8 +64,8 @@
 				pieChart(res.key, res.percent)
 				var arr = res;
 				trendAnalysisChart(res.key, arr)
-				$('.area-date').html($('#trend_period_id').find(':selected').text());
-				$('.specific-date').html($('#trend_period_id').find(':selected').text());
+				$('#area-date-'+id).html($('#trend_period_id').find(':selected').text());
+				$('#specific-date-'+id).html($('#trend_period_id').find(':selected').text());
 			}
 		})
 	}
