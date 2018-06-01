@@ -7232,10 +7232,12 @@ body {
   margin-right: 10px;
   background: #FFF; }
 .map-view-container div#overdiv span#low-text:before {
-  background: #81ddc6; }
+  background: #b1eed5; }
 .map-view-container div#overdiv span#avg-text:before {
-  background: #008091; }
+  background: #81ddc6; }
 .map-view-container div#overdiv span#high-text:before {
+  background: #008091; }
+.map-view-container div#overdiv span#vhigh-text:before {
   background: #0c4a60; }
 
 @media (min-width: 576px) {

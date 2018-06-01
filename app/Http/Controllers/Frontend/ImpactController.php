@@ -159,8 +159,9 @@ class ImpactController extends Controller
 		$current_year = date('Y');
 
 		$indicators = [
-			'Stunting' => 'BdhsStunting',
-			'Wasting' => 'BdhsWasting',
+			'Stunting prevalence in children under 5 years old' => 'BdhsStunting',
+			'Wasting prevalence in children under 5 years old' => 'BdhsWasting',
+			'Prevalence of Anemia in Women of Reproductive Age' => 'BdhsAnemia',
 			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
 		];
 		$ou = 'dNLjKwsVjod';
@@ -175,7 +176,7 @@ class ImpactController extends Controller
 				$ou = 'dNLjKwsVjod';
 				
 				$goal_model = 'App\Models\Data\\'.$indicators[$indicator];
-				$datum = $goal_model::orderBy('period', 'asc')->get();
+				$datum = $goal_model::where('organisation_unit', NULL)->orderBy('period', 'asc')->get();
 				
 				$datum_goal = $goal_model::orderBy('period', 'desc')->first();
 				// dd($datum_goal);

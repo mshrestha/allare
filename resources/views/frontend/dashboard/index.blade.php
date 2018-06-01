@@ -195,10 +195,10 @@
 
 							<ul class="map-filter outcome mb-0">
 									<li class="list-head green">IMPACTS</li>
-									<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</a></li>
+									<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('BdhsStunting', 'STUNING', '#stunting')">STUNTING</a></li>
 									{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
-									<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</a></li>
-									<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('ImciAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
+									<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting')">WASTING</a></li>
+									<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
 		    				</ul>
 		    				<ul class="map-filter mb-0">
 									<li class="list-head">OUTCOMES</li>
@@ -328,7 +328,7 @@
 	</script>
 
 	<script>
-		scoreColors = {"high": "#0b495e", "average": "#137f91", "low": "#81ddc5"};
+		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
 	</script>
 
 	<script>
@@ -513,22 +513,39 @@
 	}
 
     function initMap() {
+    	model = "CcMrAncNutriCounsel"
 			$.ajax({
 	      type: 'get',
 	      url: '/dashboard_specific_map',
-	      data: {"model": 'CcMrAncNutriCounsel'},
+	      data: {"model": model},
 	      success: function (res) {
 	      	console.log(res);
 	      	if(res['dataExists']) {
-					if(res['reverse']) {
-						$('#low-text').html('Major Problem');
-						$('#avg-text').html('Severe Problem');
-						$('#high-text').html('Critical Problem');
-					} else {
-						$('#low-text').html('Critical Problem');
-						$('#avg-text').html('Severe Problem');
-						$('#high-text').html('Major Problem');
-					}
+	      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
+	      		$('#low-text').html('Low');
+						$('#avg-text').html('Medium');
+						$('#high-text').html('High');
+						$('#vhigh-text').html('Very High');
+	      	} else if(model == 'BdhsAnemia') {
+	      		$('#low-text').html('None');
+						$('#avg-text').html('Mild');
+						$('#high-text').html('Moderate');
+						$('#vhigh-text').html('Severe');
+	      	} else {
+	      		$('#low-text').html('Low');
+						$('#avg-text').html('Medium');
+						$('#high-text').html('High');
+						$('#vhigh-text').html('Very High');
+	      	}
+	    		// 	if(res['reverse']) {
+					// 	$('#low-text').html('Major Problem');
+					// 	$('#avg-text').html('Severe Problem');
+					// 	$('#high-text').html('Critical Problem');
+					// } else {
+					// 	$('#low-text').html('Critical Problem');
+					// 	$('#avg-text').html('Severe Problem');
+					// 	$('#high-text').html('Major Problem');
+					// }
 
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
@@ -644,12 +661,25 @@
 									id = ids[1];
 								var value = parseInt(res['minimalData'][id]);
 								var localColor = '';
-								if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
-									localColor = scoreColors['low'];
-								} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
-									localColor = scoreColors['average'];
-								} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
-									localColor = scoreColors['high'];
+								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+									if(value < parseInt(res['ranges']['low'])){
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['low']) && value < parseInt(res['ranges']['mid'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['mid']) && value < parseInt(res['ranges']['high'])) {
+										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['high'])) {
+										localColor = scoreColors['high'];
+									}
+								}else {
+									console.log(res['ranges'], value);
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])) {
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['q2']) && value <= parseInt(res['ranges']['max'])) {
+										localColor = scoreColors['high'];
+									}
 								}	
 							// }
 							
@@ -674,11 +704,11 @@
 								// var localColor = '';
 								localColor = scoreColors['low'];
 								if(!res['emptydistricts']) {
-									if(value >= parseInt(res['mindistrict']) && value < parseInt(res['q1district'])) {
+									if(value >= parseInt(res['districtRanges']['mindistrict']) && value < parseInt(res['districtRanges']['q1district'])) {
 										localColor = scoreColors['low'];
-									} else if(value >= parseInt(res['q1district']) && value < parseInt(res['q2district'])) {
+									} else if(value >= parseInt(res['districtRanges']['q1district']) && value < parseInt(res['districtRanges']['q2district'])) {
 										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['q2district']) && value <= parseInt(res['maxdistrict'])) {
+									} else if(value >= parseInt(res['districtRanges']['q2district']) && value <= parseInt(res['districtRanges']['maxdistrict'])) {
 										localColor = scoreColors['high'];
 									}
 								}
@@ -702,8 +732,14 @@
 									id = ids[0];
 									if(res['server'] == 'community')
 										id = ids[1];
-									value = res['minimalData'][id];
-									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+									if(isNaN(value))
+										value = 'N/A';
+									else
+										value = parseInt(res['minimalData'][id]);
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+										value += '%';
+									console.log(value);
+									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 									var anchor = new google.maps.MVCObject();
 						    	anchor.set("position", e.latLng);
 						    	infoWindow.open(map, anchor);
@@ -768,18 +804,21 @@
 						});
 
 						stateLayer.addListener('click', function(e) {
-							if(e.feature.getProperty('name') == 'Barisal Division') {
-								var bounds = new google.maps.LatLngBounds();
-						    processPoints(e.feature.getGeometry(), bounds.extend, bounds);
-						    map.fitBounds(bounds);
-						    stateLayer.overrideStyle(e.feature, {
-									fillColor: '#ededed',
-									strokeColor: '#CCC',
-									// strokeColor: e.feature.getProperty('color'),
-									strokeWeight: 1,
-									zIndex: 5
-								});
-								anotherLayer.setMap(map);
+							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+							} else {
+								if(e.feature.getProperty('name') == 'Barisal Division') {
+									var bounds = new google.maps.LatLngBounds();
+							    processPoints(e.feature.getGeometry(), bounds.extend, bounds);
+							    map.fitBounds(bounds);
+							    stateLayer.overrideStyle(e.feature, {
+										fillColor: '#ededed',
+										strokeColor: '#CCC',
+										// strokeColor: e.feature.getProperty('color'),
+										strokeWeight: 1,
+										zIndex: 5
+									});
+									anotherLayer.setMap(map);
+								}
 							}
 						});
 
@@ -1029,15 +1068,31 @@
 	      success: function (res) {
 	      	console.log(res);
 	      	if(res['dataExists']) {
-					if(res['reverse']) {
-						$('#low-text').html('Major Problem');
-						$('#avg-text').html('Severe Problem');
-						$('#high-text').html('Critical Problem');
-					} else {
-						$('#low-text').html('Critical Problem');
-						$('#avg-text').html('Severe Problem');
-						$('#high-text').html('Major Problem');
-					}
+	      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
+	      		$('#low-text').html('Low');
+						$('#avg-text').html('Medium');
+						$('#high-text').html('High');
+						$('#vhigh-text').html('Very High');
+	      	} else if(model == 'BdhsAnemia') {
+	      		$('#low-text').html('None');
+						$('#avg-text').html('Mild');
+						$('#high-text').html('Moderate');
+						$('#vhigh-text').html('Severe');
+	      	} else {
+	      		$('#low-text').html('Low');
+						$('#avg-text').html('Medium');
+						$('#high-text').html('High');
+						$('#vhigh-text').html('Very High');
+	      	}
+	    		// 	if(res['reverse']) {
+					// 	$('#low-text').html('Major Problem');
+					// 	$('#avg-text').html('Severe Problem');
+					// 	$('#high-text').html('Critical Problem');
+					// } else {
+					// 	$('#low-text').html('Critical Problem');
+					// 	$('#avg-text').html('Severe Problem');
+					// 	$('#high-text').html('Major Problem');
+					// }
 
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
@@ -1153,12 +1208,25 @@
 									id = ids[1];
 								var value = parseInt(res['minimalData'][id]);
 								var localColor = '';
-								if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
-									localColor = scoreColors['low'];
-								} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
-									localColor = scoreColors['average'];
-								} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
-									localColor = scoreColors['high'];
+								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+									if(value < parseInt(res['ranges']['low'])){
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['low']) && value < parseInt(res['ranges']['mid'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['mid']) && value < parseInt(res['ranges']['high'])) {
+										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['high'])) {
+										localColor = scoreColors['high'];
+									}
+								}else {
+									// console.log(res['ranges'], value);
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])) {
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['q2']) && value <= parseInt(res['ranges']['max'])) {
+										localColor = scoreColors['high'];
+									}
 								}	
 							// }
 							
@@ -1183,11 +1251,11 @@
 								// var localColor = '';
 								localColor = scoreColors['low'];
 								if(!res['emptydistricts']) {
-									if(value >= parseInt(res['mindistrict']) && value < parseInt(res['q1district'])) {
+									if(value >= parseInt(res['districtRanges']['mindistrict']) && value < parseInt(res['districtRanges']['q1district'])) {
 										localColor = scoreColors['low'];
-									} else if(value >= parseInt(res['q1district']) && value < parseInt(res['q2district'])) {
+									} else if(value >= parseInt(res['districtRanges']['q1district']) && value < parseInt(res['districtRanges']['q2district'])) {
 										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['q2district']) && value <= parseInt(res['maxdistrict'])) {
+									} else if(value >= parseInt(res['districtRanges']['q2district']) && value <= parseInt(res['districtRanges']['maxdistrict'])) {
 										localColor = scoreColors['high'];
 									}
 								}
@@ -1211,8 +1279,15 @@
 									id = ids[0];
 									if(res['server'] == 'community')
 										id = ids[1];
-									value = res['minimalData'][id];
-									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+									var value = res['minimalData'][id];
+									if(isNaN(value))
+										value = 'N/A';
+									else
+										value = parseInt(value);
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+										value += '%';
+									console.log(value);
+									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 									var anchor = new google.maps.MVCObject();
 						    	anchor.set("position", e.latLng);
 						    	infoWindow.open(map, anchor);
@@ -1229,8 +1304,15 @@
 								id = ids[0];
 								if(res['server'] == 'community')
 									id = ids[1];
-								value = res['minimalData'][id];
-								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+									var value = res['minimalData'][id];
+									if(isNaN(value))
+										value = 'N/A';
+									else
+										value = parseInt(res['minimalData'][id]);
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+										value += '%';
+									console.log(value);
+									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 								var anchor = new google.maps.MVCObject();
 					    	anchor.set("position", e.latLng);
 					    	infoWindow.open(map, anchor);
@@ -1277,18 +1359,21 @@
 						});
 
 						stateLayer.addListener('click', function(e) {
-							if(e.feature.getProperty('name') == 'Barisal Division') {
-								var bounds = new google.maps.LatLngBounds();
-						    processPoints(e.feature.getGeometry(), bounds.extend, bounds);
-						    map.fitBounds(bounds);
-						    stateLayer.overrideStyle(e.feature, {
-									fillColor: '#ededed',
-									strokeColor: '#CCC',
-									// strokeColor: e.feature.getProperty('color'),
-									strokeWeight: 1,
-									zIndex: 5
-								});
-								anotherLayer.setMap(map);
+							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+							} else {
+								if(e.feature.getProperty('name') == 'Barisal Division') {
+									var bounds = new google.maps.LatLngBounds();
+							    processPoints(e.feature.getGeometry(), bounds.extend, bounds);
+							    map.fitBounds(bounds);
+							    stateLayer.overrideStyle(e.feature, {
+										fillColor: '#ededed',
+										strokeColor: '#CCC',
+										// strokeColor: e.feature.getProperty('color'),
+										strokeWeight: 1,
+										zIndex: 5
+									});
+									anotherLayer.setMap(map);
+								}
 							}
 						});
 

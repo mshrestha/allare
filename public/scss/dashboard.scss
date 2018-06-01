@@ -240,12 +240,15 @@
     background: #FFF;
 	}
 	div#overdiv span#low-text:before {
-	  background: #81ddc6;
+	  background: #b1eed5;
 	}
 	div#overdiv span#avg-text:before {
-	  background: #008091;
+	  background: #81ddc6;
 	}
 	div#overdiv span#high-text:before {
+	  background: #008091;
+	}
+	div#overdiv span#vhigh-text:before {
 	  background: #0c4a60;
 	}
 }

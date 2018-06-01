@@ -489,16 +489,28 @@ class DashboardController extends Controller
 				$server = $datamodel[$i]['server'];
 		}
 		// $pe = date('Y').date('m', strtotime('-1 month'));
-		$pe = '201804';
-		$organisations = $this->getOrganisations($server);
-		// dd($organisations);
+		$flag = 1;
+		if($data['model'] == 'BdhsWasting' || $data['model'] == 'BdhsStunting' ) {
+			$pe = '2014';
+		}
+		else if($data['model'] == 'BdhsAnemia') {
+			$pe = '2011';
+		}
+		else {
+			$pe = '201804';
+			$flag = 0;
+		}
+		
+		if($flag == 1) {
+			$organisations = $this->getOrganisationDivisons($server);
+		} else {
+			$organisations = $this->getOrganisations($server);
+		}
+
 		$category = NULL;
 		if($data['model'] == 'CcMrWeightInKgAnc')
 			$category = 'OJd05AWCFTk';
-		// dd($pe);
-		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
-		// dd($responseData);
-		
+		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();		
 
 		$centArr = [];
 		$sum = 0;
@@ -538,26 +550,36 @@ class DashboardController extends Controller
 				array_push($valueArr, $responseData[$i]['value']);
 			
 		}
-		// dd($val, $sum);
-		if($data['model'] == 'ImciStunting' || $data['model'] == 'ImciWasting' || $data['model'] == 'ImciAnemia') {
-			
+		
+		$ranges = [];
+		if($data['model'] == 'BdhsStunting') {
+			$ranges = array('low' => 20, 'mid' => 29, 'high' => 39);
+		} else if($data['model'] == 'BdhsWasting') {
+			$ranges = array('low' => 5, 'mid' => 9, 'high' => 14);
+		} else if($data['model'] == 'BdhsAnemia') {
+			$ranges = array('low' => 5, 'mid' => 19.9, 'high' => 39.9);
+		} else {
+			$ranges = $this->getThreeRanges($valueArr); 
 		}
-		$ranges = $this->getThreeRanges($valueArr);
-		$districtRanges = $this->getThreeRanges($centArr);
+
+		$districtRanges = [];
+		if($data['model'] != 'BdhsStunting' && $data['model'] == 'BdhsWasting' && $data['model'] == 'BdhsAnemia') {
+			$districtRanges = $this->getThreeRanges($centArr);
+		}
 		// dd($districtRanges);
 		$text = 'People reached: ';
 		$reverse = false;
-		if(strcasecmp($data['model'], 'ImciStunting') == 0){
-			$text = 'Children suffering from Stunting: ';
+		if(strcasecmp($data['model'], 'BdhsStunting') == 0){
+			$text = 'Severity of Stunting by Prevalance: ';
 			$reverse = true;
-		} else if(strcasecmp($data['model'], 'ImciStunting') == 0){
-			$text = 'Children suffering from Wasting: ';
+		} else if(strcasecmp($data['model'], 'BdhsWasting') == 0){
+			$text = 'Severity of Wasting by Prevalance: ';
 			$reverse = true;
 		} else if(strcasecmp($data['model'], 'CcCrExclusiveBreastFeeding') == 0){
 			$text = 'Children breastfed: ';
 			$reverse = true;
-		} else if(strcasecmp($data['model'], 'ImciAnemia') == 0){
-			$text = 'Children suffering from Anemia: ';
+		} else if(strcasecmp($data['model'], 'BdhsAnemia') == 0){
+			$text = 'Severity of Anemia by Prevalance: ';
 			$reverse = true;
 		}
 
@@ -572,14 +594,8 @@ class DashboardController extends Controller
 				'modelData' => $responseData,
 				'minimalData' => $dataArr,
 				'server' => $server,
-				'min' => count($ranges)>0?$ranges['min']:0,
-				'q1' => count($ranges)>0?$ranges['q1']:0,
-				'q2' => count($ranges)>0?$ranges['q2']:0,
-				'max' => count($ranges)>0?$ranges['max']:0,
-				'mindistrict' => count($districtRanges)>0?$districtRanges['min']:0,
-				'q1district' => count($districtRanges)>0?$districtRanges['q1']:0,
-				'q2district' => count($districtRanges)>0?$districtRanges['q2']:0,
-				'maxdistrict' => count($districtRanges)>0?$districtRanges['max']:0,
+				'ranges' => $ranges,
+				'districtRanges' => $districtRanges,
 				'text' => $text,
 				'emptydistricts' => true,
 				'reverse' => $reverse

@@ -40,5 +40,31 @@ trait OrganisationHelper
     return false;
   }
 
+  public function getOrganisationDivisons($server) {
+    $organisations = OrganisationUnit::where('level', 2)->get();
+    $orgArray = [];
+    $orgQueryString = '';
+    $orgIdArr = [];
+    for ($i=0; $i < count($organisations); $i++) { 
+      // if(in_array($organisations[$i], $orgArray))
+      //   array_push($orgArray, $organisations[$i]);
+      if($organisations[$i]->name != 'X organizationunits for delete') {
+        if(!$this->existsInArray($orgArray, $organisations[$i])) {
+          array_push($orgArray, $organisations[$i]);
+          if($server == 'community') {
+            $orgQueryString .= $organisations[$i]->community_api_id.';';
+            array_push($orgIdArr, $organisations[$i]->community_api_id);
+          }
+          else if ($server == 'central') {
+            $orgQueryString .= $organisations[$i]->central_api_id.';';
+            array_push($orgIdArr, $organisations[$i]->central_api_id);
+          }
+        }
+      }
+    }
+    $orgQueryString = rtrim($orgQueryString,";");
+    return array('organisations'=>$orgArray, 'organisation_string' => $orgQueryString, 'organisation_unit_array' => $orgIdArr);
+  }
+
 }
 
