@@ -60,7 +60,7 @@
 <script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 
 <script>
-	function loadPeriodWiseData($this, model) {
+	function loadPeriodWiseData($this, model, id) {
 		$.ajax({
 			type: 'GET',
 			url: '/outputs/maternal/load-period-wise-data', 
@@ -72,8 +72,8 @@
 				pieChart(res.key, res.percent)
 				var arr = res;
 				trendAnalysisChart(res.key, arr)
-				$('.area-date').html($('#trend_period_id').find(':selected').text());
-				$('.specific-date').html($('#trend_period_id').find(':selected').text());
+				$('#area-date-'+id).html($('#trend_period_id').find(':selected').text());
+				$('#specific-date-'+id).html($('#trend_period_id').find(':selected').text());
 			}
 		})
 	}
@@ -294,16 +294,16 @@
 		// };
 
 		var parentDiv = document.getElementById('pie-chart-'+id);
-		var w = parentDiv.clientWidth,                        
-		h = parentDiv.clientHeight,                            
+		var w = 300,                        
+		h = 156,                            
 		r = Math.min(w, h) / 2,                             
 		color = ['#fba69c', '#d2d2d2'];     
 		dataCSV = [{"label": data_value+"%", "value": data_value}, 
 		{"label":  100 - data_value+"%", "value": 100 - data_value}]
 		var vis = d3.select('#chart-area-'+ id)
 		.data([dataCSV])
-		.attr("width", 300)
-		// .attr("height", 156)
+		.attr("width", w)
+		.attr("height", h)
 		.append("svg:g")                
 		.attr("transform", "translate(" + r + "," + r + ")")
 
@@ -364,8 +364,8 @@
 </script>
 
 <script>
-	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	$('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
+	// var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	// $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
 </script>
 
 <script> 
