@@ -68,9 +68,9 @@
                 <li class="nav-item {{ Request::path() == 'impacts' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.impacts') }}">Impacts</a>
                 </li>
-                <li class="nav-item {{ Request::path() == 'technical-standard' ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ Request::path() == 'technical-standard' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.technical-standard') }}">Technical Standards</a>
-                </li>
+                </li> --}}
               </ul>
                 <!-- <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
