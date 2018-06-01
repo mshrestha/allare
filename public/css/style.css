@@ -7403,7 +7403,7 @@ div#zoomctrl div {
 .tab-outer-wrapper {
   background: #ededed; }
   .tab-outer-wrapper .standard-wrapper-inner {
-    padding: 0 15px; }
+    padding: 0px; }
   .tab-outer-wrapper .nav-tabs .nav-link {
     font-size: 15px;
     color: #666;

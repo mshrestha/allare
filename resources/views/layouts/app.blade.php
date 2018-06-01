@@ -68,7 +68,9 @@
                 <li class="nav-item {{ Request::path() == 'impacts' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.impacts') }}">Impacts</a>
                 </li>
-
+                <li class="nav-item {{ Request::path() == 'technical-standard' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('frontend.technical-standard') }}">Technical Standards</a>
+                </li>
               </ul>
                 <!-- <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -86,12 +88,11 @@
         <div class="row">
           <div class="col-12">
             <ul class="footer-menu list-inline">
-              <li class="list-inline-item"><a href="#">Dashboard</a></li>
-              <li class="list-inline-item"><a href="#">Impact</a></li>
-              <li class="list-inline-item"><a href="#">Output Maternal</a></li>
-              <li class="list-inline-item"><a href="#">Output Child</a></li>
-              <li class="list-inline-item"><a href="#">Technical Standards</a></li>
-              <li class="list-inline-item"><a href="#">Contact</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.dashboard') }}">Dashboard</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.outcomes.maternal') }}">Output Maternal</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.outcomes.child') }}">Output Child</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.impacts') }}">Impact</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.technical-standard') }}">Technical Standards</a></li>
             </ul>
           </div>
         </div>
