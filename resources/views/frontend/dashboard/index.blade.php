@@ -36,52 +36,137 @@
 			      		</div> {{-- row --}}
 
 			      		<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
-			      		<div class="row mt-4">
-			      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-			      				<label for="">Select the Division</label>
-				      			<div class="input-group">
-					                <select class="custom-select national_outcomes_filter_form_fields country_division_field" id="division_id" name="organisation_unit" required>
-					                	<option value="dNLjKwsVjod.dNLjKwsVjod">Bangladesh</option>
-					                	@foreach($organisation_units as $organisation_unit)
-						                	@if($organisation_unit->name !== 'X organizationunits for delete')
-						                    	<option value="{{ $organisation_unit->central_api_id .'.'. $organisation_unit->community_api_id}}">{{ $organisation_unit->name }}</option>
-						                    	@if($organisation_unit->name == 'Barisal Division')
-						                    		<option class="pl-5" value="xNcsJeRMUCM.xNcsJeRMUCM">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barguna District</option>
-						                    		<option class="pl-5" value="uOU0jtyD1PZ.uOU0jtyD1PZ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barisal District</option>
-						                    		<option class="pl-5" value="EdOWA8sKh2p.EdOWA8sKh2p">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bhola District</option>
-						                    		<option class="pl-5" value="WNCBZLbFD70.WNCBZLbFD70">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jhalokati District</option>
-						                    		<option class="pl-5" value="bEiL5HnmKZO.bEiL5HnmKZO">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Patuakhali District</option>
-						                    		<option class="pl-5" value="aLbPgj33QnT.aLbPgj33QnT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pirojpur District</option>
+				      		<div class="row mt-4">
+				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+				      				<label for="">Select the Division</label>
+					      			<div class="input-group">
+						                <select class="custom-select national_outcomes_filter_form_fields country_division_field" id="division_id" name="organisation_unit" required>
+						                	<option value="dNLjKwsVjod.dNLjKwsVjod">Bangladesh</option>
+						                	@foreach($organisation_units as $organisation_unit)
+							                	@if($organisation_unit->name !== 'X organizationunits for delete')
+							                    	<option value="{{ $organisation_unit->central_api_id .'.'. $organisation_unit->community_api_id}}">{{ $organisation_unit->name }}</option>
+							                    	@if($organisation_unit->name == 'Barisal Division')
+							                    		<option class="pl-5" value="xNcsJeRMUCM.xNcsJeRMUCM">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barguna District</option>
+							                    		<option class="pl-5" value="uOU0jtyD1PZ.uOU0jtyD1PZ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barisal District</option>
+							                    		<option class="pl-5" value="EdOWA8sKh2p.EdOWA8sKh2p">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bhola District</option>
+							                    		<option class="pl-5" value="WNCBZLbFD70.WNCBZLbFD70">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jhalokati District</option>
+							                    		<option class="pl-5" value="bEiL5HnmKZO.bEiL5HnmKZO">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Patuakhali District</option>
+							                    		<option class="pl-5" value="aLbPgj33QnT.aLbPgj33QnT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pirojpur District</option>
+							                    	@endif
 						                    	@endif
-					                    	@endif
-					                    @endforeach
-					                </select>
-					            </div>
-			      			</div>
-			      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
-			      				<label for="">Select the Timeline</label>
-				      			<div class="input-group">
-					                <select class="custom-select national_outcomes_filter_form_fields" id="period_id" name="period" required>
-					                    @foreach($periods as $key => $period)
-					                    	<option value="{{ $period }}">{{ $period }}</option>
-					                    @endforeach
-					                </select>
-					            </div>
-			      			</div>
-			      		</div> {{-- row --}}
+						                    @endforeach
+						                </select>
+						            </div>
+				      			</div>
+				      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+				      				<label for="">Select the Timeline</label>
+					      			<div class="input-group">
+						                <select class="custom-select national_outcomes_filter_form_fields" id="period_id" name="period" required>
+						                    @foreach($periods as $key => $period)
+						                    	<option value="{{ $period }}">{{ $period }}</option>
+						                    @endforeach
+						                </select>
+						            </div>
+				      			</div>
+				      		</div> {{-- row --}}
 			      		</form>
+			      		<div class="impact-div outcome-col">
+				      		<div class="row">
+				      			<div class="col-12">
+				      				<div class="box-heading float-left">IMPACT</div>
+				      			</div>
+				      		</div>
+				      		<div class="row">
+					  				@foreach($outcomes as $key => $analysis)
+											@include('layouts.partials.dashboard-outcomes-partial')
+										@endforeach
+				      		</div>
+			      		</div>
 			      	</div> {{-- output col-md-8 --}}
 			      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
-			      		<div class="row">
-			      			<div class="col-12">
-			      				<div class="box-heading float-left">IMPACT</div>
-			      			</div>
-			      		</div>
-			      		<div class="row">
-				  				@foreach($outcomes as $key => $analysis)
-										@include('layouts.partials.dashboard-outcomes-partial')
-									@endforeach
-			      		</div>
+			      		<div class="input-wrapper">
+				      		<div class="row">
+				      			<div class="col-12">
+				      				<div class="box-heading float-left">INPUTS</div>
+				      			</div>
+				      		</div>
+				      		<div class="reporting-div input-box input-reporting">
+				      			<h6>REPORTING</h6>
+				      			<div class="row">
+				      				<div class="col-sm-6">
+				      					<div>
+									  			<span class="report-lable">FWC</span> 
+									  			<div class="progress-bar-h">
+														<div class="goal" style="width: 10%;">
+														</div>
+														<div class="current grow-h-animation" style="width: 30%;">
+															30%
+														</div>
+													</div> {{-- progress-bar-h --}}
+												</div>
+				      				</div>
+				      				<div class="col-sm-6">
+				      					<div>
+									  			<span class="report-lable">CC</span> 
+									  			<div class="progress-bar-h">
+														<div class="goal" style="width: 10%;">
+														</div>
+														<div class="current grow-h-animation" style="width: 44%;">
+															44%
+														</div>
+													</div> {{-- progress-bar-h --}}
+												</div>
+				      				</div>
+				      			</div>
+				      			<div class="row">
+				      				<div class="col-sm-6">
+				      					<div>
+									  			<span class="report-lable">IMCI-N Corner</span> 
+									  			<div class="progress-bar-h">
+														<div class="goal" style="width: 10%;">
+														</div>
+														<div class="current grow-h-animation" style="width: 65%;">
+															65%
+														</div>
+													</div> {{-- progress-bar-h --}}
+									  		</div>
+				      				</div>
+				      				<div class="col-sm-6">
+				      					<div>
+									  			<span class="report-lable">SAM</span> 
+									  			<div class="progress-bar-h">
+														<div class="goal" style="width: 10%;">
+														</div>
+														<div class="current grow-h-animation" style="width: 56%;">
+															56%
+														</div>
+													</div> {{-- progress-bar-h --}}
+												</div>
+				      				</div>
+				      			</div>
+				      		</div>
+
+				      		{{-- CAPACITY DIV --}}
+				      		<div class="capacity-div input-box input-training">
+				      			<h6 class="mb-0">ENHANCED CAPACITY OF PLANNERS AND SERVICE PROVIDERS</h6>
+							  		<div><span class="number">65%</span><span class="number-txt"># of health workers trained on CCTN with Pay for performance </span></div>
+							  		<div><span class="number">65%</span><span class="number-txt"># of health workers who passed the training uptake assessment</span></div>
+				      		</div>
+				      		{{-- QA DIV --}}
+				      		<div class="qa-div input-box input-training">
+				      			<h6 class="mb-0">QUALITY CONTROL AND SUPPORTIVE SUPERVISION</h6>
+				      			<div><span class="number">65%</span><span class="number-txt"># of facilities receiving supporting supervision and monitoring in the last quarter</span></div>
+							  		<div><span class="number">65%</span><span class="number-txt">% of facilties reporting high quality data </span></div>
+							  		<div><span class="number">65%</span><span class="number-txt">% of facilities passing the Data Quality Assessment</span></div>
+				      		</div>
+				      		{{-- SUPPLY DIV --}}
+				      		<div class="supply-div input-box input-training">
+				      			<h6 class="mb-0">ENSURE ADEQUATE NUTRITION SUPPLIES</h6>
+				      			<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of IFA tablets</span></div>
+							  		<div><span class="number">65%</span><span class="number-txt">% of facilities with adequate anthropometric measuring tools</span></div>
+							  		<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of Zinc and ORS</span></div>
+				      		</div>
+				      	</div>
 			      	</div> {{-- col-md-4 --}}
 			  	</div>
 			  </div> {{-- data view --}}
@@ -144,79 +229,7 @@
 		</div> {{-- swiper-container --}}
 	</div> {{-- container --}}
 
-	<div class="input-wrapper">
-		<div class="container">
-			<div class="input-wrapper-inner">
-			  <div class="row">
-			  	<div class="col-12"><div class="box-heading float-left">INPUTS</div></div>
-			  </div>
-			  <div class="row">
-			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 input-box input-reporting">
-			  		<h6>REPORTING</h6>
-			  		<div>
-			  			<span class="report-lable">FWC</span> 
-			  			<div class="progress-bar-h">
-							<div class="goal" style="width: 10%;">
-							</div>
-							<div class="current grow-h-animation" style="width: 30%;">
-								30%
-							</div>
-						</div> {{-- progress-bar-h --}}
-			  		</div>
-			  		<div>
-			  			<span class="report-lable">CC</span> 
-			  			<div class="progress-bar-h">
-							<div class="goal" style="width: 10%;">
-							</div>
-							<div class="current grow-h-animation" style="width: 44%;">
-								44%
-							</div>
-						</div> {{-- progress-bar-h --}}
-			  		</div>
-			  		<div>
-			  			<span class="report-lable">IMCI-N Corner</span> 
-			  			<div class="progress-bar-h">
-							<div class="goal" style="width: 10%;">
-							</div>
-							<div class="current grow-h-animation" style="width: 65%;">
-								65%
-							</div>
-						</div> {{-- progress-bar-h --}}
-			  		</div>
-			  		<div>
-			  			<span class="report-lable">SAM</span> 
-			  			<div class="progress-bar-h">
-							<div class="goal" style="width: 10%;">
-							</div>
-							<div class="current grow-h-animation" style="width: 56%;">
-								56%
-							</div>
-						</div> {{-- progress-bar-h --}}
-			  		</div>
-			  	</div>{{-- input-box input-reporting --}}
-			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-training">
-			  		<div class="input-trainning-inner">
-				  		<h6 class="mb-0">ENHANCED CAPACITY OF PLANNERS AND SERVICE PROVIDERS</h6>
-				  		<div><span class="number">65%</span><span class="number-txt"># of health workers trained on CCTN with Pay for performance </span></div>
-				  		<div><span class="number">65%</span><span class="number-txt"># of health workers who passed the training uptake assessment</span></div>
-			  		</div>
-			  	</div>{{-- input-box input-training --}}
-			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-qa">
-			  		<h6 class="mb-0">QUALITY CONTROL AND SUPPORTIVE SUPERVISION</h6>
-			  		<div><span class="number">65%</span><span class="number-txt"># of facilities receiving supporting supervision and monitoring in the last quarter</span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">% of facilties reporting high quality data </span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">% of facilities passing the Data Quality Assessment</span></div>
-			  	</div>{{-- input-box input-qa --}}
-			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-4 input-box input-supply-management">
-			  		<h6 class="mb-0">ENSURE ADEQUATE NUTRITION SUPPLIES</h6>
-			  		<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of IFA tablets</span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">% of facilities with adequate anthropometric measuring tools</span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of Zinc and ORS</span></div>
-			  	</div>{{-- input-box input-qa --}}
-			  </div>
-			</div>
-		</div>
-	</div>
+	
 	<div class="input-wrapper tab-outer-wrapper">
 		<div class="container">
 			<div class="standard-wrapper-inner">

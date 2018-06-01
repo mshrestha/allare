@@ -9,9 +9,9 @@
 	}
 @endphp
 
-	<div class="col-12 outcome-progress-col">
+	<div class="col-6 outcome-progress-col">
 		<div class="report-heading row">
-			<div class="txt-icon col-12">
+			<div class="txt-icon col-6">
 				<div class="report-icon" style="float: left; margin-right: 10px;">
 					@if (strpos(strtolower($key), 'stunting') !== false)
 					<span class="icon-children icon"></span>
