@@ -7111,6 +7111,8 @@ body {
 
 .outcome-col {
   background: #e6e6e6; }
+  .outcome-col.impact-div {
+    background: transparent; }
   .outcome-col .outcome-progress-col {
     margin-top: 15px; }
     @media (min-height: 900px) {
@@ -7227,9 +7229,16 @@ body {
   .map-wrapper {
     height: 422px;
     margin-top: -29px; } }
+@media (min-width: 992px) {
+  .map-wrapper {
+    height: 550px; } }
+@media (min-width: 1500px) {
+  .map-wrapper {
+    height: 800px; } }
 
 .input-wrapper {
-  background: #e0e0e0; }
+  background: #e0e0e0;
+  background: transparent; }
   .input-wrapper .input-wrapper-inner {
     background: #e0e0e0;
     padding: 0 15px; }
@@ -7299,8 +7308,8 @@ body {
   position: relative; }
   @media (min-height: 900px) {
     #maternal-health, #child-health {
-      margin-top: 45px;
-      margin-bottom: 35px; } }
+      margin-top: 5px;
+      margin-bottom: 15px; } }
 
 #maternal-health:before, #child-health:before {
   background: url("../images/maternal.png") no-repeat center bottom;

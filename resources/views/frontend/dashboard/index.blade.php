@@ -36,7 +36,7 @@
 			      		</div> {{-- row --}}
 
 			      		<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
-				      		<div class="row mt-4">
+				      		<div class="row mt-2">
 				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 				      				<label for="">Select the Division</label>
 					      			<div class="input-group">
@@ -70,7 +70,7 @@
 				      			</div>
 				      		</div> {{-- row --}}
 			      		</form>
-			      		<div class="impact-div outcome-col">
+			      		<div class="impact-div outcome-col mt-3">
 				      		<div class="row">
 				      			<div class="col-12">
 				      				<div class="box-heading float-left">IMPACT</div>

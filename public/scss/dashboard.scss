@@ -89,6 +89,9 @@
 }
 .outcome-col{
 	background: #e6e6e6;
+	&.impact-div{
+		background: transparent;
+	}
 	.outcome-progress-col{
 		margin-top: 15px;
 		@media(min-height: 900px){
@@ -239,13 +242,19 @@
 	  height: 422px;
 	  margin-top: -29px;
 	}
-
+	@include media-breakpoint-up(lg) {
+	  height: 550px;
+	}
+	@media(min-width: 1500px) {
+		height: 800px;
+	}
 }
 
 
 // input
 .input-wrapper{
 	background: #e0e0e0;
+	background: transparent;
 	.input-wrapper-inner{
 		background: #e0e0e0;
 		padding: 0 15px;
@@ -340,8 +349,8 @@
   margin: 7px auto;
   position: relative;
   @media(min-height: 900px){
-		margin-top: 45px;
-		margin-bottom: 35px;
+		margin-top: 5px;
+		margin-bottom: 15px;
   }
 }
 #maternal-health:before, #child-health:before{
