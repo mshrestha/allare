@@ -82,7 +82,9 @@ class DashboardController extends Controller
 					["Home visits", "CHCP", "FWA", "FW Register", "MIS-1"],
 					["Family Welfare Center", "FWV", "CHCP", "Pregnant Mother Register", "MIS-3"]
 				],
-				"text" => "The minimum set of counselling messages that must be delivered to be reported as counselling distribution are:<br />Dietary Diversity, IFA supplementation, Exclusive Breastfeeding and Early Initiation of Breastfeeding, weight management during pregnancy/lactation<br />** Messages should vary based on trimester"
+				"text" => "The minimum set of counselling messages that must be delivered to be reported as counselling distribution are:
+				Dietary Diversity, IFA supplementation, Exclusive Breastfeeding and Early Initiation of Breastfeeding, weight management during pregnancy/lactation
+				** Messages should vary based on trimester"
 			],
 			"IYCF Counselling" => [
 				"level" => "Output",
@@ -96,7 +98,9 @@ class DashboardController extends Controller
 					["Home visits", "FWA", "FPI -> UFPO", "FW Register", "MIS-1"],
 					["Family Welfare Centers", "FWV", "UFPO", "Child register", "MIS-3"]
 				],
-				"text" => "The minimum set of counselling messages that must be delivered to be reported as counselling distribution are:<br />Dietary Diversity, Exclusive Breastfeeding, Continued breastfeeding up to 2 years, Vitamin A supplementation and Iodine fortification<br />** Messages should be age and context appropriate"
+				"text" => "The minimum set of counselling messages that must be delivered to be reported as counselling distribution are:
+				Dietary Diversity, Exclusive Breastfeeding, Continued breastfeeding up to 2 years, Vitamin A supplementation and Iodine fortification
+				** Messages should be age and context appropriate"
 			],
 			"IFA Distribution" => [
 				"level" => "Output",

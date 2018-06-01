@@ -78,9 +78,9 @@
 			      			</div>
 			      		</div>
 			      		<div class="row">
-			  				@foreach($outcomes as $key => $analysis)
-								@include('layouts.partials.dashboard-outcomes-partial')
-							@endforeach
+				  				@foreach($outcomes as $key => $analysis)
+										@include('layouts.partials.dashboard-outcomes-partial')
+									@endforeach
 			      		</div>
 			      	</div> {{-- col-md-4 --}}
 			  	</div>
@@ -196,30 +196,22 @@
 			  	</div>{{-- input-box input-reporting --}}
 			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-training">
 			  		<div class="input-trainning-inner">
-				  		<h6 class="mb-0">TRAINING</h6>
-				  		<div><span class="number">65%</span><span class="number-txt">Health workers trained </span></div>
-				  		<div><span class="number">65%</span><span class="number-txt">Health workers who succeeded </span></div>
+				  		<h6 class="mb-0">ENHANCED CAPACITY OF PLANNERS AND SERVICE PROVIDERS</h6>
+				  		<div><span class="number">65%</span><span class="number-txt"># of health workers trained on CCTN with Pay for performance </span></div>
+				  		<div><span class="number">65%</span><span class="number-txt"># of health workers who passed the training uptake assessment</span></div>
 			  		</div>
 			  	</div>{{-- input-box input-training --}}
 			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-qa">
-			  		<h6 class="mb-0">QUALITY ASSESSMENT</h6>
-			  		<div><span class="number">65%</span><span class="number-txt">Facilities receiving SS&amp;M</span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing IYCF/ Maternal counselling</span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing quality Nut reporting</span></div>
+			  		<h6 class="mb-0">QUALITY CONTROL AND SUPPORTIVE SUPERVISION</h6>
+			  		<div><span class="number">65%</span><span class="number-txt"># of facilities receiving supporting supervision and monitoring in the last quarter</span></div>
+			  		<div><span class="number">65%</span><span class="number-txt">% of facilties reporting high quality data </span></div>
+			  		<div><span class="number">65%</span><span class="number-txt">% of facilities passing the Data Quality Assessment</span></div>
 			  	</div>{{-- input-box input-qa --}}
-			  	<div class="col-sm-6 col-md-12 col-lg-3 col-xl-4 input-box input-supply-management">
-			  		<h6 class="mb-0">SUPPLY MANAGEMENT</h6>
-			  		<div class="row">
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in IFA Tablets</span></div>
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in Scales / Height board </span></div>
-			  		</div>
-			  		<div class="row">
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities awaiting counselling material</span></div>
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in F-75 and F-100 therapeutic </span></div>
-			  		</div>
-			  		<div class="row">
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in MUAC tapes</span></div>
-			  		</div>
+			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-4 input-box input-supply-management">
+			  		<h6 class="mb-0">ENSURE ADEQUATE NUTRITION SUPPLIES</h6>
+			  		<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of IFA tablets</span></div>
+			  		<div><span class="number">65%</span><span class="number-txt">% of facilities with adequate anthropometric measuring tools</span></div>
+			  		<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of Zinc and ORS</span></div>
 			  	</div>{{-- input-box input-qa --}}
 			  </div>
 			</div>
