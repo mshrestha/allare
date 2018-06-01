@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="box-heading float-left ml-0 mr-1">MATERNAL</div>
-				<div class="swiper-tab-nav">
+				{{-- <div class="swiper-tab-nav">
 					<ul class="list-inline">
 						<li class="list-inline-item">
 							<a href="#slide0" class="swipernav nav-slide0 active">Counselling</a>
@@ -26,14 +26,14 @@
 							<a href="#slide3" class="swipernav nav-slide3">Exclusive Breastfeeding</a>
 						</li>
 					</ul>
-				</div> {{-- swiper-tab-nav --}}
+				</div>  --}}{{-- swiper-tab-nav --}}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-12">
 				{{-- tab slide swiper --}}
 				<!-- Swiper -->
-				<div class="swiper-container swiper-tab" id="swiper-tab">
+				{{-- <div class="swiper-container swiper-tab" id="swiper-tab">
 					<div class="swiper-wrapper">
 						@foreach($trend_analysis as $key => $analysis)
 						@include('layouts.partials.trend-analysis-chart-partial')
@@ -44,8 +44,13 @@
 					<!-- Add Arrows -->
 					<div class="swiper-button-next invisible"></div>
 					<div class="swiper-button-prev invisible"></div>
-				</div>
+				</div> --}}
 				{{-- tab slide swiper end --}}
+				<div class="trend-div">
+					@foreach($trend_analysis as $key => $analysis)
+						@include('layouts.partials.trend-analysis-chart-partial')
+					@endforeach
+				</div>
 			</div>
 		</div>
 
@@ -60,6 +65,10 @@
 <script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 
 <script>
+	$('.area-date').html('2018');
+	$('.specific-date').html('2018');
+	// $('.swiper-slide').hide();
+
 	function loadPeriodWiseData($this, model, id) {
 		$.ajax({
 			type: 'GET',
@@ -155,6 +164,7 @@
 
 	});
 
+	var tab_indices = {'maternal_counselling': 0, 'plw_who_receive_ifas': 1, 'pregnant_women_weighed': 2, 'exclusive_breastfeeding': 3};
 	function main_chart_data(data) {
 		$.ajax({
 			type: 'POST',
@@ -168,6 +178,8 @@
 				}
 
 				charts(dataSets, title);
+				$('.swiper-slide').hide();
+				$('#swiper-slide-'+tab_indices[$('#indicator_id').val()]).show();
 
 			}, error : function () {
 				console.log('error');
@@ -337,30 +349,30 @@
 </script>
 <script src="{{asset('js/swiper.min.js')}}"></script>
 <script>
-	var swiper = new Swiper('#swiper-tab', {
-		spaceBetween: 30,
-		hashNavigation: {
-			watchState: true,
-		},
-		pagination: {
-			el: '.swiper-pagination',
-			clickable: true,
-		},
-		navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev',
-		},
-		onSlideChangeEnd: function (swiper) {
-			console.log('slide change end - after');
-			console.log(swiper);
-			console.log(swiper.activeIndex);
-          //after Event use it for your purpose
-          if (swiper.activeIndex == 1) {
-              //First Slide is active
-              console.log('First slide active')
-          }
-      }
-  });
+	// var swiper = new Swiper('#swiper-tab', {
+	// 	spaceBetween: 30,
+	// 	hashNavigation: {
+	// 		watchState: true,
+	// 	},
+	// 	pagination: {
+	// 		el: '.swiper-pagination',
+	// 		clickable: true,
+	// 	},
+	// 	navigation: {
+	// 		nextEl: '.swiper-button-next',
+	// 		prevEl: '.swiper-button-prev',
+	// 	},
+	// 	onSlideChangeEnd: function (swiper) {
+	// 		console.log('slide change end - after');
+	// 		console.log(swiper);
+	// 		console.log(swiper.activeIndex);
+ //          //after Event use it for your purpose
+ //          if (swiper.activeIndex == 1) {
+ //              //First Slide is active
+ //              console.log('First slide active')
+ //          }
+ //      }
+ //  });
 </script>
 
 <script>
@@ -369,14 +381,14 @@
 </script>
 
 <script> 
-	if(location.hash.slice(1)) { 
-		$('.swipernav').removeClass('active');
-		$('.nav-'+ location.hash.slice(1)).addClass('active');
-	}
+	// if(location.hash.slice(1)) { 
+	// 	$('.swipernav').removeClass('active');
+	// 	$('.nav-'+ location.hash.slice(1)).addClass('active');
+	// }
 
-	$(window).on('hashchange',function(){ 
-		$('.swipernav').removeClass('active');
-		$('.nav-'+ location.hash.slice(1)).addClass('active');
-	});
+	// $(window).on('hashchange',function(){ 
+	// 	$('.swipernav').removeClass('active');
+	// 	$('.nav-'+ location.hash.slice(1)).addClass('active');
+	// });
 </script>
 @endsection
