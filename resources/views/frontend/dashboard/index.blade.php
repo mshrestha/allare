@@ -531,7 +531,7 @@
 
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
-			        zoom: 6.5,
+			        zoom: 7,
 			        scrollwheel: true,
 			        styles: [{
 							"featureType": "administrative",
@@ -1040,7 +1040,7 @@
 
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
-			        zoom: 6.5,
+			        zoom: 7,
 			        scrollwheel: true,
 			        styles: [{
 							"featureType": "administrative",

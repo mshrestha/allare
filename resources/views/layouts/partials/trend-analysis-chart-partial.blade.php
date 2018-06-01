@@ -1,4 +1,4 @@
-<div class="swiper-slide" data-hash="slide{{$key}}">
+<div class="swiper-slide hidden" id="swiper-slide-{{$key}}" data-hash="slide{{$key}}">
 	<div class="row">
 		<div class="col-xl-3 col-lg-3 col-sm-4">
 			<div class="tab-col-title">{{$analysis['name']}}</div>
