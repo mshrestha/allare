@@ -46,6 +46,9 @@ Route::group(['namespace' => 'Frontend', 'as'=>'frontend.'], function() {
 	// Outcomes
 	Route::get('/impacts', 'ImpactController@secondIndexAction')->name('impacts');
 	Route::post('/impacts/get-outcome-data', 'ImpactController@getOutcomeData')->name('get-outcome-data');	
+
+	// Technical Standards
+	Route::get('/technical-standard', 'TechnicalStandardController@indexAction')->name('technical-standard');
 });
 
 
