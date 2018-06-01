@@ -88,4 +88,18 @@ footer {
 		    text-decoration: none;
 		    font-size: 12px;
 		}
+		li.list-inline-item{
+			padding-right: 10px;
+			position: relative;
+			&:after {
+		    content: "|";
+		    position: absolute;
+		    left: -13px;
+		    color: #FFF;
+		    line-height: 22px;
+			}
+		}
+		li.list-inline-item:first-child::after{
+			display: none;
+		}
 }
