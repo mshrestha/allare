@@ -539,6 +539,9 @@ class DashboardController extends Controller
 			
 		}
 		// dd($val, $sum);
+		if($data['model'] == 'ImciStunting' || $data['model'] == 'ImciWasting' || $data['model'] == 'ImciAnemia') {
+			
+		}
 		$ranges = $this->getThreeRanges($valueArr);
 		$districtRanges = $this->getThreeRanges($centArr);
 		// dd($districtRanges);

@@ -18,18 +18,18 @@
 			      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 			      				<div id="maternal-health" style="width: 100%;"></div>
 			      				<div class="legend row">
-			      					<div class="conselling-given col-10 offset-2">Maternal Nutrition Counselling</div>
-			      					<div class="ifa-distributed col-10 offset-2">IFA Distributed</div>
-			      					<div class="weight-measured col-10 offset-2">Weight Measured</div>
+			      					<div class="conselling-given col-10 offset-2">Percent of pregnant women counselled on maternal nutrition</div>
+			      					<div class="ifa-distributed col-10 offset-2">Percent of pregnant women who received IFA</div>
+			      					<div class="weight-measured col-10 offset-2">Percent of pregnant women weighed at facility visits</div>
 			      					{{-- <div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
 			      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
 			      				<div id="child-health" style="width: 100%;"></div>
 			      				<div class="legend row">
-			      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
+			      					<div class="imci-counselling col-10 offset-2">Percent of caretakers of 6-23 month olds counselled on IYCF</div>
 			      					{{-- <div class="supplements-distributed col-10 offset-2">Supplements Distributed</div> --}}
-			      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
+			      					<div class="child-growth col-10 offset-2">Percent of children 6-23 months old weighed at facilities</div>
 			      					{{-- <div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
@@ -183,9 +183,9 @@
 			    	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
 							<ul class="map-filter mb-0">
 								<li class="list-head">MATERNAL NUTRITION</li>
-									<li><a href="#" id="counselling" class="maplinks active" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Counselling Given</a></li>
-									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">IFA Distributed</a></li>
-									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
+									<li><a href="#" id="counselling" class="maplinks active" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Women counselled on Maternal Nutrition</a></li>
+									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">Pregnant Woman who received IFA</a></li>
+									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Pregnant women weighed during facility visits</a></li>
 									<li class="list-head">CHILD NUTRITION</li>
 									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
 									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
@@ -201,7 +201,7 @@
 									<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('ImciAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
 		    				</ul>
 		    				<ul class="map-filter mb-0">
-									<li class="list-head">INTERMEDIATE</li>
+									<li class="list-head">OUTCOMES</li>
 									<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding'
 									)">Exclusive Breastfeeding</a></li>
 									<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
@@ -216,6 +216,7 @@
 								<span class="legend-text" id="low-text"></span>
 								<span class="legend-text" id="avg-text"></span>
 								<span class="legend-text" id="high-text"></span>
+								<span class="legend-text" id="vhigh-text"></span>
 							</div>
 						</div>
 			    </div>

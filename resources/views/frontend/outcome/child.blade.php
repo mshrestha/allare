@@ -182,6 +182,11 @@
 		})
 	}
 
+	$('#indicator_id').click(function() {
+		$('.swiper-slide').hide();
+		$('#swiper-slide-'+tab_indices[$('#indicator_id').val()]).show();
+	});
+
 	$('#main-chart-form').on('submit', function() {
 		var data = $(this).serialize();
 		data += '&output=child';
