@@ -91,6 +91,19 @@
 	background: #e6e6e6;
 	&.impact-div{
 		background: transparent;
+		margin-top: 45px;
+		.outcome-progress-col{
+			margin-top: 25px;
+    	padding-bottom: 15px;
+    	@include media-breakpoint-down(md) {
+				padding-bottom: 5px;
+    	}
+		}
+		.txt-icon .outcome-icon-dis{
+			@include media-breakpoint-up(lg) {
+				height: 47px;
+			}
+		}
 	}
 	.outcome-progress-col{
 		margin-top: 15px;
@@ -238,16 +251,19 @@
 }
 
 .map-wrapper {
+	@include media-breakpoint-up(sm) {
+		height: 422px;
+	  margin-top: -29px;
+	}
 	@include media-breakpoint-up(md) {
-	  height: 422px;
+	  height: calc(100vh - 70px);
 	  margin-top: -29px;
 	}
 	@include media-breakpoint-up(lg) {
 	  height: 550px;
+	  height: calc(100vh - 70px);
 	}
-	@media(min-width: 1500px) {
-		height: 800px;
-	}
+
 }
 
 

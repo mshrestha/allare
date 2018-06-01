@@ -6886,6 +6886,9 @@ body {
   text-indent: 10px;
   color: #FFF;
   font-size: 14px; }
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    .progress-bar-h .current, .progress-bar-v .current {
+      font-size: 13px; } }
 
 .progress-bar-h .goal, .progress-bar-v .goal {
   width: 20%;
@@ -7112,7 +7115,17 @@ body {
 .outcome-col {
   background: #e6e6e6; }
   .outcome-col.impact-div {
-    background: transparent; }
+    background: transparent;
+    margin-top: 45px; }
+    .outcome-col.impact-div .outcome-progress-col {
+      margin-top: 25px;
+      padding-bottom: 15px; }
+      @media (max-width: 991.98px) {
+        .outcome-col.impact-div .outcome-progress-col {
+          padding-bottom: 5px; } }
+    @media (min-width: 992px) {
+      .outcome-col.impact-div .txt-icon .outcome-icon-dis {
+        height: 47px; } }
   .outcome-col .outcome-progress-col {
     margin-top: 15px; }
     @media (min-height: 900px) {
@@ -7225,16 +7238,18 @@ body {
 .map-view-container div#overdiv span#high-text:before {
   background: #0c4a60; }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .map-wrapper {
     height: 422px;
     margin-top: -29px; } }
+@media (min-width: 768px) {
+  .map-wrapper {
+    height: calc(100vh - 70px);
+    margin-top: -29px; } }
 @media (min-width: 992px) {
   .map-wrapper {
-    height: 550px; } }
-@media (min-width: 1500px) {
-  .map-wrapper {
-    height: 800px; } }
+    height: 550px;
+    height: calc(100vh - 70px); } }
 
 .input-wrapper {
   background: #e0e0e0;
@@ -7621,21 +7636,22 @@ html {
 
 body {
   position: static;
-  padding-bottom: 50px; }
+  padding-bottom: 30px; }
 
 footer {
   background: #5d5d5d;
-  padding: 15px 15px;
+  padding: 5px 15px;
   position: absolute;
   bottom: 0px;
   width: 100%;
-  height: 50px;
+  height: 30px;
   line-height: 20px; }
   footer ul.footer-menu.list-inline {
     margin: 0;
     padding: 0; }
   footer ul.footer-menu.list-inline a {
     color: #fff;
-    text-decoration: none; }
+    text-decoration: none;
+    font-size: 12px; }
 
 /*# sourceMappingURL=style.css.map */

@@ -9,7 +9,7 @@
 	}
 @endphp
 
-	<div class="col-6 outcome-progress-col">
+	<div class="col-md-12 col-lg-6 outcome-progress-col">
 		<div class="report-heading row">
 			<div class="txt-icon col-12">
 				<div class="report-icon" style="float: left; margin-right: 10px;">

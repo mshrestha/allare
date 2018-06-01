@@ -70,7 +70,7 @@
 				      			</div>
 				      		</div> {{-- row --}}
 			      		</form>
-			      		<div class="impact-div outcome-col mt-3">
+			      		<div class="impact-div outcome-col">
 				      		<div class="row">
 				      			<div class="col-12">
 				      				<div class="box-heading float-left">IMPACT</div>

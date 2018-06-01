@@ -66,16 +66,16 @@ html{
 }
 body{
 	position: static;
-	padding-bottom: 50px;
+	padding-bottom: 30px;
 }
 footer {
     background: #5d5d5d;
-    padding: 15px 15px;
+    padding: 5px 15px;
     
     position: absolute;
     bottom: 0px;
     width: 100%;
-    height: 50px;
+    height: 30px;
     line-height: 20px;
 
 		ul.footer-menu.list-inline {
@@ -86,5 +86,6 @@ footer {
 		ul.footer-menu.list-inline a {
 		    color: #fff;
 		    text-decoration: none;
+		    font-size: 12px;
 		}
 }
