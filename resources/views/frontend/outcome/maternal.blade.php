@@ -115,10 +115,35 @@
 	    				},
 	    				barPercentage: 1.0
 	    			}],
-	    			yAxes: [{
-	    				stacked: true
-	    			}]
+					// yAxes: [{
+					// 	stacked: true
+					// }]
+					yAxes: [{
+						stacked: true,
+	                    ticks: {
+	                        beginAtZero:true,
+	                        callback: function(value, index, values) {
+	                            if(parseInt(value) >= 1000){
+	                               return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                            } else {
+	                               return value;
+	                            }
+	                       }                            
+	                    }
+	                }]
 	    		},
+				tooltips: {
+					callbacks: {
+					    label: function(tooltipItem, data) {
+					        var value = data.datasets[0].data[tooltipItem.index];
+					        if(parseInt(value) >= 1000){
+					                   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					                } else {
+					                   return value;
+					                }
+					    }
+					} // end callbacks:
+				},
 	            // Container for pan options
 	            pan: {
 	                // Boolean to enable panning

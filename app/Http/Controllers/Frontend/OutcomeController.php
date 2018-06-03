@@ -33,10 +33,10 @@ class OutcomeController extends Controller
 
 		$data = config('data.maternal');
 		$indicators = [
-			'maternal_counselling' => 'Maternal Counselling',
-			'plw_who_receive_ifas' => 'Plw who receive ifas',
-			'pregnant_women_weighed' => 'Pregnant women weighed',
-			'exclusive_breastfeeding' => 'Exclusive breastfeeding',
+			'maternal_counselling' => 'Maternal Nutrition Counselling',
+			'plw_who_receive_ifas' => 'IFA Distribution',
+			'pregnant_women_weighed' => 'Maternal weight',
+			'exclusive_breastfeeding' => 'Measurement',
 		];
 
 		$total_patient_last_month = CcMrTotalPatient::orderBy('period', 'desc')->where('organisation_unit', 'dNLjKwsVjod')->first();
@@ -84,7 +84,7 @@ class OutcomeController extends Controller
 		
 		$trend_analysis = [
 			[
-				'name' => 'Counselling',
+				'name' => 'Pregnant women counselled on maternal nutrition',
 				'model' => 'counselling',
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
@@ -92,7 +92,7 @@ class OutcomeController extends Controller
 				'current_month' => $counselling_month_maternal
 			],
 			[
-				'name' => 'IFA Distribution',
+				'name' => 'Pregnant women who received IFA tablets',
 				'model' => 'ifa_distribution',
 				'percent' => round($plw_who_receive_ifas_percent),
 				'periods' => $plw_who_receive_ifas_all_periods,
@@ -100,7 +100,7 @@ class OutcomeController extends Controller
 				'current_month' => $plw_who_receive_ifas_month
 			],
 			[
-				'name' => 'Weight Measurement',
+				'name' => 'Pregnant women weighed in a facility visit',
 				'model' => 'weight_measurement',
 				'percent' => round($pregnant_women_weighed_percent),
 				'periods' => $pregnant_women_weighed_all_periods,
@@ -356,7 +356,7 @@ class OutcomeController extends Controller
 
 		$trend_analysis = [
 			[
-				'name' => 'IYCF Counselling',
+				'name' => 'Caregivers of 0-23 month olds counselled on IYCF',
 				'model' => 'iycf_counselling',
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
@@ -364,7 +364,7 @@ class OutcomeController extends Controller
 				'current_month' => $counselling_month_child
 			],
 			[
-				'name' => 'Supplements',
+				'name' => 'Children 0-23 months old weighed in a facility',
 				'model' => 'supplements',
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,

@@ -10,7 +10,7 @@ return [
 			// 	'api_id'	=> 'WfrGlt9gYxW.YF2ivOyo5'
 			// ],
 			[
-				'name'		=> 'Maternal Counselling',
+				'name'		=> 'Maternal Nutrition Counselling',
 				'model'		=> 'CcMrAncNutriCounsel',
 				'table'		=> 'cc_mr_anc_nutri_counsel',
 				'server'	=> 'community',
@@ -19,7 +19,7 @@ return [
 		],
 		'plw_who_receive_ifas' => [
 			[
-				'name'		=> 'PLW who receive IFAS',
+				'name'		=> 'IFA Distribution',
 				'model'		=> 'CcMrAncIfaDistribution',
 				'table'		=> 'cc_mr_anc_ifa_distribution',
 				'server'	=> 'community',
@@ -28,7 +28,7 @@ return [
 		],
 		'pregnant_women_weighed' => [
 			[
-				'name'		=> 'Pregnant women weighed',
+				'name'		=> 'Maternal Weight',
 				'model'		=> 'CcMrWeightInKgAnc',
 				'table'		=> 'cc_mr_weight_in_kg_anc',
 				'server'	=> 'community',
@@ -37,7 +37,7 @@ return [
 		],
 		'exclusive_breastfeeding' => [
 			[
-				'name'  	=> 'Exclusive breastfeeding',
+				'name'  	=> 'Measurement',
 				'model'		=> 'CcCrExclusiveBreastFeeding',
 				'table'		=> 'cc_cr_exclusive_breast_feeding',
 				'server'	=> 'community',
