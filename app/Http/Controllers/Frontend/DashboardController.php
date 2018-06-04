@@ -480,6 +480,7 @@ class DashboardController extends Controller
 	}
 
 	public function getMapData(Request $request) {
+		$districts = ['xNcsJeRMUCM' => 'Barguna District' , 'uOU0jtyD1PZ' => 'Barisal District' , 'EdOWA8sKh2p' => 'Bhola District' , 'WNCBZLbFD70' => 'Jhalokati District', 'bEiL5HnmKZO' => 'Patuakhali District', 'aLbPgj33QnT' => 'Pirojpur District'];
 		$data = $request->all();
 		$datamodel = config('datamodel');
 		$model = 'App\Models\Data\\' . $data['model'];
@@ -517,9 +518,11 @@ class DashboardController extends Controller
 		$centralDistricts = (config('static'))['centDistrict'];
 		// dd($centralDistricts);
 		$foundArr = [];
+		$districtMinimal = [];
 		for ($i=0; $i < count($centralDistricts); $i++) { 
 			for ($j=0; $j < count($responseData); $j++) { 
 				if($responseData[$j]['organisation_unit'] == $centralDistricts[$i]) {
+					$districtMinimal[$districts[$centralDistricts[$i]]] = $responseData[$j]['value'];
 					array_push($centArr, $responseData[$j]['value']);
 					$sum += $responseData[$j]['value'];
 				}
@@ -527,8 +530,9 @@ class DashboardController extends Controller
 			array_push($foundArr, $centralDistricts[$i]);
 		}
 
-		
-
+		$districtMinimal = array_flip($districtMinimal);
+		ksort($districtMinimal);
+		$districtMinimal = array_flip($districtMinimal);
 
 		$dataArr = [];
 		$valueArr = [];
@@ -559,13 +563,17 @@ class DashboardController extends Controller
 		} else if($data['model'] == 'BdhsAnemia') {
 			$ranges = array('low' => 5, 'mid' => 19.9, 'high' => 39.9);
 		} else {
-			$ranges = $this->getThreeRanges($valueArr); 
+			$ranges = $this->getFourRanges($valueArr); 
 		}
 
 		$districtRanges = [];
-		if($data['model'] != 'BdhsStunting' && $data['model'] == 'BdhsWasting' && $data['model'] == 'BdhsAnemia') {
-			$districtRanges = $this->getThreeRanges($centArr);
+		if($data['model'] != 'BdhsStunting' && $data['model'] != 'BdhsWasting' && $data['model'] != 'BdhsAnemia') {
+			$districtRanges = $this->getFourRanges($centArr);
 		}
+		$emptydistricts = false;
+		// dd($districtRanges);
+		if(count($districtRanges) <=0 )
+			$emptydistricts = true;
 		// dd($districtRanges);
 		$text = 'People reached: ';
 		$reverse = false;
@@ -597,8 +605,9 @@ class DashboardController extends Controller
 				'ranges' => $ranges,
 				'districtRanges' => $districtRanges,
 				'text' => $text,
-				'emptydistricts' => true,
-				'reverse' => $reverse
+				'emptydistricts' => $emptydistricts,
+				'reverse' => $reverse,
+				'minimalDistrict' => $districtMinimal
 			);
 		}
 	}
@@ -756,10 +765,30 @@ class DashboardController extends Controller
 			$q1 = $min + $step;
 			$q2 = $max - $step;
 			return array(
-				'min' => $min,
-				'max' => $max,
-				'q1' => $q1,
-				'q2' => $q2,
+				'min' => (int)$min,
+				'max' => (int)$max,
+				'q1' => (int)$q1,
+				'q2' => (int)$q2,
+			);
+		}else{
+			return [];
+		}
+	}
+
+	private function getFourRanges($valueArray) {
+		if(count($valueArray) > 0) {
+			$min = min($valueArray);
+			$max = max($valueArray);
+			$step = ($max - $min) / 4;
+			$q1 = $min + $step;
+			$q2 = $q1 + $step;
+			$q3 = $max - $step;
+			return array(
+				'min' => (int)$min,
+				'max' => (int)$max,
+				'q1' => (int)$q1,
+				'q2' => (int)$q2,
+				'q3' => (int)$q3,
 			);
 		}else{
 			return [];

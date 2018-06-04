@@ -1,5 +1,45 @@
 @extends('layouts.app')
-
+@section('styles')
+<style>
+.axis path, .axis line {
+    fill: none;
+    stroke: #fff;
+  }
+.axis text {
+  	font-size: 13px;
+  }
+.bar {
+    fill: #8CD3DD;
+  }
+/*.bar:hover {
+    fill: #F56C4E;
+  }*/
+.low {
+	fill: #b2eed6;
+}
+.mid {
+	fill: #81ddc6;
+}
+.high {
+	fill: #137f91;
+}
+.vhigh {
+	fill: #0d4a5f;
+}
+svg{
+	overflow-y: scroll !important;
+}
+svg text.label {
+  fill:white;
+  font: 15px;  
+  font-weight: 400;
+  text-anchor: middle;
+}
+#chartID {
+min-width: 531px;
+}
+</style>
+@endsection
 @section('content')
 	<div class="container">
 		<!-- Slider main container -->
@@ -194,29 +234,31 @@
 
 
 							<ul class="map-filter outcome mb-0">
-									<li class="list-head green">IMPACTS</li>
-									<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('BdhsStunting', 'STUNING', '#stunting')">STUNTING</a></li>
-									{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
-									<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting')">WASTING</a></li>
-									<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
-		    				</ul>
-		    				<ul class="map-filter mb-0">
-									<li class="list-head">OUTCOMES</li>
-									<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding'
-									)">Exclusive Breastfeeding</a></li>
-									<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
-		    				</ul>
-		    			</div>
-		    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
-		    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
-		    					<div id="zoomctrl">
-							    </div>
+								<li class="list-head green">IMPACTS</li>
+								<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('BdhsStunting', 'STUNING', '#stunting')">STUNTING</a></li>
+								{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
+								<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting')">WASTING</a></li>
+								<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
+	    				</ul>
+	    				<ul class="map-filter mb-0">
+								<li class="list-head">OUTCOMES</li>
+								<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding'
+								)">Exclusive Breastfeeding</a></li>
+								<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
+	    				</ul>
+	    			</div>
+	    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
+	    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
+	    					<div id="zoomctrl">
+						    </div>
 							</div>
 							<div id="overdiv">
 								<span class="legend-text" id="low-text"></span>
 								<span class="legend-text" id="avg-text"></span>
 								<span class="legend-text" id="high-text"></span>
 								<span class="legend-text" id="vhigh-text"></span>
+							</div>
+							<div class="canvas-holder score-bar-chart" id="chartID">
 							</div>
 						</div>
 			    </div>
@@ -519,7 +561,7 @@
 	      url: '/dashboard_specific_map',
 	      data: {"model": model},
 	      success: function (res) {
-	      	console.log(res);
+	      	// console.log(res);
 	      	if(res['dataExists']) {
 	      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
 	      		$('#low-text').html('Low');
@@ -662,23 +704,25 @@
 								var value = parseInt(res['minimalData'][id]);
 								var localColor = '';
 								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
-									if(value < parseInt(res['ranges']['low'])){
-										localColor = scoreColors['low'];
-									} else if(value >= parseInt(res['ranges']['low']) && value < parseInt(res['ranges']['mid'])) {
-										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['ranges']['mid']) && value < parseInt(res['ranges']['high'])) {
-										localColor = scoreColors['high'];
-									} else if(value >= parseInt(res['ranges']['high'])) {
-										localColor = scoreColors['high'];
-									}
-								}else {
-									console.log(res['ranges'], value);
-									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])) {
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])){
 										localColor = scoreColors['low'];
 									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
 										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['ranges']['q2']) && value <= parseInt(res['ranges']['max'])) {
+									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
 										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['very high'];
+									}
+								}else {
+									// console.log(res['ranges'], value);
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])){
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['very high'];
 									}
 								}	
 							// }
@@ -703,15 +747,20 @@
 								var value = parseInt(res['minimalData'][id]);
 								// var localColor = '';
 								localColor = scoreColors['low'];
+								console.log("hello");
 								if(!res['emptydistricts']) {
-									if(value >= parseInt(res['districtRanges']['mindistrict']) && value < parseInt(res['districtRanges']['q1district'])) {
+									if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
 										localColor = scoreColors['low'];
-									} else if(value >= parseInt(res['districtRanges']['q1district']) && value < parseInt(res['districtRanges']['q2district'])) {
+									} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
 										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['districtRanges']['q2district']) && value <= parseInt(res['districtRanges']['maxdistrict'])) {
+									} else if(value >= parseInt(res['districtRanges']['q2']) && value <= parseInt(res['districtRanges']['q3'])) {
 										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['districtRanges']['q3'])) {
+										localColor = scoreColors['very high'];
 									}
 								}
+								console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
+								console.log('end');
 								
 							// }
 							
@@ -818,6 +867,95 @@
 										zIndex: 5
 									});
 									anotherLayer.setMap(map);
+									var max = 0;
+									var dataCSV = [];
+									for(var key in res['minimalDistrict']) {
+										temp = {};
+										temp.id = key;
+										temp.value = res['minimalDistrict'][key];
+										if(max < temp.value)
+											max = temp.value;
+										dataCSV.push(temp);
+									}
+									console.log(dataCSV);
+									
+							  var margin = {top:10, right:10, bottom:90, left:10};
+
+								var width = 960 - margin.left - margin.right;
+
+								var height = 500 - margin.top - margin.bottom;
+
+								var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
+
+								var yScale = d3.scale.linear()
+								      .range([height, 0]);
+
+
+								var xAxis = d3.svg.axis()
+										.scale(xScale)
+										.orient("bottom");
+								      
+								      
+								var yAxis = d3.svg.axis()
+										.scale(yScale)
+										.orient("left");
+
+								var svgContainer = d3.select("#chartID").append("svg")
+										.attr("width", width+margin.left + margin.right)
+										.attr("height",height+margin.top + margin.bottom)
+										.append("g").attr("class", "container")
+										.attr("transform", "translate("+ margin.left +","+ margin.top +")");
+
+								xScale.domain(dataCSV.map(function(d) { return d.id; }));
+								yScale.domain([0, d3.max(dataCSV, function(d) { return parseInt(d.value); })]);
+
+
+								//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
+								var xAxis_g = svgContainer.append("g")
+										.attr("class", "x axis")
+										.attr("transform", "translate(0," + (height) + ")")
+										.call(xAxis)
+										.selectAll("text");
+											
+								// Uncomment this block if you want the y axis
+								/*var yAxis_g = svgContainer.append("g")
+										.attr("class", "y axis")
+										.call(yAxis)
+										.append("text")
+										.attr("transform", "rotate(-90)")
+										.attr("y", 6).attr("dy", ".71em")
+										//.style("text-anchor", "end").text("Number of Applicatons"); 
+								*/
+
+
+									svgContainer.selectAll(".bar")
+								  		.data(dataCSV)
+								  		.enter()
+								  		.append("rect")
+								  		.attr("class", function(d) {
+								  			if(d.value >= parseInt(res['districtRanges']['min']) && d.value < parseInt(res['districtRanges']['q1'])) {
+													return 'bar low';
+												} else if(d.value >= parseInt(res['districtRanges']['q1']) && d.value < parseInt(res['districtRanges']['q2'])) {
+													return 'bar mid';
+												} else if(d.value >= parseInt(res['districtRanges']['q2']) && d.value <= parseInt(res['districtRanges']['q3'])) {
+													return 'bar high';
+												} else if(d.value >= parseInt(res['districtRanges']['q3'])) {
+													return 'bar vhigh';
+												}
+								  		})
+								  		.attr("x", function(d) { return xScale(d.id); })
+								  		.attr("width", xScale.rangeBand())
+								  		.attr("y", function(d) { return yScale(d.value); })
+								  		.attr("height", function(d) { return height - yScale(d.value); });
+								  svgContainer.selectAll(".text")  		
+										  .data(dataCSV)
+										  .enter()
+										  .append("text")
+										  .attr("class","label")
+										  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
+										  .attr("y", function(d) { return yScale(d.value) + 1; })
+										  .attr("dy", ".75em")
+										  .text(function(d) { return d.value; });
 								}
 							}
 						});
@@ -1060,7 +1198,6 @@
   	const getMapData = (model, item, id) => {
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
-      console.log(model, item, id);
   		$.ajax({
 	      type: 'get',
 	      url: '/dashboard_specific_map',
@@ -1259,7 +1396,7 @@
 										localColor = scoreColors['high'];
 									}
 								}
-								
+								console.log(localColor);
 							// }
 							
 							return {
