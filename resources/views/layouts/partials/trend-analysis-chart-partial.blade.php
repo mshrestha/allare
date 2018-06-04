@@ -25,8 +25,9 @@
 		<div class="col-xl-6 pr-xl-0 col-lg-6 col-sm-8">
 			<div class="tab-col-title">{{$analysis['name']}}</div>
 			<div class="tab-col-subtitle area-date" id="area-date-{{$key}}">Last 6 Months</div>
-			<div class="canvas-holder output-area-chart" id="output-area-chart-{{ $key }}">
-				<svg id="line-chart-{{ $key }}"></svg>
+			<div style="height: 250px;" class="canvas-holder output-area-chart" id="output-area-chart-{{ $key }}">
+				{{-- <svg id="line-chart-{{ $key }}"></svg> --}}
+				<canvas id="line-area-{{ $key }}"></canvas>
 			</div>
 		</div> {{-- col-xs-5 --}}
 		{{-- <div class="col-xl-3 report-col col-lg-3">

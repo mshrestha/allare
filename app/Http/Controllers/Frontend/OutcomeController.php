@@ -34,7 +34,7 @@ class OutcomeController extends Controller
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::whereIn('level', [1, 2])->get();
 		$periods = $this->getPeriodYears();
-		$periodData = $periods = $this->getPeriodArray('LAST_6_MONTHS');
+		$periodData = $this->getPeriodArray('LAST_6_MONTHS');
 		$data = config('data.maternal');
 		$indicators = [
 			'maternal_counselling' => 'Maternal Nutrition Counselling',
@@ -52,7 +52,7 @@ class OutcomeController extends Controller
 		$counselling_model = 'App\Models\Data\\' . $counselling_data['model'];
 		$counselling_percent = $this->calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $current_period);
 		// dd($counselling_percent);
-		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
+		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period_name');
 		$counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
 		$counselling_month_maternal = $current_period;
 
@@ -61,7 +61,7 @@ class OutcomeController extends Controller
 		$plw_who_receive_ifas_model = 'App\Models\Data\\' . $plw_who_receive_ifas_data['model'];
 		$plw_who_receive_ifas_percent = $this->calculate_IFA_distribution_percentage($organisation_unit, $current_period);
 		$plw_who_receive_ifas_all_periods = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')
-		->pluck('period');
+		->pluck('period_name');
 
 		$plw_who_receive_ifas_all_values_dghs = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
 		$plw_who_receive_ifas_all_values_dgfp = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGFP')->orderBy('period', 'asc')->pluck('value');
@@ -75,7 +75,7 @@ class OutcomeController extends Controller
 		$pregnant_women_weighed_last_month = $pregnant_women_weighed_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
 		$pregnant_women_weighed_yearly = $pregnant_women_weighed_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
 		$pregnant_women_weighed_percent = ($pregnant_women_weighed_last_month->value/$pregnant_women_weighed_yearly->value) * 100;
-		$pregnant_women_weighed_all_periods = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('period');
+		$pregnant_women_weighed_all_periods = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('period_name');
 		$pregnant_women_weighed_all_values = $pregnant_women_weighed_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'asc')->pluck('value');
 		$pregnant_women_weighed_month = $pregnant_women_weighed_last_month->period_name;
 
@@ -86,7 +86,7 @@ class OutcomeController extends Controller
 		$exclusive_breastfeeding_last_month = $exclusive_breastfeeding_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'desc')->first();
 		$exclusive_breastfeeding_yearly = $exclusive_breastfeeding_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'desc')->first();
 		$exclusive_breastfeeding_percent = ($exclusive_breastfeeding_last_month->value/$exclusive_breastfeeding_yearly->value) * 100;
-		$exclusive_breastfeeding_all_periods = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('period');
+		$exclusive_breastfeeding_all_periods = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('period_name');
 		$exclusive_breastfeeding_all_values_dghs = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
 		$exclusive_breastfeeding_all_values_dgfp = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGFP')->orderBy('period', 'asc')->pluck('value');
 		$exclusive_breastfeeding_all_values = $this->mergeTwoArrays($exclusive_breastfeeding_all_values_dghs,$exclusive_breastfeeding_all_values_dgfp);
@@ -325,7 +325,8 @@ class OutcomeController extends Controller
 		if($request->model == 'counselling') {
 			return [
 				'key' => 0,
-				'name' => 'Counselling',
+				'heading' => 'Maternal Nutrition Counselling',
+				'name' => 'Pregnant women counselled on maternal nutrition',
 				'model' => 'counselling',
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
@@ -335,7 +336,8 @@ class OutcomeController extends Controller
 		} else if ($request->model == 'ifa_distribution') {
 			return [
 				'key' => 1,
-				'name' => 'IFA Distribution',
+				'heading' => 'IFA Distribution',
+				'name' => 'Pregnant women who received IFA tablets',
 				'model' => 'ifa_distribution',
 				'percent' => round($plw_who_receive_ifas_percent),
 				'periods' => $plw_who_receive_ifas_all_periods,
@@ -345,7 +347,8 @@ class OutcomeController extends Controller
 		} else if ($request->model == 'weight_measurement') {
 			return [
 				'key' => 2,
-				'name' => 'Weight Measurement',
+				'heading' => 'Maternal Weight',
+				'name' => 'Pregnant women weighed in a facility visit',
 				'model' => 'weight_measurement',
 				'percent' => round($pregnant_women_weighed_percent),
 				'periods' => $pregnant_women_weighed_all_periods,
@@ -355,6 +358,7 @@ class OutcomeController extends Controller
 		} else if ($request->model == 'exclusive_breastfeeding') {
 			return [
 				'key' => 3,
+				'heading' => 'Measurement',
 				'name' => 'Exclusive breastfeeding',
 				'model' => 'exclusive_breastfeeding',
 				'percent' => round($exclusive_breastfeeding_percent),
