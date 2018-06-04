@@ -186,7 +186,18 @@ class ImpactController extends Controller
 				$dataSet[$indicator]['goal_values'] = $datum_goal->value;
 				$dataSet[$indicator]['min'] = $goal_model::min('value');
 				$dataSet[$indicator]['max'] = $goal_model::max('value');
-
+				$dataSet[$indicator]['reports'] = [
+					[
+						'title' => 'BANGLADESH DEMOGRAPHIC AND HEALTH SURVEY 2011',
+						'link' => 'https://dhsprogram.com/pubs/pdf/fr265/fr265.pdf',
+						'date' => 'Jan 2013'
+					],
+					[
+						'title' => 'BANGLADESH DEMOGRAPHIC AND HEALTH SURVEY 2014 ',
+						'link' => 'https://dhsprogram.com/pubs/pdf/FR311/FR311.pdf',
+						'date' => 'Mar 2016'
+					]
+				];
 				
 				$dataSet[$indicator]['values'] = $datum->pluck('value');	
 				if($indicators[$indicator] == 'BdhsStunting') {
