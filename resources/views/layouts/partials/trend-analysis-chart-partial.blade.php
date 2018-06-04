@@ -7,7 +7,7 @@
 				<div class="input-group mb-1 col-6 col-sm-12 col-md-12 col-lg-12 col-xl-6">
 					<select class="custom-select gry-borderd load_period_data" name="period" id="trend_period_id" onchange="loadPeriodWiseData($(this), '{{ $analysis['model'] }}', {{$key}})">
 						<option value="">Last Month</option>
-						<option value="">Last 6 Months</option>
+						{{-- <option value="">Last 6 Months</option> --}}
 						<option value="2018">2018</option>
 						<option value="2017">2017</option>
 						<option value="2016">2016</option>

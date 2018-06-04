@@ -234,6 +234,7 @@
 
 	var startDate, endDate;
 	function trendAnalysisChart(id, data_value) {
+		// console.log(data_value);
 		var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
 		var randomScalingFactor = function() {
 			return Math.round(Math.random() * 100);
