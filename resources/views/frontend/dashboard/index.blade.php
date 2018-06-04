@@ -15,16 +15,16 @@
     fill: #F56C4E;
   }*/
 .low {
-	fill: #b2eed6;
+	fill: #f2b4a0;
 }
 .mid {
-	fill: #81ddc6;
+	fill: #f7e15a;
 }
 .high {
-	fill: #137f91;
+	fill: #eea039;
 }
 .vhigh {
-	fill: #0d4a5f;
+	fill: #ea5c58;
 }
 svg{
 	overflow-y: scroll !important;
@@ -35,9 +35,9 @@ svg text.label {
   font-weight: 400;
   text-anchor: middle;
 }
-#chartID {
+/*#chartID {
 min-width: 531px;
-}
+}*/
 </style>
 @endsection
 @section('content')
@@ -258,15 +258,16 @@ min-width: 531px;
 								<span class="legend-text" id="high-text"></span>
 								<span class="legend-text" id="vhigh-text"></span>
 							</div>
-							
 						</div>
 			    </div>
 			  </div> <!-- swiper-slide -->
 			</div> <!-- swiper-wrrapper -->
 			<div class="row">
-				<div class="col-sm-3"></div>
-				<div class="col-sm-9"><div class="canvas-holder score-bar-chart" id="chartID">
-			</div></div>
+				<div class="col-sm-2"></div>
+				<div class="col-12 col-md-offset-2 col-md-10">
+					<div class="canvas-holder score-bar-chart" id="chartID">
+					</div>
+				</div>
 			</div>
 			
 			<!-- Add Pagination -->
@@ -376,6 +377,7 @@ min-width: 531px;
 
 	<script>
 		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
+		districtScoreColor = {"very high": "#ea5c58", "high": "#eea039", "average": "#f7e15a", "low": "#f0c4b6"}
 		var barisalClicked = false;
 	</script>
 
@@ -753,17 +755,17 @@ min-width: 531px;
 									id = ids[1];
 								var value = parseInt(res['minimalData'][id]);
 								// var localColor = '';
-								localColor = scoreColors['low'];
+								localColor = districtScoreColor['low'];
 								console.log("hello");
 								if(!res['emptydistricts']) {
 									if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
-										localColor = scoreColors['low'];
+										localColor = districtScoreColor['low'];
 									} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
-										localColor = scoreColors['average'];
+										localColor = districtScoreColor['average'];
 									} else if(value >= parseInt(res['districtRanges']['q2']) && value <= parseInt(res['districtRanges']['q3'])) {
-										localColor = scoreColors['high'];
+										localColor = districtScoreColor['high'];
 									} else if(value >= parseInt(res['districtRanges']['q3'])) {
-										localColor = scoreColors['very high'];
+										localColor = districtScoreColor['very high'];
 									}
 								}
 								console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
@@ -894,7 +896,7 @@ min-width: 531px;
 
 									var width = parentDiv.clientWidth - margin.left - margin.right;
 
-									var height = 300;//parentDiv.clientHeight - margin.top - margin.bottom;
+									var height = 185;//parentDiv.clientHeight - margin.top - margin.bottom;
 									console.log(width, height)
 									var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
 
@@ -964,7 +966,7 @@ min-width: 531px;
 										  .append("text")
 										  .attr("class","label")
 										  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
-										  .attr("y", function(d) { return yScale(d.value) + 1; })
+										  .attr("y", function(d) { return yScale(d.value) + 10; })
 										  .attr("dy", ".75em")
 										  .text(function(d) { return d.value; });
 								}
@@ -1412,17 +1414,17 @@ min-width: 531px;
 									id = ids[1];
 								var value = parseInt(res['minimalData'][id]);
 								// var localColor = '';
-								localColor = scoreColors['low'];
+								localColor = districtScoreColor['low'];
 								console.log("hello");
 								if(!res['emptydistricts']) {
 									if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
-										localColor = scoreColors['low'];
+										localColor = districtScoreColor['low'];
 									} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
-										localColor = scoreColors['average'];
+										localColor = districtScoreColor['average'];
 									} else if(value >= parseInt(res['districtRanges']['q2']) && value <= parseInt(res['districtRanges']['q3'])) {
-										localColor = scoreColors['high'];
+										localColor = districtScoreColor['high'];
 									} else if(value >= parseInt(res['districtRanges']['q3'])) {
-										localColor = scoreColors['very high'];
+										localColor = districtScoreColor['very high'];
 									}
 								}
 								console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
@@ -1553,7 +1555,7 @@ min-width: 531px;
 
 									var width = parentDiv.clientWidth - margin.left - margin.right;
 
-									var height = 300;// - margin.top - margin.bottom;
+									var height = 185;// - margin.top - margin.bottom;
 
 									var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
 
@@ -1623,7 +1625,7 @@ min-width: 531px;
 										  .append("text")
 										  .attr("class","label")
 										  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
-										  .attr("y", function(d) { return yScale(d.value) + 1; })
+										  .attr("y", function(d) { return yScale(d.value) + 10; })
 										  .attr("dy", ".75em")
 										  .text(function(d) { return d.value; });
 								}

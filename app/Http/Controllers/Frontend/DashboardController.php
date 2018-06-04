@@ -480,7 +480,7 @@ class DashboardController extends Controller
 	}
 
 	public function getMapData(Request $request) {
-		$districts = ['xNcsJeRMUCM' => 'Barguna District' , 'uOU0jtyD1PZ' => 'Barisal District' , 'EdOWA8sKh2p' => 'Bhola District' , 'WNCBZLbFD70' => 'Jhalokati District', 'bEiL5HnmKZO' => 'Patuakhali District', 'aLbPgj33QnT' => 'Pirojpur District'];
+		$districts = ['xNcsJeRMUCM' => 'Barguna' , 'uOU0jtyD1PZ' => 'Barisal' , 'EdOWA8sKh2p' => 'Bhola' , 'WNCBZLbFD70' => 'Jhalokati', 'bEiL5HnmKZO' => 'Patuakhali', 'aLbPgj33QnT' => 'Pirojpur'];
 		$data = $request->all();
 		$datamodel = config('datamodel');
 		$model = 'App\Models\Data\\' . $data['model'];
