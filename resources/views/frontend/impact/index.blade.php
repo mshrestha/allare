@@ -1,4 +1,31 @@
 @extends('layouts.app')
+@section('styles')
+<style>
+.axis path, .axis line {
+  fill: none;
+  stroke: #fff;
+}
+.axis path {
+  stroke: #9f9f9f !important;
+}
+.axis line {
+  stroke: #9f9f9f !important;
+}
+.axis text {
+  font-size: 13px;
+  fill: #9f9f9f;
+}
+.areachart {
+    fill: #9fdfd0;
+  }
+
+svg text.label {
+  fill:white;
+  font: 15px;  
+  font-weight: 400;
+  text-anchor: middle;
+}
+</style>
 @section('content')
   <div class="white-bg"></div>
 	<div class="container">
@@ -236,6 +263,7 @@
         temp.value = data_value.values[i];
         dataCSV.push(temp);
       };
+
       startDate = dataCSV[dataCSV.length - 1].date;
       endDate = dataCSV[0].date;
       var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -243,12 +271,14 @@
       $('#area-date-'+id).html(startDate + ' - ' + endDate);
 
 
-      dataCSV.forEach(function(d) {
-        d.date = d3.time.format("%Y").parse(d.date);
-      });
+      // dataCSV.forEach(function(d) {
+      //   d.date = d3.time.format("%Y").parse(d.date);
+      // });
+
+
       var parentDiv = document.getElementById('area-chart-'+id);
-      var w = parentDiv.clientWidth,                        
-      h = parentDiv.clientHeight;  
+      var margin = {top:20, right:20, bottom:20, left:20};
+      var w = parentDiv.clientWidth, h = parentDiv.clientHeight;  
       var margin = {top: 20, right: 20, bottom: 30, left: 50},
           width = w - margin.left - margin.right,
           height = h - margin.top - margin.bottom;
@@ -260,58 +290,109 @@
       // var x = d3.scale.linear()
       //     .domain([0, d3.max(dataCSV, function(d) { return d.date; })])
       //     .range([0, width]);
+      var xScale = d3.scale.ordinal().rangeRoundBands([width, 0], .03)
+      var yScale = d3.scale.linear()
+                        .range([height, 0]);
+      var xAxis = d3.svg.axis()
+                      .scale(xScale)
+                      .orient("bottom");
+                        
+                        
+      var yAxis = d3.svg.axis()
+          .scale(yScale)
+          .orient("left");
 
       var y = d3.scale.linear()
-          .domain([0, d3.max(dataCSV, function(d) { return d.value; })])
+          .domain([0, d3.max(dataCSV, function(d) { return parseInt(d.value); })])
           .range([height, 0]);
 
-      var xAxis = d3.svg.axis()
-          .scale(x)
-          .orient("bottom")
-          .innerTickSize(-height)
-          .outerTickSize(0)
-          .ticks(5)
-          .tickPadding(20);
+      var svgContainer = d3.select("#line-chart-"+id)
+                      .attr("width", width+margin.left + margin.right)
+                      .attr("height",height+margin.top + margin.bottom)
+                      .append("g").attr("class", "container")
+                      .attr("transform", "translate("+ margin.left +","+ margin.top +")");
 
-      var yAxis = d3.svg.axis()
-          .scale(y)
-          .orient("left")
-          .innerTickSize(-width)
-          .outerTickSize(0)
-          .ticks(5)
-          .tickPadding(20);
+      xScale.domain(dataCSV.map(function(d) { return d.date; }));
+      yScale.domain([0, d3.max(dataCSV, function(d) { return parseInt(d.value); })]);
+      var xAxis_g = svgContainer.append("g")
+                      .attr("class", "x axis")
+                      .attr("transform", "translate(0," + (height) + ")")
+                      .call(xAxis)
+                      .selectAll("text");
 
-      var area = d3.svg.area()
-          .x(function(d) { return x(d.date); })
-          .y0(height)
-          .y1(function(d) { return y(d.value); })
-          .interpolate(interpolateTypes[6]);;
+      var yAxis_g = svgContainer.append("g")
+                      .attr("class", "y axis")
+                      .call(yAxis)
+                      .append("text")
+                      .attr("transform", "rotate(-90)")
+                      .attr("y", 6).attr("dy", ".71em")
+                      //.style("text-anchor", "end").text("Number of Applicatons"); 
+      svgContainer.selectAll(".areachart")
+                      .data(dataCSV)
+                      .enter()
+                      .append("rect")
+                      .attr("class", "areachart")
+                      .attr("x", function(d) { return xScale(d.date); })
+                      .attr("width", xScale.rangeBand())
+                      .attr("y", function(d) { return yScale(d.value); })
+                      .attr("height", function(d) { return height - yScale(d.value); });
 
-      var svg = d3.select("#line-chart-"+id)
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .attr("class", "areachart")
-        .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      document.addEventListener("DOMContentLoaded", resize);
+      d3.select(window).on('resize', resize);
+      function resize() {
+        // console.log('----resize function----');
+        // update width
+        width = parseInt(d3.select("#area-chart-"+id).style('width'), 10);
+        width = parseInt(width - margin.left - margin.right);
 
-      svg.append("path")
-          .datum(dataCSV)
-          .attr("class", "area")
-          .attr("d", area);
+        height = parseInt(d3.select("#area-chart-"+id).style("height"));
+        height = parseInt(height - margin.top - margin.bottom);
+        // console.log('----resiz width----'+width);
+        // console.log('----resiz height----'+height);
+        // resize the chart
+        
+          xScale.range([width, 0]);
+          xScale.rangeRoundBands([width, 0], .03);
+          yScale.range([height, 0]);
 
-       svg.append("g")
-          .attr("class", "grid")
-          .call(yAxis)
+          yAxis.ticks(Math.max(height/50, 2));
+          xAxis.ticks(Math.max(width/50, 2));
 
-      // svg.append("g")
-      //     .attr("class", "x axis")
-      //     .attr("transform", "translate(0," + height + ")")
-      //     .call(xAxis);
+          d3.select(svgContainer.node().parentNode)
+              .style('width', (width + margin.left + margin.right) + 'px');
 
-      // svg.append("g")
-      //     .attr("class", "y axis")
-      //     .call(yAxis);
+          svgContainer.selectAll('.areachart')
+            .attr("x", function(d) { return xScale(d.date); })
+            .attr("width", xScale.rangeBand());    
 
+          // svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
+          // Swap the version below for the one above to disable rotating the titles
+          // svgContainer.select('.x.axis').call(xAxis.orient('top')).selectAll("text").attr("x",55).attr("y",-25);
+      }
+
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              y = text.attr("y"),
+              dy = parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }
     }
   </script>
   <script src="{{asset('js/swiper.min.js')}}"></script>
