@@ -53,15 +53,15 @@ class DashboardController extends Controller
 		$maternal_nutrition_data = [
 			'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($bangladesh_ou, $current_period)),
 			'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($bangladesh_ou, $current_period)),
-			'weight_measured' => 0,
+			'weight_measured' => 22,
 			'exclusive_breastfeeding' => 0
 		];
 
 		$child_nutrition_data = [
 			'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage($bangladesh_ou, $current_period)),
-			'supplements_distributed' => 0,
-			'child_growth_monitoring' => 0,
-			'minimum_acceptable_diet' => 0
+			'supplements_distributed' => 0.01,
+			'child_growth_monitoring' => 20,
+			'minimum_acceptable_diet' => 0.01
 		];
 
 		return view('frontend.dashboard.index', compact('sidebarContents', 'outcomes', 'organisation_units', 'periods', 'maternal_nutrition_data', 'child_nutrition_data'));
@@ -480,6 +480,7 @@ class DashboardController extends Controller
 	}
 
 	public function getMapData(Request $request) {
+		$districts = ['xNcsJeRMUCM' => 'Barguna' , 'uOU0jtyD1PZ' => 'Barisal' , 'EdOWA8sKh2p' => 'Bhola' , 'WNCBZLbFD70' => 'Jhalokati', 'bEiL5HnmKZO' => 'Patuakhali', 'aLbPgj33QnT' => 'Pirojpur'];
 		$data = $request->all();
 		$datamodel = config('datamodel');
 		$model = 'App\Models\Data\\' . $data['model'];
@@ -517,9 +518,11 @@ class DashboardController extends Controller
 		$centralDistricts = (config('static'))['centDistrict'];
 		// dd($centralDistricts);
 		$foundArr = [];
+		$districtMinimal = [];
 		for ($i=0; $i < count($centralDistricts); $i++) { 
 			for ($j=0; $j < count($responseData); $j++) { 
 				if($responseData[$j]['organisation_unit'] == $centralDistricts[$i]) {
+					$districtMinimal[$districts[$centralDistricts[$i]]] = $responseData[$j]['value'];
 					array_push($centArr, $responseData[$j]['value']);
 					$sum += $responseData[$j]['value'];
 				}
@@ -527,8 +530,9 @@ class DashboardController extends Controller
 			array_push($foundArr, $centralDistricts[$i]);
 		}
 
-		
-
+		$districtMinimal = array_flip($districtMinimal);
+		ksort($districtMinimal);
+		$districtMinimal = array_flip($districtMinimal);
 
 		$dataArr = [];
 		$valueArr = [];
@@ -553,19 +557,23 @@ class DashboardController extends Controller
 		
 		$ranges = [];
 		if($data['model'] == 'BdhsStunting') {
-			$ranges = array('low' => 20, 'mid' => 29, 'high' => 39);
+			$ranges = array('min'=>0, 'q1' => 20, 'q2' => 29, 'q3' => 39, 'max' => 100);
 		} else if($data['model'] == 'BdhsWasting') {
-			$ranges = array('low' => 5, 'mid' => 9, 'high' => 14);
+			$ranges = array('min'=>0, 'q1' => 5, 'q2' => 9, 'q3' => 14, 'max' => 100);
 		} else if($data['model'] == 'BdhsAnemia') {
-			$ranges = array('low' => 5, 'mid' => 19.9, 'high' => 39.9);
+			$ranges = array('min'=>0, 'q1' => 5, 'q2' => 19.9, 'q3' => 39.9, 'max' => 100);
 		} else {
-			$ranges = $this->getThreeRanges($valueArr); 
+			$ranges = $this->getFourRanges($valueArr); 
 		}
 
 		$districtRanges = [];
-		if($data['model'] != 'BdhsStunting' && $data['model'] == 'BdhsWasting' && $data['model'] == 'BdhsAnemia') {
-			$districtRanges = $this->getThreeRanges($centArr);
+		if($data['model'] != 'BdhsStunting' && $data['model'] != 'BdhsWasting' && $data['model'] != 'BdhsAnemia') {
+			$districtRanges = $this->getFourRanges($centArr);
 		}
+		$emptydistricts = false;
+		// dd($districtRanges);
+		if(count($districtRanges) <=0 )
+			$emptydistricts = true;
 		// dd($districtRanges);
 		$text = 'People reached: ';
 		$reverse = false;
@@ -597,8 +605,9 @@ class DashboardController extends Controller
 				'ranges' => $ranges,
 				'districtRanges' => $districtRanges,
 				'text' => $text,
-				'emptydistricts' => true,
-				'reverse' => $reverse
+				'emptydistricts' => $emptydistricts,
+				'reverse' => $reverse,
+				'minimalDistrict' => $districtMinimal
 			);
 		}
 	}
@@ -756,10 +765,30 @@ class DashboardController extends Controller
 			$q1 = $min + $step;
 			$q2 = $max - $step;
 			return array(
-				'min' => $min,
-				'max' => $max,
-				'q1' => $q1,
-				'q2' => $q2,
+				'min' => (int)$min,
+				'max' => (int)$max,
+				'q1' => (int)$q1,
+				'q2' => (int)$q2,
+			);
+		}else{
+			return [];
+		}
+	}
+
+	private function getFourRanges($valueArray) {
+		if(count($valueArray) > 0) {
+			$min = min($valueArray);
+			$max = max($valueArray);
+			$step = ($max - $min) / 4;
+			$q1 = $min + $step;
+			$q2 = $q1 + $step;
+			$q3 = $max - $step;
+			return array(
+				'min' => (int)$min,
+				'max' => (int)$max,
+				'q1' => (int)$q1,
+				'q2' => (int)$q2,
+				'q3' => (int)$q3,
 			);
 		}else{
 			return [];
