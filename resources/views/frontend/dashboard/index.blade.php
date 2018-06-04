@@ -183,31 +183,32 @@
 			    	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
 							<ul class="map-filter mb-0">
 								<li class="list-head">MATERNAL NUTRITION</li>
-									<li><a href="#" id="counselling" class="maplinks active" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Women counselled on Maternal Nutrition</a></li>
-									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">Pregnant Woman who received IFA</a></li>
-									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Pregnant women weighed during facility visits</a></li>
+									<li><a href="#" id="counselling" class="maplinks active" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling', 'Women counselled on Maternal Nutrition')">Women counselled on Maternal Nutrition</a></li>
+									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution', 'Pregnant Woman who received IFA')">Pregnant Woman who received IFA</a></li>
+									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight', 'Pregnant women weighed during facility visits')">Pregnant women weighed during facility visits</a></li>
 									<li class="list-head">CHILD NUTRITION</li>
-									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
-									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
+									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling', 'Caregivers Counselling on IYCF')">Caregivers Counselling on IYCF</a></li>
+									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements', 'Child 0-24 months weighed during facility visit')">Child 0-24 months weighed during facility visit</a></li>
 
 							</ul>
 
 
 							<ul class="map-filter outcome mb-0">
 								<li class="list-head green">IMPACTS</li>
-								<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('BdhsStunting', 'STUNING', '#stunting')">STUNTING</a></li>
+								<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('BdhsStunting', 'STUNING', '#stunting', 'STUNTING')">STUNTING</a></li>
 								{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
-								<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting')">WASTING</a></li>
-								<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
+								<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting', 'WASTING')">WASTING</a></li>
+								<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia', 'ANEMIA')">ANEMIA</a></li>
 	    				</ul>
 	    				<ul class="map-filter mb-0">
 								<li class="list-head">OUTCOMES</li>
-								<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding'
+								<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding', 'Exclusive Breastfeeding'
 								)">Exclusive Breastfeeding</a></li>
 								<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
 	    				</ul>
 	    			</div>
 	    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
+	    				<div class="map-title d-block ml-0" id="map-title">HEADING</div>
 	    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
 	    					<div id="zoomctrl">
 						    </div>
@@ -225,6 +226,7 @@
 			<div class="row">
 				<div class="col-sm-2"></div>
 				<div class="col-12 col-md-offset-2 col-md-10">
+					<div class="barchart-title d-block ml-0" id="barchart-title-id">HEADING</div>
 					<div class="canvas-holder score-bar-chart" id="chartID">
 					</div>
 				</div>
@@ -542,10 +544,10 @@
 						$('#high-text').html('Moderate');
 						$('#vhigh-text').html('Severe');
 	      	} else {
-	      		$('#low-text').html('Low');
-						$('#avg-text').html('Medium');
-						$('#high-text').html('High');
-						$('#vhigh-text').html('Very High');
+	      		$('#low-text').html('Very High');
+						$('#avg-text').html('High');
+						$('#high-text').html('Medium');
+						$('#vhigh-text').html('Low');
 	      	}
 	    		// 	if(res['reverse']) {
 					// 	$('#low-text').html('Major Problem');
@@ -556,7 +558,8 @@
 					// 	$('#avg-text').html('Severe Problem');
 					// 	$('#high-text').html('Major Problem');
 					// }
-
+						$('#map-title').html("Women counselled on Maternal Nutrition")
+						$('#map-title').show();
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
 			        zoom: 7,
@@ -684,13 +687,13 @@
 								}else {
 									// console.log(res['ranges'], value);
 									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])){
-										localColor = scoreColors['low'];
-									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
-										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
-										localColor = scoreColors['high'];
-									} else if(value >= parseInt(res['ranges']['q3'])) {
 										localColor = scoreColors['very high'];
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
+										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['low'];
 									}
 								}	
 							// }
@@ -838,6 +841,11 @@
 									barisalClicked = true;
 									$('#chartID').html('');
 									$('#chartID').show();
+									$('#barchart-title-id').html("Women counselled on Maternal Nutrition");
+									$('#barchart-title-id').show();
+									$('html,body').animate({
+						        scrollTop: $("#chartID").offset().top},
+						        'slow');
 									var max = 0;
 									var dataCSV = [];
 									for(var key in res['minimalDistrict']) {
@@ -905,13 +913,13 @@
 								  		.append("rect")
 								  		.attr("class", function(d) {
 								  			if(d.value >= parseInt(res['districtRanges']['min']) && d.value < parseInt(res['districtRanges']['q1'])) {
-													return 'bar low';
-												} else if(d.value >= parseInt(res['districtRanges']['q1']) && d.value < parseInt(res['districtRanges']['q2'])) {
-													return 'bar mid';
-												} else if(d.value >= parseInt(res['districtRanges']['q2']) && d.value <= parseInt(res['districtRanges']['q3'])) {
-													return 'bar high';
-												} else if(d.value >= parseInt(res['districtRanges']['q3'])) {
 													return 'bar vhigh';
+												} else if(d.value >= parseInt(res['districtRanges']['q1']) && d.value < parseInt(res['districtRanges']['q2'])) {
+													return 'bar high';
+												} else if(d.value >= parseInt(res['districtRanges']['q2']) && d.value <= parseInt(res['districtRanges']['q3'])) {
+													return 'bar mid';
+												} else if(d.value >= parseInt(res['districtRanges']['q3'])) {
+													return 'bar low';
 												}
 								  		})
 								  		.attr("x", function(d) { return xScale(d.id); })
@@ -1233,18 +1241,26 @@
     	// console.log(i.realIndex, barisalClicked, barisalClicked==true);
     	if(i.realIndex == 0) {
     		$('#chartID').hide();
+				$('#barchart-title-id').hide();
+				$('#map-title').hide();
     	} else if(i.realIndex == 1 && barisalClicked == true) {
     		$('#chartID').show();
+    		$('#barchart-title-id').show();
+    		$('#map-title').show();
     	} else {
     		$('#chartID').hide();
+    		$('#barchart-title-id').hide();
+    		$('#map-title').hide();
     	}
     })
   </script>
 
   <script>
-  	const getMapData = (model, item, id) => {
+  	const getMapData = (model, item, id, text) => {
   		clicked = false;
   		$('#chartID').html('');
+  		$('#barchart-title-id').html(text);
+			$('#barchart-title-id').show();
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
   		$.ajax({
@@ -1265,11 +1281,13 @@
 						$('#high-text').html('Moderate');
 						$('#vhigh-text').html('Severe');
 	      	} else {
-	      		$('#low-text').html('Low');
-						$('#avg-text').html('Medium');
-						$('#high-text').html('High');
-						$('#vhigh-text').html('Very High');
+	      		$('#low-text').html('Very High');
+						$('#avg-text').html('High');
+						$('#high-text').html('Medium');
+						$('#vhigh-text').html('Low');
 	      	}
+	      	$('#map-title').html(text)
+					$('#map-title').show();
 	    		// 	if(res['reverse']) {
 					// 	$('#low-text').html('Major Problem');
 					// 	$('#avg-text').html('Severe Problem');
@@ -1407,13 +1425,13 @@
 								}else {
 									// console.log(res['ranges'], value);
 									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])){
-										localColor = scoreColors['low'];
-									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
-										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
-										localColor = scoreColors['high'];
-									} else if(value >= parseInt(res['ranges']['q3'])) {
 										localColor = scoreColors['very high'];
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
+										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['low'];
 									}
 								}	
 							// }
@@ -1438,7 +1456,7 @@
 								var value = parseInt(res['minimalData'][id]);
 								// var localColor = '';
 								localColor = districtScoreColor['low'];
-								// console.log("hello");
+								console.log("hello");
 								if(!res['emptydistricts']) {
 									if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
 										localColor = districtScoreColor['low'];
@@ -1561,6 +1579,11 @@
 									barisalClicked = true;
 									$('#chartID').html('');
 									$('#chartID').show();
+									$('#barchart-title-id').html("Women counselled on Maternal Nutrition");
+									$('#barchart-title-id').show();
+									$('html,body').animate({
+						        scrollTop: $("#chartID").offset().top},
+						        'slow');
 									var max = 0;
 									var dataCSV = [];
 									for(var key in res['minimalDistrict']) {
@@ -1571,15 +1594,14 @@
 											max = temp.value;
 										dataCSV.push(temp);
 									}
-									// console.log(dataCSV);
 									
 									parentDiv = document.getElementById('chartID');
 								  var margin = {top:20, right:20, bottom:20, left:20};
 
 									var width = parentDiv.clientWidth - margin.left - margin.right;
 
-									var height = 185;// - margin.top - margin.bottom;
-
+									var height = 185;//parentDiv.clientHeight - margin.top - margin.bottom;
+									console.log(width, height)
 									var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
 
 									var yScale = d3.scale.linear()
@@ -1629,13 +1651,13 @@
 								  		.append("rect")
 								  		.attr("class", function(d) {
 								  			if(d.value >= parseInt(res['districtRanges']['min']) && d.value < parseInt(res['districtRanges']['q1'])) {
-													return 'bar low';
-												} else if(d.value >= parseInt(res['districtRanges']['q1']) && d.value < parseInt(res['districtRanges']['q2'])) {
-													return 'bar mid';
-												} else if(d.value >= parseInt(res['districtRanges']['q2']) && d.value <= parseInt(res['districtRanges']['q3'])) {
-													return 'bar high';
-												} else if(d.value >= parseInt(res['districtRanges']['q3'])) {
 													return 'bar vhigh';
+												} else if(d.value >= parseInt(res['districtRanges']['q1']) && d.value < parseInt(res['districtRanges']['q2'])) {
+													return 'bar high';
+												} else if(d.value >= parseInt(res['districtRanges']['q2']) && d.value <= parseInt(res['districtRanges']['q3'])) {
+													return 'bar mid';
+												} else if(d.value >= parseInt(res['districtRanges']['q3'])) {
+													return 'bar low';
 												}
 								  		})
 								  		.attr("x", function(d) { return xScale(d.id); })
@@ -1646,21 +1668,12 @@
 										  .data(dataCSV)
 										  .enter()
 										  .append("text")
-										  .attr("class",function(d) {
-										  	if(d.value >= parseInt(res['districtRanges']['min']) && d.value < parseInt(res['districtRanges']['q1'])) {
-													return 'label lowtext';
-												} else if(d.value >= parseInt(res['districtRanges']['q1']) && d.value < parseInt(res['districtRanges']['q2'])) {
-													return 'label midtext';
-												} else if(d.value >= parseInt(res['districtRanges']['q2']) && d.value <= parseInt(res['districtRanges']['q3'])) {
-													return 'label hightext';
-												} else if(d.value >= parseInt(res['districtRanges']['q3'])) {
-													return 'label vhightext';
-												}
-										  })
+										  .attr("class","label")
 										  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
 										  .attr("y", function(d) { return yScale(d.value) - 15; })
 										  .attr("dy", ".75em")
 										  .text(function(d) { return d.value; });
+
 									document.addEventListener("DOMContentLoaded", resize);
 									d3.select(window).on('resize', resize);
 									

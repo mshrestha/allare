@@ -569,3 +569,17 @@ svg text.label {
 .vhigh{
 	fill: #ea5c58;
 }
+
+
+.barchart-title{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: -30px;
+}
+
+.map-title {
+    position: relative;
+    text-align: center;
+    z-index: 10;
+    top: -15px;
+}

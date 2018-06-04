@@ -278,7 +278,6 @@ svg text.label {
       //   d.date = d3.time.format("%Y").parse(d.date);
       // });
 
-
       var parentDiv = document.getElementById('area-chart-'+id);
       var margin = {top:20, right:20, bottom:20, left:20};
       var w = parentDiv.clientWidth, h = parentDiv.clientHeight;  
