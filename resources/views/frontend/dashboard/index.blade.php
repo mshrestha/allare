@@ -841,7 +841,7 @@
 									barisalClicked = true;
 									$('#chartID').html('');
 									$('#chartID').show();
-									$('#barchart-title-id').html("Women counselled on Maternal Nutrition");
+									$('#barchart-title-id').html("Women counselled on Maternal Nutrition in Barisal Division");
 									$('#barchart-title-id').show();
 									$('html,body').animate({
 						        scrollTop: $("#chartID").offset().top},
@@ -1579,7 +1579,7 @@
 									barisalClicked = true;
 									$('#chartID').html('');
 									$('#chartID').show();
-									$('#barchart-title-id').html("Women counselled on Maternal Nutrition");
+									$('#barchart-title-id').html(text+" in Barisal Division");
 									$('#barchart-title-id').show();
 									$('html,body').animate({
 						        scrollTop: $("#chartID").offset().top},
