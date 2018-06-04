@@ -561,8 +561,7 @@ min-width: 531px;
 	  });
 
 	}
-		// document.addEventListener("DOMContentLoaded", resize);
-		// d3.select(window).on('resize', resize);
+		
     function initMap() {
     	model = "CcMrAncNutriCounsel"
 			$.ajax({
@@ -969,6 +968,70 @@ min-width: 531px;
 										  .attr("y", function(d) { return yScale(d.value) + 10; })
 										  .attr("dy", ".75em")
 										  .text(function(d) { return d.value; });
+
+									document.addEventListener("DOMContentLoaded", resize);
+									d3.select(window).on('resize', resize);
+									
+									function resize() {
+										// console.log('----resize function----');
+									  // update width
+									  width = parseInt(d3.select('#chartID').style('width'), 10);
+									  width = parseInt(width - margin.left - margin.right);
+
+									  height = parseInt(d3.select("#chartID").style("height"));
+									  height = parseInt(height - margin.top - margin.bottom);
+										// console.log('----resiz width----'+width);
+										// console.log('----resiz height----'+height);
+									  // resize the chart
+									  
+									    xScale.range([0, width]);
+									    xScale.rangeRoundBands([0, width], .03);
+									    yScale.range([height, 0]);
+
+									    yAxis.ticks(Math.max(height/50, 2));
+									    xAxis.ticks(Math.max(width/50, 2));
+
+									    d3.select(svgContainer.node().parentNode)
+									        .style('width', (width + margin.left + margin.right) + 'px');
+
+									    svgContainer.selectAll('.bar')
+									    	.attr("x", function(d) { return xScale(d.id); })
+									      .attr("width", xScale.rangeBand());
+									      
+									   svgContainer.selectAll("text")  		
+										 // .attr("x", function(d) { return xScale(d.id); })
+										 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
+									      .attr("y", function(d) { if(isNaN(yScale(parseInt(d.value)) + 10)) return 0; return yScale(parseInt(d.value)) + 10; })
+									      .attr("dy", ".75em");   	      
+
+									    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
+									    // Swap the version below for the one above to disable rotating the titles
+									    // svgContainer.select('.x.axis').call(xAxis.orient('top')).selectAll("text").attr("x",55).attr("y",-25);
+									}
+
+									function wrap(text, width) {
+									  text.each(function() {
+									    var text = d3.select(this),
+									        words = text.text().split(/\s+/).reverse(),
+									        word,
+									        line = [],
+									        lineNumber = 0,
+									        lineHeight = 1.1, // ems
+									        y = text.attr("y"),
+									        dy = parseFloat(text.attr("dy")),
+									        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+									    while (word = words.pop()) {
+									      line.push(word);
+									      tspan.text(line.join(" "));
+									      if (tspan.node().getComputedTextLength() > width) {
+									        line.pop();
+									        tspan.text(line.join(" "));
+									        line = [word];
+									        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+									      }
+									    }
+									  });
+									}
 								}
 							}
 						});
@@ -1628,6 +1691,69 @@ min-width: 531px;
 										  .attr("y", function(d) { return yScale(d.value) + 10; })
 										  .attr("dy", ".75em")
 										  .text(function(d) { return d.value; });
+									document.addEventListener("DOMContentLoaded", resize);
+									d3.select(window).on('resize', resize);
+									
+									function resize() {
+										// console.log('----resize function----');
+									  // update width
+									  width = parseInt(d3.select('#chartID').style('width'), 10);
+									  width = parseInt(width - margin.left - margin.right);
+
+									  height = parseInt(d3.select("#chartID").style("height"));
+									  height = parseInt(height - margin.top - margin.bottom);
+										// console.log('----resiz width----'+width);
+										// console.log('----resiz height----'+height);
+									  // resize the chart
+									  
+									    xScale.range([0, width]);
+									    xScale.rangeRoundBands([0, width], .03);
+									    yScale.range([height, 0]);
+
+									    yAxis.ticks(Math.max(height/50, 2));
+									    xAxis.ticks(Math.max(width/50, 2));
+
+									    d3.select(svgContainer.node().parentNode)
+									        .style('width', (width + margin.left + margin.right) + 'px');
+
+									    svgContainer.selectAll('.bar')
+									    	.attr("x", function(d) { return xScale(d.id); })
+									      .attr("width", xScale.rangeBand());
+									      
+									   svgContainer.selectAll("text")  		
+										 // .attr("x", function(d) { return xScale(d.id); })
+										 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
+									      .attr("y", function(d) { if(isNaN(yScale(parseInt(d.value)) + 10)) return 0; return yScale(parseInt(d.value)) + 10; })
+									      .attr("dy", ".75em");   	      
+
+									    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
+									    // Swap the version below for the one above to disable rotating the titles
+									    // svgContainer.select('.x.axis').call(xAxis.orient('top')).selectAll("text").attr("x",55).attr("y",-25);
+									}
+
+									function wrap(text, width) {
+									  text.each(function() {
+									    var text = d3.select(this),
+									        words = text.text().split(/\s+/).reverse(),
+									        word,
+									        line = [],
+									        lineNumber = 0,
+									        lineHeight = 1.1, // ems
+									        y = text.attr("y"),
+									        dy = parseFloat(text.attr("dy")),
+									        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+									    while (word = words.pop()) {
+									      line.push(word);
+									      tspan.text(line.join(" "));
+									      if (tspan.node().getComputedTextLength() > width) {
+									        line.pop();
+									        tspan.text(line.join(" "));
+									        line = [word];
+									        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+									      }
+									    }
+									  });
+									}
 								}
 							}
 						});
