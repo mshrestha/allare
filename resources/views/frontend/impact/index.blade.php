@@ -16,8 +16,8 @@
   fill: #9f9f9f;
 }
 .areachart {
-    fill: #9fdfd0;
-  }
+  fill: #81ddc6;
+}
 
 svg text.label {
   fill:white;
