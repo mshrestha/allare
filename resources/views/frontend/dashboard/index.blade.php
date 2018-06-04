@@ -889,13 +889,13 @@ min-width: 531px;
 									}
 									console.log(dataCSV);
 									
-									parentDiv = document.getElementById('chartId');
-								  var margin = {top:10, right:10, bottom:90, left:10};
+									parentDiv = document.getElementById('chartID');
+								  var margin = {top:20, right:20, bottom:20, left:20};
 
 									var width = parentDiv.clientWidth - margin.left - margin.right;
 
-									var height = parentDiv.clientHeight - margin.top - margin.bottom;
-
+									var height = 300;//parentDiv.clientHeight - margin.top - margin.bottom;
+									console.log(width, height)
 									var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
 
 									var yScale = d3.scale.linear()
@@ -1548,12 +1548,12 @@ min-width: 531px;
 									}
 									console.log(dataCSV);
 									
-									parentDiv = document.getElementById('chartId');
-								  var margin = {top:10, right:10, bottom:90, left:10};
+									parentDiv = document.getElementById('chartID');
+								  var margin = {top:20, right:20, bottom:20, left:20};
 
 									var width = parentDiv.clientWidth - margin.left - margin.right;
 
-									var height = parentDiv.clientHeight - margin.top - margin.bottom;
+									var height = 300;// - margin.top - margin.bottom;
 
 									var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
 
