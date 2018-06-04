@@ -2,7 +2,7 @@
 	
   <div class="row">
     <div class="col-xl-2 col-lg-3 col-sm-4">
-      <div class="tab-col-title">{!! str_replace('_', ' ', $key) !!}</div>
+      <div class="tab-col-title">{{$analysis['heading']}}</div>
 {{-- <<<<<<< HEAD
       <div class="tab-col-subtitle"></div>
       <div class="canvas-holder">
@@ -25,7 +25,7 @@
       </div>
     </div> {{-- col-xs-2 --}}
     <div class="col-xl-6 offset-xl-1 pr-xl-0 col-lg-6 col-sm-8">
-      <div class="tab-col-title">People Counselled on {!! str_replace('_', ' ', $key) !!}</div>
+      <div class="tab-col-title">{!! str_replace('_', ' ', $key) !!}</div>
 {{-- <<<<<<< HEAD
       <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
       <div class="canvas-holder">
@@ -37,27 +37,16 @@
       </div>
     </div> {{-- col-xs-5 --}}
     <div class="col-xl-3 report-col col-lg-3">
-      <div class="tab-col-title">Reports on {!! str_replace('_', ' ', $key) !!}</div>
+      <div class="tab-col-title">Reports on {{$analysis['heading']}}</div>
       <ul class="report-list row">
+        @foreach($analysis['reports'] as $report)
         <li class="col-sm-6 col-lg-12">
-          <a href="#" class="row">
+          <a href="{{$report['link']}}" target="_blank" class="row">
             <span class="col-md-3 col-sm-3 col-3 pr-0"><img src="{{asset('images\report-img.png')}}" alt="" class="img-fluid"> </span>
-            <span class="col-sm-9 col-md-9 col-9"><span class="report-title">Lorem ipsum dolor sit amet adipiscing</span> <span class="date">Feb 13,2018</span></span>
+            <span class="col-sm-9 col-md-9 col-9"><span class="report-title">{{$report['title']}}</span> <span class="date">{{$report['date']}}</span></span>
           </a>
         </li>
-        <li class="col-sm-6 col-lg-12">
-          <a href="#" class="row">
-            <span class="col-md-3 col-sm-3 col-3 pr-0"><img src="{{asset('images\report-img.png')}}" alt="" class="img-fluid"> </span>
-            <span class="col-sm-9 col-md-9 col-9"><span class="report-title">Lorem ipsum dolor sit amet adipiscing</span> <span class="date">Feb 13,2018</span></span>
-          </a>
-        </li>
-        <li class="col-sm-6 col-lg-12">
-          <a href="#" class="row">
-            <span class="col-md-3 col-sm-3 col-3 pr-0"><img src="{{asset('images\report-img.png')}}" alt="" class="img-fluid"> </span>
-            <span class="col-sm-9 col-md-9 col-9"><span class="report-title">Lorem ipsum dolor sit amet adipiscing</span> <span class="date">Feb 13,2018</span></span>
-          </a>
-        </li>
-        
+        @endforeach        
       </ul>
 
     </div>

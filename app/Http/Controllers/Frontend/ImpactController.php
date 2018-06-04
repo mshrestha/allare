@@ -186,13 +186,25 @@ class ImpactController extends Controller
 				$dataSet[$indicator]['goal_values'] = $datum_goal->value;
 				$dataSet[$indicator]['min'] = $goal_model::min('value');
 				$dataSet[$indicator]['max'] = $goal_model::max('value');
-
+				$dataSet[$indicator]['reports'] = [
+					[
+						'title' => 'BANGLADESH DEMOGRAPHIC AND HEALTH SURVEY 2011',
+						'link' => 'https://dhsprogram.com/pubs/pdf/fr265/fr265.pdf',
+						'date' => 'Jan 2013'
+					],
+					[
+						'title' => 'BANGLADESH DEMOGRAPHIC AND HEALTH SURVEY 2014 ',
+						'link' => 'https://dhsprogram.com/pubs/pdf/FR311/FR311.pdf',
+						'date' => 'Mar 2016'
+					]
+				];
 				
 				$dataSet[$indicator]['values'] = $datum->pluck('value');	
 				if($indicators[$indicator] == 'BdhsStunting') {
 					$dataSet[$indicator]['goal_value'] = 25;
 					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
 					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['heading'] = 'STUNTING';
 					$dataSet[$indicator]['goal_text'] = "Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021";
 				}
 				else if($indicators[$indicator] == 'BdhsWasting') {
@@ -200,16 +212,19 @@ class ImpactController extends Controller
 					$dataSet[$indicator]['goal_value'] = 10;
 					$dataSet[$indicator]['direction'] = -1;
 					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
+					$dataSet[$indicator]['heading'] = 'WASTING';
 				}else if($indicators[$indicator] == 'BdhsAnemia') {
 					$dataSet[$indicator]['goal'] = 'Goal < 10% by 2021';
 					$dataSet[$indicator]['goal_value'] = 10;
 					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['heading'] = 'ANEMIA';
 					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
 				}
 				else {
 					$dataSet[$indicator]['goal'] = 'Goal 65% by 2021';
 					$dataSet[$indicator]['direction'] = 1;
 					$dataSet[$indicator]['goal_value'] = 65;
+					$dataSet[$indicator]['heading'] = 'EXCLUSIVE BREASTFEEDING';
 					$dataSet[$indicator]['goal_text'] = "Increase prevalence of exclusive breastfeeding";
 				}
 		}
