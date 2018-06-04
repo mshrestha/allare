@@ -1,14 +1,5 @@
 <div class="swiper-slide" data-hash="slide{{$counter}}">
-	@php
-		if($analysis['direction'] == -1) {
-			$complete = 100 / ($analysis['limit'] - $analysis['max']) * ($analysis['goal_values'] - $analysis['max']);
-			$incomplete = 100 - $complete;
-		}
-		else {
-			$complete = 100 / ($analysis['limit'] - $analysis['min']) * ($analysis['goal_values'] - $analysis['min']);
-			$incomplete = 100 - $complete;
-		}
-	@endphp
+	
   <div class="row">
     <div class="col-xl-2 col-lg-3 col-sm-4">
       <div class="tab-col-title">{!! str_replace('_', ' ', $key) !!}</div>
@@ -16,17 +7,17 @@
       <div class="tab-col-subtitle"></div>
       <div class="canvas-holder">
 ======= --}}
-      <div class="tab-col-subtitle specific-date"></div>
+      <div class="tab-col-subtitle specific-date" id="specific-date-{{$counter}}"></div>
       <div class="canvas-holder">
 {{-- >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
         <div class="progress-bar-v" id="goal-chart-{{
 				$key}}">
 					
-					<div class="goal" style="height: {{$incomplete}}%;">
+					<div class="goal" style="height: {{100 - $analysis['goal_value']}}%;">
 						{{-- {{$analysis['goal']}} --}}
 					</div>
 					
-					<div class="current grow-v-animation" style="height: {{$complete}}%;">
+					<div class="current grow-v-animation" style="height: {{$analysis['goal_value']}}%;">
 						{{$analysis['goal_values']}}  %
 					</div>
 

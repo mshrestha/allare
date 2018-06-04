@@ -47,6 +47,9 @@ svg text.label {
               <li class="list-inline-item">
                 <a href="#slide2" class="swipernav nav-slide2">EXCLUSIVE BREASTFEEDING</a>
               </li>
+              <li class="list-inline-item">
+                <a href="#slide3" class="swipernav nav-slide3">ANEMIA</a>
+              </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}
         </div>
@@ -267,7 +270,7 @@ svg text.label {
       startDate = dataCSV[dataCSV.length - 1].date;
       endDate = dataCSV[0].date;
       var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      $('.specific-date').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
+      $('#specific-date-'+id).html(endDate);
       $('#area-date-'+id).html(startDate + ' - ' + endDate);
 
 
