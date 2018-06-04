@@ -258,12 +258,17 @@ min-width: 531px;
 								<span class="legend-text" id="high-text"></span>
 								<span class="legend-text" id="vhigh-text"></span>
 							</div>
-							<div class="canvas-holder score-bar-chart" id="chartID">
-							</div>
+							
 						</div>
 			    </div>
 			  </div> <!-- swiper-slide -->
 			</div> <!-- swiper-wrrapper -->
+			<div class="row">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-9"><div class="canvas-holder score-bar-chart" id="chartID">
+			</div></div>
+			</div>
+			
 			<!-- Add Pagination -->
 			<div class="swiper-pagination swiper-pagination-white"></div>
 			<!-- Add Navigation -->
@@ -371,6 +376,7 @@ min-width: 531px;
 
 	<script>
 		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
+		var barisalClicked = false;
 	</script>
 
 	<script>
@@ -553,7 +559,8 @@ min-width: 531px;
 	  });
 
 	}
-
+		// document.addEventListener("DOMContentLoaded", resize);
+		// d3.select(window).on('resize', resize);
     function initMap() {
     	model = "CcMrAncNutriCounsel"
 			$.ajax({
@@ -867,6 +874,9 @@ min-width: 531px;
 										zIndex: 5
 									});
 									anotherLayer.setMap(map);
+									barisalClicked = true;
+									$('#chartID').html('');
+									$('#chartID').show();
 									var max = 0;
 									var dataCSV = [];
 									for(var key in res['minimalDistrict']) {
@@ -879,53 +889,54 @@ min-width: 531px;
 									}
 									console.log(dataCSV);
 									
-							  var margin = {top:10, right:10, bottom:90, left:10};
+									parentDiv = document.getElementById('chartId');
+								  var margin = {top:10, right:10, bottom:90, left:10};
 
-								var width = 960 - margin.left - margin.right;
+									var width = parentDiv.clientWidth - margin.left - margin.right;
 
-								var height = 500 - margin.top - margin.bottom;
+									var height = parentDiv.clientHeight - margin.top - margin.bottom;
 
-								var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
+									var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
 
-								var yScale = d3.scale.linear()
-								      .range([height, 0]);
-
-
-								var xAxis = d3.svg.axis()
-										.scale(xScale)
-										.orient("bottom");
-								      
-								      
-								var yAxis = d3.svg.axis()
-										.scale(yScale)
-										.orient("left");
-
-								var svgContainer = d3.select("#chartID").append("svg")
-										.attr("width", width+margin.left + margin.right)
-										.attr("height",height+margin.top + margin.bottom)
-										.append("g").attr("class", "container")
-										.attr("transform", "translate("+ margin.left +","+ margin.top +")");
-
-								xScale.domain(dataCSV.map(function(d) { return d.id; }));
-								yScale.domain([0, d3.max(dataCSV, function(d) { return parseInt(d.value); })]);
+									var yScale = d3.scale.linear()
+									      .range([height, 0]);
 
 
-								//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
-								var xAxis_g = svgContainer.append("g")
-										.attr("class", "x axis")
-										.attr("transform", "translate(0," + (height) + ")")
-										.call(xAxis)
-										.selectAll("text");
-											
-								// Uncomment this block if you want the y axis
-								/*var yAxis_g = svgContainer.append("g")
-										.attr("class", "y axis")
-										.call(yAxis)
-										.append("text")
-										.attr("transform", "rotate(-90)")
-										.attr("y", 6).attr("dy", ".71em")
-										//.style("text-anchor", "end").text("Number of Applicatons"); 
-								*/
+									var xAxis = d3.svg.axis()
+											.scale(xScale)
+											.orient("bottom");
+									      
+									      
+									var yAxis = d3.svg.axis()
+											.scale(yScale)
+											.orient("left");
+
+									var svgContainer = d3.select("#chartID").append("svg")
+											.attr("width", width+margin.left + margin.right)
+											.attr("height",height+margin.top + margin.bottom)
+											.append("g").attr("class", "container")
+											.attr("transform", "translate("+ margin.left +","+ margin.top +")");
+
+									xScale.domain(dataCSV.map(function(d) { return d.id; }));
+									yScale.domain([0, d3.max(dataCSV, function(d) { return parseInt(d.value); })]);
+
+
+									//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
+									var xAxis_g = svgContainer.append("g")
+											.attr("class", "x axis")
+											.attr("transform", "translate(0," + (height) + ")")
+											.call(xAxis)
+											.selectAll("text");
+												
+									// Uncomment this block if you want the y axis
+									/*var yAxis_g = svgContainer.append("g")
+											.attr("class", "y axis")
+											.call(yAxis)
+											.append("text")
+											.attr("transform", "rotate(-90)")
+											.attr("y", 6).attr("dy", ".71em")
+											//.style("text-anchor", "end").text("Number of Applicatons"); 
+									*/
 
 
 									svgContainer.selectAll(".bar")
@@ -996,6 +1007,7 @@ min-width: 531px;
 	  	});
 	}
 
+	
 	function processPoints(geometry, callback, thisArg) {
 		if (geometry instanceof google.maps.LatLng) {
 		  callback.call(thisArg, geometry);
@@ -1192,10 +1204,22 @@ min-width: 531px;
         prevEl: '.swiper-button-prev',
       },
     });
+
+    swiper.on('paginationUpdate', function(i){
+    	console.log(i.realIndex, barisalClicked, barisalClicked==true);
+    	if(i.realIndex == 0) {
+    		$('#chartID').hide();
+    	} else if(i.realIndex == 1 && barisalClicked == true) {
+    		$('#chartID').show();
+    	} else {
+    		$('#chartID').hide();
+    	}
+    })
   </script>
 
   <script>
   	const getMapData = (model, item, id) => {
+  		clicked = false;
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
   		$.ajax({
@@ -1203,7 +1227,7 @@ min-width: 531px;
 	      url: '/dashboard_specific_map',
 	      data: {"model": model},
 	      success: function (res) {
-	      	console.log(res);
+	      	// console.log(res);
 	      	if(res['dataExists']) {
 	      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
 	      		$('#low-text').html('Low');
@@ -1346,23 +1370,25 @@ min-width: 531px;
 								var value = parseInt(res['minimalData'][id]);
 								var localColor = '';
 								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
-									if(value < parseInt(res['ranges']['low'])){
-										localColor = scoreColors['low'];
-									} else if(value >= parseInt(res['ranges']['low']) && value < parseInt(res['ranges']['mid'])) {
-										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['ranges']['mid']) && value < parseInt(res['ranges']['high'])) {
-										localColor = scoreColors['high'];
-									} else if(value >= parseInt(res['ranges']['high'])) {
-										localColor = scoreColors['high'];
-									}
-								}else {
-									// console.log(res['ranges'], value);
-									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])) {
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])){
 										localColor = scoreColors['low'];
 									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
 										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['ranges']['q2']) && value <= parseInt(res['ranges']['max'])) {
+									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
 										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['very high'];
+									}
+								}else {
+									// console.log(res['ranges'], value);
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])){
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['q3'])) {
+										localColor = scoreColors['very high'];
 									}
 								}	
 							// }
@@ -1387,16 +1413,21 @@ min-width: 531px;
 								var value = parseInt(res['minimalData'][id]);
 								// var localColor = '';
 								localColor = scoreColors['low'];
+								console.log("hello");
 								if(!res['emptydistricts']) {
-									if(value >= parseInt(res['districtRanges']['mindistrict']) && value < parseInt(res['districtRanges']['q1district'])) {
+									if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
 										localColor = scoreColors['low'];
-									} else if(value >= parseInt(res['districtRanges']['q1district']) && value < parseInt(res['districtRanges']['q2district'])) {
+									} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
 										localColor = scoreColors['average'];
-									} else if(value >= parseInt(res['districtRanges']['q2district']) && value <= parseInt(res['districtRanges']['maxdistrict'])) {
+									} else if(value >= parseInt(res['districtRanges']['q2']) && value <= parseInt(res['districtRanges']['q3'])) {
 										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['districtRanges']['q3'])) {
+										localColor = scoreColors['very high'];
 									}
 								}
-								console.log(localColor);
+								console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
+								console.log('end');
+								
 							// }
 							
 							return {
@@ -1416,11 +1447,10 @@ min-width: 531px;
 									id = ids[0];
 									if(res['server'] == 'community')
 										id = ids[1];
-									var value = res['minimalData'][id];
 									if(isNaN(value))
 										value = 'N/A';
 									else
-										value = parseInt(value);
+										value = parseInt(res['minimalData'][id]);
 									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
 										value += '%';
 									console.log(value);
@@ -1441,15 +1471,8 @@ min-width: 531px;
 								id = ids[0];
 								if(res['server'] == 'community')
 									id = ids[1];
-									var value = res['minimalData'][id];
-									if(isNaN(value))
-										value = 'N/A';
-									else
-										value = parseInt(res['minimalData'][id]);
-									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
-										value += '%';
-									console.log(value);
-									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
+								value = res['minimalData'][id];
+								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
 								var anchor = new google.maps.MVCObject();
 					    	anchor.set("position", e.latLng);
 					    	infoWindow.open(map, anchor);
@@ -1510,6 +1533,99 @@ min-width: 531px;
 										zIndex: 5
 									});
 									anotherLayer.setMap(map);
+									barisalClicked = true;
+									$('#chartID').html('');
+									$('#chartID').show();
+									var max = 0;
+									var dataCSV = [];
+									for(var key in res['minimalDistrict']) {
+										temp = {};
+										temp.id = key;
+										temp.value = res['minimalDistrict'][key];
+										if(max < temp.value)
+											max = temp.value;
+										dataCSV.push(temp);
+									}
+									console.log(dataCSV);
+									
+									parentDiv = document.getElementById('chartId');
+								  var margin = {top:10, right:10, bottom:90, left:10};
+
+									var width = parentDiv.clientWidth - margin.left - margin.right;
+
+									var height = parentDiv.clientHeight - margin.top - margin.bottom;
+
+									var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
+
+									var yScale = d3.scale.linear()
+									      .range([height, 0]);
+
+
+									var xAxis = d3.svg.axis()
+											.scale(xScale)
+											.orient("bottom");
+									      
+									      
+									var yAxis = d3.svg.axis()
+											.scale(yScale)
+											.orient("left");
+
+									var svgContainer = d3.select("#chartID").append("svg")
+											.attr("width", width+margin.left + margin.right)
+											.attr("height",height+margin.top + margin.bottom)
+											.append("g").attr("class", "container")
+											.attr("transform", "translate("+ margin.left +","+ margin.top +")");
+
+									xScale.domain(dataCSV.map(function(d) { return d.id; }));
+									yScale.domain([0, d3.max(dataCSV, function(d) { return parseInt(d.value); })]);
+
+
+									//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
+									var xAxis_g = svgContainer.append("g")
+											.attr("class", "x axis")
+											.attr("transform", "translate(0," + (height) + ")")
+											.call(xAxis)
+											.selectAll("text");
+												
+									// Uncomment this block if you want the y axis
+									/*var yAxis_g = svgContainer.append("g")
+											.attr("class", "y axis")
+											.call(yAxis)
+											.append("text")
+											.attr("transform", "rotate(-90)")
+											.attr("y", 6).attr("dy", ".71em")
+											//.style("text-anchor", "end").text("Number of Applicatons"); 
+									*/
+
+
+									svgContainer.selectAll(".bar")
+								  		.data(dataCSV)
+								  		.enter()
+								  		.append("rect")
+								  		.attr("class", function(d) {
+								  			if(d.value >= parseInt(res['districtRanges']['min']) && d.value < parseInt(res['districtRanges']['q1'])) {
+													return 'bar low';
+												} else if(d.value >= parseInt(res['districtRanges']['q1']) && d.value < parseInt(res['districtRanges']['q2'])) {
+													return 'bar mid';
+												} else if(d.value >= parseInt(res['districtRanges']['q2']) && d.value <= parseInt(res['districtRanges']['q3'])) {
+													return 'bar high';
+												} else if(d.value >= parseInt(res['districtRanges']['q3'])) {
+													return 'bar vhigh';
+												}
+								  		})
+								  		.attr("x", function(d) { return xScale(d.id); })
+								  		.attr("width", xScale.rangeBand())
+								  		.attr("y", function(d) { return yScale(d.value); })
+								  		.attr("height", function(d) { return height - yScale(d.value); });
+								  svgContainer.selectAll(".text")  		
+										  .data(dataCSV)
+										  .enter()
+										  .append("text")
+										  .attr("class","label")
+										  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
+										  .attr("y", function(d) { return yScale(d.value) + 1; })
+										  .attr("dy", ".75em")
+										  .text(function(d) { return d.value; });
 								}
 							}
 						});

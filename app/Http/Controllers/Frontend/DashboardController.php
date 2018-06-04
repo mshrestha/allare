@@ -557,11 +557,11 @@ class DashboardController extends Controller
 		
 		$ranges = [];
 		if($data['model'] == 'BdhsStunting') {
-			$ranges = array('low' => 20, 'mid' => 29, 'high' => 39);
+			$ranges = array('min'=>0, 'q1' => 20, 'q2' => 29, 'q3' => 39, 'max' => 100);
 		} else if($data['model'] == 'BdhsWasting') {
-			$ranges = array('low' => 5, 'mid' => 9, 'high' => 14);
+			$ranges = array('min'=>0, 'q1' => 5, 'q2' => 9, 'q3' => 14, 'max' => 100);
 		} else if($data['model'] == 'BdhsAnemia') {
-			$ranges = array('low' => 5, 'mid' => 19.9, 'high' => 39.9);
+			$ranges = array('min'=>0, 'q1' => 5, 'q2' => 19.9, 'q3' => 39.9, 'max' => 100);
 		} else {
 			$ranges = $this->getFourRanges($valueArr); 
 		}
