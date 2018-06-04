@@ -190,21 +190,21 @@ min-width: 531px;
 				      		<div class="capacity-div input-box input-training">
 				      			<h6 class="mb-0">ENHANCED CAPACITY OF PLANNERS AND SERVICE PROVIDERS</h6>
 							  		<div><span class="number">65%</span><span class="number-txt"># of health workers trained on CCTN with Pay for performance </span></div>
-							  		<div><span class="number">65%</span><span class="number-txt"># of health workers who passed the training uptake assessment</span></div>
+							  		<div><span class="number">60%</span><span class="number-txt"># of health workers who passed the training uptake assessment</span></div>
 				      		</div>
 				      		{{-- QA DIV --}}
 				      		<div class="qa-div input-box input-training">
 				      			<h6 class="mb-0">QUALITY CONTROL AND SUPPORTIVE SUPERVISION</h6>
-				      			<div><span class="number">65%</span><span class="number-txt"># of facilities receiving supporting supervision and monitoring in the last quarter</span></div>
-							  		<div><span class="number">65%</span><span class="number-txt">% of facilties reporting high quality data </span></div>
-							  		<div><span class="number">65%</span><span class="number-txt">% of facilities passing the Data Quality Assessment</span></div>
+				      			<div><span class="number">63%</span><span class="number-txt"># of facilities receiving supporting supervision and monitoring in the last quarter</span></div>
+							  		<div><span class="number">70%</span><span class="number-txt">% of facilties reporting high quality data </span></div>
+							  		<div><span class="number">67%</span><span class="number-txt">% of facilities passing the Data Quality Assessment</span></div>
 				      		</div>
 				      		{{-- SUPPLY DIV --}}
 				      		<div class="supply-div input-box input-training">
 				      			<h6 class="mb-0">ENSURE ADEQUATE NUTRITION SUPPLIES</h6>
-				      			<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of IFA tablets</span></div>
-							  		<div><span class="number">65%</span><span class="number-txt">% of facilities with adequate anthropometric measuring tools</span></div>
-							  		<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of Zinc and ORS</span></div>
+				      			<div><span class="number">61%</span><span class="number-txt">% of facilities without stockouts of IFA tablets</span></div>
+							  		<div><span class="number">69%</span><span class="number-txt">% of facilities with adequate anthropometric measuring tools</span></div>
+							  		<div><span class="number">64%</span><span class="number-txt">% of facilities without stockouts of Zinc and ORS</span></div>
 				      		</div>
 				      	</div>
 			      	</div> {{-- col-md-4 --}}
@@ -1115,7 +1115,7 @@ min-width: 531px;
 					},
 					{
 						labelStart: ~~weight_measured + '%', // Weight Measured
-						value: 0.01,
+						value: weight_measured,
 						color: "#005e6f"
 					},
 					// {
@@ -1162,7 +1162,7 @@ min-width: 531px;
 			 //  	},
 			  	{
 			  		labelStart: ~~child_growth_monitoring + '%', //Child Growth Monitoring
-			  		value: 0.01,
+			  		value: child_growth_monitoring,
 			  		color: '#005e6f'
 			  	},
 			  	// {

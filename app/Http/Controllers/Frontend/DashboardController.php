@@ -53,15 +53,15 @@ class DashboardController extends Controller
 		$maternal_nutrition_data = [
 			'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($bangladesh_ou, $current_period)),
 			'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($bangladesh_ou, $current_period)),
-			'weight_measured' => 0,
+			'weight_measured' => 22,
 			'exclusive_breastfeeding' => 0
 		];
 
 		$child_nutrition_data = [
 			'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage($bangladesh_ou, $current_period)),
-			'supplements_distributed' => 0,
-			'child_growth_monitoring' => 0,
-			'minimum_acceptable_diet' => 0
+			'supplements_distributed' => 0.01,
+			'child_growth_monitoring' => 20,
+			'minimum_acceptable_diet' => 0.01
 		];
 
 		return view('frontend.dashboard.index', compact('sidebarContents', 'outcomes', 'organisation_units', 'periods', 'maternal_nutrition_data', 'child_nutrition_data'));
