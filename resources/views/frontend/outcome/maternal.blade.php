@@ -65,9 +65,8 @@
 <script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 
 <script>
-	$('.area-date').html('2018');
-	$('.specific-date').html('2018');
-	// $('.swiper-slide').hide();
+	$('.area-date').html('Last 6 months');
+	$('.specific-date').html('Last 6 months');
 
 	function loadPeriodWiseData($this, model, id) {
 		$.ajax({
@@ -81,8 +80,8 @@
 				pieChart(res.key, res.percent)
 				var arr = res;
 				trendAnalysisChart(res.key, arr)
-				$('#area-date-'+id).html($('#trend_period_id').find(':selected').text());
-				$('#specific-date-'+id).html($('#trend_period_id').find(':selected').text());
+				$('#area-date-'+id).html($this.find(':selected').text());
+				$('#specific-date-'+id).html($this.find(':selected').text());
 			}
 		})
 	}
@@ -132,18 +131,6 @@
 	                    }
 	                }]
 	    		},
-				tooltips: {
-					callbacks: {
-					    label: function(tooltipItem, data) {
-					        var value = data.datasets[0].data[tooltipItem.index];
-					        if(parseInt(value) >= 1000){
-					                   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-					                } else {
-					                   return value;
-					                }
-					    }
-					} // end callbacks:
-				},
 	            // Container for pan options
 	            pan: {
 	                // Boolean to enable panning

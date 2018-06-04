@@ -2,12 +2,12 @@
 	<div class="row">
 		<div class="col-xl-3 col-lg-3 col-sm-4">
 			<div class="tab-col-title">{{$analysis['heading']}}</div>
-			<div class="tab-col-subtitle specific-date" id="specific-date-{{$key}}"> 2018{{-- {{strtoupper($analysis['current_month'])}} --}}</div>
+			<div class="tab-col-subtitle specific-date" id="specific-date-{{$key}}"> Last 6 Months {{-- {{strtoupper($analysis['current_month'])}} --}}</div>
 			<div class="row">
 				<div class="input-group mb-1 col-6 col-sm-12 col-md-12 col-lg-12 col-xl-6">
 					<select class="custom-select gry-borderd load_period_data" name="period" id="trend_period_id" onchange="loadPeriodWiseData($(this), '{{ $analysis['model'] }}', {{$key}})">
 						{{-- <option value="LAST_MONTH">Last Month</option> --}}
-						{{-- <option value="LAST_6_MONTHS">Last 6 Months</option> --}}
+						<option value="LAST_6_MONTHS">Last 6 Months</option>
 						<option value="2018">2018</option>
 						<option value="2017">2017</option>
 						<option value="2016">2016</option>
@@ -24,7 +24,7 @@
 		</div> {{-- col-xs-2 --}}
 		<div class="col-xl-6 pr-xl-0 col-lg-6 col-sm-8">
 			<div class="tab-col-title">{{$analysis['name']}}</div>
-			<div class="tab-col-subtitle area-date" id="area-date-{{$key}}">2018</div>
+			<div class="tab-col-subtitle area-date" id="area-date-{{$key}}">Last 6 Months</div>
 			<div class="canvas-holder output-area-chart" id="output-area-chart-{{ $key }}">
 				<svg id="line-chart-{{ $key }}"></svg>
 			</div>

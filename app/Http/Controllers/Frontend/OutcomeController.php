@@ -34,18 +34,7 @@ class OutcomeController extends Controller
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::whereIn('level', [1, 2])->get();
 		$periods = $this->getPeriodYears();
-		// $currentVal = date('Y').date('m', strtotime('-2 month'));
-		$periodData = $this->yearly_months(2018);
-		// array_push($periodData, '201712');
-		// $emptyPeriod = [];
-		// for ($i=0; $i < count($periodData); $i++) { 
-		// 	if((int)$periodData[$i] < (int)$currentVal)
-		// 		array_push($emptyPeriod, $periodData[$i]);
-		// }
-		// $periodData = $emptyPeriod
-		// sort($emptyPeriod);
-		// $periodData = $emptyPeriod;
-		// dd($periodData);
+		$periodData = $periods = $this->getPeriodArray('LAST_6_MONTHS');
 		$data = config('data.maternal');
 		$indicators = [
 			'maternal_counselling' => 'Maternal Nutrition Counselling',
@@ -56,12 +45,13 @@ class OutcomeController extends Controller
 
 		$total_patient_last_month = CcMrTotalPatient::orderBy('period', 'desc')->where('organisation_unit', 'dNLjKwsVjod')->first();
 		$organisation_unit = ['dNLjKwsVjod', 'dNLjKwsVjod'];
-		$current_period = 2018;
+		$current_period = $periodData;
 		
 		//Maternal counselling percentage
 		$counselling_data = $data['maternal_counselling'][0];
 		$counselling_model = 'App\Models\Data\\' . $counselling_data['model'];
 		$counselling_percent = $this->calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $current_period);
+		// dd($counselling_percent);
 		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
 		$counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
 		$counselling_month_maternal = $current_period;
@@ -72,7 +62,10 @@ class OutcomeController extends Controller
 		$plw_who_receive_ifas_percent = $this->calculate_IFA_distribution_percentage($organisation_unit, $current_period);
 		$plw_who_receive_ifas_all_periods = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')
 		->pluck('period');
-		$plw_who_receive_ifas_all_values = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
+
+		$plw_who_receive_ifas_all_values_dghs = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
+		$plw_who_receive_ifas_all_values_dgfp = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGFP')->orderBy('period', 'asc')->pluck('value');
+		$plw_who_receive_ifas_all_values = $this->mergeTwoArrays($plw_who_receive_ifas_all_values_dghs, $plw_who_receive_ifas_all_values_dgfp);
 		$plw_who_receive_ifas_month = $current_period;
 		
 
@@ -94,7 +87,9 @@ class OutcomeController extends Controller
 		$exclusive_breastfeeding_yearly = $exclusive_breastfeeding_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'desc')->first();
 		$exclusive_breastfeeding_percent = ($exclusive_breastfeeding_last_month->value/$exclusive_breastfeeding_yearly->value) * 100;
 		$exclusive_breastfeeding_all_periods = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('period');
-		$exclusive_breastfeeding_all_values = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
+		$exclusive_breastfeeding_all_values_dghs = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
+		$exclusive_breastfeeding_all_values_dgfp = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGFP')->orderBy('period', 'asc')->pluck('value');
+		$exclusive_breastfeeding_all_values = $this->mergeTwoArrays($exclusive_breastfeeding_all_values_dghs,$exclusive_breastfeeding_all_values_dgfp);
 		$exclusive_breastfeeding_month = $exclusive_breastfeeding_last_month->period_name;
 		
 		$trend_analysis = [
@@ -146,34 +141,32 @@ class OutcomeController extends Controller
 		//Dhis formula
 		// Numerator: kazi->comm->cc_MR_ANC_Nutri_counsel
 		// Denominator : Kazi->comm-> cc_MR_ANC_1+2+3+4
-		
 		$cc_mr_anc_nutri_counsel = CcMrAncNutriCounsel::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
+					->sum('value');
 		$anc1_dghs = ANC1::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
+					->sum('value');
 		$anc2_dghs = ANC2::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
+					->sum('value');
 		$anc3_dghs = ANC3::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
+					->sum('value');
 		$anc4_dghs = ANC4::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
-		$dhis_calculate = ($cc_mr_anc_nutri_counsel->value / ($anc1_dghs->value + $anc2_dghs->value + $anc3_dghs->value + $anc4_dghs->value)) * 100;
-
+					->sum('value');
+		$dhis_calculate = ($cc_mr_anc_nutri_counsel / ($anc1_dghs + $anc2_dghs + $anc3_dghs + $anc4_dghs)) * 100;
 		return $dhis_calculate;
 	}
 
@@ -185,31 +178,32 @@ class OutcomeController extends Controller
 		$cc_mr_anc_ifa_distribution = CcMrAncIfaDistribution::where('organisation_unit', $organisation_unit[0])
 						->whereNull('category_option_combo')
 						->where('source', 'DGHS')
-						->where('period', $period)->first();
+						->whereIn('period', $period)
+						->sum('value');
 		
 		$anc1_dghs = ANC1::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
+					->sum('value');
 		$anc2_dghs = ANC2::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
+					->sum('value');
 		$anc3_dghs = ANC3::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
+					->sum('value');
 		$anc4_dghs = ANC4::where('source', 'DGHS')
 					->where('organisation_unit', $organisation_unit[0])
-					->where('period', $period)
+					->whereIn('period', $period)
 					->whereNull('category_option_combo')
-					->first();
+					->sum('value');
 
-		$dhis_numerator = $cc_mr_anc_ifa_distribution->value;
-		$dhis_denominator = $anc1_dghs->value + $anc2_dghs->value + $anc3_dghs->value + $anc4_dghs->value;
+		$dhis_numerator = $cc_mr_anc_ifa_distribution;
+		$dhis_denominator = $anc1_dghs + $anc2_dghs + $anc3_dghs + $anc4_dghs;
 
 
 		//DGFP calculation
@@ -217,27 +211,27 @@ class OutcomeController extends Controller
 		//Denominator -> ANC1 + ANC2 + ANC3 + ANC4
 		$number_of_pregnant_woman_received_ifa = CcMrAncIfaDistribution::where('source', 'DGFP')
 					->where('organisation_unit', $organisation_unit[1])
-					->where('period', 'LIKE', '%' . $period . '%')
+					->whereIn('period',$period)
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc1_dgfp = ANC1::where('source', 'DGFP')
 					->where('organisation_unit', $organisation_unit[1])
-					->where('period', 'LIKE', '%' . $period . '%')
+					->whereIn('period',$period)
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc2_dgfp = ANC2::where('source', 'DGFP')
 					->where('organisation_unit', $organisation_unit[1])
-					->where('period', 'LIKE', '%' . $period . '%')
+					->whereIn('period',$period)
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc3_dgfp = ANC3::where('source', 'DGFP')
 					->where('organisation_unit', $organisation_unit[1])
-					->where('period', 'LIKE', '%' . $period . '%')
+					->whereIn('period',$period)
 					->whereNull('category_option_combo')
 					->sum('value');
 		$anc4_dgfp = ANC4::where('source', 'DGFP')
 					->where('organisation_unit', $organisation_unit[1])
-					->where('period', 'LIKE', '%' . $period . '%')
+					->whereIn('period',$period)
 					->whereNull('category_option_combo')
 					->sum('value');
 
@@ -251,8 +245,9 @@ class OutcomeController extends Controller
 	
 	public function loadPeriodWiseMaternalData(Request $request) {
 		if($request->period == 'LAST_MONTH') {
-			$pe = date('Ym') - 1;
+			$pe = date('Ym') - 2;
 			$periodData = [(String)$pe];
+			$current_period = $periodData;
 		} else if($request->period == 'LAST_6_MONTHS') {
 			$current_year = date('Y');
 			$current_month = date('m');
@@ -269,10 +264,8 @@ class OutcomeController extends Controller
 			$current_period = $periodData;
 		} else {
 			$periodData = $this->yearly_months($request->period);
-			$current_period = $request->period;
+			$current_period = $periodData;
 		}
-
-		// dd($periodData);
 		
 		$data = config('data.maternal');
 		$indicators = [
@@ -286,7 +279,6 @@ class OutcomeController extends Controller
 
 		$organisation_unit = ['dNLjKwsVjod', 'dNLjKwsVjod'];
 		
-		
 		//Maternal counselling percentage
 		$counselling_data = $data['maternal_counselling'][0];
 		$counselling_model = 'App\Models\Data\\' . $counselling_data['model'];
@@ -294,13 +286,15 @@ class OutcomeController extends Controller
 		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
 		$counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
 		$counselling_month_maternal = $current_period;
-		// dd($counselling_all_values);
+
 		//Plw who receive ifas
 		$plw_who_receive_ifas_data = $data['plw_who_receive_ifas'][0];
 		$plw_who_receive_ifas_model = 'App\Models\Data\\' . $plw_who_receive_ifas_data['model'];
 		$plw_who_receive_ifas_percent = $this->calculate_IFA_distribution_percentage($organisation_unit, $current_period);
 		$plw_who_receive_ifas_all_periods = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('period');
-		$plw_who_receive_ifas_all_values = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
+		$plw_who_receive_ifas_all_values_dghs = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
+		$plw_who_receive_ifas_all_values_dgfp = $plw_who_receive_ifas_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGFP')->orderBy('period', 'asc')->pluck('value');
+		$plw_who_receive_ifas_all_values = $this->mergeTwoArrays($plw_who_receive_ifas_all_values_dghs, $plw_who_receive_ifas_all_values_dgfp);
 		$plw_who_receive_ifas_month = $current_period;
 		
 
@@ -322,7 +316,10 @@ class OutcomeController extends Controller
 		$exclusive_breastfeeding_yearly = $exclusive_breastfeeding_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'desc')->first();
 		$exclusive_breastfeeding_percent = ($exclusive_breastfeeding_last_month->value/$exclusive_breastfeeding_yearly->value) * 100;
 		$exclusive_breastfeeding_all_periods = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('period');
-		$exclusive_breastfeeding_all_values = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
+		$exclusive_breastfeeding_all_values_dghs = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('value');
+		$exclusive_breastfeeding_all_values_dgfp = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGFP')->orderBy('period', 'asc')->pluck('value');
+		$exclusive_breastfeeding_all_values = $this->mergeTwoArrays($exclusive_breastfeeding_all_values_dghs, $exclusive_breastfeeding_all_values_dgfp);
+
 		$exclusive_breastfeeding_month = $exclusive_breastfeeding_last_month->period_name;
 		
 		if($request->model == 'counselling') {
@@ -577,7 +574,6 @@ class OutcomeController extends Controller
 		}
 
 		$periods = $this->getPeriodArray($request->period_id);
-
 		$organisation_unit = explode('.', $request->organisation_unit_id);
 		$source = $request->department_id;
 
@@ -737,5 +733,17 @@ class OutcomeController extends Controller
 			$pe = $period;
 		}
 		return explode(";", $pe);
+	}
+
+	private function mergeTwoArrays($a1, $a2) {
+		$merged = [];
+		foreach ([$a1, $a2] as $a) {// iterate both arrays
+		    foreach ($a as $key => $value) {// iterate all keys+values
+		        $sum = $value + ($merged[$key] ?? 0);
+		        $merged[$key] = (String)$sum; // merge and add
+		    }
+		}
+
+		return $merged;
 	}
 }
