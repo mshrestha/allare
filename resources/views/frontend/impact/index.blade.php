@@ -281,7 +281,7 @@ svg text.label {
       var w = parentDiv.clientWidth, h = parentDiv.clientHeight;  
       var margin = {top: 20, right: 20, bottom: 30, left: 50},
           width = w - margin.left - margin.right,
-          height = h - margin.top - margin.bottom;
+          height = 290;//h - margin.top - margin.bottom;
 
       var x = d3.time.scale()
                 .range([0, width])
