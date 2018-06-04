@@ -1,13 +1,13 @@
 <div class="swiper-slide hidden" id="swiper-slide-{{$key}}" data-hash="slide{{$key}}">
 	<div class="row">
 		<div class="col-xl-3 col-lg-3 col-sm-4">
-			<div class="tab-col-title">{{$analysis['name']}}</div>
+			<div class="tab-col-title">{{$analysis['heading']}}</div>
 			<div class="tab-col-subtitle specific-date" id="specific-date-{{$key}}"> 2018{{-- {{strtoupper($analysis['current_month'])}} --}}</div>
 			<div class="row">
 				<div class="input-group mb-1 col-6 col-sm-12 col-md-12 col-lg-12 col-xl-6">
 					<select class="custom-select gry-borderd load_period_data" name="period" id="trend_period_id" onchange="loadPeriodWiseData($(this), '{{ $analysis['model'] }}', {{$key}})">
-						<option value="">Last Month</option>
-						{{-- <option value="">Last 6 Months</option> --}}
+						{{-- <option value="LAST_MONTH">Last Month</option> --}}
+						{{-- <option value="LAST_6_MONTHS">Last 6 Months</option> --}}
 						<option value="2018">2018</option>
 						<option value="2017">2017</option>
 						<option value="2016">2016</option>
@@ -18,7 +18,7 @@
 				<svg id="chart-area-{{ $key }}"></svg>
 			</div>
 			<div class="pie-legend">
-				<span class="legend-text" id="current-text">{{$analysis['name']}} Given</span>
+				<span class="legend-text" id="current-text">{{$analysis['heading']}} Given</span>
 				{{-- <span class="legend-text" id="other-text">Total Patients Visited</span> --}}
 			</div>
 		</div> {{-- col-xs-2 --}}

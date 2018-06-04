@@ -246,8 +246,8 @@
 		startDate = data_value.periods[0];
 		endDate = data_value.periods[data_value.periods.length - 1];
 		
-		console.log(startDate);
-		console.log(endDate);
+		// console.log(startDate);
+		// console.log(endDate);
 		
 		for (var i = data_value.values.length - 1; i > 0; i--) {
 			if(i == 0) {
@@ -259,6 +259,7 @@
 			temp.value = data_value.values[i];
 			dataCSV.push(temp);
 		};
+		// console.log(dataCSV);
 		maxDate = 0;
 		minDate = 999999;
 		dataCSV.forEach(function(d) {
@@ -329,13 +330,14 @@
 		svg.append("g")
 		.attr("class", "grid")
 		.call(yAxis)
+
+		svg.append("g")
+            .attr("class", "xaxis")
+            .attr("transform", "translate(0," + (height - 12) + ")")
+            .call(xAxis);
 	}
 
 	function pieChart(id, data_value) {
-		// var randomScalingFactor = function() {
-		// 	return Math.round(Math.random() * 100);
-		// };
-
 		var parentDiv = document.getElementById('pie-chart-'+id);
 		var w = 300,                        
 		h = 156,                            
@@ -358,27 +360,27 @@
 		pie.value(function(d) { return d.value; });    
 
 		var arcs = vis.selectAll("g.slice")     
-		.data(pie)                          
-		.enter()                            
-		.append("svg:g")                
-		.attr("class", "slice");    
+		.data(pie)
+		.enter()
+		.append("svg:g")
+		.attr("class", "slice");
 
 		arcs.append("svg:path")
 		.attr("fill", function(d, i) { return color[i]; } ) 
-		.attr("d", arc);                                    
-		arcs.append("svg:text")                                     
-		.attr("transform", function(d) {                   
+		.attr("d", arc);
+		arcs.append("svg:text")
+		.attr("transform", function(d) {
 			d.innerRadius = 0;
 			d.outerRadius = r;
-			return "translate(" + arc.centroid(d) + ")";        
+			return "translate(" + arc.centroid(d) + ")";
 		})
-		.attr("text-anchor", "middle")                         
+		.attr("text-anchor", "middle")
 		.text(function(d, i) { return dataCSV[i].label; })
 		.style("fill", function(d, i) { if(i==0) return '#ffffff'; else return '#000000'; } )
 		.style("font-size", "13px")
 	}
 </script>
-<script src="{{asset('js/swiper.min.js')}}"></script>
+{{-- <script src="{{asset('js/swiper.min.js')}}"></script> --}}
 <script>
 	// var swiper = new Swiper('#swiper-tab', {
 	// 	spaceBetween: 30,

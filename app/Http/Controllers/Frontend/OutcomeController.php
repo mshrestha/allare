@@ -99,6 +99,7 @@ class OutcomeController extends Controller
 		
 		$trend_analysis = [
 			[
+				'heading' => 'Maternal Nutrition Counselling',
 				'name' => 'Pregnant women counselled on maternal nutrition',
 				'model' => 'counselling',
 				'percent' => round($counselling_percent),
@@ -107,6 +108,7 @@ class OutcomeController extends Controller
 				'current_month' => $counselling_month_maternal
 			],
 			[
+				'heading' => 'IFA Distribution',
 				'name' => 'Pregnant women who received IFA tablets',
 				'model' => 'ifa_distribution',
 				'percent' => round($plw_who_receive_ifas_percent),
@@ -115,6 +117,7 @@ class OutcomeController extends Controller
 				'current_month' => $plw_who_receive_ifas_month
 			],
 			[
+				'heading' => 'Maternal Weight',
 				'name' => 'Pregnant women weighed in a facility visit',
 				'model' => 'weight_measurement',
 				'percent' => round($pregnant_women_weighed_percent),
@@ -123,6 +126,7 @@ class OutcomeController extends Controller
 				'current_month' => $pregnant_women_weighed_month
 			],
 			[
+				'heading' => 'Measurement',
 				'name' => 'Exclusive breastfeeding',
 				'model' => 'exclusive_breastfeeding',
 				'percent' => round($exclusive_breastfeeding_percent),
@@ -246,8 +250,30 @@ class OutcomeController extends Controller
 	}
 	
 	public function loadPeriodWiseMaternalData(Request $request) {
-		$periodData = $this->yearly_months($request->period);
+		if($request->period == 'LAST_MONTH') {
+			$pe = date('Ym') - 1;
+			$periodData = [(String)$pe];
+		} else if($request->period == 'LAST_6_MONTHS') {
+			$current_year = date('Y');
+			$current_month = date('m');
+			if($current_month - 1 < 10) {
+				$current_month = '0'.($current_month-1);
+			}else {
+				$current_month = ($current_month-1);
+			}
+			$periodData = [];
+			for ($i = 1; $i < 7; $i++) {
+				$pe = date('Ym', strtotime("-$i month"));
+				array_push($periodData, $pe);
+			}
+			$current_period = $periodData;
+		} else {
+			$periodData = $this->yearly_months($request->period);
+			$current_period = $request->period;
+		}
 
+		// dd($periodData);
+		
 		$data = config('data.maternal');
 		$indicators = [
 			'maternal_counselling' => 'Maternal Counselling',
@@ -259,7 +285,7 @@ class OutcomeController extends Controller
 		$total_patient_last_month = CcMrTotalPatient::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->orderBy('period', 'desc')->first();
 
 		$organisation_unit = ['dNLjKwsVjod', 'dNLjKwsVjod'];
-		$current_period = $request->period;
+		
 		
 		//Maternal counselling percentage
 		$counselling_data = $data['maternal_counselling'][0];
@@ -372,6 +398,7 @@ class OutcomeController extends Controller
 
 		$trend_analysis = [
 			[
+				'heading' => '',
 				'name' => 'Caregivers of 0-23 month olds counselled on IYCF',
 				'model' => 'iycf_counselling',
 				'percent' => round($counselling_percent),
@@ -380,6 +407,7 @@ class OutcomeController extends Controller
 				'current_month' => $counselling_month_child
 			],
 			[
+				'heading' => '',
 				'name' => 'Children 0-23 months old weighed in a facility',
 				'model' => 'supplements',
 				'percent' => round($vitamin_a_supplementation_percent),
