@@ -61,7 +61,7 @@ class ImporterController extends Controller
                 else if($currData['server'] == 'community')
                     $baseUrl = config('static.communityBaseUrl');
                 $url = $baseUrl.config('static.analyticsEP').'?dimension=dx:'.$currData['api_id'].'&dimension=pe:LAST_MONTH&filter=ou:'.$ou[$j].'&displayProperty=NAME&outputIdScheme=UID&skipData=True';
-
+                // dd($url);
                 $responses = $this->callUrl($url);
                 $responses = json_decode($responses);
                 
