@@ -6886,6 +6886,9 @@ body {
   text-indent: 10px;
   color: #FFF;
   font-size: 14px; }
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    .progress-bar-h .current, .progress-bar-v .current {
+      font-size: 13px; } }
 
 .progress-bar-h .goal, .progress-bar-v .goal {
   width: 20%;
@@ -7111,8 +7114,20 @@ body {
 
 .outcome-col {
   background: #e6e6e6; }
+  .outcome-col.impact-div {
+    background: transparent;
+    margin-top: 45px; }
+    .outcome-col.impact-div .outcome-progress-col {
+      margin-top: 25px;
+      padding-bottom: 15px; }
+      @media (max-width: 991.98px) {
+        .outcome-col.impact-div .outcome-progress-col {
+          padding-bottom: 5px; } }
+    @media (min-width: 992px) {
+      .outcome-col.impact-div .txt-icon .outcome-icon-dis {
+        height: 47px; } }
   .outcome-col .outcome-progress-col {
-    margin-top: 20px; }
+    margin-top: 15px; }
     @media (min-height: 900px) {
       .outcome-col .outcome-progress-col {
         margin-top: 35px; } }
@@ -7201,7 +7216,7 @@ body {
         color: #FFF; }
 .map-view-container div#overdiv {
   position: absolute;
-  bottom: 5px;
+  bottom: 15px;
   right: 3px;
   color: #535353;
   font-size: 11px;
@@ -7217,19 +7232,30 @@ body {
   margin-right: 10px;
   background: #FFF; }
 .map-view-container div#overdiv span#low-text:before {
-  background: #81ddc6; }
+  background: #b1eed5; }
 .map-view-container div#overdiv span#avg-text:before {
-  background: #008091; }
+  background: #81ddc6; }
 .map-view-container div#overdiv span#high-text:before {
+  background: #008091; }
+.map-view-container div#overdiv span#vhigh-text:before {
   background: #0c4a60; }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .map-wrapper {
     height: 422px;
     margin-top: -29px; } }
+@media (min-width: 768px) {
+  .map-wrapper {
+    height: calc(100vh - 70px);
+    margin-top: -29px; } }
+@media (min-width: 992px) {
+  .map-wrapper {
+    height: 550px;
+    height: calc(100vh - 70px); } }
 
 .input-wrapper {
-  background: #e0e0e0; }
+  background: #e0e0e0;
+  background: transparent; }
   .input-wrapper .input-wrapper-inner {
     background: #e0e0e0;
     padding: 0 15px; }
@@ -7272,7 +7298,7 @@ body {
   .input-wrapper .input-training span.number-txt, .input-wrapper .input-qa span.number-txt, .input-wrapper .input-supply-management span.number-txt, .input-wrapper .input-reporting span.number-txt {
     margin-top: 8px;
     display: inline-block;
-    width: 60%;
+    width: 68%;
     font-size: 12px;
     color: #666666;
     line-height: 15px; }
@@ -7299,8 +7325,8 @@ body {
   position: relative; }
   @media (min-height: 900px) {
     #maternal-health, #child-health {
-      margin-top: 45px;
-      margin-bottom: 35px; } }
+      margin-top: 5px;
+      margin-bottom: 15px; } }
 
 #maternal-health:before, #child-health:before {
   background: url("../images/maternal.png") no-repeat center bottom;
@@ -7397,6 +7423,36 @@ div#zoomctrl div {
   100% {
     opacity: 1;
     -ms-transform: translate(0px, 0px); } }
+.table th.has-border, .table td.has-border {
+  border: 1px solid #b1b1b1; }
+
+.tab-outer-wrapper {
+  background: #ededed; }
+  .tab-outer-wrapper .standard-wrapper-inner {
+    padding: 0px; }
+  .tab-outer-wrapper .nav-tabs .nav-link {
+    font-size: 15px;
+    color: #666;
+    font-weight: 500; }
+  .tab-outer-wrapper .nav-tabs .nav-link.active, .tab-outer-wrapper .nav-tabs .nav-item.show .nav-link {
+    border: none;
+    border-radius: 0;
+    background: #ffffff;
+    color: #666; }
+  .tab-outer-wrapper .tab-content > .active {
+    background: #FFF; }
+  .tab-outer-wrapper .nav-tabs {
+    border: none; }
+  .tab-outer-wrapper .nav-tabs .nav-item {
+    margin-bottom: -3px;
+    border-color: transparent; }
+  .tab-outer-wrapper .nav-tabs .nav-link:hover, .tab-outer-wrapper .nav-tabs .nav-link:focus {
+    border-color: transparent; }
+  .tab-outer-wrapper .table-striped tbody tr:nth-of-type(odd) {
+    background-color: white; }
+  .tab-outer-wrapper .table th {
+    font-weight: 500; }
+
 .swiper-tab {
   background: #fff; }
   .swiper-tab .swiper-pagination {
@@ -7531,6 +7587,20 @@ div#zoomctrl div {
 .bargraph-div {
   background: #FFF; }
 
+.transparent-accordion .card {
+  background: transparent;
+  border: none; }
+.transparent-accordion .card-header {
+  background: transparent;
+  border: none;
+  padding: 0px 0px; }
+.transparent-accordion button.btn.btn-link {
+  width: 100%;
+  text-align: left;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none; }
+
 #mapdiv .gm-style > .gmnoprint > .gmnoprint div[title="Zoom in"] {
   top: 2px !important;
   left: 2px !important;
@@ -7561,5 +7631,40 @@ div#zoomctrl div {
   height: 100%;
   background: #FFF;
   z-index: -1; }
+
+html {
+  position: relative;
+  min-height: 100%; }
+
+body {
+  position: static;
+  padding-bottom: 30px; }
+
+footer {
+  background: #5d5d5d;
+  padding: 5px 15px;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 30px;
+  line-height: 20px; }
+  footer ul.footer-menu.list-inline {
+    margin: 0;
+    padding: 0; }
+  footer ul.footer-menu.list-inline a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px; }
+  footer li.list-inline-item {
+    padding-right: 10px;
+    position: relative; }
+    footer li.list-inline-item:after {
+      content: "|";
+      position: absolute;
+      left: -13px;
+      color: #FFF;
+      line-height: 22px; }
+  footer li.list-inline-item:first-child::after {
+    display: none; }
 
 /*# sourceMappingURL=style.css.map */

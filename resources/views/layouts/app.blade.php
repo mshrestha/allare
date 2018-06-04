@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{asset('css\style.css')}}">
 
   <script>
-    console.log = function() {}
+    // console.log = function() {}
     if (typeof console._commandLineAPI !== 'undefined') {
       console.API = console._commandLineAPI; //chrome
     } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
@@ -68,7 +68,9 @@
                 <li class="nav-item {{ Request::path() == 'impacts' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('frontend.impacts') }}">Impacts</a>
                 </li>
-
+                {{-- <li class="nav-item {{ Request::path() == 'technical-standard' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('frontend.technical-standard') }}">Technical Standards</a>
+                </li> --}}
               </ul>
                 <!-- <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -80,6 +82,23 @@
       </header>
     </div> {{-- /.header-full --}}
     @yield('content')
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <ul class="footer-menu list-inline">
+              <li class="list-inline-item"><a href="{{ route('frontend.dashboard') }}">Dashboard</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.outcomes.maternal') }}">Output Maternal</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.outcomes.child') }}">Output Child</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.impacts') }}">Impact</a></li>
+              <li class="list-inline-item"><a href="{{ route('frontend.technical-standard') }}">Technical Standards</a></li>
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+    </footer>
 
 
     <!-- Latest compiled and minified JavaScript -->

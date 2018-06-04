@@ -39,7 +39,7 @@
       <div class="tab-col-subtitle">Jan 14 - Feb 18</div>
       <div class="canvas-holder">
 ======= --}}
-      <div class="tab-col-subtitle area-date">Jan 14 - Feb 18</div>
+      <div class="tab-col-subtitle area-date" id="area-date-{{$counter}}">Jan 14 - Feb 18</div>
       <div class="canvas-holder area-chart" id="area-chart-{{$counter}}">
 {{-- >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
         <svg id="line-chart-{{$counter}}"></svg>

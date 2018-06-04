@@ -26,17 +26,32 @@ class OutcomeController extends Controller
 {
 	use PeriodHelper;
 
+	public function test($var) { 
+		$currentVal = date('Y').date('m', strtotime('-2 month'));
+		return (int)$var < (int)$currentVal; 
+	}
+
 	public function indexAction() {
 		$organisation_units = OrganisationUnit::whereIn('level', [1, 2])->get();
 		$periods = $this->getPeriodYears();
+		// $currentVal = date('Y').date('m', strtotime('-2 month'));
 		$periodData = $this->yearly_months(2018);
-
+		// array_push($periodData, '201712');
+		// $emptyPeriod = [];
+		// for ($i=0; $i < count($periodData); $i++) { 
+		// 	if((int)$periodData[$i] < (int)$currentVal)
+		// 		array_push($emptyPeriod, $periodData[$i]);
+		// }
+		// $periodData = $emptyPeriod
+		// sort($emptyPeriod);
+		// $periodData = $emptyPeriod;
+		// dd($periodData);
 		$data = config('data.maternal');
 		$indicators = [
-			'maternal_counselling' => 'Maternal Counselling',
-			'plw_who_receive_ifas' => 'Plw who receive ifas',
-			'pregnant_women_weighed' => 'Pregnant women weighed',
-			'exclusive_breastfeeding' => 'Exclusive breastfeeding',
+			'maternal_counselling' => 'Maternal Nutrition Counselling',
+			'plw_who_receive_ifas' => 'IFA Distribution',
+			'pregnant_women_weighed' => 'Maternal weight',
+			'exclusive_breastfeeding' => 'Measurement',
 		];
 
 		$total_patient_last_month = CcMrTotalPatient::orderBy('period', 'desc')->where('organisation_unit', 'dNLjKwsVjod')->first();
@@ -84,7 +99,7 @@ class OutcomeController extends Controller
 		
 		$trend_analysis = [
 			[
-				'name' => 'Counselling',
+				'name' => 'Pregnant women counselled on maternal nutrition',
 				'model' => 'counselling',
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
@@ -92,7 +107,7 @@ class OutcomeController extends Controller
 				'current_month' => $counselling_month_maternal
 			],
 			[
-				'name' => 'IFA Distribution',
+				'name' => 'Pregnant women who received IFA tablets',
 				'model' => 'ifa_distribution',
 				'percent' => round($plw_who_receive_ifas_percent),
 				'periods' => $plw_who_receive_ifas_all_periods,
@@ -100,7 +115,7 @@ class OutcomeController extends Controller
 				'current_month' => $plw_who_receive_ifas_month
 			],
 			[
-				'name' => 'Weight Measurement',
+				'name' => 'Pregnant women weighed in a facility visit',
 				'model' => 'weight_measurement',
 				'percent' => round($pregnant_women_weighed_percent),
 				'periods' => $pregnant_women_weighed_all_periods,
@@ -232,6 +247,7 @@ class OutcomeController extends Controller
 	
 	public function loadPeriodWiseMaternalData(Request $request) {
 		$periodData = $this->yearly_months($request->period);
+
 		$data = config('data.maternal');
 		$indicators = [
 			'maternal_counselling' => 'Maternal Counselling',
@@ -252,7 +268,7 @@ class OutcomeController extends Controller
 		$counselling_all_periods = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('period');
 		$counselling_all_values = $counselling_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->orderBy('period', 'asc')->pluck('value');
 		$counselling_month_maternal = $current_period;
-
+		// dd($counselling_all_values);
 		//Plw who receive ifas
 		$plw_who_receive_ifas_data = $data['plw_who_receive_ifas'][0];
 		$plw_who_receive_ifas_model = 'App\Models\Data\\' . $plw_who_receive_ifas_data['model'];
@@ -356,7 +372,7 @@ class OutcomeController extends Controller
 
 		$trend_analysis = [
 			[
-				'name' => 'IYCF Counselling',
+				'name' => 'Caregivers of 0-23 month olds counselled on IYCF',
 				'model' => 'iycf_counselling',
 				'percent' => round($counselling_percent),
 				'periods' => $counselling_all_periods,
@@ -364,7 +380,7 @@ class OutcomeController extends Controller
 				'current_month' => $counselling_month_child
 			],
 			[
-				'name' => 'Supplements',
+				'name' => 'Children 0-23 months old weighed in a facility',
 				'model' => 'supplements',
 				'percent' => round($vitamin_a_supplementation_percent),
 				'periods' => $vitamin_a_supplementation_all_periods,
@@ -591,6 +607,7 @@ class OutcomeController extends Controller
 
 			$final_data['DGHS']= array_pluck($data['DGHS'], 'value');
 			$final_data['DGFP'] = array_pluck($data['DGFP'], 'value');
+			// dd($final_data);
 			$labels = array_pluck($data['DGHS'], 'period_name');
 			$title = $data_table[0]['name'];
 			if(strcasecmp(strtolower($title), 'imci counselling') == 0)

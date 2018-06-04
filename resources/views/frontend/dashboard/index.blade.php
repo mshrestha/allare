@@ -18,62 +18,155 @@
 			      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 			      				<div id="maternal-health" style="width: 100%;"></div>
 			      				<div class="legend row">
-			      					<div class="conselling-given col-10 offset-2">Maternal Nutrition Counselling</div>
-			      					<div class="ifa-distributed col-10 offset-2">IFA Distributed</div>
-			      					<div class="weight-measured col-10 offset-2">Weight Measured</div>
+			      					<div class="conselling-given col-10 offset-2">Percent of pregnant women counselled on maternal nutrition</div>
+			      					<div class="ifa-distributed col-10 offset-2">Percent of pregnant women who received IFA</div>
+			      					<div class="weight-measured col-10 offset-2">Percent of pregnant women weighed at facility visits</div>
 			      					{{-- <div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
 			      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
 			      				<div id="child-health" style="width: 100%;"></div>
 			      				<div class="legend row">
-			      					<div class="imci-counselling col-10 offset-2">IYCF Counselling</div>
+			      					<div class="imci-counselling col-10 offset-2">Percent of caretakers of 6-23 month olds counselled on IYCF</div>
 			      					{{-- <div class="supplements-distributed col-10 offset-2">Supplements Distributed</div> --}}
-			      					<div class="child-growth col-10 offset-2">Child Growth Monitoring</div>
+			      					<div class="child-growth col-10 offset-2">Percent of children 6-23 months old weighed at facilities</div>
 			      					{{-- <div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
 			      		</div> {{-- row --}}
 
 			      		<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
-			      		<div class="row mt-4">
-			      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-			      				<label for="">Select the Division</label>
-				      			<div class="input-group">
-					                <select class="custom-select national_outcomes_filter_form_fields country_division_field" id="division_id" name="organisation_unit" required>
-					                	<option value="dNLjKwsVjod.dNLjKwsVjod">Bangladesh</option>
-					                	@foreach($organisation_units as $organisation_unit)
-						                	@if($organisation_unit->name !== 'X organizationunits for delete')
-						                    	<option value="{{ $organisation_unit->central_api_id .'.'. $organisation_unit->community_api_id}}">{{ $organisation_unit->name }}</option>
-					                    	@endif
-					                    @endforeach
-					                </select>
-					            </div>
-			      			</div>
-			      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
-			      				<label for="">Select the Timeline</label>
-				      			<div class="input-group">
-					                <select class="custom-select national_outcomes_filter_form_fields" id="period_id" name="period" required>
-					                    @foreach($periods as $key => $period)
-					                    	<option value="{{ $period }}">{{ $period }}</option>
-					                    @endforeach
-					                </select>
-					            </div>
-			      			</div>
-			      		</div> {{-- row --}}
+				      		<div class="row mt-2">
+				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+				      				<label for="">Select the Division</label>
+					      			<div class="input-group">
+						                <select class="custom-select national_outcomes_filter_form_fields country_division_field" id="division_id" name="organisation_unit" required>
+						                	<option value="dNLjKwsVjod.dNLjKwsVjod">Bangladesh</option>
+						                	@foreach($organisation_units as $organisation_unit)
+							                	@if($organisation_unit->name !== 'X organizationunits for delete')
+							                    	<option value="{{ $organisation_unit->central_api_id .'.'. $organisation_unit->community_api_id}}">{{ $organisation_unit->name }}</option>
+							                    	@if($organisation_unit->name == 'Barisal Division')
+							                    		<option class="pl-5" value="xNcsJeRMUCM.xNcsJeRMUCM">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barguna District</option>
+							                    		<option class="pl-5" value="uOU0jtyD1PZ.uOU0jtyD1PZ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barisal District</option>
+							                    		<option class="pl-5" value="EdOWA8sKh2p.EdOWA8sKh2p">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bhola District</option>
+							                    		<option class="pl-5" value="WNCBZLbFD70.WNCBZLbFD70">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jhalokati District</option>
+							                    		<option class="pl-5" value="bEiL5HnmKZO.bEiL5HnmKZO">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Patuakhali District</option>
+							                    		<option class="pl-5" value="aLbPgj33QnT.aLbPgj33QnT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pirojpur District</option>
+							                    	@endif
+						                    	@endif
+						                    @endforeach
+						                </select>
+						            </div>
+				      			</div>
+				      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+				      				<label for="">Select the Timeline</label>
+					      			<div class="input-group">
+						                <select class="custom-select national_outcomes_filter_form_fields" id="period_id" name="period" required>
+						                    @foreach($periods as $key => $period)
+						                    	<option value="{{ $period }}">{{ $period }}</option>
+						                    @endforeach
+						                </select>
+						            </div>
+				      			</div>
+				      		</div> {{-- row --}}
 			      		</form>
+			      		<div class="impact-div outcome-col">
+				      		<div class="row">
+				      			<div class="col-12">
+				      				<div class="box-heading float-left">IMPACT</div>
+				      			</div>
+				      		</div>
+				      		<div class="row">
+					  				@foreach($outcomes as $key => $analysis)
+											@include('layouts.partials.dashboard-outcomes-partial')
+										@endforeach
+				      		</div>
+			      		</div>
 			      	</div> {{-- output col-md-8 --}}
 			      	<div class="col-md-5 col-lg-4 outcome-col" data-swiper-parallax="-300" data-swiper-parallax-opacity="0">
-			      		<div class="row">
-			      			<div class="col-12">
-			      				<div class="box-heading float-left">IMPACT</div>
-			      			</div>
-			      		</div>
-			      		<div class="row">
-			  				@foreach($outcomes as $key => $analysis)
-								@include('layouts.partials.dashboard-outcomes-partial')
-							@endforeach
-			      		</div>
+			      		<div class="input-wrapper">
+				      		<div class="row">
+				      			<div class="col-12">
+				      				<div class="box-heading float-left">INPUTS</div>
+				      			</div>
+				      		</div>
+				      		<div class="reporting-div input-box input-reporting">
+				      			<h6>REPORTING</h6>
+				      			<div class="row">
+				      				<div class="col-sm-6">
+				      					<div>
+									  			<span class="report-lable">FWC</span> 
+									  			<div class="progress-bar-h">
+														<div class="goal" style="width: 10%;">
+														</div>
+														<div class="current grow-h-animation" style="width: 30%;">
+															30%
+														</div>
+													</div> {{-- progress-bar-h --}}
+												</div>
+				      				</div>
+				      				<div class="col-sm-6">
+				      					<div>
+									  			<span class="report-lable">CC</span> 
+									  			<div class="progress-bar-h">
+														<div class="goal" style="width: 10%;">
+														</div>
+														<div class="current grow-h-animation" style="width: 44%;">
+															44%
+														</div>
+													</div> {{-- progress-bar-h --}}
+												</div>
+				      				</div>
+				      			</div>
+				      			<div class="row">
+				      				<div class="col-sm-6">
+				      					<div>
+									  			<span class="report-lable">IMCI-N Corner</span> 
+									  			<div class="progress-bar-h">
+														<div class="goal" style="width: 10%;">
+														</div>
+														<div class="current grow-h-animation" style="width: 65%;">
+															65%
+														</div>
+													</div> {{-- progress-bar-h --}}
+									  		</div>
+				      				</div>
+				      				<div class="col-sm-6">
+				      					<div>
+									  			<span class="report-lable">SAM</span> 
+									  			<div class="progress-bar-h">
+														<div class="goal" style="width: 10%;">
+														</div>
+														<div class="current grow-h-animation" style="width: 56%;">
+															56%
+														</div>
+													</div> {{-- progress-bar-h --}}
+												</div>
+				      				</div>
+				      			</div>
+				      		</div>
+
+				      		{{-- CAPACITY DIV --}}
+				      		<div class="capacity-div input-box input-training">
+				      			<h6 class="mb-0">ENHANCED CAPACITY OF PLANNERS AND SERVICE PROVIDERS</h6>
+							  		<div><span class="number">65%</span><span class="number-txt"># of health workers trained on CCTN with Pay for performance </span></div>
+							  		<div><span class="number">65%</span><span class="number-txt"># of health workers who passed the training uptake assessment</span></div>
+				      		</div>
+				      		{{-- QA DIV --}}
+				      		<div class="qa-div input-box input-training">
+				      			<h6 class="mb-0">QUALITY CONTROL AND SUPPORTIVE SUPERVISION</h6>
+				      			<div><span class="number">65%</span><span class="number-txt"># of facilities receiving supporting supervision and monitoring in the last quarter</span></div>
+							  		<div><span class="number">65%</span><span class="number-txt">% of facilties reporting high quality data </span></div>
+							  		<div><span class="number">65%</span><span class="number-txt">% of facilities passing the Data Quality Assessment</span></div>
+				      		</div>
+				      		{{-- SUPPLY DIV --}}
+				      		<div class="supply-div input-box input-training">
+				      			<h6 class="mb-0">ENSURE ADEQUATE NUTRITION SUPPLIES</h6>
+				      			<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of IFA tablets</span></div>
+							  		<div><span class="number">65%</span><span class="number-txt">% of facilities with adequate anthropometric measuring tools</span></div>
+							  		<div><span class="number">65%</span><span class="number-txt">% of facilities without stockouts of Zinc and ORS</span></div>
+				      		</div>
+				      	</div>
 			      	</div> {{-- col-md-4 --}}
 			  	</div>
 			  </div> {{-- data view --}}
@@ -90,9 +183,9 @@
 			    	<div class="col-md-4 col-lg-3 col-xl-2 pl-0 pr-0 filter-col">
 							<ul class="map-filter mb-0">
 								<li class="list-head">MATERNAL NUTRITION</li>
-									<li><a href="#" id="counselling" class="maplinks inactive" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Counselling Given</a></li>
-									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">IFA Distributed</a></li>
-									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Weight Measured</a></li>
+									<li><a href="#" id="counselling" class="maplinks active" onclick="getMapData('CcMrAncNutriCounsel', 'Counselling Given', '#counselling')">Women counselled on Maternal Nutrition</a></li>
+									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution')">Pregnant Woman who received IFA</a></li>
+									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight')">Pregnant women weighed during facility visits</a></li>
 									<li class="list-head">CHILD NUTRITION</li>
 									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling')">IMCI Counselling Given</a></li>
 									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements')">Supplements Distributed</a></li>
@@ -102,13 +195,13 @@
 
 							<ul class="map-filter outcome mb-0">
 									<li class="list-head green">IMPACTS</li>
-									<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</a></li>
+									<li><a href="#" id="stunting" class="maplinks inactive" onclick="getMapData('BdhsStunting', 'STUNING', '#stunting')">STUNTING</a></li>
 									{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
-									<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('ImciWasting', 'WASTING', '#wasting')">WASTING</a></li>
-									<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('ImciAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
+									<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting')">WASTING</a></li>
+									<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia')">ANEMIA</a></li>
 		    				</ul>
 		    				<ul class="map-filter mb-0">
-									<li class="list-head">INTERMEDIATE</li>
+									<li class="list-head">OUTCOMES</li>
 									<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding'
 									)">Exclusive Breastfeeding</a></li>
 									<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
@@ -123,6 +216,7 @@
 								<span class="legend-text" id="low-text"></span>
 								<span class="legend-text" id="avg-text"></span>
 								<span class="legend-text" id="high-text"></span>
+								<span class="legend-text" id="vhigh-text"></span>
 							</div>
 						</div>
 			    </div>
@@ -136,87 +230,92 @@
 		</div> {{-- swiper-container --}}
 	</div> {{-- container --}}
 
-	<div class="input-wrapper">
+	
+	
+	{{-- <div class="input-wrapper">
 		<div class="container">
-			<div class="input-wrapper-inner">
-			  <div class="row">
-			  	<div class="col-12"><div class="box-heading float-left">INPUTS</div></div>
-			  </div>
-			  <div class="row">
-			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 input-box input-reporting">
-			  		<h6>REPORTING</h6>
-			  		<div>
-			  			<span class="report-lable">FWC</span> 
-			  			<div class="progress-bar-h">
-							<div class="goal" style="width: 10%;">
+			<div class="standard-wrapper-inner">
+				<div class="row">
+					<div class="col-12"><div class="box-heading float-left ml-0">Technical Standards</div></div></div>
+					<div class="row">
+				  	<div class="col-sm-12 col-md-12 col-lg-12 standard-box standard-reporting">
+				  		<div id="accordion" class="transparent-accordion">
+				  			@php
+				  				$cardCounter = 1;
+				  			@endphp
+				  			@foreach($standards as $firstKey => $standard)
+								  <div class="card">
+								    <div class="card-header" id="heading{{$cardCounter}}">
+								      <h5 class="mb-0">
+								      	<i class="fas fa-angle-right"></i>
+								        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$cardCounter}}" aria-expanded="true" aria-controls="collapse{{$cardCounter}}">
+								          {{$firstKey}}
+								        </button>
+								      </h5>
+								    </div>
+											
+								    <div id="collapse{{$cardCounter}}" class="collapse" aria-labelledby="heading{{$cardCounter}}" data-parent="#accordion">
+								      <div class="card-body">
+								        <table class="table table-striped">
+							        	<tr>
+							        		<th>Level</th>
+							        		<td class="" colspan="4">{{$standard['level']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Indicator</th>
+							        		<td colspan="4">{{$standard['indicator']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Definition</th>
+							        		<td colspan="4">{{$standard['definition']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Target</th>
+							        		<td colspan="4">{{$standard['target']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th>Frequency</th>
+							        		<td colspan="4">{{$standard['frequency']}}</td>
+							        	</tr>
+							        	<tr>
+							        		<th class="has-border">Collection point</th>
+							        		<th class="has-border">Person responsible for recording data</th>
+							        		<th class="has-border">Person responsible for reporting data </th>
+							        		<th class="has-border">Methods for recording</th>
+							        		<th class="has-border">Methods for recording</th>
+							        	</tr>
+							        	@foreach($standard['table_data'] as $table_data)
+							        		<tr>
+							        			@foreach($table_data as $datumKey => $datum)
+							        				@if($datumKey == 0)
+							        					<th class="has-border">{{$datum}}</th>
+							        				@else
+							        					<td class="has-border">{{$datum}}</td>
+						        					@endif
+							        			@endforeach
+							        		</tr>
+							        	@endforeach
+							        		<tr>
+							        			<td colspan="5">
+							        				<h4>Technical Standards</h4>
+							        				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex molestiae ab maxime, necessitatibus, nobis, aliquid similique natus odit commodi doloremque culpa omnis laudantium tempora autem voluptates quas aspernatur temporibus quam!</p>
+							        			</td>
+							        		</tr>
+							        </table>
+								      </div>
+								    </div>
+								  </div>
+								  @php
+								  	$cardCounter += 1;
+								  @endphp
+							  @endforeach
 							</div>
-							<div class="current grow-h-animation" style="width: 30%;">
-								30%
-							</div>
-						</div> {{-- progress-bar-h --}}
-			  		</div>
-			  		<div>
-			  			<span class="report-lable">CC</span> 
-			  			<div class="progress-bar-h">
-							<div class="goal" style="width: 10%;">
-							</div>
-							<div class="current grow-h-animation" style="width: 44%;">
-								44%
-							</div>
-						</div> {{-- progress-bar-h --}}
-			  		</div>
-			  		<div>
-			  			<span class="report-lable">IMCI-N Corner</span> 
-			  			<div class="progress-bar-h">
-							<div class="goal" style="width: 10%;">
-							</div>
-							<div class="current grow-h-animation" style="width: 65%;">
-								65%
-							</div>
-						</div> {{-- progress-bar-h --}}
-			  		</div>
-			  		<div>
-			  			<span class="report-lable">SAM</span> 
-			  			<div class="progress-bar-h">
-							<div class="goal" style="width: 10%;">
-							</div>
-							<div class="current grow-h-animation" style="width: 56%;">
-								56%
-							</div>
-						</div> {{-- progress-bar-h --}}
-			  		</div>
-			  	</div>{{-- input-box input-reporting --}}
-			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-training">
-			  		<div class="input-trainning-inner">
-				  		<h6 class="mb-0">TRAINING</h6>
-				  		<div><span class="number">65%</span><span class="number-txt">Health workers trained </span></div>
-				  		<div><span class="number">65%</span><span class="number-txt">Health workers who succeeded </span></div>
-			  		</div>
-			  	</div>{{-- input-box input-training --}}
-			  	<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 input-box input-qa">
-			  		<h6 class="mb-0">QUALITY ASSESSMENT</h6>
-			  		<div><span class="number">65%</span><span class="number-txt">Facilities receiving SS&amp;M</span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing IYCF/ Maternal counselling</span></div>
-			  		<div><span class="number">65%</span><span class="number-txt">Facilities providing quality Nut reporting</span></div>
-			  	</div>{{-- input-box input-qa --}}
-			  	<div class="col-sm-6 col-md-12 col-lg-3 col-xl-4 input-box input-supply-management">
-			  		<h6 class="mb-0">SUPPLY MANAGEMENT</h6>
-			  		<div class="row">
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in IFA Tablets</span></div>
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in Scales / Height board </span></div>
-			  		</div>
-			  		<div class="row">
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities awaiting counselling material</span></div>
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in F-75 and F-100 therapeutic </span></div>
-			  		</div>
-			  		<div class="row">
-			  			<div class="col-xl-6 col-md-6 col-sm-12 col-lg-12"><span class="number">65%</span><span class="number-txt">Facilities with no stockout in MUAC tapes</span></div>
-			  		</div>
-			  	</div>{{-- input-box input-qa --}}
-			  </div>
+				  	</div>
+				  </div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</div> --}}
 </div>
 @endsection
 
@@ -229,7 +328,7 @@
 	</script>
 
 	<script>
-		scoreColors = {"high": "#0b495e", "average": "#137f91", "low": "#81ddc5"};
+		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
 	</script>
 
 	<script>
@@ -371,7 +470,7 @@
 
 	  // Creating divs & styles for custom zoom control
 	  controlDiv.style.padding = '5px';
-
+	  $('#zoomctrl').html('');
 	  // Set CSS for the control wrapper
 	  var controlWrapper = document.createElement('div');
 	  controlWrapper.style.backgroundColor = 'transparent';
@@ -414,25 +513,43 @@
 	}
 
     function initMap() {
-      $.ajax({
+    	model = "CcMrAncNutriCounsel"
+			$.ajax({
 	      type: 'get',
 	      url: '/dashboard_specific_map',
-	      data: {"model": "CcMrAncNutriCounsel"},
+	      data: {"model": model},
 	      success: function (res) {
+	      	console.log(res);
 	      	if(res['dataExists']) {
-				if(res['reverse']) {
-					$('#low-text').html('Major Problem');
-					$('#avg-text').html('Severe Problem');
-					$('#high-text').html('Critical Problem');
-				} else {
-					$('#low-text').html('Critical Problem');
-					$('#avg-text').html('Severe Problem');
-					$('#high-text').html('Major Problem');
-				}
+	      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
+	      		$('#low-text').html('Low');
+						$('#avg-text').html('Medium');
+						$('#high-text').html('High');
+						$('#vhigh-text').html('Very High');
+	      	} else if(model == 'BdhsAnemia') {
+	      		$('#low-text').html('None');
+						$('#avg-text').html('Mild');
+						$('#high-text').html('Moderate');
+						$('#vhigh-text').html('Severe');
+	      	} else {
+	      		$('#low-text').html('Low');
+						$('#avg-text').html('Medium');
+						$('#high-text').html('High');
+						$('#vhigh-text').html('Very High');
+	      	}
+	    		// 	if(res['reverse']) {
+					// 	$('#low-text').html('Major Problem');
+					// 	$('#avg-text').html('Severe Problem');
+					// 	$('#high-text').html('Critical Problem');
+					// } else {
+					// 	$('#low-text').html('Critical Problem');
+					// 	$('#avg-text').html('Severe Problem');
+					// 	$('#high-text').html('Major Problem');
+					// }
 
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
-			        zoom: 6.5,
+			        zoom: 7,
 			        scrollwheel: true,
 			        styles: [{
 							"featureType": "administrative",
@@ -514,77 +631,222 @@
 
 		      	// var zoomControlDiv = document.createElement('div');
 		      	var zoomControlDiv = document.getElementById('zoomctrl');
-				var zoomControl = new ZoomControl(zoomControlDiv, map);
+						var zoomControl = new ZoomControl(zoomControlDiv, map);
 
-				zoomControlDiv.index = 1;
-				map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(zoomControlDiv);
+						zoomControlDiv.index = 1;
+						map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(zoomControlDiv);
 
-		        // Set a blank infoWindow to be used for each to state on click
-				var infoWindow = new google.maps.InfoWindow({
-					content: ""
-				});
+				        // Set a blank infoWindow to be used for each to state on click
+						var infoWindow = new google.maps.InfoWindow({
+							content: ""
+						});
 
-				// Create the state data layer and load the GeoJson Data
-				var stateLayer = new google.maps.Data();
+						// Create the state data layer and load the GeoJson Data
+						var anotherLayer = new google.maps.Data();
+						var stateLayer = new google.maps.Data();
+						
+						
 
-				{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
-				stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+						{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
+						anotherLayer.loadGeoJson("{{asset('js/barisal.geojson')}}");
+						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+						var clicked = false;
+						// Set and apply styling to the stateLayer
+						stateLayer.setStyle(function(feature) {
+							var localColor = '#ededed';
+							// if(feature.getProperty('name') != 'Barisal Division') {
+								var ids = feature.getProperty('ids').split('-');
+								var id = ids[0];
+								if(res['server'] == 'community')
+									id = ids[1];
+								var value = parseInt(res['minimalData'][id]);
+								var localColor = '';
+								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+									if(value < parseInt(res['ranges']['low'])){
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['low']) && value < parseInt(res['ranges']['mid'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['mid']) && value < parseInt(res['ranges']['high'])) {
+										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['high'])) {
+										localColor = scoreColors['high'];
+									}
+								}else {
+									console.log(res['ranges'], value);
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])) {
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['q2']) && value <= parseInt(res['ranges']['max'])) {
+										localColor = scoreColors['high'];
+									}
+								}	
+							// }
+							
+							// color = feature.getProperty('color');
+							return {
+								fillColor: localColor,
+								fillOpacity: 1,
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 1
+							};
+						});
 
-				// Set and apply styling to the stateLayer
-				stateLayer.setStyle(function(feature) {
-					var ids = feature.getProperty('ids').split('-');
-					var id = ids[0];
-					if(res['server'] == 'community')
-						id = ids[1];
-					var value = parseInt(res['minimalData'][id]);
-					var localColor = '';
-					if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
-						localColor = scoreColors['low'];
-					} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
-						localColor = scoreColors['average'];
-					} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
-						localColor = scoreColors['high'];
-					}
-					color = feature.getProperty('color');
-					return {
-						fillColor: localColor,
-						fillOpacity: 1,
-						strokeColor: '#fff',
-						strokeWeight: 1.5,
-						zIndex: 1
-					};
-				});
+						anotherLayer.setStyle(function(feature) {
+							var localColor = feature.getProperty('color');
+							// if(feature.getProperty('name') == 'Barisal District' || feature.getProperty('name') == 'Barguna District') {
+								var ids = feature.getProperty('ids').split('-');
+								var id = ids[0];
+								if(res['server'] == 'community')
+									id = ids[1];
+								var value = parseInt(res['minimalData'][id]);
+								// var localColor = '';
+								localColor = scoreColors['low'];
+								if(!res['emptydistricts']) {
+									if(value >= parseInt(res['districtRanges']['mindistrict']) && value < parseInt(res['districtRanges']['q1district'])) {
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['districtRanges']['q1district']) && value < parseInt(res['districtRanges']['q2district'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['districtRanges']['q2district']) && value <= parseInt(res['districtRanges']['maxdistrict'])) {
+										localColor = scoreColors['high'];
+									}
+								}
+								
+							// }
+							
+							return {
+								fillColor: localColor,
+								fillOpacity: 1,
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 3
+							};
+						});
 
-				// Add mouseover and mouse out styling for the GeoJSON State data
-				stateLayer.addListener('mouseover', function(e) {
-					ids = e.feature.getProperty('ids').split('-');
-					id = ids[0];
-					if(res['server'] == 'community')
-						id = ids[1];
-					value = res['minimalData'][id];
-					infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
-					var anchor = new google.maps.MVCObject();
-		    	anchor.set("position", e.latLng);
-		    	infoWindow.open(map, anchor);
-					stateLayer.overrideStyle(e.feature, {
-						// fillColor: e.feature.getProperty('color'),
-						strokeColor: '#CCC',
-						// strokeColor: e.feature.getProperty('color'),
-						strokeWeight: 1,
-						zIndex: 2
-					});
-				});
+						// Add mouseover and mouse out styling for the GeoJSON State data
+						stateLayer.addListener('mouseover', function(e) {
+							if(clicked){
+								if(e.feature.getProperty('name') == 'Barisal Division') {
+									ids = e.feature.getProperty('ids').split('-');
+									id = ids[0];
+									if(res['server'] == 'community')
+										id = ids[1];
+									if(isNaN(value))
+										value = 'N/A';
+									else
+										value = parseInt(res['minimalData'][id]);
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+										value += '%';
+									console.log(value);
+									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
+									var anchor = new google.maps.MVCObject();
+						    	anchor.set("position", e.latLng);
+						    	infoWindow.open(map, anchor);
+									stateLayer.overrideStyle(e.feature, {
+										// fillColor: e.feature.getProperty('color'),
+										strokeColor: '#CCC',
+										// strokeColor: e.feature.getProperty('color'),
+										strokeWeight: 1,
+										zIndex: 1
+									});
+								}
+							} else {
+								ids = e.feature.getProperty('ids').split('-');
+								id = ids[0];
+								if(res['server'] == 'community')
+									id = ids[1];
+								value = res['minimalData'][id];
+								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+								var anchor = new google.maps.MVCObject();
+					    	anchor.set("position", e.latLng);
+					    	infoWindow.open(map, anchor);
+								stateLayer.overrideStyle(e.feature, {
+									// fillColor: e.feature.getProperty('color'),
+									strokeColor: '#CCC',
+									// strokeColor: e.feature.getProperty('color'),
+									strokeWeight: 1,
+									zIndex: 1
+								});
+							}	
+						});
 
-				stateLayer.addListener('mouseout', function(e) {
-					stateLayer.overrideStyle(e.feature, {
-						strokeColor: '#fff',
-						strokeWeight: 1.5,
-						zIndex: 1
-					});
-				});
+						
 
-		        // Final step here sets the stateLayer GeoJSON data onto the map
-				stateLayer.setMap(map);
+						anotherLayer.addListener('mouseover', function(e) {
+							console.log(e.feature.getProperty('name'));
+							ids = e.feature.getProperty('ids').split('-');
+							id = ids[0];
+							if(res['server'] == 'community')
+								id = ids[1];
+							value = res['minimalData'][id];
+							console.log(res);
+							if(isNaN(value))
+								value = 'N/A';
+							else
+								value = parseInt(value);
+
+							if(res['emptydistricts'] && value == 0) {
+								value = 'N/A';
+							}
+							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
+							var anchor = new google.maps.MVCObject();
+				    	anchor.set("position", e.latLng);
+				    	infoWindow.open(map, anchor);
+							anotherLayer.overrideStyle(e.feature, {
+								// fillColor: e.feature.getProperty('color'),
+								strokeColor: '#000',
+								// strokeColor: e.feature.getProperty('color'),
+								strokeWeight: 1,
+								zIndex: 5
+							});
+							
+						});
+
+						stateLayer.addListener('click', function(e) {
+							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+							} else {
+								if(e.feature.getProperty('name') == 'Barisal Division') {
+									var bounds = new google.maps.LatLngBounds();
+							    processPoints(e.feature.getGeometry(), bounds.extend, bounds);
+							    map.fitBounds(bounds);
+							    stateLayer.overrideStyle(e.feature, {
+										fillColor: '#ededed',
+										strokeColor: '#CCC',
+										// strokeColor: e.feature.getProperty('color'),
+										strokeWeight: 1,
+										zIndex: 5
+									});
+									anotherLayer.setMap(map);
+								}
+							}
+						});
+
+						stateLayer.addListener('mouseout', function(e) {
+							stateLayer.overrideStyle(e.feature, {
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 1
+							});
+						});
+
+						anotherLayer.addListener('mouseout', function(e) {
+							anotherLayer.overrideStyle(e.feature, {
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 3
+							});
+						});
+
+				        // Final step here sets the stateLayer GeoJSON data onto the map
+						stateLayer.setMap(map);
+						
+						// stateLayer.addListener('mouseclick', function(e) {
+						// 	if(e.feature.getProperty('name') == 'Barisal Division') {
+						// 		anotherLayer.setMap(map);
+						// 	}
+							
+						// });
 	      	}else{
 
 	      	}
@@ -595,6 +857,18 @@
 	      }
 	  	});
 	}
+
+	function processPoints(geometry, callback, thisArg) {
+		if (geometry instanceof google.maps.LatLng) {
+		  callback.call(thisArg, geometry);
+		} else if (geometry instanceof google.maps.Data.Point) {
+		  callback.call(thisArg, geometry.get());
+		} else {
+		  geometry.getArray().forEach(function(g) {
+		    processPoints(g, callback, thisArg);
+		  });
+		}
+		}
 
 	function getDivisionData(event) {
 		$.ajax({
@@ -794,19 +1068,35 @@
 	      success: function (res) {
 	      	console.log(res);
 	      	if(res['dataExists']) {
+	      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
+	      		$('#low-text').html('Low');
+						$('#avg-text').html('Medium');
+						$('#high-text').html('High');
+						$('#vhigh-text').html('Very High');
+	      	} else if(model == 'BdhsAnemia') {
+	      		$('#low-text').html('None');
+						$('#avg-text').html('Mild');
+						$('#high-text').html('Moderate');
+						$('#vhigh-text').html('Severe');
+	      	} else {
+	      		$('#low-text').html('Low');
+						$('#avg-text').html('Medium');
+						$('#high-text').html('High');
+						$('#vhigh-text').html('Very High');
+	      	}
+	    		// 	if(res['reverse']) {
+					// 	$('#low-text').html('Major Problem');
+					// 	$('#avg-text').html('Severe Problem');
+					// 	$('#high-text').html('Critical Problem');
+					// } else {
+					// 	$('#low-text').html('Critical Problem');
+					// 	$('#avg-text').html('Severe Problem');
+					// 	$('#high-text').html('Major Problem');
+					// }
 
-						if(res['reverse']) {
-							$('#low-text').html('Major Problem');
-							$('#avg-text').html('Severe Problem');
-							$('#high-text').html('Critical Problem');
-						} else {
-							$('#low-text').html('Critical Problem');
-							$('#avg-text').html('Severe Problem');
-							$('#high-text').html('Major Problem');
-						}
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
-			        zoom: 6.5,
+			        zoom: 7,
 			        scrollwheel: true,
 			        styles: [{
 							"featureType": "administrative",
@@ -875,44 +1165,72 @@
 								"color": "#ededed"
 							}]
 						}],
-			        zoomControl: true,
-		          zoomControlOptions: {
-		              position: google.maps.ControlPosition.LEFT_BOTTOM
-		          },
+			        	zoomControl: false,
+			          zoomControlOptions: {
+			              position: google.maps.ControlPosition.LEFT_BOTTOM
+			          },
 		          scaleControl: true,
-		          streetViewControl: true,
-		          streetViewControlOptions: {
-		              position: google.maps.ControlPosition.LEFT_BOTTOM
-		          },
+		          streetViewControl: false,
+		          noClear: true,
+    			  disableDefaultUI:true
+
 		      	});
 
-		        // Set a blank infoWindow to be used for each to state on click
+		      	// var zoomControlDiv = document.createElement('div');
+		      	var zoomControlDiv = document.getElementById('zoomctrl');
+						var zoomControl = new ZoomControl(zoomControlDiv, map);
+
+						zoomControlDiv.index = 1;
+						map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(zoomControlDiv);
+
+				        // Set a blank infoWindow to be used for each to state on click
 						var infoWindow = new google.maps.InfoWindow({
 							content: ""
 						});
 
 						// Create the state data layer and load the GeoJson Data
+						var anotherLayer = new google.maps.Data();
 						var stateLayer = new google.maps.Data();
+						
+						
 
 						{{-- stateLayer.loadGeoJson("{{asset('bangladesh-division.geojson')}}"); --}}
+						anotherLayer.loadGeoJson("{{asset('js/barisal.geojson')}}");
 						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
-
+						var clicked = false;
 						// Set and apply styling to the stateLayer
 						stateLayer.setStyle(function(feature) {
-							var ids = feature.getProperty('ids').split('-');
-							var id = ids[0];
-							if(res['server'] == 'community')
-								id = ids[1];
-							value = res['minimalData'][id];
-							var localColor = '';
-							if(value >= parseInt(res['min']) && value < parseInt(res['q1'])) {
-								localColor = scoreColors['low'];
-							} else if(value >= parseInt(res['q1']) && value < parseInt(res['q2'])) {
-								localColor = scoreColors['average'];
-							} else if(value >= parseInt(res['q2']) && value <= parseInt(res['max'])) {
-								localColor = scoreColors['high'];
-							}
-							color = feature.getProperty('color');
+							var localColor = '#ededed';
+							// if(feature.getProperty('name') != 'Barisal Division') {
+								var ids = feature.getProperty('ids').split('-');
+								var id = ids[0];
+								if(res['server'] == 'community')
+									id = ids[1];
+								var value = parseInt(res['minimalData'][id]);
+								var localColor = '';
+								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+									if(value < parseInt(res['ranges']['low'])){
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['low']) && value < parseInt(res['ranges']['mid'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['mid']) && value < parseInt(res['ranges']['high'])) {
+										localColor = scoreColors['high'];
+									} else if(value >= parseInt(res['ranges']['high'])) {
+										localColor = scoreColors['high'];
+									}
+								}else {
+									// console.log(res['ranges'], value);
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])) {
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['ranges']['q2']) && value <= parseInt(res['ranges']['max'])) {
+										localColor = scoreColors['high'];
+									}
+								}	
+							// }
+							
+							// color = feature.getProperty('color');
 							return {
 								fillColor: localColor,
 								fillOpacity: 1,
@@ -922,25 +1240,141 @@
 							};
 						});
 
+						anotherLayer.setStyle(function(feature) {
+							var localColor = feature.getProperty('color');
+							// if(feature.getProperty('name') == 'Barisal District' || feature.getProperty('name') == 'Barguna District') {
+								var ids = feature.getProperty('ids').split('-');
+								var id = ids[0];
+								if(res['server'] == 'community')
+									id = ids[1];
+								var value = parseInt(res['minimalData'][id]);
+								// var localColor = '';
+								localColor = scoreColors['low'];
+								if(!res['emptydistricts']) {
+									if(value >= parseInt(res['districtRanges']['mindistrict']) && value < parseInt(res['districtRanges']['q1district'])) {
+										localColor = scoreColors['low'];
+									} else if(value >= parseInt(res['districtRanges']['q1district']) && value < parseInt(res['districtRanges']['q2district'])) {
+										localColor = scoreColors['average'];
+									} else if(value >= parseInt(res['districtRanges']['q2district']) && value <= parseInt(res['districtRanges']['maxdistrict'])) {
+										localColor = scoreColors['high'];
+									}
+								}
+								
+							// }
+							
+							return {
+								fillColor: localColor,
+								fillOpacity: 1,
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 3
+							};
+						});
+
 						// Add mouseover and mouse out styling for the GeoJSON State data
 						stateLayer.addListener('mouseover', function(e) {
+							if(clicked){
+								if(e.feature.getProperty('name') == 'Barisal Division') {
+									ids = e.feature.getProperty('ids').split('-');
+									id = ids[0];
+									if(res['server'] == 'community')
+										id = ids[1];
+									var value = res['minimalData'][id];
+									if(isNaN(value))
+										value = 'N/A';
+									else
+										value = parseInt(value);
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+										value += '%';
+									console.log(value);
+									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
+									var anchor = new google.maps.MVCObject();
+						    	anchor.set("position", e.latLng);
+						    	infoWindow.open(map, anchor);
+									stateLayer.overrideStyle(e.feature, {
+										// fillColor: e.feature.getProperty('color'),
+										strokeColor: '#CCC',
+										// strokeColor: e.feature.getProperty('color'),
+										strokeWeight: 1,
+										zIndex: 1
+									});
+								}
+							} else {
+								ids = e.feature.getProperty('ids').split('-');
+								id = ids[0];
+								if(res['server'] == 'community')
+									id = ids[1];
+									var value = res['minimalData'][id];
+									if(isNaN(value))
+										value = 'N/A';
+									else
+										value = parseInt(res['minimalData'][id]);
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+										value += '%';
+									console.log(value);
+									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
+								var anchor = new google.maps.MVCObject();
+					    	anchor.set("position", e.latLng);
+					    	infoWindow.open(map, anchor);
+								stateLayer.overrideStyle(e.feature, {
+									// fillColor: e.feature.getProperty('color'),
+									strokeColor: '#CCC',
+									// strokeColor: e.feature.getProperty('color'),
+									strokeWeight: 1,
+									zIndex: 1
+								});
+							}	
+						});
+
+						
+
+						anotherLayer.addListener('mouseover', function(e) {
+							console.log(e.feature.getProperty('name'));
 							ids = e.feature.getProperty('ids').split('-');
 							id = ids[0];
 							if(res['server'] == 'community')
 								id = ids[1];
 							value = res['minimalData'][id];
-							console.log(value);
-							infoWindow.setContent('<div style="line-height::;.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseInt(value) + '</span>' + '</div>');
+							console.log(res);
+							if(isNaN(value))
+								value = 'N/A';
+							else
+								value = parseInt(value);
+
+							if(res['emptydistricts'] && value == 0) {
+								value = 'N/A';
+							}
+							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 							var anchor = new google.maps.MVCObject();
 				    	anchor.set("position", e.latLng);
 				    	infoWindow.open(map, anchor);
-							stateLayer.overrideStyle(e.feature, {
+							anotherLayer.overrideStyle(e.feature, {
 								// fillColor: e.feature.getProperty('color'),
 								strokeColor: '#000',
 								// strokeColor: e.feature.getProperty('color'),
-								strokeWeight: 2,
-								zIndex: 2
+								strokeWeight: 1,
+								zIndex: 5
 							});
+							
+						});
+
+						stateLayer.addListener('click', function(e) {
+							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+							} else {
+								if(e.feature.getProperty('name') == 'Barisal Division') {
+									var bounds = new google.maps.LatLngBounds();
+							    processPoints(e.feature.getGeometry(), bounds.extend, bounds);
+							    map.fitBounds(bounds);
+							    stateLayer.overrideStyle(e.feature, {
+										fillColor: '#ededed',
+										strokeColor: '#CCC',
+										// strokeColor: e.feature.getProperty('color'),
+										strokeWeight: 1,
+										zIndex: 5
+									});
+									anotherLayer.setMap(map);
+								}
+							}
 						});
 
 						stateLayer.addListener('mouseout', function(e) {
@@ -951,8 +1385,23 @@
 							});
 						});
 
-		        // Final step here sets the stateLayer GeoJSON data onto the map
+						anotherLayer.addListener('mouseout', function(e) {
+							anotherLayer.overrideStyle(e.feature, {
+								strokeColor: '#fff',
+								strokeWeight: 1.5,
+								zIndex: 3
+							});
+						});
+
+				        // Final step here sets the stateLayer GeoJSON data onto the map
 						stateLayer.setMap(map);
+						
+						// stateLayer.addListener('mouseclick', function(e) {
+						// 	if(e.feature.getProperty('name') == 'Barisal Division') {
+						// 		anotherLayer.setMap(map);
+						// 	}
+							
+						// });
 	      	}else{
 
 	      	}

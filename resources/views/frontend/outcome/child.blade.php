@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="box-heading float-left ml-0 mr-1">CHILD</div>
-				<div class="swiper-tab-nav">
+				{{-- <div class="swiper-tab-nav">
 					<ul class="list-inline">
 						<li class="list-inline-item">
 							<a href="#slide0" class="swipernav nav-slide0 active">IFCF COUNSELLING</a>
@@ -20,14 +20,14 @@
 							<a href="#slide1" class="swipernav nav-slide1">SUPPLEMENTS</a>
 						</li>
 					</ul>
-				</div> {{-- swiper-tab-nav --}}
+				</div> --}} {{-- swiper-tab-nav --}}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-12">
 				{{-- tab slide swiper --}}
 				<!-- Swiper -->
-				<div class="swiper-container swiper-tab" id="swiper-tab-child-output">
+				{{-- <div class="swiper-container swiper-tab" id="swiper-tab-child-output">
 					<div class="swiper-wrapper">
 						@foreach($trend_analysis as $key => $analysis)
 						@include('layouts.partials.trend-analysis-chart-partial')
@@ -38,9 +38,15 @@
 					<!-- Add Arrows -->
 					<div class="swiper-button-next invisible"></div>
 					<div class="swiper-button-prev invisible"></div>
-				</div>
+				</div> --}}
 				{{-- tab slide swiper end --}}
+				<div class="trend-div">
+					@foreach($trend_analysis as $key => $analysis)
+						@include('layouts.partials.trend-analysis-chart-partial')
+					@endforeach
+				</div>
 			</div>
+			
 		</div>
 	</div>
 	{{-- tabcontent end --}}
@@ -52,8 +58,13 @@
 <script src="//d3js.org/d3.v3.min.js"></script>
 
 <script>
-	function loadPeriodWiseData($this, model) {
+	$('.area-date').html('2018');
+	$('.specific-date').html('2018');
+	// $('.swiper-slide').hide();
 
+	
+
+	function loadPeriodWiseData($this, model, id) {
 		$.ajax({
 			type: 'GET',
 			url: '/outputs/child/load-period-wise-data', 
@@ -65,8 +76,8 @@
 				pieChart(res.key, res.percent)
 				var arr = res;
 				trendAnalysisChart(res.key, arr)
-				$('.area-date').html($('#trend_period_id').find(':selected').text());
-				$('.specific-date').html($('#trend_period_id').find(':selected').text());
+				$('#area-date-'+id).html($('#trend_period_id').find(':selected').text());
+				$('#specific-date-'+id).html($('#trend_period_id').find(':selected').text());
 			}
 		})
 	}
@@ -148,6 +159,7 @@
 
 	});
 
+	var tab_indices = {'iycf_counselling': 0, 'vitamin_a_supplementation': 1};
 	function main_chart_data(data) {
 		$.ajax({
 			type: 'POST',
@@ -161,12 +173,19 @@
 				}
 
 				charts(dataSets, title);
+				$('.swiper-slide').hide();
+				$('#swiper-slide-'+tab_indices[$('#indicator_id').val()]).show();
 
 			}, error : function () {
 				console.log('error');
 			}
 		})
 	}
+
+	$('#indicator_id').click(function() {
+		$('.swiper-slide').hide();
+		$('#swiper-slide-'+tab_indices[$('#indicator_id').val()]).show();
+	});
 
 	$('#main-chart-form').on('submit', function() {
 		var data = $(this).serialize();
@@ -186,6 +205,7 @@
 
 	var startDate, endDate;
 	function trendAnalysisChart(id, data_value) {
+		// console.log(data_value);
 		var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
 		var randomScalingFactor = function() {
 			return Math.round(Math.random() * 100);
@@ -329,36 +349,36 @@
 
 <script src="{{asset('js/swiper.min.js')}}"></script>
 <script>
-	var swiper = new Swiper('#swiper-tab-child-output', {
-		spaceBetween: 30,
-		hashNavigation: {
-			watchState: true,
-		},
-		pagination: {
-			el: '.swiper-pagination',
-			clickable: true,
-		},
-		navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev',
-		},
-	});
+	// var swiper = new Swiper('#swiper-tab-child-output', {
+	// 	spaceBetween: 30,
+	// 	hashNavigation: {
+	// 		watchState: true,
+	// 	},
+	// 	pagination: {
+	// 		el: '.swiper-pagination',
+	// 		clickable: true,
+	// 	},
+	// 	navigation: {
+	// 		nextEl: '.swiper-button-next',
+	// 		prevEl: '.swiper-button-prev',
+	// 	},
+	// });
 </script>
 
 <script>
 	// var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	// $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
-	$('.area-date').html($('#trend_period_id').find(':selected').text());	
+	// $('.area-date').html($('#trend_period_id').find(':selected').text());	
 </script>
 <script> 
-	if(location.hash.slice(1)) {
-		$('.swipernav').removeClass('active');
-		$('.nav-'+ location.hash.slice(1)).addClass('active');
-	}
+	// if(location.hash.slice(1)) {
+	// 	$('.swipernav').removeClass('active');
+	// 	$('.nav-'+ location.hash.slice(1)).addClass('active');
+	// }
 
-	$(window).on('hashchange',function(){ 
-		$('.swipernav').removeClass('active');
-		$('.nav-'+ location.hash.slice(1)).addClass('active');
-	});
+	// $(window).on('hashchange',function(){ 
+	// 	$('.swipernav').removeClass('active');
+	// 	$('.nav-'+ location.hash.slice(1)).addClass('active');
+	// });
 </script>
 @endsection

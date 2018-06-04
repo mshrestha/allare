@@ -76,6 +76,9 @@
   text-indent: 10px;
   color: #FFF;
   font-size: 14px;
+  @include media-breakpoint-only(lg) {
+    font-size: 13px;
+  }
 }
 .progress-bar-h .goal, .progress-bar-v .goal{
   width: 20%;

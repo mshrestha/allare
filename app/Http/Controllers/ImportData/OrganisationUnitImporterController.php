@@ -20,32 +20,59 @@ class OrganisationUnitImporterController extends Controller
 		OrganisationUnit::truncate();
 
 		foreach($servers as $key => $server) {
-			for ($i=1; $i <= 2; $i++) {  //Level 2
-				$response = $this->callUrl($server.$i);
+			for ($i=1; $i <= 3; $i++) {  //Level 2
+				$response = $this->callUrl($server.$i.'&paging=false');
 				$response = json_decode($response);
 
 				foreach($response->organisationUnits as $organisationUnit) {
-					$unit = OrganisationUnit::where('name', $organisationUnit->displayName)->first();
-					if($key == 'central') {
-						$save_data = [
-							'central_api_id' => $organisationUnit->id,
-							'name' => $organisationUnit->displayName,
-							'level' => $i,
-							'source' => 'DGHS',
-						];
-					} else {
-						$save_data = [
-							'community_api_id' => $organisationUnit->id,
-							'name' => $organisationUnit->displayName,
-							'level' => $i,
-							'source' => 'DGHS',
-						];
-					}
-					
-					if($unit) {
-						$unit->update($save_data);
-					} else {
-						OrganisationUnit::create($save_data);
+					if($i == 3) {
+						if(strpos(strtolower($organisationUnit->displayName), 'district') !== false) {
+							$unit = OrganisationUnit::where('name', $organisationUnit->displayName)->first();
+							if($key == 'central') {
+								$save_data = [
+									'central_api_id' => $organisationUnit->id,
+									'name' => $organisationUnit->displayName,
+									'level' => $i,
+									'source' => 'DGHS',
+								];
+							} else {
+								$save_data = [
+									'community_api_id' => $organisationUnit->id,
+									'name' => $organisationUnit->displayName,
+									'level' => $i,
+									'source' => 'DGHS',
+								];
+							}
+							
+							if($unit) {
+								$unit->update($save_data);
+							} else {
+								OrganisationUnit::create($save_data);
+							}
+						}
+					}else{
+						$unit = OrganisationUnit::where('name', $organisationUnit->displayName)->first();
+						if($key == 'central') {
+							$save_data = [
+								'central_api_id' => $organisationUnit->id,
+								'name' => $organisationUnit->displayName,
+								'level' => $i,
+								'source' => 'DGHS',
+							];
+						} else {
+							$save_data = [
+								'community_api_id' => $organisationUnit->id,
+								'name' => $organisationUnit->displayName,
+								'level' => $i,
+								'source' => 'DGHS',
+							];
+						}
+						
+						if($unit) {
+							$unit->update($save_data);
+						} else {
+							OrganisationUnit::create($save_data);
+						}
 					}
 				}
 

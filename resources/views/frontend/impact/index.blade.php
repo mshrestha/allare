@@ -207,8 +207,9 @@
       @endphp
     @endforeach
 
-    var startDate, endDate;
+    
     function trendAnalysisChart(id, data_value) {
+      var startDate, endDate;
       var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
       };
@@ -228,14 +229,18 @@
         }else {
           temp.date = data_value.periods[i];
         }
-        if(i == 0)
-          startDate = temp.date;
-        if(i == data_value.values.length - 1)
-          endDate = temp.date;
+        // if(i == 0)
+        //   startDate = temp.date;
+        // if(i == data_value.values.length - 1)
+        //   endDate = temp.date;
         temp.value = data_value.values[i];
         dataCSV.push(temp);
       };
-      
+      startDate = dataCSV[dataCSV.length - 1].date;
+      endDate = dataCSV[0].date;
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      $('.specific-date').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
+      $('#area-date-'+id).html(startDate + ' - ' + endDate);
 
 
       dataCSV.forEach(function(d) {
@@ -328,10 +333,7 @@
   </script>
 
   <script>
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    $('.specific-date').html((months[new Date().getMonth()])+" "+(new Date().getFullYear()));
-
-    $('.area-date').html(startDate + ' - ' + endDate);
+    
   </script>
 
   <script> 

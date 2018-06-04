@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="box-heading float-left ml-0 mr-1">MATERNAL</div>
-				<div class="swiper-tab-nav">
+				{{-- <div class="swiper-tab-nav">
 					<ul class="list-inline">
 						<li class="list-inline-item">
 							<a href="#slide0" class="swipernav nav-slide0 active">Counselling</a>
@@ -26,14 +26,14 @@
 							<a href="#slide3" class="swipernav nav-slide3">Exclusive Breastfeeding</a>
 						</li>
 					</ul>
-				</div> {{-- swiper-tab-nav --}}
+				</div>  --}}{{-- swiper-tab-nav --}}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-12">
 				{{-- tab slide swiper --}}
 				<!-- Swiper -->
-				<div class="swiper-container swiper-tab" id="swiper-tab">
+				{{-- <div class="swiper-container swiper-tab" id="swiper-tab">
 					<div class="swiper-wrapper">
 						@foreach($trend_analysis as $key => $analysis)
 						@include('layouts.partials.trend-analysis-chart-partial')
@@ -44,8 +44,13 @@
 					<!-- Add Arrows -->
 					<div class="swiper-button-next invisible"></div>
 					<div class="swiper-button-prev invisible"></div>
-				</div>
+				</div> --}}
 				{{-- tab slide swiper end --}}
+				<div class="trend-div">
+					@foreach($trend_analysis as $key => $analysis)
+						@include('layouts.partials.trend-analysis-chart-partial')
+					@endforeach
+				</div>
 			</div>
 		</div>
 
@@ -60,7 +65,11 @@
 <script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 
 <script>
-	function loadPeriodWiseData($this, model) {
+	$('.area-date').html('2018');
+	$('.specific-date').html('2018');
+	// $('.swiper-slide').hide();
+
+	function loadPeriodWiseData($this, model, id) {
 		$.ajax({
 			type: 'GET',
 			url: '/outputs/maternal/load-period-wise-data', 
@@ -72,8 +81,8 @@
 				pieChart(res.key, res.percent)
 				var arr = res;
 				trendAnalysisChart(res.key, arr)
-				$('.area-date').html($('#trend_period_id').find(':selected').text());
-				$('.specific-date').html($('#trend_period_id').find(':selected').text());
+				$('#area-date-'+id).html($('#trend_period_id').find(':selected').text());
+				$('#specific-date-'+id).html($('#trend_period_id').find(':selected').text());
 			}
 		})
 	}
@@ -106,10 +115,35 @@
 	    				},
 	    				barPercentage: 1.0
 	    			}],
-	    			yAxes: [{
-	    				stacked: true
-	    			}]
+					// yAxes: [{
+					// 	stacked: true
+					// }]
+					yAxes: [{
+						stacked: true,
+	                    ticks: {
+	                        beginAtZero:true,
+	                        callback: function(value, index, values) {
+	                            if(parseInt(value) >= 1000){
+	                               return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                            } else {
+	                               return value;
+	                            }
+	                       }                            
+	                    }
+	                }]
 	    		},
+				tooltips: {
+					callbacks: {
+					    label: function(tooltipItem, data) {
+					        var value = data.datasets[0].data[tooltipItem.index];
+					        if(parseInt(value) >= 1000){
+					                   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					                } else {
+					                   return value;
+					                }
+					    }
+					} // end callbacks:
+				},
 	            // Container for pan options
 	            pan: {
 	                // Boolean to enable panning
@@ -155,6 +189,7 @@
 
 	});
 
+	var tab_indices = {'maternal_counselling': 0, 'plw_who_receive_ifas': 1, 'pregnant_women_weighed': 2, 'exclusive_breastfeeding': 3};
 	function main_chart_data(data) {
 		$.ajax({
 			type: 'POST',
@@ -168,12 +203,19 @@
 				}
 
 				charts(dataSets, title);
+				$('.swiper-slide').hide();
+				$('#swiper-slide-'+tab_indices[$('#indicator_id').val()]).show();
 
 			}, error : function () {
 				console.log('error');
 			}
 		})
 	}
+
+	$('#indicator_id').click(function() {
+		$('.swiper-slide').hide();
+		$('#swiper-slide-'+tab_indices[$('#indicator_id').val()]).show();
+	});
 
 	$('#main-chart-form').on('submit', function() {
 		var data = $(this).serialize();
@@ -192,6 +234,7 @@
 
 	var startDate, endDate;
 	function trendAnalysisChart(id, data_value) {
+		// console.log(data_value);
 		var interpolateTypes = ['linear','step-before','step-after','basis','basis-open','basis-closed','bundle','cardinal','cardinal-open','cardinal-closed','monotone'];
 		var randomScalingFactor = function() {
 			return Math.round(Math.random() * 100);
@@ -294,16 +337,16 @@
 		// };
 
 		var parentDiv = document.getElementById('pie-chart-'+id);
-		var w = parentDiv.clientWidth,                        
-		h = parentDiv.clientHeight,                            
+		var w = 300,                        
+		h = 156,                            
 		r = Math.min(w, h) / 2,                             
 		color = ['#fba69c', '#d2d2d2'];     
 		dataCSV = [{"label": data_value+"%", "value": data_value}, 
 		{"label":  100 - data_value+"%", "value": 100 - data_value}]
 		var vis = d3.select('#chart-area-'+ id)
 		.data([dataCSV])
-		.attr("width", 300)
-		// .attr("height", 156)
+		.attr("width", w)
+		.attr("height", h)
 		.append("svg:g")                
 		.attr("transform", "translate(" + r + "," + r + ")")
 
@@ -337,46 +380,46 @@
 </script>
 <script src="{{asset('js/swiper.min.js')}}"></script>
 <script>
-	var swiper = new Swiper('#swiper-tab', {
-		spaceBetween: 30,
-		hashNavigation: {
-			watchState: true,
-		},
-		pagination: {
-			el: '.swiper-pagination',
-			clickable: true,
-		},
-		navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev',
-		},
-		onSlideChangeEnd: function (swiper) {
-			console.log('slide change end - after');
-			console.log(swiper);
-			console.log(swiper.activeIndex);
-          //after Event use it for your purpose
-          if (swiper.activeIndex == 1) {
-              //First Slide is active
-              console.log('First slide active')
-          }
-      }
-  });
+	// var swiper = new Swiper('#swiper-tab', {
+	// 	spaceBetween: 30,
+	// 	hashNavigation: {
+	// 		watchState: true,
+	// 	},
+	// 	pagination: {
+	// 		el: '.swiper-pagination',
+	// 		clickable: true,
+	// 	},
+	// 	navigation: {
+	// 		nextEl: '.swiper-button-next',
+	// 		prevEl: '.swiper-button-prev',
+	// 	},
+	// 	onSlideChangeEnd: function (swiper) {
+	// 		console.log('slide change end - after');
+	// 		console.log(swiper);
+	// 		console.log(swiper.activeIndex);
+ //          //after Event use it for your purpose
+ //          if (swiper.activeIndex == 1) {
+ //              //First Slide is active
+ //              console.log('First slide active')
+ //          }
+ //      }
+ //  });
 </script>
 
 <script>
-	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	$('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
+	// var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	// $('.area-date').html(months[startDate.substr(-1) - 1] + " " + startDate.substr(2,2) + ' - ' + months[endDate.substr(-1) - 1] + " " + endDate.substr(2,2));
 </script>
 
 <script> 
-	if(location.hash.slice(1)) { 
-		$('.swipernav').removeClass('active');
-		$('.nav-'+ location.hash.slice(1)).addClass('active');
-	}
+	// if(location.hash.slice(1)) { 
+	// 	$('.swipernav').removeClass('active');
+	// 	$('.nav-'+ location.hash.slice(1)).addClass('active');
+	// }
 
-	$(window).on('hashchange',function(){ 
-		$('.swipernav').removeClass('active');
-		$('.nav-'+ location.hash.slice(1)).addClass('active');
-	});
+	// $(window).on('hashchange',function(){ 
+	// 	$('.swipernav').removeClass('active');
+	// 	$('.nav-'+ location.hash.slice(1)).addClass('active');
+	// });
 </script>
 @endsection
