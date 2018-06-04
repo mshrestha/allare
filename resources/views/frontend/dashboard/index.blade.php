@@ -1,45 +1,5 @@
 @extends('layouts.app')
-@section('styles')
-<style>
-.axis path, .axis line {
-    fill: none;
-    stroke: #fff;
-  }
-.axis text {
-  	font-size: 13px;
-  }
-.bar {
-    fill: #8CD3DD;
-  }
-/*.bar:hover {
-    fill: #F56C4E;
-  }*/
-.low {
-	fill: #f2b4a0;
-}
-.mid {
-	fill: #f7e15a;
-}
-.high {
-	fill: #eea039;
-}
-.vhigh {
-	fill: #ea5c58;
-}
-svg{
-	overflow-y: scroll !important;
-}
-svg text.label {
-  fill:white;
-  font: 15px;  
-  font-weight: 400;
-  text-anchor: middle;
-}
-/*#chartID {
-min-width: 531px;
-}*/
-</style>
-@endsection
+
 @section('content')
 	<div class="container">
 		<!-- Slider main container -->
@@ -767,8 +727,8 @@ min-width: 531px;
 										localColor = districtScoreColor['very high'];
 									}
 								}
-								console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
-								console.log('end');
+								// console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
+								// console.log('end');
 								
 							// }
 							
@@ -795,7 +755,7 @@ min-width: 531px;
 										value = parseInt(res['minimalData'][id]);
 									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
 										value += '%';
-									console.log(value);
+									// console.log(value);
 									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 									var anchor = new google.maps.MVCObject();
 						    	anchor.set("position", e.latLng);
@@ -831,13 +791,13 @@ min-width: 531px;
 						
 
 						anotherLayer.addListener('mouseover', function(e) {
-							console.log(e.feature.getProperty('name'));
+							// console.log(e.feature.getProperty('name'));
 							ids = e.feature.getProperty('ids').split('-');
 							id = ids[0];
 							if(res['server'] == 'community')
 								id = ids[1];
 							value = res['minimalData'][id];
-							console.log(res);
+							// console.log(res);
 							if(isNaN(value))
 								value = 'N/A';
 							else
@@ -888,7 +848,6 @@ min-width: 531px;
 											max = temp.value;
 										dataCSV.push(temp);
 									}
-									console.log(dataCSV);
 									
 									parentDiv = document.getElementById('chartID');
 								  var margin = {top:20, right:20, bottom:20, left:20};
@@ -965,7 +924,7 @@ min-width: 531px;
 										  .append("text")
 										  .attr("class","label")
 										  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
-										  .attr("y", function(d) { return yScale(d.value) + 10; })
+										  .attr("y", function(d) { return yScale(d.value) - 15; })
 										  .attr("dy", ".75em")
 										  .text(function(d) { return d.value; });
 
@@ -1001,7 +960,7 @@ min-width: 531px;
 									   svgContainer.selectAll("text")  		
 										 // .attr("x", function(d) { return xScale(d.id); })
 										 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
-									      .attr("y", function(d) { if(isNaN(yScale(parseInt(d.value)) + 10)) return 0; return yScale(parseInt(d.value)) + 10; })
+									      .attr("y", function(d) { if(isNaN(yScale(parseInt(d.value)) - 15)) return 0; return yScale(parseInt(d.value)) - 15; })
 									      .attr("dy", ".75em");   	      
 
 									    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
@@ -1271,7 +1230,7 @@ min-width: 531px;
     });
 
     swiper.on('paginationUpdate', function(i){
-    	console.log(i.realIndex, barisalClicked, barisalClicked==true);
+    	// console.log(i.realIndex, barisalClicked, barisalClicked==true);
     	if(i.realIndex == 0) {
     		$('#chartID').hide();
     	} else if(i.realIndex == 1 && barisalClicked == true) {
@@ -1285,6 +1244,7 @@ min-width: 531px;
   <script>
   	const getMapData = (model, item, id) => {
   		clicked = false;
+  		$('#chartID').html('');
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
   		$.ajax({
@@ -1478,7 +1438,7 @@ min-width: 531px;
 								var value = parseInt(res['minimalData'][id]);
 								// var localColor = '';
 								localColor = districtScoreColor['low'];
-								console.log("hello");
+								// console.log("hello");
 								if(!res['emptydistricts']) {
 									if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
 										localColor = districtScoreColor['low'];
@@ -1490,8 +1450,8 @@ min-width: 531px;
 										localColor = districtScoreColor['very high'];
 									}
 								}
-								console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
-								console.log('end');
+								// console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
+								// console.log('end');
 								
 							// }
 							
@@ -1518,7 +1478,7 @@ min-width: 531px;
 										value = parseInt(res['minimalData'][id]);
 									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
 										value += '%';
-									console.log(value);
+									// console.log(value);
 									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 									var anchor = new google.maps.MVCObject();
 						    	anchor.set("position", e.latLng);
@@ -1554,13 +1514,13 @@ min-width: 531px;
 						
 
 						anotherLayer.addListener('mouseover', function(e) {
-							console.log(e.feature.getProperty('name'));
+							// console.log(e.feature.getProperty('name'));
 							ids = e.feature.getProperty('ids').split('-');
 							id = ids[0];
 							if(res['server'] == 'community')
 								id = ids[1];
 							value = res['minimalData'][id];
-							console.log(res);
+							// console.log(res);
 							if(isNaN(value))
 								value = 'N/A';
 							else
@@ -1611,7 +1571,7 @@ min-width: 531px;
 											max = temp.value;
 										dataCSV.push(temp);
 									}
-									console.log(dataCSV);
+									// console.log(dataCSV);
 									
 									parentDiv = document.getElementById('chartID');
 								  var margin = {top:20, right:20, bottom:20, left:20};
@@ -1686,9 +1646,19 @@ min-width: 531px;
 										  .data(dataCSV)
 										  .enter()
 										  .append("text")
-										  .attr("class","label")
+										  .attr("class",function(d) {
+										  	if(d.value >= parseInt(res['districtRanges']['min']) && d.value < parseInt(res['districtRanges']['q1'])) {
+													return 'label lowtext';
+												} else if(d.value >= parseInt(res['districtRanges']['q1']) && d.value < parseInt(res['districtRanges']['q2'])) {
+													return 'label midtext';
+												} else if(d.value >= parseInt(res['districtRanges']['q2']) && d.value <= parseInt(res['districtRanges']['q3'])) {
+													return 'label hightext';
+												} else if(d.value >= parseInt(res['districtRanges']['q3'])) {
+													return 'label vhightext';
+												}
+										  })
 										  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
-										  .attr("y", function(d) { return yScale(d.value) + 10; })
+										  .attr("y", function(d) { return yScale(d.value) - 15; })
 										  .attr("dy", ".75em")
 										  .text(function(d) { return d.value; });
 									document.addEventListener("DOMContentLoaded", resize);
@@ -1723,7 +1693,7 @@ min-width: 531px;
 									   svgContainer.selectAll("text")  		
 										 // .attr("x", function(d) { return xScale(d.id); })
 										 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
-									      .attr("y", function(d) { if(isNaN(yScale(parseInt(d.value)) + 10)) return 0; return yScale(parseInt(d.value)) + 10; })
+									      .attr("y", function(d) { if(isNaN(yScale(parseInt(d.value)) - 15)) return 0; return yScale(parseInt(d.value)) - 15; })
 									      .attr("dy", ".75em");   	      
 
 									    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());

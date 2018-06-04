@@ -7453,6 +7453,40 @@ div#zoomctrl div {
   .tab-outer-wrapper .table th {
     font-weight: 500; }
 
+.axis path, .axis line {
+  fill: none;
+  stroke: #fff; }
+
+.axis text {
+  font-size: 13px; }
+
+.bar {
+  fill: #8CD3DD; }
+
+/*.bar:hover {
+    fill: #F56C4E;
+  }*/
+svg {
+  overflow-y: scroll !important; }
+
+svg text.label {
+  fill: #959595;
+  font-size: 0.85em;
+  font-weight: 400;
+  text-anchor: middle; }
+
+.low {
+  fill: #f2b4a0; }
+
+.mid {
+  fill: #f7e15a; }
+
+.high {
+  fill: #eea039; }
+
+.vhigh {
+  fill: #ea5c58; }
+
 .swiper-tab {
   background: #fff; }
   .swiper-tab .swiper-pagination {
