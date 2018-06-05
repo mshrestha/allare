@@ -187,8 +187,8 @@
 									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution', 'Pregnant Woman who received IFA')">Pregnant Woman who received IFA</a></li>
 									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight', 'Pregnant women weighed during facility visits')">Pregnant women weighed during facility visits</a></li>
 									<li class="list-head">CHILD NUTRITION</li>
-									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling', 'Caregivers Counselling on IYCF')">Caregivers Counselling on IYCF</a></li>
-									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements', 'Child 0-24 months weighed during facility visit')">Child 0-24 months weighed during facility visit</a></li>
+									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling', 'Caregivers counselled on IYCF')">Caregivers counselled on IYCF</a></li>
+									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements', 'Children 0-24 months weighed during facility visit')">Children 0-24 months weighed during facility visit</a></li>
 
 							</ul>
 
