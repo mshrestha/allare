@@ -16,9 +16,14 @@
 						{{$analysis['goal_values']}}  %
 					</div>
 
-          <div class="target" style=""></div>
-
+          <div class="target" style="top: {{$analysis['goal_value']}}% !important;"></div>
+          
 				</div>
+      </div>
+      <div class="tgtxt">
+        <div class="target-h" style="right: {{$analysis['goal_value']}}%;"></div>
+        <div class="target target-label"></div>
+        <span class="target-label-text">Target {{$analysis['goal']}}</span>
       </div>
     </div> {{-- col-xs-2 --}}
     <div class="col-xl-6 offset-xl-1 pr-xl-0 col-lg-6 col-sm-8">

@@ -533,7 +533,7 @@
     	if(model == 'CcMrAncNutriCounsel' || model == 'CcMrAncIfaDistribution') {
     		setTimeout(function(){
 			    document.getElementById('map-hint-id').classList.add('slowhide');
-				}, 5000);
+				}, 2000);
     	}
 			$.ajax({
 	      type: 'get',
@@ -1227,12 +1227,15 @@
   	const getMapData = (model, item, id, text) => {
   		clicked = false;
   		$('#chartID').html('');
-  		
-  		document.getElementById('map-hint-id').classList.remove('slowhide');
-    		setTimeout(function(){
+  		if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+
+  		} else {
+	  		document.getElementById('map-hint-id').classList.remove('slowhide');
+	  		setTimeout(function(){
 			    document.getElementById('map-hint-id').classList.add('slowhide');
-				}, 5000);
+				}, 2000);
 				document.getElementById('barchart-title-id').style.visibility = 'hidden';
+			}
 			
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
