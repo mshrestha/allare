@@ -7496,10 +7496,26 @@ svg text.label {
   position: relative;
   text-align: center;
   z-index: 10;
-  top: -28px; }
+  top: -28px;
+  color: #585858;
+  font-size: 16px; }
 
 text.rbc-center-text {
   font-weight: 500; }
+
+.map-hint {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+  color: #585858;
+  font-size: 14px; }
+
+.map-hint {
+  opacity: 1;
+  transition: opacity 500ms; }
+
+.map-hint.slowhide {
+  opacity: 0; }
 
 .swiper-tab {
   background: #fff; }

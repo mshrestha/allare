@@ -187,8 +187,8 @@
 									<li><a href="#" id="ifadistribution" class="maplinks inactive" onclick="getMapData('CcMrAncIfaDistribution', 'IFA Distributed', '#ifadistribution', 'Pregnant Woman who received IFA')">Pregnant Woman who received IFA</a></li>
 									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight', 'Pregnant women weighed during facility visits')">Pregnant women weighed during facility visits</a></li>
 									<li class="list-head">CHILD NUTRITION</li>
-									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling', 'Caregivers Counselling on IYCF')">Caregivers Counselling on IYCF</a></li>
-									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements', 'Child 0-24 months weighed during facility visit')">Child 0-24 months weighed during facility visit</a></li>
+									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling', 'Caregivers counselled on IYCF')">Caregivers counselled on IYCF</a></li>
+									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements', 'Children 0-24 months weighed during facility visit')">Children 0-24 months weighed during facility visit</a></li>
 
 							</ul>
 
@@ -209,6 +209,9 @@
 	    			</div>
 	    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
 	    				<div class="map-title d-block ml-0" id="map-title">HEADING</div>
+	    				<div class="map-hint d-block ml-0 hidden" id="map-hint-id">
+	    					<p>Click on Barisal division for detailed district scores<p>
+	    				</div>
 	    				<div id="mapdiv" class="swiper-no-swiping map-wrapper" style="width: 100%;">
 	    					<div id="zoomctrl">
 						    </div>
@@ -526,7 +529,11 @@
 	}
 		
     function initMap() {
-    	model = "CcMrAncNutriCounsel"
+    	model = "CcMrAncNutriCounsel";
+    	setTimeout(function(){
+		    document.getElementById('map-hint-id').classList.add('slowhide');
+			}, 5000);
+    	// document.getElementById("map-hint-id").style.visibility = "hidden";
 			$.ajax({
 	      type: 'get',
 	      url: '/dashboard_specific_map',
@@ -722,13 +729,13 @@
 								console.log("hello");
 								if(!res['emptydistricts']) {
 									if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
-										localColor = districtScoreColor['low'];
-									} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
-										localColor = districtScoreColor['average'];
-									} else if(value >= parseInt(res['districtRanges']['q2']) && value <= parseInt(res['districtRanges']['q3'])) {
-										localColor = districtScoreColor['high'];
-									} else if(value >= parseInt(res['districtRanges']['q3'])) {
 										localColor = districtScoreColor['very high'];
+									} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
+										localColor = districtScoreColor['high'];
+									} else if(value >= parseInt(res['districtRanges']['q2']) && value <= parseInt(res['districtRanges']['q3'])) {
+										localColor = districtScoreColor['average'];
+									} else if(value >= parseInt(res['districtRanges']['q3'])) {
+										localColor = districtScoreColor['low'];
 									}
 								}
 								// console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
@@ -1262,6 +1269,10 @@
   	const getMapData = (model, item, id, text) => {
   		clicked = false;
   		$('#chartID').html('');
+  		document.getElementById('map-hint-id').classList.remove('slowhide');
+  		setTimeout(function(){
+		    document.getElementById('map-hint-id').classList.add('slowhide');
+			}, 5000);
 			document.getElementById('barchart-title-id').style.visibility = 'hidden';
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
@@ -1461,13 +1472,13 @@
 								console.log("hello");
 								if(!res['emptydistricts']) {
 									if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
-										localColor = districtScoreColor['low'];
-									} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
-										localColor = districtScoreColor['average'];
-									} else if(value >= parseInt(res['districtRanges']['q2']) && value <= parseInt(res['districtRanges']['q3'])) {
-										localColor = districtScoreColor['high'];
-									} else if(value >= parseInt(res['districtRanges']['q3'])) {
 										localColor = districtScoreColor['very high'];
+									} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
+										localColor = districtScoreColor['high'];
+									} else if(value >= parseInt(res['districtRanges']['q2']) && value <= parseInt(res['districtRanges']['q3'])) {
+										localColor = districtScoreColor['average'];
+									} else if(value >= parseInt(res['districtRanges']['q3'])) {
+										localColor = districtScoreColor['low'];
 									}
 								}
 								// console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2'], res['districtRanges']['max'], localColor)
