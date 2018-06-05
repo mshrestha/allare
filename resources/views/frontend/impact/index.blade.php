@@ -45,10 +45,10 @@ svg text.label {
                 <a href="#slide1" class="swipernav nav-slide1">WASTING</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide2" class="swipernav nav-slide2">EXCLUSIVE BREASTFEEDING</a>
+                <a href="#slide2" class="swipernav nav-slide2">ANEMIA</a>
               </li>
               <li class="list-inline-item">
-                <a href="#slide3" class="swipernav nav-slide3">ANEMIA</a>
+                <a href="#slide3" class="swipernav nav-slide3">EXCLUSIVE BREASTFEEDING</a>
               </li>
             </ul>
           </div> {{-- swiper-tab-nav --}}

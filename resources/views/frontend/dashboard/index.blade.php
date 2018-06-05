@@ -766,10 +766,10 @@
 						    	infoWindow.open(map, anchor);
 									stateLayer.overrideStyle(e.feature, {
 										// fillColor: e.feature.getProperty('color'),
-										strokeColor: '#CCC',
+										strokeColor: '#000',
 										// strokeColor: e.feature.getProperty('color'),
 										strokeWeight: 1,
-										zIndex: 1
+										zIndex: 2
 									});
 								}
 							} else {
@@ -784,10 +784,10 @@
 					    	infoWindow.open(map, anchor);
 								stateLayer.overrideStyle(e.feature, {
 									// fillColor: e.feature.getProperty('color'),
-									strokeColor: '#CCC',
+									strokeColor: '#000',
 									// strokeColor: e.feature.getProperty('color'),
 									strokeWeight: 1,
-									zIndex: 1
+									zIndex: 2
 								});
 							}	
 						});
@@ -1505,10 +1505,10 @@
 						    	infoWindow.open(map, anchor);
 									stateLayer.overrideStyle(e.feature, {
 										// fillColor: e.feature.getProperty('color'),
-										strokeColor: '#CCC',
+										strokeColor: '#000',
 										// strokeColor: e.feature.getProperty('color'),
 										strokeWeight: 1,
-										zIndex: 1
+										zIndex: 2
 									});
 								}
 							} else {
@@ -1523,10 +1523,10 @@
 					    	infoWindow.open(map, anchor);
 								stateLayer.overrideStyle(e.feature, {
 									// fillColor: e.feature.getProperty('color'),
-									strokeColor: '#CCC',
+									strokeColor: '#000',
 									// strokeColor: e.feature.getProperty('color'),
 									strokeWeight: 1,
-									zIndex: 1
+									zIndex: 2
 								});
 							}	
 						});

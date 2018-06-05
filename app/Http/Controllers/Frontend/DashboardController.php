@@ -306,9 +306,10 @@ class DashboardController extends Controller
 		$indicators = [
 			'Stunting' => 'BdhsStunting',
 			'Wasting' => 'BdhsWasting',
+			'Anemia' => 'BdhsAnemia',
 			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
 			'Vitamin A Supplements' => 'BdhsVitaminA',
-			'Anemia' => 'BdhsAnemia',
+			
 		];
 
 		$dataSet = [];
