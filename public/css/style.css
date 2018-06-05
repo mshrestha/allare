@@ -6834,7 +6834,7 @@ body {
   float: left;
   margin-right: 2%;
   position: relative; }
-  .progress-bar-h#goal-chart-h-Stunting, .progress-bar-h#goal-chart-h-Wasting {
+  .progress-bar-h#goal-chart-h-Stunting, .progress-bar-h#goal-chart-h-Wasting, .progress-bar-h#goal-chart-h-Anemia {
     display: flex; }
   .progress-bar-h .target {
     right: 0%;
@@ -7508,7 +7508,8 @@ text.rbc-center-text {
   text-align: center;
   z-index: 2;
   color: #585858;
-  font-size: 14px; }
+  font-size: 14px;
+  top: -10px; }
 
 .map-hint {
   opacity: 1;

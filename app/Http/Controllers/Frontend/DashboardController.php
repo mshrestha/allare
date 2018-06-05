@@ -331,7 +331,7 @@ class DashboardController extends Controller
 				$dataSet[$indicator]['goal_values'] = $datum_goal->value;
 				$dataSet[$indicator]['min'] = 0;//$goal_model::min('value');
 				$dataSet[$indicator]['max'] = 100;//m$goal_model::max('value');
-				$dataSet[$indicator]['values'] = $datum->pluck('value');	
+				$dataSet[$indicator]['values'] = $datum->pluck('value');
 				if($indicators[$indicator] == 'BdhsStunting') {
 					$dataSet[$indicator]['limit'] = 100;
 					$dataSet[$indicator]['target'] = 25;
@@ -340,6 +340,9 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['goal_text'] = "Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+
+					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
+
 				}
 				else if($indicators[$indicator] == 'BdhsWasting') {
 					$dataSet[$indicator]['goal'] = 'Goal < 10% by 2021';
@@ -349,33 +352,40 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
-				}
-				else if($indicators[$indicator] == 'BdhsVitaminA') {
-					$dataSet[$indicator]['goal'] = 'Goal 100% by 2021';
-					$dataSet[$indicator]['limit'] = 100;
-					$dataSet[$indicator]['target'] = 1;
-					$dataSet[$indicator]['direction'] = -1;
-					$dataSet[$indicator]['goal_text'] = "Two-dose coverage for 2016: 99%";
-					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
-					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
 				}
 				else if($indicators[$indicator] == 'BdhsAnemia') {
-					$dataSet[$indicator]['goal'] = 'Goal 39.7% by 2021';
+					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
 					$dataSet[$indicator]['limit'] = 100;
-					$dataSet[$indicator]['target'] = 100 - 39.7;
+					$dataSet[$indicator]['target'] = 25;
 					$dataSet[$indicator]['direction'] = -1;
 					$dataSet[$indicator]['goal_text'] = "Prevalence of Anemia in Women of Reproductive age";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+
+					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
+				}else if($indicators[$indicator] == 'BdhsVitaminA') {
+					$dataSet[$indicator]['goal'] = 'Goal 25% by 2021';
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 1;
+					$dataSet[$indicator]['direction'] = 1;
+					$dataSet[$indicator]['goal_text'] = "Two-dosage coverage for 2016: 99%";
+					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
+					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+
+					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
+
 				}
 				else {
-					$dataSet[$indicator]['goal'] = 'Goal 65% by 2021';
+					$dataSet[$indicator]['goal'] = 'Maintaining goal of 99% by 2021';
 					$dataSet[$indicator]['direction'] = 1;
 					$dataSet[$indicator]['limit'] = 100;
 					$dataSet[$indicator]['target'] = 35;
 					$dataSet[$indicator]['goal_text'] = "Increase prevalence of exclusive breastfeeding";
+					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
 				}
 		}
+		// dd($dataSet);
 
 		return $dataSet;
 	}
@@ -491,6 +501,142 @@ class DashboardController extends Controller
 		return $sidebarContents;
 	}
 
+	public function calculate_Maternal_nutrition_counseling_proportion_pergentage($organisation_unit, $period) {
+		//Dhis formula
+		// Numerator: kazi->comm->cc_MR_ANC_Nutri_counsel
+		// Denominator : Kazi->comm-> cc_MR_ANC_1+2+3+4
+		
+		$cc_mr_anc_nutri_counsel = CcMrAncNutriCounsel::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$cc_val = 0;
+		if($cc_mr_anc_nutri_counsel != null)
+			$cc_val = $cc_mr_anc_nutri_counsel->value;
+		$anc1_dghs = ANC1::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$anc1_val = 1;
+		if($anc1_dghs != null)
+			$anc1_val = $anc1_dghs->value;
+		$anc2_dghs = ANC2::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$anc2_val = 1;
+		if($anc2_dghs != null)
+			$anc2_val = $anc2_dghs->value;
+		$anc3_dghs = ANC3::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$anc3_val = 1;
+		if($anc3_dghs != null)
+			$anc3_val = $anc3_dghs->value;
+		$anc4_dghs = ANC4::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$anc4_val = 1;
+		if($anc4_dghs != null)
+			$anc4_val = $anc4_dghs->value;
+		$dhis_calculate = ($cc_val / ($anc1_val + $anc2_val + $anc3_val + $anc4_val)) * 100;
+
+		return $dhis_calculate;
+	}
+
+	public function calculate_IFA_distribution_proportion_percentage($organisation_unit, $period) {
+		//DHIS calculation
+		//Numerator -> Kazi-Comm->cc_MR_ANC_IFA_Distribution
+		//Denominator -> Kazi->comm-> cc_MR_ANC_1+2+3+4 
+		
+		$cc_mr_anc_ifa_distribution = CcMrAncIfaDistribution::where('organisation_unit', $organisation_unit[0])
+						->whereNull('category_option_combo')
+						->where('source', 'DGHS')
+						->where('period', $period)->first();
+		
+		$anc1_dghs = ANC1::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$anc1_dghs_val = 1;
+		if($anc1_dghs != null)
+			$anc1_dghs_val = $anc1_dghs->value;
+		$anc2_dghs = ANC2::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$anc2_dghs_val = 0;
+		if($anc2_dghs != null)
+			$anc2_dghs_val = $anc2_dghs->value;
+		$anc3_dghs = ANC3::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$anc3_dghs_val = 0;
+		if($anc3_dghs != null)
+			$anc3_dghs_val = $anc3_dghs->value;
+		$anc4_dghs = ANC4::where('source', 'DGHS')
+					->where('organisation_unit', $organisation_unit[0])
+					->where('period', $period)
+					->whereNull('category_option_combo')
+					->first();
+		$anc4_dghs_val = 0;
+		if($anc4_dghs != null)
+			$anc4_dghs_val = $anc4_dghs->value;
+		$dhgs_val = 0;
+		if($cc_mr_anc_ifa_distribution != null)
+			$dhgs_val = $cc_mr_anc_ifa_distribution->value;
+		$dhis_numerator = $dhgs_val;
+		$dhis_denominator = $anc1_dghs_val + $anc2_dghs_val + $anc3_dghs_val + $anc4_dghs_val;
+
+
+		//DGFP calculation
+		//Numerator -> Number of Pregnant Woman received IFA 
+		//Denominator -> ANC1 + ANC2 + ANC3 + ANC4
+		$number_of_pregnant_woman_received_ifa = CcMrAncIfaDistribution::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc1_dgfp = ANC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc2_dgfp = ANC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc3_dgfp = ANC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc4_dgfp = ANC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$dgfp_numerator = $number_of_pregnant_woman_received_ifa;
+		$dgfp_denominator = $anc1_dgfp + $anc2_dgfp + $anc3_dgfp + $anc4_dgfp;
+
+		$ifa_distribution_percent = (($dhis_numerator + $dgfp_numerator) / ($dhis_denominator + $dgfp_denominator)) * 100;
+
+		return $ifa_distribution_percent;
+	}
+
 	public function getMapData(Request $request) {
 		$districts = ['xNcsJeRMUCM' => 'Barguna' , 'uOU0jtyD1PZ' => 'Barisal' , 'EdOWA8sKh2p' => 'Bhola' , 'WNCBZLbFD70' => 'Jhalokati', 'bEiL5HnmKZO' => 'Patuakhali', 'aLbPgj33QnT' => 'Pirojpur'];
 		$data = $request->all();
@@ -523,8 +669,39 @@ class DashboardController extends Controller
 		$category = NULL;
 		if($data['model'] == 'CcMrWeightInKgAnc')
 			$category = 'OJd05AWCFTk';
-		$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();		
-
+				
+		$responseData = [];
+		if($data['model'] == 'CcMrAncNutriCounsel') {
+			// dd(count($organisations['organisation_unit_array']));
+			for ($i=0; $i < count($organisations['organisation_unit_array']); $i++) { 
+				$response = $this->calculate_Maternal_nutrition_counseling_proportion_pergentage([$organisations['organisation_unit_array'][$i], $organisations['organisation_unit_array'][$i]], '201804');
+				if($response == '' || $response == null) {
+					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
+					$responseData[$i]['value'] = 0;
+				}
+				else {
+					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
+					$responseData[$i]['value'] = (string)$response;
+				}
+			}
+		} 
+		else if($data['model'] == 'CcMrAncIfaDistribution') {
+			// dd(count($organisations['organisation_unit_array']));
+			for ($i=0; $i < count($organisations['organisation_unit_array']); $i++) { 
+				$response = $this->calculate_IFA_distribution_proportion_percentage([$organisations['organisation_unit_array'][$i], $organisations['organisation_unit_array'][$i]], '201804');
+				if($response == '' || $response == null) {
+					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
+					$responseData[$i]['value'] = 0;
+				}
+				else {
+					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
+					$responseData[$i]['value'] = (string)$response;
+				}
+			}
+		} else {
+			$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
+		}
+		// dd($responseData);
 		$centArr = [];
 		$sum = 0;
 		$centralDistricts = (config('static'))['centDistrict'];
@@ -541,11 +718,10 @@ class DashboardController extends Controller
 			}
 			array_push($foundArr, $centralDistricts[$i]);
 		}
-
+		
 		$districtMinimal = array_flip($districtMinimal);
 		ksort($districtMinimal);
 		$districtMinimal = array_flip($districtMinimal);
-
 		$dataArr = [];
 		$valueArr = [];
 		$val = 0;
@@ -557,14 +733,18 @@ class DashboardController extends Controller
 		for ($i=0; $i < count($responseData); $i++) { 
 			if($responseData[$i]['organisation_unit'] == 'mykF7AaZv9R') {
 				if($sum != 0) {
-					$responseData[$i]['value'] = $sum;
-					$val = $responseData[$i]['value'];
+					if($data['model'] == 'CcMrAncIfaDistribution' || $data['model'] == 'CcMrAncNutriCounsel') {
+						$responseData[$i]['value'] = $sum / 6;
+						$val = $responseData[$i]['value'];
+					} else {
+						$responseData[$i]['value'] = $sum / 6;
+						$val = $responseData[$i]['value'];
+					}
 				}
 			}
 			$dataArr[$responseData[$i]['organisation_unit']] = $responseData[$i]['value'];
 			if($responseData[$i]['organisation_unit'] != 'dNLjKwsVjod')
 				array_push($valueArr, $responseData[$i]['value']);
-			
 		}
 		
 		$ranges = [];
@@ -623,6 +803,8 @@ class DashboardController extends Controller
 			);
 		}
 	}
+
+	
 
 	private function getChildPercent($periodData, $central_api_id, $community_api_id) {
 
