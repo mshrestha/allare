@@ -1,5 +1,9 @@
 @extends('layouts.app')
+@section('style')
+<style>
 
+</style>
+@endsection
 @section('content')
   <div class="white-bg"></div>
 	<div class="container">
@@ -312,6 +316,15 @@
                       .attr("width", xScale.rangeBand())
                       .attr("y", function(d) { return yScale(d.value); })
                       .attr("height", function(d) { return height - yScale(d.value); });
+      svgContainer.selectAll(".text")     
+                      .data(dataCSV)
+                      .enter()
+                      .append("text")
+                      .attr("class","label")
+                      .attr("x", (function(d) { return xScale(d.date) + xScale.rangeBand() / 2 ; }  ))
+                      .attr("y", function(d) { return yScale(d.value) - 15; })
+                      .attr("dy", ".75em")
+                      .text(function(d) { return d.value; });
 
       document.addEventListener("DOMContentLoaded", resize);
       d3.select(window).on('resize', resize);
@@ -341,7 +354,7 @@
             .attr("x", function(d) { return xScale(d.date); })
             .attr("width", xScale.rangeBand());    
 
-          // svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
+          svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
           // Swap the version below for the one above to disable rotating the titles
           // svgContainer.select('.x.axis').call(xAxis.orient('top')).selectAll("text").attr("x",55).attr("y",-25);
       }

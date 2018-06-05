@@ -34,8 +34,8 @@
 }
 
 svg text.label {
-  fill:white;
-  font: 15px;  
+  fill:#959595;
+  font-size: 15px;  
   font-weight: 400;
   text-anchor: middle;
 }
