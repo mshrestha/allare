@@ -3,21 +3,16 @@
   <div class="row">
     <div class="col-xl-2 col-lg-3 col-sm-4">
       <div class="tab-col-title">{{$analysis['heading']}}</div>
-{{-- <<<<<<< HEAD
-      <div class="tab-col-subtitle"></div>
-      <div class="canvas-holder">
-======= --}}
       <div class="tab-col-subtitle specific-date" id="specific-date-{{$counter}}"></div>
       <div class="canvas-holder">
-{{-- >>>>>>> 1d0f6dc195de0557c17d27d1f1676607ccbfcee0 --}}
         <div class="progress-bar-v" id="goal-chart-{{
 				$key}}">
 					
-					<div class="goal" style="height: {{100 - $analysis['goal_value']}}%;">
+					<div class="goal" style="height: {{100 - $analysis['goal_values']}}%;">
 						{{-- {{$analysis['goal']}} --}}
 					</div>
 					
-					<div class="current grow-v-animation" style="height: {{$analysis['goal_value']}}%;">
+					<div class="current grow-v-animation" style="height: {{$analysis['goal_values']}}%;">
 						{{$analysis['goal_values']}}  %
 					</div>
 

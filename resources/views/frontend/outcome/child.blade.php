@@ -33,11 +33,9 @@
 <script src="//d3js.org/d3.v3.min.js"></script>
 
 <script>
-	$('.area-date').html('2018');
-	$('.specific-date').html('2018');
+	$('.area-date').html('Last 6 months');
+	$('.specific-date').html('Last 6 months');
 	// $('.swiper-slide').hide();
-
-	
 
 	function loadPeriodWiseData($this, model, id) {
 		$.ajax({
@@ -86,8 +84,18 @@
 						barPercentage: 1.0
 					}],
 					yAxes: [{
-						stacked: true
-					}]
+						stacked: true,
+	                    ticks: {
+	                        beginAtZero:true,
+	                        callback: function(value, index, values) {
+	                            if(parseInt(value) >= 1000){
+	                               return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                            } else {
+	                               return value;
+	                            }
+	                       }                            
+	                    }
+	                }]
 				},
 				// Container for pan options
 				pan: {
@@ -157,17 +165,15 @@
 		})
 	}
 
-	$('#indicator_id').click(function() {
-		$('.swiper-slide').hide();
-		$('#swiper-slide-'+tab_indices[$('#indicator_id').val()]).show();
-	});
-
 	$('#main-chart-form').on('submit', function() {
 		var data = $(this).serialize();
 		data += '&output=child';
 		// console.log(data);
 
 		main_chart_data(data);
+
+		$('.swiper-slide').hide();
+		$('#swiper-slide-'+tab_indices[$('#indicator_id').val()]).show();
 
 		return false;
 	});
@@ -179,50 +185,60 @@
 	@endforeach
 
 	function trendAnalysisChart(id, data_value) {
-		var ctx = document.getElementById('line-area-' + id).getContext('2d');
-		var config = {
-			type: 'line',
-			data: {
-				labels: data_value.periods,
-				datasets: [{
-					label: data_value.name,
-					borderColor: '#81ddc6',
-					backgroundColor: '#81ddc6',
-					data: data_value.values,
-				}]
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				title: {
-					display: false,
-					text: 'Chart.js Line Chart - Stacked Area'
-				},
-				tooltips: {
-					mode: 'index',
-				},
-				hover: {
-					mode: 'index'
-				},
-				scales: {
-					xAxes: [{
-						scaleLabel: {
-							display: true,
-							// labelString: 'Month'
-						}
-					}],
-					yAxes: [{
-						stacked: true,
-						scaleLabel: {
-							display: true,
-							// labelString: 'Value'
-						}
+		$(function(){
+			var config = {
+				type: 'line',
+				data: {
+					labels: data_value.periods,
+					datasets: [{
+						label: data_value.name,
+						borderColor: '#81ddc6',
+						backgroundColor: '#81ddc6',
+						data: data_value.values,
 					}]
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					title: {
+						display: false,
+						text: 'Chart.js Line Chart - Stacked Area'
+					},
+					tooltips: {
+						mode: 'index',
+					},
+					hover: {
+						mode: 'index'
+					},
+					scales: {
+						xAxes: [{
+							scaleLabel: {
+								display: true,
+								// labelString: 'Month'
+							}
+						}],
+						yAxes: [{
+							stacked: true,
+							scaleLabel: {
+								display: true,
+								// labelString: 'Value'
+							},
+							ticks: {
+							    beginAtZero:true,
+							    userCallback: function(value, index, values) {
+							        value = value.toString();
+							        value = value.split(/(?=(?:...)*$)/);
+							        value = value.join(',');
+							        return value;
+							    }
+							}
+						}]
+					}
 				}
-			}
-		};
-		window.myLine = new Chart(ctx, config);
-		
+			};
+			var ctx = document.getElementById('line-area-' + id).getContext('2d');
+			window.myLine = new Chart(ctx, config);
+		})
 	}
 
 	function pieChart(id, data_value) {

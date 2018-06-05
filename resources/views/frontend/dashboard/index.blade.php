@@ -77,9 +77,9 @@
 				      			</div>
 				      		</div>
 				      		<div class="row">
-					  				@foreach($outcomes as $key => $analysis)
-											@include('layouts.partials.dashboard-outcomes-partial')
-										@endforeach
+				  				@foreach($outcomes as $key => $analysis)
+									@include('layouts.partials.dashboard-outcomes-partial')
+								@endforeach
 				      		</div>
 			      		</div>
 			      	</div> {{-- output col-md-8 --}}

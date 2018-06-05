@@ -1,0 +1,41 @@
+.target.target-label {
+	position: absolute;
+	top: 6px;
+	left: 0;
+	border: 4px solid transparent;
+	border-bottom: 4px solid #959595;
+}
+.target-label:before {
+	height: 13px !important;
+	margin-top: -13px !important;
+	background: #959595 !important;
+}
+.target-label-text {
+	padding-left: 17px;
+}
+
+<style>
+.axis path, .axis line {
+  fill: none;
+  stroke: #fff;
+}
+.axis path {
+  stroke: #9f9f9f !important;
+}
+.axis line {
+  stroke: #9f9f9f !important;
+}
+.axis text {
+  font-size: 13px;
+  fill: #9f9f9f;
+}
+.areachart {
+  fill: #81ddc6;
+}
+
+svg text.label {
+  fill:white;
+  font: 15px;  
+  font-weight: 400;
+  text-anchor: middle;
+}
