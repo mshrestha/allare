@@ -13,6 +13,27 @@
 
 .progress-bar-v{
   background-image: url('../images/loading-strip-v.png');
+  position: relative;
+  overflow: visible;
+  .target{
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    border-bottom: 1px solid #063d48;
+    &:after{
+      content: "";
+      width: 0px;
+      height: 0px;
+      background: transparent;
+      display: block;
+      position: absolute;
+      top: -9px;
+      right: -9px;
+      border: 10px solid transparent;
+      border-right: 10px solid #063d48;
+    }
+  }
 }
 .progress-bar-h{
   width: 100%;

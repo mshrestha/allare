@@ -1,3 +1,4 @@
+
 <div class="col-md-12 col-lg-6 outcome-progress-col">
 	<div class="report-heading row">
 		<div class="txt-icon col-12">
@@ -22,6 +23,7 @@
 			<div class="outcome-icon-dis" style="float: left;">
 				<h6 class="mb-0">{!! str_replace('_', ' ', $key) !!}</h6>
 				<div>{{$analysis['goal_text']}}</div>
+
 			</div>
 		</div>
 	</div>

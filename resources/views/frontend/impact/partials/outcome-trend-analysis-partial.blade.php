@@ -16,6 +16,8 @@
 						{{$analysis['goal_values']}}  %
 					</div>
 
+          <div class="target" style=""></div>
+
 				</div>
       </div>
     </div> {{-- col-xs-2 --}}
