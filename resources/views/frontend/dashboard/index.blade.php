@@ -91,7 +91,7 @@
 				      			</div>
 				      		</div>
 				      		<div class="reporting-div input-box input-reporting">
-				      			<h6>REPORTING</h6>
+				      			<h6>FACILITY REPORTING RATES</h6>
 				      			<div class="row">
 				      				<div class="col-sm-6">
 				      					<div>
@@ -99,8 +99,8 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="current grow-h-animation" style="width: 30%;">
-															30%
+														<div class="current grow-h-animation" style="width: 73%;">
+															73%
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -111,8 +111,8 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="current grow-h-animation" style="width: 44%;">
-															44%
+														<div class="current grow-h-animation" style="width: 70%;">
+															70%
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -125,8 +125,8 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="current grow-h-animation" style="width: 65%;">
-															65%
+														<div class="current grow-h-animation" style="width: 68%;">
+															68%
 														</div>
 													</div> {{-- progress-bar-h --}}
 									  		</div>
@@ -137,8 +137,8 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="current grow-h-animation" style="width: 56%;">
-															56%
+														<div class="current grow-h-animation" style="width: 61%;">
+															61%
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -1143,12 +1143,12 @@
 					{
 						labelStart: ~~ifa_distribution + '%', // IFA Distributed
 						value: ifa_distribution,
-						color: '#137f91',
+						color: '#3b8090',
 					},
 					{
 						labelStart: ~~weight_measured + '%', // Weight Measured
 						value: weight_measured,
-						color: "#005e6f"
+						color: "#3b3e73"
 					},
 					// {
 					// 	labelStart: exclusive_breastfeeding + '%', //Exclusive Breastfeeding
@@ -1195,7 +1195,7 @@
 			  	{
 			  		labelStart: ~~child_growth_monitoring + '%', //Child Growth Monitoring
 			  		value: child_growth_monitoring,
-			  		color: '#005e6f'
+			  		color: '#3b3e73'
 			  	},
 			  	// {
 			  	// 	labelStart: minimum_acceptable_diet + '%', //Minimum acceptable diet
