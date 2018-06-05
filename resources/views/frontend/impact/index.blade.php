@@ -1,31 +1,5 @@
 @extends('layouts.app')
-@section('styles')
-<style>
-.axis path, .axis line {
-  fill: none;
-  stroke: #fff;
-}
-.axis path {
-  stroke: #9f9f9f !important;
-}
-.axis line {
-  stroke: #9f9f9f !important;
-}
-.axis text {
-  font-size: 13px;
-  fill: #9f9f9f;
-}
-.areachart {
-  fill: #81ddc6;
-}
 
-svg text.label {
-  fill:white;
-  font: 15px;  
-  font-weight: 400;
-  text-anchor: middle;
-}
-</style>
 @section('content')
   <div class="white-bg"></div>
 	<div class="container">
