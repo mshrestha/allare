@@ -34,22 +34,22 @@
     margin-right: 10px;
 	}
 	.conselling-given:before{
-		background-color: #81ddc6;
+		background-color: #eea039;
 	}
 	.ifa-distributed:before{
-		background-color: #008091;
+		background-color: #3b8090;
 	}
 	.weight-measured:before{
-		background-color: #0c4a60;
+		background-color: #ea5c58;
 	}
 	.imci-counselling:before{
-		background-color: #81ddc6;
+		background-color: #eea039;
 	}
 	.supplements-distributed:before{
-		background-color: #008091;
+		background-color: #3b8090;
 	}
 	.child-growth:before{
-		background-color: #0c4a60;
+		background-color: #ea5c58;
 	}
 }
 
@@ -568,4 +568,22 @@ svg text.label {
 }
 .vhigh{
 	fill: #ea5c58;
+}
+
+
+.barchart-title{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.map-title {
+    position: relative;
+    text-align: center;
+    z-index: 10;
+    top: -28px;
+}
+
+text.rbc-center-text {
+    font-weight: 500;
 }
