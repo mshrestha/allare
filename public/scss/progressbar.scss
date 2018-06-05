@@ -280,3 +280,22 @@
     -ms-transform:  scaleX(1.00) ;
   }
 }
+
+
+.tgtxt .target.target-label.vertical {
+    border: 4px solid transparent;
+    border-right: 4px solid #063d48;
+    margin-top: -4px;
+}
+
+.tgtxt .target.target-label.vertical:before {
+    width: 8px;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    background: #f00;
+    background: transparent !important;
+    border-bottom: 1px solid #063d48;
+    margin-left: -6px;
+    margin-top: -12px !important;
+}

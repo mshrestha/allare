@@ -22,7 +22,7 @@
       </div>
       <div class="tgtxt">
         <div class="target-h" style="right: {{$analysis['goal_value']}}%;"></div>
-        <div class="target target-label"></div>
+        <div class="target target-label vertical"></div>
         <span class="target-label-text">Target {{$analysis['goal']}}</span>
       </div>
     </div> {{-- col-xs-2 --}}
