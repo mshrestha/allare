@@ -26,7 +26,7 @@
 					<span class="icon-supplement icon"></span>
 					{{-- <img src="{{ asset('images\supplement.svg') }}" alt=""> --}}
 					@elseif (strpos(strtolower($key), 'anemia') !== false)
-					<span class="icon-anemia icon"></span>
+					<span class="icon-blood-drop icon"></span>
 					@endif
 				</div>
 				<div class="outcome-icon-dis" style="float: left;">

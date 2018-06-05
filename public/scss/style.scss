@@ -103,3 +103,8 @@ footer {
 			display: none;
 		}
 }
+.report-col{
+	@include media-breakpoint-down(md) {	
+		margin-top: 60px;
+	}
+}

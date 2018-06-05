@@ -29,13 +29,13 @@
         {}
       ],
       "properties": {
-        "order": 38,
+        "order": 14,
         "id": 10,
         "name": "baby",
         "prevSize": 32,
         "code": 59656
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 0
     },
@@ -75,13 +75,13 @@
         {}
       ],
       "properties": {
-        "order": 37,
+        "order": 13,
         "id": 9,
         "name": "maternal",
         "prevSize": 32,
         "code": 59657
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 1
     },
@@ -121,13 +121,13 @@
         {}
       ],
       "properties": {
-        "order": 36,
+        "order": 10,
         "id": 8,
         "name": "wasting",
         "prevSize": 32,
         "code": 59654
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 2
     },
@@ -163,13 +163,13 @@
         {}
       ],
       "properties": {
-        "order": 35,
+        "order": 9,
         "id": 7,
         "name": "supplement",
         "prevSize": 32,
         "code": 59655
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 3
     },
@@ -201,13 +201,13 @@
         {}
       ],
       "properties": {
-        "order": 34,
+        "order": 8,
         "id": 6,
         "name": "breastfeeding",
         "prevSize": 32,
         "code": 59648
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 4
     },
@@ -235,13 +235,13 @@
         {}
       ],
       "properties": {
-        "order": 33,
+        "order": 7,
         "id": 5,
         "name": "children",
         "prevSize": 32,
         "code": 59649
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 5
     },
@@ -273,13 +273,13 @@
         {}
       ],
       "properties": {
-        "order": 32,
+        "order": 6,
         "id": 4,
         "name": "minus",
         "prevSize": 32,
         "code": 59650
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 6
     },
@@ -307,13 +307,13 @@
         {}
       ],
       "properties": {
-        "order": 31,
+        "order": 5,
         "id": 3,
         "name": "plus",
         "prevSize": 32,
         "code": 59651
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 7
     },
@@ -341,13 +341,13 @@
         {}
       ],
       "properties": {
-        "order": 28,
+        "order": 4,
         "id": 1,
         "name": "triangle-boittom",
         "prevSize": 32,
         "code": 59652
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 8
     },
@@ -375,49 +375,15 @@
         {}
       ],
       "properties": {
-        "order": 29,
+        "order": 3,
         "id": 0,
         "name": "triangle-top",
         "prevSize": 32,
         "code": 59653
       },
-      "setIdx": 1,
+      "setIdx": 0,
       "setId": 2,
       "iconIdx": 9
-    },
-    {
-      "icon": {
-        "paths": [
-          "M524.358 15.216l-12.348-15.216-12.348 15.216c-14.584 17.973-356.669 441.379-356.669 639.769 0 203.455 165.545 369.018 369 369.018s369.018-165.562 369.018-369.018c0.018-198.445-342.103-621.814-356.651-639.769zM404.639 876.033l-4.795-2.271c-118.113-56.227-157.432-208.161-120.169-314.809l1.768-4.974 30.033 10.457-1.748 5.030c-32.107 91.704 2.632 227.414 103.782 275.637l4.795 2.271-13.666 28.66z"
-        ],
-        "attrs": [
-          {}
-        ],
-        "isMulticolor": false,
-        "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "blood-drop"
-        ],
-        "colorPermutations": {
-          "12552552551": [
-            {}
-          ]
-        }
-      },
-      "attrs": [
-        {}
-      ],
-      "properties": {
-        "order": 30,
-        "id": 11,
-        "name": "blood-drop",
-        "prevSize": 32,
-        "code": 59658
-      },
-      "setIdx": 1,
-      "setId": 2,
-      "iconIdx": 10
     }
   ],
   "height": 1024,
