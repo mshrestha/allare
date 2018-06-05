@@ -308,6 +308,7 @@ class DashboardController extends Controller
 			'Wasting' => 'BdhsWasting',
 			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
 			'Vitamin A Supplements' => 'BdhsVitaminA',
+			'Anemia' => 'BdhsAnemia',
 		];
 
 		$dataSet = [];
@@ -354,6 +355,15 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['target'] = 1;
 					$dataSet[$indicator]['direction'] = -1;
 					$dataSet[$indicator]['goal_text'] = "Two-dose coverage for 2016: 99%";
+					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
+					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+				}
+				else if($indicators[$indicator] == 'BdhsAnemia') {
+					$dataSet[$indicator]['goal'] = 'Goal 39.7% by 2021';
+					$dataSet[$indicator]['limit'] = 100;
+					$dataSet[$indicator]['target'] = 100 - 39.7;
+					$dataSet[$indicator]['direction'] = -1;
+					$dataSet[$indicator]['goal_text'] = "Prevalence of Anemia in Women of Reproductive age";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
 				}

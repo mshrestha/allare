@@ -173,10 +173,10 @@
 			  <div class="swiper-slide container map-view-container">
 			    <div class="row justify-content-between">
 			    	<div class="col-6 col-md-4 col-lg-3 col-xl-2 pr-0 pl-0 d-block">
-						<div class="box-heading float-left d-block ml-0">National Outcomes</div>
+						<div class="box-heading float-left d-block ml-0">OUTPUTS</div>
 					</div>
 			    	<div class="col-md-2 col-6">
-						<div class="view-on-map float-right swiper-button-prev">VIEW DATA</div>
+						<div class="view-on-map float-right swiper-button-prev">VIEW DASHBOARD</div>
 					</div>
 			    </div>
 			    <div class="row">
@@ -201,7 +201,7 @@
 								<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia', 'ANEMIA')">ANEMIA</a></li>
 	    				</ul>
 	    				<ul class="map-filter mb-0">
-								<li class="list-head">OUTCOMES</li>
+								<li class="list-head">INTERMEDIATE OUTCOMES</li>
 								<li><a href="#" id="exclusive_breastfeeding" class="maplinks inactive" onclick="getMapData('CcCrExclusiveBreastFeeding', 'Exclusive Breastfeeding', '#exclusive_breastfeeding', 'Exclusive Breastfeeding'
 								)">Exclusive Breastfeeding</a></li>
 								<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
@@ -341,6 +341,7 @@
 		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
 		districtScoreColor = {"very high": "#ea5c58", "high": "#eea039", "average": "#f7e15a", "low": "#f0c4b6"}
 		var barisalClicked = false;
+		document.getElementById('barchart-title-id').style.visibility = 'hidden';
 	</script>
 
 	<script>
@@ -842,7 +843,7 @@
 									$('#chartID').html('');
 									$('#chartID').show();
 									$('#barchart-title-id').html("Women counselled on Maternal Nutrition in Barisal Division");
-									$('#barchart-title-id').show();
+									document.getElementById('barchart-title-id').style.visibility = 'visible';
 									$('html,body').animate({
 						        scrollTop: $("#chartID").offset().top},
 						        'slow');
@@ -1138,7 +1139,7 @@
 					{
 						labelStart: ~~maternal_nutrition_counseling + '%', //maternal_nutrition_counseling
 						value: maternal_nutrition_counseling,
-						color: '#81ddc6',
+						color: '#eea039',
 					},
 					{
 						labelStart: ~~ifa_distribution + '%', // IFA Distributed
@@ -1148,7 +1149,7 @@
 					{
 						labelStart: ~~weight_measured + '%', // Weight Measured
 						value: weight_measured,
-						color: "#3b3e73"
+						color: "#ea5c58"
 					},
 					// {
 					// 	labelStart: exclusive_breastfeeding + '%', //Exclusive Breastfeeding
@@ -1185,7 +1186,7 @@
 			    {
 					labelStart: ~~iycf_counselling + '%', //IYCF Counselling
 					value: iycf_counselling,
-					color: '#81ddc6',
+					color: '#eea039',
 				},
 				// {
 			 //  		labelStart: supplements_distributed + '%', //supplementss
@@ -1195,7 +1196,7 @@
 			  	{
 			  		labelStart: ~~child_growth_monitoring + '%', //Child Growth Monitoring
 			  		value: child_growth_monitoring,
-			  		color: '#3b3e73'
+			  		color: '#ea5c58'
 			  	},
 			  	// {
 			  	// 	labelStart: minimum_acceptable_diet + '%', //Minimum acceptable diet
@@ -1237,19 +1238,21 @@
       },
     });
 
+
+
     swiper.on('paginationUpdate', function(i){
     	// console.log(i.realIndex, barisalClicked, barisalClicked==true);
     	if(i.realIndex == 0) {
     		$('#chartID').hide();
-				$('#barchart-title-id').hide();
+				document.getElementById('barchart-title-id').style.visibility = 'hidden';
 				$('#map-title').hide();
     	} else if(i.realIndex == 1 && barisalClicked == true) {
     		$('#chartID').show();
-    		$('#barchart-title-id').show();
+    		document.getElementById('barchart-title-id').style.visibility = 'visible';
     		$('#map-title').show();
     	} else {
     		$('#chartID').hide();
-    		$('#barchart-title-id').hide();
+    		document.getElementById('barchart-title-id').style.visibility = 'hidden';
     		$('#map-title').hide();
     	}
     })
@@ -1259,8 +1262,7 @@
   	const getMapData = (model, item, id, text) => {
   		clicked = false;
   		$('#chartID').html('');
-  		$('#barchart-title-id').html(text);
-			$('#barchart-title-id').show();
+			document.getElementById('barchart-title-id').style.visibility = 'hidden';
   		$('.maplinks').removeClass('active').addClass('inactive');
       $(id).removeClass('inactive').addClass('active');
   		$.ajax({
@@ -1579,8 +1581,9 @@
 									barisalClicked = true;
 									$('#chartID').html('');
 									$('#chartID').show();
+									
 									$('#barchart-title-id').html(text+" in Barisal Division");
-									$('#barchart-title-id').show();
+									document.getElementById('barchart-title-id').style.visibility = 'visible';
 									$('html,body').animate({
 						        scrollTop: $("#chartID").offset().top},
 						        'slow');
