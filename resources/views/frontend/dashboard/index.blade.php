@@ -199,6 +199,7 @@
 								{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
 								<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting', 'WASTING')">WASTING</a></li>
 								<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia', 'ANEMIA')">ANEMIA</a></li>
+								<li><a href="#" id="bmi" class="maplinks inactive" onclick="getMapData('BdhsBmi', 'WOMEN UNDERWEIGHED', '#bmi', 'WOMEN UNDERWEIGHED')">WOMEN UNDERWEIGHED</a></li>
 	    				</ul>
 	    				<ul class="map-filter mb-0">
 								<li class="list-head">INTERMEDIATE OUTCOMES</li>
@@ -542,7 +543,7 @@
 	      success: function (res) {
 	      	// console.log(res);
 	      	if(res['dataExists']) {
-		      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
+		      	if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsBmi') {
 		      		$('#low-text').html('Low');
 							$('#avg-text').html('Medium');
 							$('#high-text').html('High');
@@ -670,7 +671,7 @@
 									id = ids[1];
 								var value = Math.ceil(res['minimalData'][id]);
 								var localColor = '';
-								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 									if(value >= Math.ceil(res['ranges']['min']) && value < Math.ceil(res['ranges']['q1'])){
 										localColor = scoreColors['low'];
 									} else if(value >= Math.ceil(res['ranges']['q1']) && value < Math.ceil(res['ranges']['q2'])) {
@@ -745,7 +746,7 @@
 										value = 'N/A';
 									else
 										value = Math.ceil(res['minimalData'][id]);
-									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi')
 										value += '%';
 									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 									var anchor = new google.maps.MVCObject();
@@ -804,7 +805,7 @@
 						});
 
 						stateLayer.addListener('click', function(e) {
-							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 							} else {
 								if(e.feature.getProperty('name') == 'Barisal Division') {
 									var bounds = new google.maps.LatLngBounds();
@@ -1227,7 +1228,7 @@
   	const getMapData = (model, item, id, text) => {
   		clicked = false;
   		$('#chartID').html('');
-  		if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+  		if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 
   		} else {
 	  		document.getElementById('map-hint-id').classList.remove('slowhide');
@@ -1246,7 +1247,7 @@
 	      data: {"model": model},
 	      success: function (res) {
 	      	if(res['dataExists']) {
-		      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
+		      	if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsBmi') {
 		      		$('#low-text').html('Low');
 							$('#avg-text').html('Medium');
 							$('#high-text').html('High');
@@ -1262,7 +1263,7 @@
 							$('#high-text').html('Medium');
 							$('#vhigh-text').html('Low');
 		      	}
-						$('#map-title').html("Women counselled on Maternal Nutrition")
+						$('#map-title').html(text)
 						$('#map-title').show();
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
@@ -1374,7 +1375,7 @@
 									id = ids[1];
 								var value = Math.ceil(res['minimalData'][id]);
 								var localColor = '';
-								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 									if(value >= Math.ceil(res['ranges']['min']) && value < Math.ceil(res['ranges']['q1'])){
 										localColor = scoreColors['low'];
 									} else if(value >= Math.ceil(res['ranges']['q1']) && value < Math.ceil(res['ranges']['q2'])) {
@@ -1449,7 +1450,7 @@
 										value = 'N/A';
 									else
 										value = Math.ceil(res['minimalData'][id]);
-									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi')
 										value += '%';
 									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 									var anchor = new google.maps.MVCObject();
@@ -1508,7 +1509,7 @@
 						});
 
 						stateLayer.addListener('click', function(e) {
-							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 							} else {
 								if(e.feature.getProperty('name') == 'Barisal Division') {
 									var bounds = new google.maps.LatLngBounds();

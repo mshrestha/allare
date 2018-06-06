@@ -309,7 +309,7 @@ class DashboardController extends Controller
 			'Anemia' => 'BdhsAnemia',
 			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
 			'Vitamin A Supplements' => 'BdhsVitaminA',
-			'BMI' => 'BdhsBmi'
+			'Women Underweight' => 'BdhsBmi'
 			
 		];
 
@@ -661,7 +661,7 @@ class DashboardController extends Controller
 		}
 		// $pe = date('Y').date('m', strtotime('-1 month'));
 		$flag = 1;
-		if($data['model'] == 'BdhsWasting' || $data['model'] == 'BdhsStunting' ) {
+		if($data['model'] == 'BdhsWasting' || $data['model'] == 'BdhsStunting' || $data['model'] == 'BdhsBmi') {
 			$pe = '2014';
 		}
 		else if($data['model'] == 'BdhsAnemia') {
