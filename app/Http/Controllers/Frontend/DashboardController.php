@@ -53,14 +53,14 @@ class DashboardController extends Controller
 		$maternal_nutrition_data = [
 			'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($bangladesh_ou, $current_period)),
 			'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($bangladesh_ou, $current_period)),
-			'weight_measured' => 22,
-			'exclusive_breastfeeding' => 0
+			'weight_measured' => 0.01,
+			'exclusive_breastfeeding' => 0.01
 		];
 
 		$child_nutrition_data = [
 			'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage($bangladesh_ou, $current_period)),
 			'supplements_distributed' => 0.01,
-			'child_growth_monitoring' => 20,
+			'child_growth_monitoring' => 0.01,
 			'minimum_acceptable_diet' => 0.01
 		];
 
@@ -71,30 +71,30 @@ class DashboardController extends Controller
 		$organisation_unit = explode('.', $request->organisation_unit);
 		if($request->organisation_unit == 'R1GAfTe6Mkb.op5gbhjVCRk') {
 			$maternal_nutrition_data = [
-				'maternal_nutrition_counseling' => 82,
-				'ifa_distribution' => 30,
-				'weight_measured' => 19,
+				'maternal_nutrition_counseling' => 0.01,
+				'ifa_distribution' => 0.01,
+				'weight_measured' => 0.01,
 				'exclusive_breastfeeding' => 0.01
 			];
 
 			$child_nutrition_data = [
-				'iycf_counselling' => 30,
+				'iycf_counselling' => 0.01,
 				'supplements_distributed' => 0.01,
-				'child_growth_monitoring' => 20,
+				'child_growth_monitoring' => 0.01,
 				'minimum_acceptable_diet' => 0.01
 			];
 		} else {
 			$maternal_nutrition_data = [
 				'maternal_nutrition_counseling' => floor($this->calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $request->period)),
 				'ifa_distribution' => floor($this->calculate_IFA_distribution_percentage($organisation_unit, $request->period)),
-				'weight_measured' => 22,
+				'weight_measured' =>  0.01,
 				// 'exclusive_breastfeeding' => 0
 			];
 
 			$child_nutrition_data = [
 				'iycf_counselling' => floor($this->calculate_IYCF_counselling_percentage($organisation_unit, $request->period)),
 				// 'supplements_distributed' => 0,
-				'child_growth_monitoring' => 20,
+				'child_growth_monitoring' =>  0.01,
 				// 'minimum_acceptable_diet' => 0
 			];
 		}
