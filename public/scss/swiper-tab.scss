@@ -54,13 +54,35 @@
 }
 
 .tab-content{
+	.swiper-container{
+		overflow-y:visible;
+	}
+	.swiper-wrapper{
+		@include media-breakpoint-down(sm) {
+			overflow: visible !important;
+			height: auto !important;
+		}
+	}
 	.swiper-slide {
 	    padding: 12px 15px;
+	    @include media-breakpoint-down(sm) {
+	    	height: auto !important;
+	    	min-height: 100% !important;
+	    	overflow: visible !important;
+	    }
 	    .pie-chart .slice:first-child text {
 			    fill: #FFF !important;
 			}
 			.pie-chart{
 				margin-top: 15px;
+				@include media-breakpoint-down(sm) {
+					text-align: center;
+					svg{
+						width: 158px;
+						margin-left: auto;
+						margin-right: auto;
+					}
+				}
 			}
 			.area-chart{
 				height: 300px;
