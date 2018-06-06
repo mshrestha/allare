@@ -38,7 +38,7 @@
 			      		<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
 				      		<div class="row mt-2">
 				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
-				      				<label for="">Select the Division</label>
+				      				<label for="">Select by Geography</label>
 					      			<div class="input-group">
 						                <select class="custom-select national_outcomes_filter_form_fields country_division_field" id="division_id" name="organisation_unit" required>
 						                	<option value="dNLjKwsVjod.dNLjKwsVjod">Bangladesh</option>
