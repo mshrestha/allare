@@ -309,7 +309,7 @@ class DashboardController extends Controller
 			'Anemia' => 'BdhsAnemia',
 			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
 			'Vitamin A Supplements' => 'BdhsVitaminA',
-			'Women Underweight' => 'BdhsBmi'
+			'Women Underweighed' => 'BdhsBmi'
 			
 		];
 
