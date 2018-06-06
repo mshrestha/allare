@@ -10,7 +10,7 @@
 				<span class="icon-wasting icon"></span>
 				{{-- <img src="{{ asset('images\wasting.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'anemia') !== false)
-				<span class="icon-anemia icon"></span>
+				<span class="icon-blood-drop icon"></span>
 				@elseif (strpos(strtolower($key), 'breastfeed') !== false)
 				<span class="icon-breastfeeding icon"></span>
 				{{-- <img src="{{ asset('images\breastfeed.svg') }}" alt=""> --}}
