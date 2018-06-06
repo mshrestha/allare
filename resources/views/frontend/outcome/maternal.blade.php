@@ -216,10 +216,11 @@
 					},
 					scales: {
 						xAxes: [{
-							scaleLabel: {
-								display: true,
-								// labelString: 'Month'
-							}
+							ticks: {
+			                    autoSkip: true,
+			                    maxRotation: 0,
+			                    minRotation: 0
+			                }
 						}],
 						yAxes: [{
 							stacked: true,

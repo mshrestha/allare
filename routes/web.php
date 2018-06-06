@@ -9,6 +9,19 @@ Route::get('/', function () {
 	return redirect()->route('frontend.dashboard');
 });
 
+Route::get('/cumulative-data', function() {
+	$data = [10,20,30];
+
+	$return = [];
+	$dat = null;
+	foreach($data as $d) {
+		$dat += $d;
+		array_push($return, $dat);
+	}
+
+	dd($return);
+});
+
 // Updating database
 Route::get('/update_anc_counsel', 'Helper\UpdateDBController@updateANCCounsel');
 
