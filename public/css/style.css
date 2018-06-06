@@ -7096,12 +7096,17 @@ body {
   color: #535353;
   font-size: 12px;
   font-family: "Roboto", sans-serif; }
-  .legend div:before {
-    content: "";
-    width: 25px;
-    height: 10px;
-    display: inline-block;
-    margin-right: 10px; }
+  .legend div {
+    padding-left: 50px; }
+    .legend div:before {
+      content: "";
+      width: 25px;
+      height: 10px;
+      display: inline-block;
+      margin-right: 10px;
+      position: absolute;
+      left: 16px;
+      top: 4px; }
   .legend .conselling-given:before {
     background-color: #eea039; }
   .legend .ifa-distributed:before {
@@ -7376,6 +7381,10 @@ body {
   margin-left: -20px;
   margin-top: -62px; }
 
+#maternal-health:before {
+  width: 53px;
+  height: 54px; }
+
 #child-health:before {
   background: url("../images/baby.png") no-repeat center bottom;
   background-size: contain;
@@ -7600,12 +7609,30 @@ text.rbc-center-text {
 .swiper-tab-nav .list-inline {
   margin-bottom: 0; }
 
+.tab-content .swiper-container {
+  overflow-y: visible; }
+@media (max-width: 767.98px) {
+  .tab-content .swiper-wrapper {
+    overflow: visible !important;
+    height: auto !important; } }
 .tab-content .swiper-slide {
   padding: 12px 15px; }
+  @media (max-width: 767.98px) {
+    .tab-content .swiper-slide {
+      height: auto !important;
+      min-height: 100% !important;
+      overflow: visible !important; } }
   .tab-content .swiper-slide .pie-chart .slice:first-child text {
     fill: #FFF !important; }
   .tab-content .swiper-slide .pie-chart {
     margin-top: 15px; }
+    @media (max-width: 767.98px) {
+      .tab-content .swiper-slide .pie-chart {
+        text-align: center; }
+        .tab-content .swiper-slide .pie-chart svg {
+          width: 158px;
+          margin-left: auto;
+          margin-right: auto; } }
   .tab-content .swiper-slide .area-chart {
     height: 300px; }
     @media (min-width: 768px) {
