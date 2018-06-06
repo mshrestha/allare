@@ -248,8 +248,8 @@
 
 	function pieChart(id, data_value) {
 		var parentDiv = document.getElementById('pie-chart-'+id);
-		var w = 250,                        
-		h = 250;                              
+		var w = 200,                        
+		h = 200;                             
 		r = Math.min(w, h) / 2,                             
 		color = ['#fba69c', '#d2d2d2'];     
 		dataCSV = [{"label": data_value+"%", "value": data_value}, 

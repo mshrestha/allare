@@ -7630,7 +7630,7 @@ text.rbc-center-text {
       .tab-content .swiper-slide .pie-chart {
         text-align: center; }
         .tab-content .swiper-slide .pie-chart svg {
-          width: 250px;
+          width: 200px;
           margin-left: auto;
           margin-right: auto; } }
   @media (max-width: 991.98px) {
@@ -7638,7 +7638,7 @@ text.rbc-center-text {
       text-align: center; } }
   @media (max-width: 991.98px) {
     .tab-content .swiper-slide .trend-col {
-      margin-top: 1px; } }
+      margin-top: 15px; } }
   .tab-content .swiper-slide .area-chart {
     height: 300px; }
     @media (min-width: 768px) {
