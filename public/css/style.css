@@ -6853,7 +6853,7 @@ body {
   float: left;
   margin-right: 2%;
   position: relative; }
-  .progress-bar-h#goal-chart-h-Stunting, .progress-bar-h#goal-chart-h-Wasting, .progress-bar-h#goal-chart-h-Anemia {
+  .progress-bar-h#goal-chart-h-Stunting, .progress-bar-h#goal-chart-h-Wasting, .progress-bar-h#goal-chart-h-Anemia, .progress-bar-h#goal-chart-h-Women-Underweighed {
     display: flex; }
   .progress-bar-h .target {
     right: 0%;
