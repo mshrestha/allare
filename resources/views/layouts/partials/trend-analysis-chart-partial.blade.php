@@ -1,6 +1,6 @@
 <div class="swiper-slide hidden" id="swiper-slide-{{$key}}" data-hash="slide{{$key}}">
 	<div class="row">
-		<div class="col-xl-3 col-lg-3 col-sm-4">
+		<div class="col-xl-4 col-lg-4 col-sm-12 col-md-12">
 			<div class="tab-col-title">{{$analysis['heading']}}</div>
 			<div class="tab-col-subtitle specific-date" id="specific-date-{{$key}}"> Last 6 Months {{-- {{strtoupper($analysis['current_month'])}} --}}</div>
 			<div class="row">
@@ -22,7 +22,7 @@
 				{{-- <span class="legend-text" id="other-text">Total Patients Visited</span> --}}
 			</div>
 		</div> {{-- col-xs-2 --}}
-		<div class="col-xl-6 pr-xl-0 col-lg-6 col-sm-8">
+		<div class="col-xl-8 pr-xl-0 col-lg-8 col-sm-12 col-md-12 trend-col">
 			<div class="tab-col-title">{{$analysis['name']}}</div>
 			<div class="tab-col-subtitle area-date" id="area-date-{{$key}}">Last 6 Months</div>
 			<div style="height: 250px;" class="canvas-holder output-area-chart" id="output-area-chart-{{ $key }}">
