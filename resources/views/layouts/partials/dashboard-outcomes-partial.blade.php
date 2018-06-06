@@ -44,10 +44,6 @@
 	<div class="tgtxt">
 		<div class="target" style="right: {{$analysis['target']}}%;"></div>
 		<div class="target target-label"></div>
-		@if($loop->last)
-		<span class="target-label-text">Maintain goal of 99% by 2021</span>
-		@else
-		<span class="target-label-text">Target {{$analysis['goal']}}</span>
-		@endif
+		<span class="target-label-text">{{$analysis['goal']}}</span>
 	</div>
 </div>
