@@ -4,10 +4,10 @@
 		<div class="txt-icon col-12">
 			<div class="report-icon" style="float: left; margin-right: 10px;">
 				@if (strpos(strtolower($key), 'stunting') !== false)
-				<span class="icon-children icon"></span>
+				<span class="icon-stunting-n icon"></span>
 				{{-- <img src="{{ asset('images\stunting.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'wasting') !== false)
-				<span class="icon-wasting icon"></span>
+				<span class="icon-wasting-n icon"></span>
 				{{-- <img src="{{ asset('images\wasting.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'anemia') !== false)
 				<span class="icon-blood-drop icon"></span>
@@ -15,7 +15,7 @@
 				<span class="icon-breastfeeding icon"></span>
 				{{-- <img src="{{ asset('images\breastfeed.svg') }}" alt=""> --}}
 				@elseif (strpos(strtolower($key), 'supplements') !== false)
-				<span class="icon-supplement icon"></span>
+				<span class="icon-ifa-tablets icon"></span>
 				{{-- <img src="{{ asset('images\supplement.svg') }}" alt=""> --}}
 				@endif
 				
