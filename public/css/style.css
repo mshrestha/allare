@@ -7562,6 +7562,10 @@ text.rbc-center-text {
 .map-hint.slowhide {
   opacity: 0; }
 
+@media (min-width: 576px) {
+  .col-map {
+    padding-top: 40px; } }
+
 .swiper-tab {
   background: #fff; }
   .swiper-tab .swiper-pagination {

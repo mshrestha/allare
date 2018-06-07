@@ -208,8 +208,8 @@
 								<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
 	    				</ul>
 	    			</div>
-	    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
-	    				<div class="map-title d-block ml-0" id="map-title">HEADING</div>
+	    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 col-map">
+	    				<div class="map-title d-block ml-0" id="map-title"></div>
 	    				<div class="map-hint d-block ml-0 " id="map-hint-id">
 	    					<p>Click on Barisal division for detailed district data<p>
 	    				</div>
@@ -230,7 +230,7 @@
 			<div class="row">
 				<div class="col-sm-2"></div>
 				<div class="col-12 col-md-offset-2 col-md-10">
-					<div class="barchart-title d-block ml-0" id="barchart-title-id">HEADING</div>
+					<div class="barchart-title d-block ml-0" id="barchart-title-id"></div>
 					<div class="canvas-holder score-bar-chart" id="chartID">
 					</div>
 				</div>

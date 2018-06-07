@@ -616,3 +616,9 @@ text.rbc-center-text {
 .map-hint.slowhide {
     opacity:0;
 }
+
+.col-map {
+	@include media-breakpoint-up(sm) {
+	  padding-top: 40px;
+  }
+}
