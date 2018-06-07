@@ -48,6 +48,7 @@
 				console.log(res)
 				pieChart(res.key, res.percent)
 				var arr = res;
+				myLine.destroy();
 				trendAnalysisChart(res.key, arr)
 				$('#area-date-'+id).html($('#trend_period_id').find(':selected').text());
 				$('#specific-date-'+id).html($('#trend_period_id').find(':selected').text());
@@ -212,10 +213,11 @@
 					},
 					scales: {
 						xAxes: [{
-							scaleLabel: {
-								display: true,
-								// labelString: 'Month'
-							}
+							ticks: {
+			                    autoSkip: true,
+			                    maxRotation: 0,
+			                    minRotation: 0
+			                }
 						}],
 						yAxes: [{
 							stacked: true,
@@ -246,8 +248,8 @@
 			return Math.round(Math.random() * 100);
 		};
 		var parentDiv = document.getElementById('pie-chart-'+id);
-		var w = 300,                        
-		h = 156,                            
+		var w = 200,                        
+		h = 200;                            
 		r = Math.min(w, h) / 2,                            
 		color = ['#fba69c', '#d2d2d2'];
 		dataCSV = [{"label": data_value+"%", "value": data_value}, 

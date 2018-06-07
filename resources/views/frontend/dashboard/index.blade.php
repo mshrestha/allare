@@ -199,6 +199,7 @@
 								{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
 								<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting', 'WASTING')">WASTING</a></li>
 								<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia', 'ANEMIA')">ANEMIA</a></li>
+								<li><a href="#" id="bmi" class="maplinks inactive" onclick="getMapData('BdhsBmi', 'WOMEN UNDERWEIGHED', '#bmi', 'WOMEN UNDERWEIGHED')">WOMEN UNDERWEIGHED</a></li>
 	    				</ul>
 	    				<ul class="map-filter mb-0">
 								<li class="list-head">INTERMEDIATE OUTCOMES</li>
@@ -207,8 +208,8 @@
 								<li><a href="#" id="min_acceptable_diet" class="maplinks inactive">Min. Acceptable diet</a></li>
 	    				</ul>
 	    			</div>
-	    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 ">
-	    				<div class="map-title d-block ml-0" id="map-title">HEADING</div>
+	    			<div class="col-md-8 col-lg-9 col-xl-10 pl-0 pr-0 col-map">
+	    				<div class="map-title d-block ml-0" id="map-title"></div>
 	    				<div class="map-hint d-block ml-0 " id="map-hint-id">
 	    					<p>Click on Barisal division for detailed district data<p>
 	    				</div>
@@ -229,7 +230,7 @@
 			<div class="row">
 				<div class="col-sm-2"></div>
 				<div class="col-12 col-md-offset-2 col-md-10">
-					<div class="barchart-title d-block ml-0" id="barchart-title-id">HEADING</div>
+					<div class="barchart-title d-block ml-0" id="barchart-title-id"></div>
 					<div class="canvas-holder score-bar-chart" id="chartID">
 					</div>
 				</div>
@@ -542,7 +543,7 @@
 	      success: function (res) {
 	      	// console.log(res);
 	      	if(res['dataExists']) {
-		      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
+		      	if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsBmi') {
 		      		$('#low-text').html('Low');
 							$('#avg-text').html('Medium');
 							$('#high-text').html('High');
@@ -670,7 +671,7 @@
 									id = ids[1];
 								var value = Math.ceil(res['minimalData'][id]);
 								var localColor = '';
-								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 									if(value >= Math.ceil(res['ranges']['min']) && value < Math.ceil(res['ranges']['q1'])){
 										localColor = scoreColors['low'];
 									} else if(value >= Math.ceil(res['ranges']['q1']) && value < Math.ceil(res['ranges']['q2'])) {
@@ -745,7 +746,7 @@
 										value = 'N/A';
 									else
 										value = Math.ceil(res['minimalData'][id]);
-									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi')
 										value += '%';
 									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 									var anchor = new google.maps.MVCObject();
@@ -804,7 +805,7 @@
 						});
 
 						stateLayer.addListener('click', function(e) {
-							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 							} else {
 								if(e.feature.getProperty('name') == 'Barisal Division') {
 									var bounds = new google.maps.LatLngBounds();
@@ -829,149 +830,51 @@
 										$('html,body').animate({
 							        scrollTop: $("#chartID").offset().top},
 							        'slow');
-										var max = 0;
-										var dataCSV = [];
+
+										var labels = [];
+										var fillColors = [];
+										var dataValues = [];
 										for(var key in res['minimalDistrict']) {
-											temp = {};
-											temp.id = key;
-											temp.value = res['minimalDistrict'][key];
-											if(max < temp.value)
-												max = temp.value;
-											dataCSV.push(temp);
+											var value = res['minimalDistrict'][key];
+											labels.push(key);
+											if(value >= Math.ceil(res['districtRanges']['min']) && value < Math.ceil(res['districtRanges']['q1'])) {
+												fillColors.push('#ea5c58');
+											} else if(value >= Math.ceil(res['districtRanges']['q1']) && value < Math.ceil(res['districtRanges']['q2'])) {
+												fillColors.push('#eea039');
+											} else if(value >= Math.ceil(res['districtRanges']['q2']) && value <= Math.ceil(res['districtRanges']['q3'])) {
+												fillColors.push('#f7e15a');
+											} else if(value >= Math.ceil(res['districtRanges']['q3'])) {
+												fillColors.push('#f2b4a0');
+											}
 										}
+
+										var chartData = {
+											labels: labels,
+											datasets: [{
+												fillColor: fillColors,
+												strokeColor: fillColors,
+												data: dataValues
+											}]
+										}
+										var ctx = document.getElementById("chartID").getContext("2d");
+										var myBar = new Chart(ctx).Bar(chartData, {
+									    showTooltips: false,
+									    onAnimationComplete: function () {
+								        var ctx = this.chart.ctx;
+								        ctx.font = this.scale.font;
+								        ctx.fillStyle = this.scale.textColor
+								        ctx.textAlign = "center";
+								        ctx.textBaseline = "bottom";
+
+								        this.datasets.forEach(function (dataset) {
+							            dataset.bars.forEach(function (bar) {
+						                ctx.fillText(bar.value, bar.x, bar.y - 5);
+							            });
+								        })
+									    }
+										});
+
 										
-										parentDiv = document.getElementById('chartID');
-									  var margin = {top:20, right:20, bottom:20, left:20};
-
-										var width = parentDiv.clientWidth - margin.left - margin.right;
-
-										var height = 185;
-										var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
-
-										var yScale = d3.scale.linear()
-										      .range([height, 0]);
-
-
-										var xAxis = d3.svg.axis()
-												.scale(xScale)
-												.orient("bottom");
-										      
-										      
-										var yAxis = d3.svg.axis()
-												.scale(yScale)
-												.orient("left");
-
-										var svgContainer = d3.select("#chartID").append("svg")
-												.attr("width", width+margin.left + margin.right)
-												.attr("height",height+margin.top + margin.bottom)
-												.append("g").attr("class", "container")
-												.attr("transform", "translate("+ margin.left +","+ margin.top +")");
-
-										xScale.domain(dataCSV.map(function(d) { return d.id; }));
-										yScale.domain([0, d3.max(dataCSV, function(d) { return Math.ceil(d.value); })]);
-
-
-										//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
-										var xAxis_g = svgContainer.append("g")
-												.attr("class", "x axis")
-												.attr("transform", "translate(0," + (height) + ")")
-												.call(xAxis)
-												.selectAll("text");
-													
-										// Uncomment this block if you want the y axis
-										/*var yAxis_g = svgContainer.append("g")
-												.attr("class", "y axis")
-												.call(yAxis)
-												.append("text")
-												.attr("transform", "rotate(-90)")
-												.attr("y", 6).attr("dy", ".71em")
-												//.style("text-anchor", "end").text("Number of Applicatons"); 
-										*/
-
-
-										svgContainer.selectAll(".bar")
-									  		.data(dataCSV)
-									  		.enter()
-									  		.append("rect")
-									  		.attr("class", function(d) {
-									  			if(d.value >= Math.ceil(res['districtRanges']['min']) && d.value < Math.ceil(res['districtRanges']['q1'])) {
-														return 'bar vhigh';
-													} else if(d.value >= Math.ceil(res['districtRanges']['q1']) && d.value < Math.ceil(res['districtRanges']['q2'])) {
-														return 'bar high';
-													} else if(d.value >= Math.ceil(res['districtRanges']['q2']) && d.value <= Math.ceil(res['districtRanges']['q3'])) {
-														return 'bar mid';
-													} else if(d.value >= Math.ceil(res['districtRanges']['q3'])) {
-														return 'bar low';
-													}
-									  		})
-									  		.attr("x", function(d) { return xScale(d.id); })
-									  		.attr("width", xScale.rangeBand())
-									  		.attr("y", function(d) { return yScale(d.value); })
-									  		.attr("height", function(d) { return height - yScale(d.value); });
-									  svgContainer.selectAll(".text")  		
-											  .data(dataCSV)
-											  .enter()
-											  .append("text")
-											  .attr("class","label")
-											  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
-											  .attr("y", function(d) { return yScale(d.value) - 15; })
-											  .attr("dy", ".75em")
-											  .text(function(d) { return Math.ceil(d.value); });
-
-										document.addEventListener("DOMContentLoaded", resize);
-										d3.select(window).on('resize', resize);
-										
-										function resize() {
-										  width = Math.ceil(d3.select('#chartID').style('width'), 10);
-										  width = Math.ceil(width - margin.left - margin.right);
-
-										  height = Math.ceil(d3.select("#chartID").style("height"));
-										  height = Math.ceil(height - margin.top - margin.bottom);
-										    xScale.range([0, width]);
-										    xScale.rangeRoundBands([0, width], .03);
-										    yScale.range([height, 0]);
-
-										    yAxis.ticks(Math.max(height/50, 2));
-										    xAxis.ticks(Math.max(width/50, 2));
-
-										    d3.select(svgContainer.node().parentNode)
-										        .style('width', (width + margin.left + margin.right) + 'px');
-
-										    svgContainer.selectAll('.bar')
-										    	.attr("x", function(d) { return xScale(d.id); })
-										      .attr("width", xScale.rangeBand());
-										      
-										   svgContainer.selectAll("text")  		
-											 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
-										      .attr("y", function(d) { if(isNaN(yScale(Math.ceil(d.value)) - 15)) return 0; return yScale(Math.ceil(d.value)) - 15; })
-										      .attr("dy", ".75em");   	      
-
-										    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
-										}
-
-										function wrap(text, width) {
-										  text.each(function() {
-										    var text = d3.select(this),
-										        words = text.text().split(/\s+/).reverse(),
-										        word,
-										        line = [],
-										        lineNumber = 0,
-										        lineHeight = 1.1, // ems
-										        y = text.attr("y"),
-										        dy = parseFloat(text.attr("dy")),
-										        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-										    while (word = words.pop()) {
-										      line.push(word);
-										      tspan.text(line.join(" "));
-										      if (tspan.node().getComputedTextLength() > width) {
-										        line.pop();
-										        tspan.text(line.join(" "));
-										        line = [word];
-										        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-										      }
-										    }
-										  });
-										}
 									}
 								}
 							}
@@ -1227,7 +1130,7 @@
   	const getMapData = (model, item, id, text) => {
   		clicked = false;
   		$('#chartID').html('');
-  		if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+  		if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 
   		} else {
 	  		document.getElementById('map-hint-id').classList.remove('slowhide');
@@ -1246,7 +1149,7 @@
 	      data: {"model": model},
 	      success: function (res) {
 	      	if(res['dataExists']) {
-		      	if(model == 'BdhsStunting' || model == 'BdhsWasting') {
+		      	if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsBmi') {
 		      		$('#low-text').html('Low');
 							$('#avg-text').html('Medium');
 							$('#high-text').html('High');
@@ -1262,7 +1165,7 @@
 							$('#high-text').html('Medium');
 							$('#vhigh-text').html('Low');
 		      	}
-						$('#map-title').html("Women counselled on Maternal Nutrition")
+						$('#map-title').html(text)
 						$('#map-title').show();
 	      		map = new google.maps.Map(document.getElementById('mapdiv'), {
 			        center: {lat: 23.684994, lng: 90.356331},
@@ -1374,7 +1277,7 @@
 									id = ids[1];
 								var value = Math.ceil(res['minimalData'][id]);
 								var localColor = '';
-								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 									if(value >= Math.ceil(res['ranges']['min']) && value < Math.ceil(res['ranges']['q1'])){
 										localColor = scoreColors['low'];
 									} else if(value >= Math.ceil(res['ranges']['q1']) && value < Math.ceil(res['ranges']['q2'])) {
@@ -1449,7 +1352,7 @@
 										value = 'N/A';
 									else
 										value = Math.ceil(res['minimalData'][id]);
-									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia')
+									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi')
 										value += '%';
 									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 									var anchor = new google.maps.MVCObject();
@@ -1508,7 +1411,7 @@
 						});
 
 						stateLayer.addListener('click', function(e) {
-							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia') {
+							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 							} else {
 								if(e.feature.getProperty('name') == 'Barisal Division') {
 									var bounds = new google.maps.LatLngBounds();

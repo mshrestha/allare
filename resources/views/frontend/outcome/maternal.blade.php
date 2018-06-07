@@ -216,10 +216,11 @@
 					},
 					scales: {
 						xAxes: [{
-							scaleLabel: {
-								display: true,
-								// labelString: 'Month'
-							}
+							ticks: {
+			                    autoSkip: true,
+			                    maxRotation: 0,
+			                    minRotation: 0
+			                }
 						}],
 						yAxes: [{
 							stacked: true,
@@ -248,8 +249,8 @@
 
 	function pieChart(id, data_value) {
 		var parentDiv = document.getElementById('pie-chart-'+id);
-		var w = 300,                        
-		h = 156,                            
+		var w = 200,                        
+		h = 200;                             
 		r = Math.min(w, h) / 2,                             
 		color = ['#fba69c', '#d2d2d2'];     
 		dataCSV = [{"label": data_value+"%", "value": data_value}, 

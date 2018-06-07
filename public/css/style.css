@@ -6853,7 +6853,7 @@ body {
   float: left;
   margin-right: 2%;
   position: relative; }
-  .progress-bar-h#goal-chart-h-Stunting, .progress-bar-h#goal-chart-h-Wasting, .progress-bar-h#goal-chart-h-Anemia {
+  .progress-bar-h#goal-chart-h-Stunting, .progress-bar-h#goal-chart-h-Wasting, .progress-bar-h#goal-chart-h-Anemia, .progress-bar-h#goal-chart-h-Women-Underweighed {
     display: flex; }
   .progress-bar-h .target {
     right: 0%;
@@ -7574,6 +7574,10 @@ text.rbc-center-text {
 .map-hint.slowhide {
   opacity: 0; }
 
+@media (max-width: 991.98px) {
+  .col-map {
+    padding-top: 40px; } }
+
 .swiper-tab {
   background: #fff; }
   .swiper-tab .swiper-pagination {
@@ -7638,13 +7642,19 @@ text.rbc-center-text {
     fill: #FFF !important; }
   .tab-content .swiper-slide .pie-chart {
     margin-top: 15px; }
-    @media (max-width: 767.98px) {
+    @media (max-width: 991.98px) {
       .tab-content .swiper-slide .pie-chart {
         text-align: center; }
         .tab-content .swiper-slide .pie-chart svg {
-          width: 158px;
+          width: 200px;
           margin-left: auto;
           margin-right: auto; } }
+  @media (max-width: 991.98px) {
+    .tab-content .swiper-slide .pie-legend {
+      text-align: center; } }
+  @media (max-width: 991.98px) {
+    .tab-content .swiper-slide .trend-col {
+      margin-top: 15px; } }
   .tab-content .swiper-slide .area-chart {
     height: 300px; }
     @media (min-width: 768px) {

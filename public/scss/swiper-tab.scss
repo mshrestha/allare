@@ -75,13 +75,23 @@
 			}
 			.pie-chart{
 				margin-top: 15px;
-				@include media-breakpoint-down(sm) {
+				@include media-breakpoint-down(md) {
 					text-align: center;
 					svg{
-						width: 158px;
+						width: 200px;
 						margin-left: auto;
 						margin-right: auto;
 					}
+				}
+			}
+			.pie-legend {
+				@include media-breakpoint-down(md) {
+					text-align: center
+				}
+			}
+			.trend-col {
+				@include media-breakpoint-down(md) {
+					margin-top:	15px;
 				}
 			}
 			.area-chart{

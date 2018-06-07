@@ -1,10 +1,10 @@
 <div class="swiper-slide hidden" id="swiper-slide-{{$key}}" data-hash="slide{{$key}}">
 	<div class="row">
-		<div class="col-xl-3 col-lg-3 col-sm-4">
+		<div class="col-xl-3 col-lg-3 col-sm-12 col-md-12">
 			<div class="tab-col-title">{{$analysis['heading']}}</div>
 			<div class="tab-col-subtitle specific-date" id="specific-date-{{$key}}"> Last 6 Months {{-- {{strtoupper($analysis['current_month'])}} --}}</div>
 			<div class="row">
-				<div class="input-group mb-1 col-6 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+				<div class="input-group mb-1 col-6 col-sm-12 col-md-12 col-lg-8 col-xl-6">
 					<select class="custom-select gry-borderd load_period_data" name="period" id="trend_period_id" onchange="loadPeriodWiseData($(this), '{{ $analysis['model'] }}', {{$key}})">
 						{{-- <option value="LAST_MONTH">Last Month</option> --}}
 						<option value="LAST_6_MONTHS">Last 6 Months</option>
@@ -22,10 +22,10 @@
 				{{-- <span class="legend-text" id="other-text">Total Patients Visited</span> --}}
 			</div>
 		</div> {{-- col-xs-2 --}}
-		<div class="col-xl-6 pr-xl-0 col-lg-6 col-sm-8">
+		<div class="col-xl-8 pr-xl-0 col-lg-8 col-sm-12 col-md-12 trend-col">
 			<div class="tab-col-title">{{$analysis['name']}}</div>
 			<div class="tab-col-subtitle area-date" id="area-date-{{$key}}">Last 6 Months</div>
-			<div style="height: 250px;" class="canvas-holder output-area-chart" id="output-area-chart-{{ $key }}">
+			<div style="height: 300px;" class="canvas-holder output-area-chart" id="output-area-chart-{{ $key }}">
 				{{-- <svg id="line-chart-{{ $key }}"></svg> --}}
 				<canvas id="line-area-{{ $key }}"></canvas>
 			</div>

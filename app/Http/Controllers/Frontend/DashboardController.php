@@ -309,7 +309,7 @@ class DashboardController extends Controller
 			'Anemia' => 'BdhsAnemia',
 			'Exclusive Breastfeeding' => 'BdhsExclusiveBreastfeeding',
 			'Vitamin A Supplements' => 'BdhsVitaminA',
-			'BMI' => 'BdhsBmi'
+			'Women-Underweighed' => 'BdhsBmi'
 			
 		];
 
@@ -341,7 +341,7 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['goal_text'] = "Reduce stunting in children under-5 years from 36.1% (BDHS 2014) to 25 % by 2021";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
-
+					$dataSet[$indicator]['id'] = 'Stunting';
 					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
 
 				}
@@ -353,6 +353,7 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['goal_text'] = "Reduce wasting in children under-5 years";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
+					$dataSet[$indicator]['id'] = 'Wasting';
 					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
 				}
 				else if($indicators[$indicator] == 'BdhsAnemia') {
@@ -363,7 +364,7 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['goal_text'] = "Prevalence of Anemia in Women of Reproductive age";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
-
+					$dataSet[$indicator]['id'] = 'Anemia';
 					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
 				}else if($indicators[$indicator] == 'BdhsVitaminA') {
 					$dataSet[$indicator]['goal'] = 'Maintain goal of 99% by 2021';
@@ -373,20 +374,18 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['goal_text'] = "Two-dosage coverage for 2016: 99%";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
-
+					$dataSet[$indicator]['id'] = 'VitaminA';
 					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
-
 				}else if($indicators[$indicator] == 'BdhsBmi') {
 					$dataSet[$indicator]['goal'] = 'Target goal < 19% by 2021';
 					$dataSet[$indicator]['limit'] = 100;
-					$dataSet[$indicator]['target'] = 81;
+					$dataSet[$indicator]['target'] = 19;
 					$dataSet[$indicator]['direction'] = 1;
 					$dataSet[$indicator]['goal_text'] = "Prevalence of Underweight in Woman of Reproductive age";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
-
+					$dataSet[$indicator]['id'] = 'Women-Underweighed';
 					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
-
 				}
 				else {
 					$dataSet[$indicator]['goal'] = 'Target goal 65% by 2021';
@@ -395,6 +394,7 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['target'] = 35;
 					$dataSet[$indicator]['goal_text'] = "Increase prevalence of exclusive breastfeeding";
 					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
+					$dataSet[$indicator]['id'] = 'Exclusive-Breastfeeding';
 				}
 		}
 		// dd($dataSet);
@@ -661,7 +661,7 @@ class DashboardController extends Controller
 		}
 		// $pe = date('Y').date('m', strtotime('-1 month'));
 		$flag = 1;
-		if($data['model'] == 'BdhsWasting' || $data['model'] == 'BdhsStunting' ) {
+		if($data['model'] == 'BdhsWasting' || $data['model'] == 'BdhsStunting' || $data['model'] == 'BdhsBmi') {
 			$pe = '2014';
 		}
 		else if($data['model'] == 'BdhsAnemia') {
