@@ -618,7 +618,7 @@ text.rbc-center-text {
 }
 
 .col-map {
-	@include media-breakpoint-up(sm) {
+	@include media-breakpoint-down(md) {
 	  padding-top: 40px;
   }
 }
