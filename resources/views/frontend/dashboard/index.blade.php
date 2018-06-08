@@ -813,10 +813,10 @@
 							    map.fitBounds(bounds);
 							    stateLayer.overrideStyle(e.feature, {
 										fillColor: '#ededed',
-										strokeColor: '#CCC',
+										strokeColor: '#ededed',
 										// strokeColor: e.feature.getProperty('color'),
 										strokeWeight: 1,
-										zIndex: 5
+										zIndex: 1
 									});
 									// console.log(res);
 									anotherLayer.setMap(map);
@@ -1517,10 +1517,10 @@
 							    map.fitBounds(bounds);
 							    stateLayer.overrideStyle(e.feature, {
 										fillColor: '#ededed',
-										strokeColor: '#CCC',
+										strokeColor: '#ededed',
 										// strokeColor: e.feature.getProperty('color'),
 										strokeWeight: 1,
-										zIndex: 5
+										zIndex: 1
 									});
 									// console.log(res);
 									anotherLayer.setMap(map);
