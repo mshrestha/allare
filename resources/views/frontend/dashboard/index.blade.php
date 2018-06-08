@@ -100,7 +100,7 @@
 														<div class="goal" style="width: 10%;">
 														</div>
 														<div class="input-bars current grow-h-animation" style="width: 73%;">
-															73%
+															<span>73%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -112,7 +112,7 @@
 														<div class="goal" style="width: 10%;">
 														</div>
 														<div class="input-bars current grow-h-animation" style="width: 70%;">
-															70%
+															<span>70%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -126,7 +126,7 @@
 														<div class="goal" style="width: 10%;">
 														</div>
 														<div class="input-bars current grow-h-animation" style="width: 68%;">
-															68%
+															<span>68%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
 									  		</div>
@@ -138,7 +138,7 @@
 														<div class="goal" style="width: 10%;">
 														</div>
 														<div class="input-bars current grow-h-animation" style="width: 61%;">
-															61%
+															<span>61%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -250,6 +250,7 @@
 @section('outjavascript')
 	<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 	<script src="{{asset('js/swiper.min.js')}}"></script>
+	<script src="{{asset('js/TweenMax.min.js')}}"></script>
 	<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkyw2RR6Cy0hsAOE4-um5lZg5TV6c8bbQ&callback=initMap">
 	</script>
@@ -276,6 +277,12 @@
 	})
 
   	$('#national_outcomes_filter_form').on('submit', function() {
+  		var aniamteEl = $('.input-bars.current.grow-h-animation');
+  		var aniamteElChild = $('.input-bars.current.grow-h-animation span');
+
+  		TweenMax.from(aniamteEl, 1, {css: {width: '0%'}});
+  		TweenMax.from(aniamteElChild, 0.5, {css: {opacity: '0', x: '-10px'}, delay:0.5});
+
   		if($('.input-bars').hasClass('grow-h-animation')) {
   			$('.input-bars').removeClass('grow-h-animation');	
   		}
