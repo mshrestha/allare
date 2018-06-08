@@ -609,7 +609,7 @@
 						var stateLayer = new google.maps.Data();
 						
 						anotherLayer.loadGeoJson("{{asset('js/barisal.geojson')}}");
-						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+						stateLayer.loadGeoJson("{{asset('js/test_complete.json')}}");
 						var clicked = false;
 						stateLayer.setStyle(function(feature) {
 							var localColor = '#ededed';
@@ -1309,7 +1309,7 @@
 						var stateLayer = new google.maps.Data();
 						
 						anotherLayer.loadGeoJson("{{asset('js/barisal.geojson')}}");
-						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+						stateLayer.loadGeoJson("{{asset('js/test_complete.json')}}");
 						var clicked = false;
 						stateLayer.setStyle(function(feature) {
 							var localColor = '#ededed';
