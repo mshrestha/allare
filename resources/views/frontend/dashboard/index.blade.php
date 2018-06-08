@@ -156,7 +156,7 @@
 				      		<div class="qa-div input-box input-training">
 				      			<h6 class="mb-0">QUALITY CONTROL AND SUPPORTIVE SUPERVISION</h6>
 				      			<div><span class="number">63%</span><span class="number-txt"># of facilities receiving supporting supervision and monitoring in the last quarter</span></div>
-							  		<div><span class="number">70%</span><span class="number-txt">% of facilties reporting high quality data </span></div>
+							  		{{-- <div><span class="number">70%</span><span class="number-txt">% of facilties reporting high quality data </span></div> --}}
 							  		<div><span class="number">67%</span><span class="number-txt">% of facilities passing the Data Quality Assessment</span></div>
 				      		</div>
 				      		{{-- SUPPLY DIV --}}
