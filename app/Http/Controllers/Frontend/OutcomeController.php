@@ -170,9 +170,64 @@ class OutcomeController extends Controller
 					->whereIn('period', $period)
 					->whereNull('category_option_combo')
 					->sum('value');
-		$dhis_calculate = ($cc_mr_anc_nutri_counsel / ($anc1_dghs + $anc2_dghs + $anc3_dghs + $anc4_dghs)) * 100;
-		return $dhis_calculate;
+		// $dhis_calculate = ($cc_mr_anc_nutri_counsel / ($anc1_dghs + $anc2_dghs + $anc3_dghs + $anc4_dghs)) * 100;
+		
+		$dhis_numerator = $cc_mr_anc_nutri_counsel;
+		$dhis_denominator = $anc1_dghs + $anc2_dghs + $anc3_dghs + $anc4_dghs;
+
+		// numerator = 0
+		// denominator = ANC1+ANC2+ANC3+ANC4+PNC1+PNC2+PNC3+PNC4
+
+		$anc1_dgfp = ANC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc2_dgfp = ANC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc3_dgfp = ANC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc4_dgfp = ANC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc1_dgfp = PNC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc2_dgfp = PNC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc3_dgfp = PNC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc4_dgfp = PNC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$dgfp_numerator = 0;
+		$dgfp_denominator = $anc1_dgfp + $anc2_dgfp + $anc3_dgfp + $anc4_dgfp + $pnc1_dgfp + $pnc2_dgfp + $pnc3_dgfp + $pnc4_dgfp;
+
+		$maternal_nutrition_counselling_percent = (($dhis_numerator + $dgfp_numerator) / ($dhis_denominator + $dgfp_denominator)) * 100;
+
+		return floor($maternal_nutrition_counselling_percent);
+
 	}
+
 
 	public function calculate_IFA_distribution_percentage($organisation_unit, $period) {
 		//DHIS calculation
