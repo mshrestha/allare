@@ -166,10 +166,10 @@
 							  		<div><span class="number">69%</span><span class="number-txt">% of facilities with adequate anthropometric measuring tools</span></div>
 							  		<div><span class="number">64%</span><span class="number-txt">% of facilities without stockouts of Zinc and ORS</span></div>
 				      		</div>
-				      		<div class="spider-graph-div input-box input-training">
+				      		{{-- <div class="spider-graph-div input-box input-training">
 				      			<h6 class="mb-0">SPIDER GRAPH</h6>
 				      			<div><img id="spider-graph-img" class="img" src="http://via.placeholder.com/350x250" alt=""></div>
-				      		</div>
+				      		</div> --}}
 				      	</div>
 			      	</div> {{-- col-md-4 --}}
 			  	</div>
@@ -300,13 +300,13 @@
   		// }
   		// $('.input-bars').addClass('grow-h-animation');
 
-  		var imageDiction = {"bangladesh": "", "barisal division": "", "barisal district": "", "barguna": "", "bhola": "", "jhalokati": "","patuakhali": "", "pirojpur": "", "chittagong": "", "dhaka": "", "khulna": "", "mymensingh": "", "rajshahi": "", "rangpur": "", "sylhet": ""};
-  		var divisions_id = $('#division_id option:selected').text();
-  		for(var key in imageDiction) {
-  			if(divisions_id.toLowerCase().match(key) != null) {
-  				console.log(divisions_id, key);
-  			}
-  		}
+  		// var imageDiction = {"bangladesh": "", "barisal division": "", "barisal district": "", "barguna": "", "bhola": "", "jhalokati": "","patuakhali": "", "pirojpur": "", "chittagong": "", "dhaka": "", "khulna": "", "mymensingh": "", "rajshahi": "", "rangpur": "", "sylhet": ""};
+  		// var divisions_id = $('#division_id option:selected').text();
+  		// for(var key in imageDiction) {
+  		// 	if(divisions_id.toLowerCase().match(key) != null) {
+  		// 		console.log(divisions_id, key);
+  		// 	}
+  		// }
 
   		
   		$.ajax({
@@ -841,7 +841,7 @@
 												.attr("y", 6).attr("dy", ".71em")
 												//.style("text-anchor", "end").text("Number of Applicatons"); 
 										*/
-										console.log(res);
+										// console.log(res);
 
 										svgContainer.selectAll(".bar")
 									  		.data(dataCSV)

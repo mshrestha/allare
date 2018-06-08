@@ -613,8 +613,63 @@ class DashboardController extends Controller
 		if($anc4_dghs != null)
 			$anc4_val = $anc4_dghs->value;
 		$dhis_calculate = ($cc_val / ($anc1_val + $anc2_val + $anc3_val + $anc4_val)) * 100;
+		$dhis_numerator = $cc_val;
+		$dhis_denominator = ($anc1_val + $anc2_val + $anc3_val + $anc4_val);
+		
+		$period = $this->yearly_months('2018');
+		$anc1_dgfp = ANC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
 
-		return $dhis_calculate;
+		$anc2_dgfp = ANC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$anc3_dgfp = ANC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$anc4_dgfp = ANC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$pnc1_dgfp = PNC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc2_dgfp = PNC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$pnc3_dgfp = PNC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$pnc4_dgfp = PNC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$dgfp_numerator = 0;
+		$dgfp_denominator = $anc1_dgfp + $anc2_dgfp + $anc3_dgfp + $anc4_dgfp + $pnc1_dgfp + $pnc2_dgfp + $pnc3_dgfp + $pnc4_dgfp;
+
+		$maternal_nutrition_counselling_percent = (($dhis_numerator + $dgfp_numerator) / ($dhis_denominator + $dgfp_denominator)) * 100;
+
+		return floor($maternal_nutrition_counselling_percent);
 	}
 
 	public function calculate_IFA_distribution_proportion_percentage($organisation_unit, $period) {
