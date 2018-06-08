@@ -7380,10 +7380,22 @@ body {
   position: absolute;
   margin-left: -20px;
   margin-top: -62px; }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    #maternal-health:before, #child-health:before {
+      width: 30px;
+      height: 60px;
+      margin-left: -10px;
+      margin-top: -58px; } }
 
 #maternal-health:before {
   width: 53px;
   height: 54px; }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    #maternal-health:before {
+      width: 35px;
+      height: 54px;
+      margin-left: -15px;
+      margin-top: -58px; } }
 
 #child-health:before {
   background: url("../images/baby.png") no-repeat center bottom;
