@@ -7592,6 +7592,11 @@ text.rbc-center-text {
   .col-map {
     padding-top: 40px; } }
 
+@media (max-width: 575.98px) {
+  .geo-filter-wrap {
+    padding-bottom: 20px;
+    padding-top: 20px; } }
+
 .swiper-tab {
   background: #fff; }
   .swiper-tab .swiper-pagination {
