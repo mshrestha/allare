@@ -894,7 +894,7 @@ class DashboardController extends Controller
 			$reverse = true;
 		}
 
-		// dd($valueArr);
+		// dd($dataArr);
 		if(count($valueArr) <= 0){
 			return array(
 				'dataExists' => false,

@@ -689,6 +689,7 @@
 									id = ids[0];
 									if(res['server'] == 'community')
 										id = ids[1];
+									value = res['minimalData'][id];
 									if(isNaN(value))
 										value = 'N/A';
 									else
@@ -711,7 +712,12 @@
 								if(res['server'] == 'community')
 									id = ids[1];
 								value = res['minimalData'][id];
-								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseFloat(value).toFixed(1) + '</span>' + '</div>');
+								if(isNaN(value))
+									value = 'N/A';
+								else
+									value = parseFloat(res['minimalData'][id]).toFixed(1);
+								// value = res['minimalData'][id];
+								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 								var anchor = new google.maps.MVCObject();
 					    	anchor.set("position", e.latLng);
 					    	infoWindow.open(map, anchor);
@@ -970,6 +976,7 @@
 			url: '/dashboard_percents',
 			data: {"ids": event.feature.getProperty('ids')},
 			success: function (res) {
+
 				$('#legend-for-data').show();
 				$('#division-name').html(event.feature.getProperty('name'))
 				child = res['child'];
@@ -1191,6 +1198,7 @@
 	      url: '/dashboard_specific_map',
 	      data: {"model": model},
 	      success: function (res) {
+	      	// console.log(res);
 	      	if(res['dataExists']) {
 		      	if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsBmi') {
 		      		$('#low-text').html('Low');
@@ -1389,6 +1397,7 @@
 									id = ids[0];
 									if(res['server'] == 'community')
 										id = ids[1];
+									value = res['minimalData'][id];
 									if(isNaN(value))
 										value = 'N/A';
 									else
@@ -1411,7 +1420,12 @@
 								if(res['server'] == 'community')
 									id = ids[1];
 								value = res['minimalData'][id];
-								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseFloat(value).toFixed(1) + '</span>' + '</div>');
+								// console.log(isNaN(value));
+								if(isNaN(value))
+										value = 'N/A';
+								else
+									value = parseFloat(res['minimalData'][id]).toFixed(1);
+								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 								var anchor = new google.maps.MVCObject();
 					    	anchor.set("position", e.latLng);
 					    	infoWindow.open(map, anchor);
