@@ -231,9 +231,7 @@
 				<div class="col-sm-2"></div>
 				<div class="col-12 col-md-offset-2 col-md-10">
 					<div class="barchart-title d-block ml-0" id="barchart-title-id"></div>
-					<div class="canvas-holder score-bar-chart" style="height: 220px; width: 100%; margin-top: 20px;">
-						<canvas id="chartID" width="400" hwight="200">
-						</canvas>
+					<div class="canvas-holder score-bar-chart" id="chartID">
 					</div>
 				</div>
 			</div>
@@ -832,92 +830,149 @@
 										$('html,body').animate({
 							        scrollTop: $("#chartID").offset().top},
 							        'slow');
-
-										var labels = [];
-										var fillColors = [];
-										var dataValues = [];
+										var max = 0;
+										var dataCSV = [];
 										for(var key in res['minimalDistrict']) {
-											var value = res['minimalDistrict'][key];
-											dataValues.push(Math.ceil(value));
-											labels.push(key);
-											if(value >= Math.ceil(res['districtRanges']['min']) && value < Math.ceil(res['districtRanges']['q1'])) {
-												fillColors.push('#ea5c58');
-											} else if(value >= Math.ceil(res['districtRanges']['q1']) && value < Math.ceil(res['districtRanges']['q2'])) {
-												fillColors.push('#eea039');
-											} else if(value >= Math.ceil(res['districtRanges']['q2']) && value <= Math.ceil(res['districtRanges']['q3'])) {
-												fillColors.push('#f7e15a');
-											} else if(value >= Math.ceil(res['districtRanges']['q3'])) {
-												fillColors.push('#f2b4a0');
-											}
+											temp = {};
+											temp.id = key;
+											temp.value = res['minimalDistrict'][key];
+											if(max < temp.value)
+												max = temp.value;
+											dataCSV.push(temp);
 										}
 										
-										var chartData = {
-											labels: labels,
-											datasets: [{
-												label: "Women counselled on Maternal Nutrition",
-												backgroundColor: fillColors,
-												data: dataValues
-											}]
-										};
-										// console.log(chartData);
-										var ctx = document.getElementById("chartID").getContext("2d");
-										var myBar = new Chart(ctx, {
-								    	type: 'bar',
-								    	data: chartData,
-								    	options: {
-												responsive: true,
-												legend: {
-													position: 'top',
-												},
-												title: {
-													display: false,
-													text: 'Chart.js Bar Chart'
-												},
-												maintainAspectRatio: false,
-												legend: {
-									        display: false
-										    },
-										    scales: {
-										      yAxes: [{
-										        ticks: {
-										          beginAtZero: true
-										        },
-										        display: false,
-										        gridLines: {
-										          display: false
-										        },
-										      }],
-										      xAxes: [{
-										        gridLines: {
-										          display: false
-										        },
-										        ticks: {
-										          beginAtZero: true
-										        },
-										        categoryPercentage: 0.9,
-								            barPercentage: 0.9
-										      }]
-										    },
-										    tooltips: {
-										      "enabled": false
-										    },
-										    animation: {
-										    	onComplete: function () {
-										    		var chartInstance = this.chart;
-										        var ctx = chartInstance.ctx;
-										        console.log(ctx);
-										        var height = chartInstance.controller.boxes[0].bottom;
-												    ctx.textAlign = "center";
-										        Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
-													      var meta = chartInstance.controller.getDatasetMeta(i);
-													      Chart.helpers.each(meta.data.forEach(function (bar, index) {
-													        ctx.fillText(dataset.data[index], bar._model.x, bar._model.y + 15);
-													      }),this)
-													    }),this);
-											    }
-											  }
-											}
-							    	});					
+										parentDiv = document.getElementById('chartID');
+									  var margin = {top:20, right:20, bottom:20, left:20};
+
+										var width = parentDiv.clientWidth - margin.left - margin.right;
+
+										var height = 185;
+										var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
+
+										var yScale = d3.scale.linear()
+										      .range([height, 0]);
+
+
+										var xAxis = d3.svg.axis()
+												.scale(xScale)
+												.orient("bottom");
+										      
+										      
+										var yAxis = d3.svg.axis()
+												.scale(yScale)
+												.orient("left");
+
+										var svgContainer = d3.select("#chartID").append("svg")
+												.attr("width", width+margin.left + margin.right)
+												.attr("height",height+margin.top + margin.bottom)
+												.append("g").attr("class", "container")
+												.attr("transform", "translate("+ margin.left +","+ margin.top +")");
+
+										xScale.domain(dataCSV.map(function(d) { return d.id; }));
+										yScale.domain([0, d3.max(dataCSV, function(d) { return Math.ceil(d.value); })]);
+
+
+										//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
+										var xAxis_g = svgContainer.append("g")
+												.attr("class", "x axis")
+												.attr("transform", "translate(0," + (height) + ")")
+												.call(xAxis)
+												.selectAll("text");
+													
+										// Uncomment this block if you want the y axis
+										/*var yAxis_g = svgContainer.append("g")
+												.attr("class", "y axis")
+												.call(yAxis)
+												.append("text")
+												.attr("transform", "rotate(-90)")
+												.attr("y", 6).attr("dy", ".71em")
+												//.style("text-anchor", "end").text("Number of Applicatons"); 
+										*/
+
+
+										svgContainer.selectAll(".bar")
+									  		.data(dataCSV)
+									  		.enter()
+									  		.append("rect")
+									  		.attr("class", function(d) {
+									  			if(d.value >= Math.ceil(res['districtRanges']['min']) && d.value < Math.ceil(res['districtRanges']['q1'])) {
+														return 'bar vhigh';
+													} else if(d.value >= Math.ceil(res['districtRanges']['q1']) && d.value < Math.ceil(res['districtRanges']['q2'])) {
+														return 'bar high';
+													} else if(d.value >= Math.ceil(res['districtRanges']['q2']) && d.value <= Math.ceil(res['districtRanges']['q3'])) {
+														return 'bar mid';
+													} else if(d.value >= Math.ceil(res['districtRanges']['q3'])) {
+														return 'bar low';
+													}
+									  		})
+									  		.attr("x", function(d) { return xScale(d.id); })
+									  		.attr("width", xScale.rangeBand())
+									  		.attr("y", function(d) { return yScale(d.value); })
+									  		.attr("height", function(d) { return height - yScale(d.value); });
+									  svgContainer.selectAll(".text")  		
+											  .data(dataCSV)
+											  .enter()
+											  .append("text")
+											  .attr("class","label")
+											  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
+											  .attr("y", function(d) { return yScale(d.value) - 15; })
+											  .attr("dy", ".75em")
+											  .text(function(d) { return Math.ceil(d.value); });
+
+										document.addEventListener("DOMContentLoaded", resize);
+										d3.select(window).on('resize', resize);
+										
+										function resize() {
+										  width = parseInt(d3.select('#chartID').style('width'), 10);
+										  width = parseInt(width - margin.left - margin.right);
+
+										  height = parseInt(d3.select("#chartID").style("height"));
+										  height = parseInt(height - margin.top - margin.bottom);
+										    xScale.range([0, width]);
+										    xScale.rangeRoundBands([0, width], .03);
+										    yScale.range([height, 0]);
+
+										    yAxis.ticks(Math.max(height/50, 2));
+										    xAxis.ticks(Math.max(width/50, 2));
+
+										    d3.select(svgContainer.node().parentNode)
+										        .style('width', (width + margin.left + margin.right) + 'px');
+
+										    svgContainer.selectAll('.bar')
+										    	.attr("x", function(d) { return xScale(d.id); })
+										      .attr("width", xScale.rangeBand());
+										      
+										   svgContainer.selectAll("text")  		
+											 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
+										      .attr("y", function(d) { if(isNaN(yScale(Math.ceil(d.value)) - 15)) return 0; return yScale(Math.ceil(d.value)) - 15; })
+										      .attr("dy", ".75em");   	      
+
+										    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
+										}
+
+										function wrap(text, width) {
+										  text.each(function() {
+										    var text = d3.select(this),
+										        words = text.text().split(/\s+/).reverse(),
+										        word,
+										        line = [],
+										        lineNumber = 0,
+										        lineHeight = 1.1, // ems
+										        y = text.attr("y"),
+										        dy = parseFloat(text.attr("dy")),
+										        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+										    while (word = words.pop()) {
+										      line.push(word);
+										      tspan.text(line.join(" "));
+										      if (tspan.node().getComputedTextLength() > width) {
+										        line.pop();
+										        tspan.text(line.join(" "));
+										        line = [word];
+										        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+										      }
+										    }
+										  });
+										}
 									}
 								}
 							}
@@ -1191,7 +1246,6 @@
 	      url: '/dashboard_specific_map',
 	      data: {"model": model},
 	      success: function (res) {
-	      	// console.log(res);
 	      	if(res['dataExists']) {
 		      	if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsBmi') {
 		      		$('#low-text').html('Low');
@@ -1480,92 +1534,149 @@
 										$('html,body').animate({
 							        scrollTop: $("#chartID").offset().top},
 							        'slow');
-
-										var labels = [];
-										var fillColors = [];
-										var dataValues = [];
+										var max = 0;
+										var dataCSV = [];
 										for(var key in res['minimalDistrict']) {
-											var value = res['minimalDistrict'][key];
-											dataValues.push(Math.ceil(value));
-											labels.push(key);
-											if(value >= Math.ceil(res['districtRanges']['min']) && value < Math.ceil(res['districtRanges']['q1'])) {
-												fillColors.push('#ea5c58');
-											} else if(value >= Math.ceil(res['districtRanges']['q1']) && value < Math.ceil(res['districtRanges']['q2'])) {
-												fillColors.push('#eea039');
-											} else if(value >= Math.ceil(res['districtRanges']['q2']) && value <= Math.ceil(res['districtRanges']['q3'])) {
-												fillColors.push('#f7e15a');
-											} else if(value >= Math.ceil(res['districtRanges']['q3'])) {
-												fillColors.push('#f2b4a0');
-											}
+											temp = {};
+											temp.id = key;
+											temp.value = res['minimalDistrict'][key];
+											if(max < temp.value)
+												max = temp.value;
+											dataCSV.push(temp);
+										}
+										
+										parentDiv = document.getElementById('chartID');
+									  var margin = {top:20, right:20, bottom:20, left:20};
+
+										var width = parentDiv.clientWidth - margin.left - margin.right;
+
+										var height = 185;
+										var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
+
+										var yScale = d3.scale.linear()
+										      .range([height, 0]);
+
+
+										var xAxis = d3.svg.axis()
+												.scale(xScale)
+												.orient("bottom");
+										      
+										      
+										var yAxis = d3.svg.axis()
+												.scale(yScale)
+												.orient("left");
+
+										var svgContainer = d3.select("#chartID").append("svg")
+												.attr("width", width+margin.left + margin.right)
+												.attr("height",height+margin.top + margin.bottom)
+												.append("g").attr("class", "container")
+												.attr("transform", "translate("+ margin.left +","+ margin.top +")");
+
+										xScale.domain(dataCSV.map(function(d) { return d.id; }));
+										yScale.domain([0, d3.max(dataCSV, function(d) { return Math.ceil(d.value); })]);
+
+
+										//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
+										var xAxis_g = svgContainer.append("g")
+												.attr("class", "x axis")
+												.attr("transform", "translate(0," + (height) + ")")
+												.call(xAxis)
+												.selectAll("text");
+													
+										// Uncomment this block if you want the y axis
+										/*var yAxis_g = svgContainer.append("g")
+												.attr("class", "y axis")
+												.call(yAxis)
+												.append("text")
+												.attr("transform", "rotate(-90)")
+												.attr("y", 6).attr("dy", ".71em")
+												//.style("text-anchor", "end").text("Number of Applicatons"); 
+										*/
+
+
+										svgContainer.selectAll(".bar")
+									  		.data(dataCSV)
+									  		.enter()
+									  		.append("rect")
+									  		.attr("class", function(d) {
+									  			if(d.value >= Math.ceil(res['districtRanges']['min']) && d.value < Math.ceil(res['districtRanges']['q1'])) {
+														return 'bar vhigh';
+													} else if(d.value >= Math.ceil(res['districtRanges']['q1']) && d.value < Math.ceil(res['districtRanges']['q2'])) {
+														return 'bar high';
+													} else if(d.value >= Math.ceil(res['districtRanges']['q2']) && d.value <= Math.ceil(res['districtRanges']['q3'])) {
+														return 'bar mid';
+													} else if(d.value >= Math.ceil(res['districtRanges']['q3'])) {
+														return 'bar low';
+													}
+									  		})
+									  		.attr("x", function(d) { return xScale(d.id); })
+									  		.attr("width", xScale.rangeBand())
+									  		.attr("y", function(d) { return yScale(d.value); })
+									  		.attr("height", function(d) { return height - yScale(d.value); });
+									  svgContainer.selectAll(".text")  		
+											  .data(dataCSV)
+											  .enter()
+											  .append("text")
+											  .attr("class","label")
+											  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
+											  .attr("y", function(d) { return yScale(d.value) - 15; })
+											  .attr("dy", ".75em")
+											  .text(function(d) { return Math.ceil(d.value); });
+
+										document.addEventListener("DOMContentLoaded", resize);
+										d3.select(window).on('resize', resize);
+										
+										function resize() {
+										  width = parseInt(d3.select('#chartID').style('width'), 10);
+										  width = parseInt(width - margin.left - margin.right);
+
+										  height = parseInt(d3.select("#chartID").style("height"));
+										  height = parseInt(height - margin.top - margin.bottom);
+										    xScale.range([0, width]);
+										    xScale.rangeRoundBands([0, width], .03);
+										    yScale.range([height, 0]);
+
+										    yAxis.ticks(Math.max(height/50, 2));
+										    xAxis.ticks(Math.max(width/50, 2));
+
+										    d3.select(svgContainer.node().parentNode)
+										        .style('width', (width + margin.left + margin.right) + 'px');
+
+										    svgContainer.selectAll('.bar')
+										    	.attr("x", function(d) { return xScale(d.id); })
+										      .attr("width", xScale.rangeBand());
+										      
+										   svgContainer.selectAll("text")  		
+											 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
+										      .attr("y", function(d) { if(isNaN(yScale(Math.ceil(d.value)) - 15)) return 0; return yScale(Math.ceil(d.value)) - 15; })
+										      .attr("dy", ".75em");   	      
+
+										    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
 										}
 
-										var chartData = {
-											labels: labels,
-											datasets: [{
-												label: text,
-												backgroundColor: fillColors,
-												data: dataValues
-											}]
-										};
-										// console.log(chartData);
-										var ctx = document.getElementById("chartID").getContext("2d");
-										var myBar = new Chart(ctx, {
-								    	type: 'bar',
-								    	data: chartData,
-								    	options: {
-												responsive: true,
-												legend: {
-													position: 'top',
-												},
-												title: {
-													display: false,
-													text: 'Chart.js Bar Chart'
-												},
-												maintainAspectRatio: false,
-												legend: {
-									        display: false
-										    },
-										    scales: {
-										      yAxes: [{
-										        ticks: {
-										          beginAtZero: true
-										        },
-										        display: false,
-										        gridLines: {
-										          display: false
-										        },
-										      }],
-										      xAxes: [{
-										        gridLines: {
-										          display: false
-										        },
-										        ticks: {
-										          beginAtZero: true
-										        },
-										        categoryPercentage: 0.9,
-								            barPercentage: 0.9
-										      }]
-										    },
-										    tooltips: {
-										      "enabled": true
-										    },
-										   //  animation: {
-										   //  	onComplete: function () {
-										   //  		var chartInstance = this.chart;
-										   //      var ctx = chartInstance.ctx;
-										   //      console.log(ctx);
-										   //      var height = chartInstance.controller.boxes[0].bottom;
-												 //    ctx.textAlign = "center";
-										   //      Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
-													//       var meta = chartInstance.controller.getDatasetMeta(i);
-													//       Chart.helpers.each(meta.data.forEach(function (bar, index) {
-													//         ctx.fillText(dataset.data[index], bar._model.x, height - ((height - bar._model.y) / 2));
-													//       }),this)
-													//     }),this);
-											  //   }
-											  // }
-											}
-							    	});					
+										function wrap(text, width) {
+										  text.each(function() {
+										    var text = d3.select(this),
+										        words = text.text().split(/\s+/).reverse(),
+										        word,
+										        line = [],
+										        lineNumber = 0,
+										        lineHeight = 1.1, // ems
+										        y = text.attr("y"),
+										        dy = parseFloat(text.attr("dy")),
+										        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+										    while (word = words.pop()) {
+										      line.push(word);
+										      tspan.text(line.join(" "));
+										      if (tspan.node().getComputedTextLength() > width) {
+										        line.pop();
+										        tspan.text(line.join(" "));
+										        line = [word];
+										        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+										      }
+										    }
+										  });
+										}
 									}
 								}
 							}
