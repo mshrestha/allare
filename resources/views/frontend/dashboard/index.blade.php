@@ -18,18 +18,18 @@
 			      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 			      				<div id="maternal-health" style="width: 100%;"></div>
 			      				<div class="legend row">
-			      					<div class="conselling-given col-10 offset-2">Percent of pregnant women counselled on maternal nutrition</div>
-			      					<div class="ifa-distributed col-10 offset-2">Percent of pregnant women who received IFA</div>
-			      					<div class="weight-measured col-10 offset-2">Percent of pregnant women weighed at facility visits</div>
+			      					<div class="dashboard-legend conselling-given col-10 offset-2">Percent of pregnant women counselled on maternal nutrition</div>
+			      					<div class="ifa-distributed dashboard-legend col-10 offset-2">Percent of pregnant women who received IFA</div>
+			      					<div class="weight-measured dashboard-legend col-10 offset-2">Percent of pregnant women weighed at facility visits</div>
 			      					{{-- <div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
 			      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
 			      				<div id="child-health" style="width: 100%;"></div>
 			      				<div class="legend row">
-			      					<div class="imci-counselling col-10 offset-2">Percent of caretakers of 6-23 month olds counselled on IYCF</div>
+			      					<div class="imci-counselling dashboard-legend col-10 offset-2">Percent of caretakers of 6-23 month olds counselled on IYCF</div>
 			      					{{-- <div class="supplements-distributed col-10 offset-2">Supplements Distributed</div> --}}
-			      					<div class="child-growth col-10 offset-2">Percent of children 6-23 months old weighed at facilities</div>
+			      					<div class="child-growth dashboard-legend col-10 offset-2">Percent of children 6-23 months old weighed at facilities</div>
 			      					{{-- <div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>

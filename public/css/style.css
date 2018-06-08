@@ -7097,7 +7097,7 @@ body {
   font-size: 12px;
   font-family: "Roboto", sans-serif; }
   .legend div {
-    padding-left: 50px; }
+    padding-left: 30px; }
     .legend div:before {
       content: "";
       width: 25px;
@@ -7107,6 +7107,11 @@ body {
       position: absolute;
       left: 16px;
       top: 4px; }
+  .legend div.dashboard-legend {
+    padding-left: 35px; }
+    .legend div.dashboard-legend:before {
+      content: "";
+      margin-left: -15px; }
   .legend .conselling-given:before {
     background-color: #eea039; }
   .legend .ifa-distributed:before {

@@ -27,7 +27,7 @@
 	font-size: 12px;
 	font-family: $primary-font;
 	div{
-    padding-left: 50px;
+    padding-left: 30px;
 		&:before{
 			content: "";
 			width: 25px;
@@ -37,6 +37,13 @@
 	    position: absolute;
 	    left: 16px;
 	    top: 4px;
+		}
+	}
+	div.dashboard-legend{
+    padding-left: 35px;
+		&:before{
+			content: "";
+	    margin-left: -15px;
 		}
 	}
 	.conselling-given:before{
