@@ -99,7 +99,7 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="input-bars current grow-h-animation" style="width: 73%;">
+														<div class="input-bars current grow-h-animation-" style="width: 73%;">
 															<span>73%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
@@ -111,7 +111,7 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="input-bars current grow-h-animation" style="width: 70%;">
+														<div class="input-bars current grow-h-animation-" style="width: 70%;">
 															<span>70%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
@@ -125,7 +125,7 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="input-bars current grow-h-animation" style="width: 68%;">
+														<div class="input-bars current grow-h-animation-" style="width: 68%;">
 															<span>68%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
@@ -137,7 +137,7 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="input-bars current grow-h-animation" style="width: 61%;">
+														<div class="input-bars current grow-h-animation-" style="width: 61%;">
 															<span>61%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
@@ -256,11 +256,13 @@
 	</script>
 
 	<script>
-	  // window.onload = function() {
-	  // 	if($('.input-bars').hasClass('grow-h-animation')) {
-  	// 		$('.input-bars').removeClass('grow-h-animation');	
-  	// 	}
-	  // }
+	  window.onload = function() {
+	  	var aniamteEl = $('.input-bars.current');
+  		var aniamteElChild = $('.input-bars.current span');
+
+  		TweenMax.from(aniamteEl, 1, {css: {width: '0%'}, delay:0.8});
+  		TweenMax.from(aniamteElChild, 0.5, {css: {opacity: '0', x: '-10px'}, delay:1.3});
+	  }
 		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
 		districtScoreColor = {"very high": "#ea5c58", "high": "#eea039", "average": "#f7e15a", "low": "#f0c4b6"}
 		var barisalClicked = false;
@@ -286,8 +288,8 @@
   		var aniamteEl = $('.input-bars.current');
   		var aniamteElChild = $('.input-bars.current span');
 
-  		TweenMax.from(aniamteEl, 1, {css: {width: '0%'}});
-  		TweenMax.from(aniamteElChild, 0.5, {css: {opacity: '0', x: '-10px'}, delay:0.5});
+  		TweenMax.from(aniamteEl, 1, {css: {width: '0%'}, delay:0.7});
+  		TweenMax.from(aniamteElChild, 0.5, {css: {opacity: '0', x: '-10px'}, delay:1.2});
 
   		// if($('.input-bars').hasClass('grow-h-animation')) {
   		// 	$('.input-bars').removeClass('grow-h-animation');	
