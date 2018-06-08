@@ -256,11 +256,13 @@
 	</script>
 
 	<script>
-	  // window.onload = function() {
-	  // 	if($('.input-bars').hasClass('grow-h-animation')) {
-  	// 		$('.input-bars').removeClass('grow-h-animation');	
-  	// 	}
-	  // }
+	  window.onload = function() {
+	  	var aniamteEl = $('.input-bars.current');
+  		var aniamteElChild = $('.input-bars.current span');
+
+  		TweenMax.from(aniamteEl, 1, {css: {width: '0%'}, delay:0.8});
+  		TweenMax.from(aniamteElChild, 0.5, {css: {opacity: '0', x: '-10px'}, delay:1.3});
+	  }
 		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
 		districtScoreColor = {"very high": "#ea5c58", "high": "#eea039", "average": "#f7e15a", "low": "#f0c4b6"}
 		var barisalClicked = false;
