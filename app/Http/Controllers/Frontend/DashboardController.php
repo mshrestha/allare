@@ -775,7 +775,6 @@ class DashboardController extends Controller
 						->whereNull('category_option_combo')
 						->where('source', 'DGHS')
 						->where('period', $period)->first();
-
 		$dhis_numerator = $imci_counselling->value;
 		$dhis_denominator = $imci_male->value + $imci_female->value;
 
@@ -899,20 +898,20 @@ class DashboardController extends Controller
 				}
 			}
 		} 
-		// else if($data['model'] == 'ImciCounselling') {
-		// 	// dd(count($organisations['organisation_unit_array']));
-		// 	for ($i=0; $i < count($organisations['organisation_unit_array']); $i++) { 
-		// 		$response = $this->calculate_IYCF_counselling_proportion_percentage([$organisations['organisation_unit_array'][$i], $organisations['organisation_unit_array'][$i]], '201804');
-		// 		if($response == '' || $response == null) {
-		// 			$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
-		// 			$responseData[$i]['value'] = 0;
-		// 		}
-		// 		else {
-		// 			$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
-		// 			$responseData[$i]['value'] = (string)$response;
-		// 		}
-		// 	}
-		// }
+		else if($data['model'] == 'ImciCounselling') {
+			// dd(count($organisations['organisation_unit_array']));
+			for ($i=0; $i < count($organisations['organisation_unit_array']); $i++) { 
+				$response = $this->calculate_IYCF_counselling_proportion_percentage([$organisations['organisation_unit_array'][$i], $organisations['organisation_unit_array'][$i]], '201804');
+				if($response == '' || $response == null) {
+					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
+					$responseData[$i]['value'] = 0;
+				}
+				else {
+					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
+					$responseData[$i]['value'] = (string)$response;
+				}
+			}
+		}
 		else {
 			$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
 		}
