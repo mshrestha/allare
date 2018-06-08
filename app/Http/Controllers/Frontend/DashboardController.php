@@ -254,7 +254,7 @@ class DashboardController extends Controller
 	}
 
 	public function calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $period) {
-		//Dhis formula
+		// Dhis formula
 		// Numerator: kazi->comm->cc_MR_ANC_Nutri_counsel
 		// Denominator : Kazi->comm-> cc_MR_ANC_1+2+3+4
 		
@@ -283,9 +283,62 @@ class DashboardController extends Controller
 					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
-		$dhis_calculate = ($cc_mr_anc_nutri_counsel->value / ($anc1_dghs->value + $anc2_dghs->value + $anc3_dghs->value + $anc4_dghs->value)) * 100;
+		// $dhis_calculate = ($cc_mr_anc_nutri_counsel->value / ($anc1_dghs->value + $anc2_dghs->value + $anc3_dghs->value + $anc4_dghs->value)) * 100;
 
-		return $dhis_calculate;
+		$dhis_numerator = $cc_mr_anc_nutri_counsel->value;
+		$dhis_denominator = $anc1_dghs->value + $anc2_dghs->value + $anc3_dghs->value + $anc4_dghs->value;
+
+		// numerator = 0
+		// denominator = ANC1+ANC2+ANC3+ANC4+PNC1+PNC2+PNC3+PNC4
+
+		$period = $this->yearly_months($period);
+		$anc1_dgfp = ANC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc2_dgfp = ANC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc3_dgfp = ANC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc4_dgfp = ANC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc1_dgfp = PNC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc2_dgfp = PNC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc3_dgfp = PNC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc4_dgfp = PNC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$dgfp_numerator = 0;
+		$dgfp_denominator = $anc1_dgfp + $anc2_dgfp + $anc3_dgfp + $anc4_dgfp + $pnc1_dgfp + $pnc2_dgfp + $pnc3_dgfp + $pnc4_dgfp;
+
+		$maternal_nutrition_counselling_percent = (($dhis_numerator + $dgfp_numerator) / ($dhis_denominator + $dgfp_denominator)) * 100;
+
+		return floor($maternal_nutrition_counselling_percent);
 	}
 
 	public function calculateMonthlyPercentage($data, $periodData, $ou) {
@@ -815,8 +868,6 @@ class DashboardController extends Controller
 			);
 		}
 	}
-
-	
 
 	private function getChildPercent($periodData, $central_api_id, $community_api_id) {
 
