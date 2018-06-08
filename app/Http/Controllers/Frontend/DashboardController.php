@@ -781,7 +781,7 @@ class DashboardController extends Controller
 		//DGFP IYCF counselling calculation
 		//Numerator -> Counseling on IYCF, IFA,Vitamin-A & Hand washing
 		//Denominator -> ANC1+ANC2+ANC3+ANC4 + PNC 1+ PNC 2+ PNC 3 + PNC4
-		
+		$period = '2018';
 		$iycf_counselling = ImciCounselling::where('source', 'DGFP')
 					->where('organisation_unit', $organisation_unit[1])
 					->where('period', 'LIKE', '%' . $period . '%')
@@ -864,7 +864,7 @@ class DashboardController extends Controller
 		} else {
 			$organisations = $this->getOrganisations($server);
 		}
-
+		// dd($organisations);
 		$category = NULL;
 		if($data['model'] == 'CcMrWeightInKgAnc')
 			$category = 'OJd05AWCFTk';
@@ -901,6 +901,9 @@ class DashboardController extends Controller
 		else if($data['model'] == 'ImciCounselling') {
 			// dd(count($organisations['organisation_unit_array']));
 			for ($i=0; $i < count($organisations['organisation_unit_array']); $i++) { 
+				if($organisations['organisation_unit_array'][$i] == 'op5gbhjVCRk') {
+					$organisations['organisation_unit_array'] = 'R1GAfTe6Mkb';
+				}
 				$response = $this->calculate_IYCF_counselling_proportion_percentage([$organisations['organisation_unit_array'][$i], $organisations['organisation_unit_array'][$i]], '201804');
 				if($response == '' || $response == null) {
 					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];

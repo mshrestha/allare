@@ -774,7 +774,7 @@
 									// console.log(res);
 									anotherLayer.setMap(map);
 
-									if(model == 'CcMrAncIfaDistribution' || model == 'CcMrAncNutriCounsel') {
+									if(model == 'CcMrAncIfaDistribution' || model == 'CcMrAncNutriCounsel' || model == 'ImciCounselling') {
 										$('#barchart-title-id').html("Women counselled on Maternal Nutrition in Barisal Division");
 										document.getElementById('barchart-title-id').style.visibility = 'visible';
 										barisalClicked = true;
@@ -1482,8 +1482,8 @@
 									// console.log(res);
 									anotherLayer.setMap(map);
 
-									if(model == 'CcMrAncIfaDistribution' || model == 'CcMrAncNutriCounsel') {
-										$('#barchart-title-id').html("Women counselled on Maternal Nutrition in Barisal Division");
+									if(model == 'CcMrAncIfaDistribution' || model == 'CcMrAncNutriCounsel' || model == 'ImciCounselling') {
+										$('#barchart-title-id').html(text);
 										document.getElementById('barchart-title-id').style.visibility = 'visible';
 										barisalClicked = true;
 										$('#chartID').html('');
