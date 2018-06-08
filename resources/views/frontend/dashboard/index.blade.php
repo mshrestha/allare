@@ -256,6 +256,11 @@
 	</script>
 
 	<script>
+	  // window.onload = function() {
+	  // 	if($('.input-bars').hasClass('grow-h-animation')) {
+  	// 		$('.input-bars').removeClass('grow-h-animation');	
+  	// 	}
+	  // }
 		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
 		districtScoreColor = {"very high": "#ea5c58", "high": "#eea039", "average": "#f7e15a", "low": "#f0c4b6"}
 		var barisalClicked = false;
@@ -277,16 +282,18 @@
 	})
 
   	$('#national_outcomes_filter_form').on('submit', function() {
-  		var aniamteEl = $('.input-bars.current.grow-h-animation');
-  		var aniamteElChild = $('.input-bars.current.grow-h-animation span');
+
+  		var aniamteEl = $('.input-bars.current');
+  		var aniamteElChild = $('.input-bars.current span');
 
   		TweenMax.from(aniamteEl, 1, {css: {width: '0%'}});
   		TweenMax.from(aniamteElChild, 0.5, {css: {opacity: '0', x: '-10px'}, delay:0.5});
 
-  		if($('.input-bars').hasClass('grow-h-animation')) {
-  			$('.input-bars').removeClass('grow-h-animation');	
-  		}
-  		$('.input-bars').addClass('grow-h-animation');
+  		// if($('.input-bars').hasClass('grow-h-animation')) {
+  		// 	$('.input-bars').removeClass('grow-h-animation');	
+  		// }
+  		// $('.input-bars').addClass('grow-h-animation');
+
   		
   		$.ajax({
   			type: $(this).attr('method'),
@@ -307,6 +314,10 @@
 			    	res[1].child_growth_monitoring,
 			    	res[1].minimum_acceptable_diet,
 			    );
+			    if($('.input-bars').hasClass('grow-h-animation')) {
+		  			$('.input-bars').removeClass('grow-h-animation');	
+		  		}
+
   			}
   		})
   		return false;
@@ -1006,7 +1017,7 @@
 		    if (isFirefox || isSafari) {
 					var shadowWidth = 0.0001;
 		    }
-
+					
 
 			var mainChart = new RadialProgressChart('#maternal-health', {
 				diameter: 100,
