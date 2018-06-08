@@ -18,26 +18,26 @@
 			      			<div class="col-sm-6" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 			      				<div id="maternal-health" style="width: 100%;"></div>
 			      				<div class="legend row">
-			      					<div class="conselling-given col-10 offset-2">Percent of pregnant women counselled on maternal nutrition</div>
-			      					<div class="ifa-distributed col-10 offset-2">Percent of pregnant women who received IFA</div>
-			      					<div class="weight-measured col-10 offset-2">Percent of pregnant women weighed at facility visits</div>
-			      					{{-- <div class="weight-measured col-10 offset-2">Increase in Exclusive Breastfeeding</div> --}}
+			      					<div class="dashboard-legend conselling-given col-12 col-md-10 offset-lg-2 offset-md-2 offset-xs-2">Percent of pregnant women counselled on maternal nutrition</div>
+			      					<div class="ifa-distributed dashboard-legend col-12 col-md-10 offset-lg-2 offset-md-2 offset-xs-2">Percent of pregnant women who received IFA</div>
+			      					<div class="weight-measured dashboard-legend col-12 col-md-10 offset-lg-2 offset-md-2 offset-xs-2">Percent of pregnant women weighed at facility visits</div>
+			      					{{-- <div class="weight-measured col-12 col-md-10 offset-lg-2 offset-md-2 offset-xs-2">Increase in Exclusive Breastfeeding</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
 			      			<div class="col-sm-6"  data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
 			      				<div id="child-health" style="width: 100%;"></div>
 			      				<div class="legend row">
-			      					<div class="imci-counselling col-10 offset-2">Percent of caretakers of 6-23 month olds counselled on IYCF</div>
-			      					{{-- <div class="supplements-distributed col-10 offset-2">Supplements Distributed</div> --}}
-			      					<div class="child-growth col-10 offset-2">Percent of children 6-23 months old weighed at facilities</div>
-			      					{{-- <div class="child-growth col-10 offset-2">Increase in minimum acceptable diet</div> --}}
+			      					<div class="imci-counselling dashboard-legend col-12 col-md-10 offset-lg-2 offset-md-2 offset-xs-2">Percent of caretakers of 6-23 month olds counselled on IYCF</div>
+			      					{{-- <div class="supplements-distributed col-12 col-md-10 offset-lg-2 offset-md-2 offset-xs-2">Supplements Distributed</div> --}}
+			      					<div class="child-growth dashboard-legend col-12 col-md-10 offset-lg-2 offset-md-2 offset-xs-2">Percent of children 6-23 months old weighed at facilities</div>
+			      					{{-- <div class="child-growth col-12 col-md-10 offset-lg-2 offset-md-2 offset-xs-2">Increase in minimum acceptable diet</div> --}}
 			      				</div> {{-- legend --}}
 			      			</div>
 			      		</div> {{-- row --}}
 
 			      		<form action="{{ route('frontend.dashboard.circular-chart') }}" id="national_outcomes_filter_form">
 				      		<div class="row mt-2">
-				      			<div class="col-10 col-sm-4 offset-1" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
+				      			<div class="col-12 col-sm-6 col-md-6 col-lg-4 offset-lg-1 pl-lg-0 geo-filter-wrap" data-swiper-parallax="0" data-swiper-parallax-opacity="0">
 				      				<label for="">Select by Geography</label>
 					      			<div class="input-group">
 						                <select class="custom-select national_outcomes_filter_form_fields country_division_field" id="division_id" name="organisation_unit" required>
@@ -58,7 +58,7 @@
 						                </select>
 						            </div>
 				      			</div>
-				      			<div class="col-10 col-sm-4 offset-1 offset-sm-2" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
+				      			<div class="col-12 col-sm-6 col-md-6 col-lg-4 offset-lg-2 pl-lg-0" data-swiper-parallax="-200" data-swiper-parallax-opacity="0">
 				      				<label for="">Select the Timeline</label>
 					      			<div class="input-group">
 						                <select class="custom-select national_outcomes_filter_form_fields" id="period_id" name="period" required>
@@ -99,8 +99,8 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="current grow-h-animation" style="width: 73%;">
-															73%
+														<div class="input-bars current grow-h-animation-" style="width: 73%;">
+															<span>73%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -111,8 +111,8 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="current grow-h-animation" style="width: 70%;">
-															70%
+														<div class="input-bars current grow-h-animation-" style="width: 70%;">
+															<span>70%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -125,8 +125,8 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="current grow-h-animation" style="width: 68%;">
-															68%
+														<div class="input-bars current grow-h-animation-" style="width: 68%;">
+															<span>68%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
 									  		</div>
@@ -137,8 +137,8 @@
 									  			<div class="progress-bar-h">
 														<div class="goal" style="width: 10%;">
 														</div>
-														<div class="current grow-h-animation" style="width: 61%;">
-															61%
+														<div class="input-bars current grow-h-animation-" style="width: 61%;">
+															<span>61%</span>
 														</div>
 													</div> {{-- progress-bar-h --}}
 												</div>
@@ -156,7 +156,7 @@
 				      		<div class="qa-div input-box input-training">
 				      			<h6 class="mb-0">QUALITY CONTROL AND SUPPORTIVE SUPERVISION</h6>
 				      			<div><span class="number">63%</span><span class="number-txt"># of facilities receiving supporting supervision and monitoring in the last quarter</span></div>
-							  		<div><span class="number">70%</span><span class="number-txt">% of facilties reporting high quality data </span></div>
+							  		{{-- <div><span class="number">70%</span><span class="number-txt">% of facilties reporting high quality data </span></div> --}}
 							  		<div><span class="number">67%</span><span class="number-txt">% of facilities passing the Data Quality Assessment</span></div>
 				      		</div>
 				      		{{-- SUPPLY DIV --}}
@@ -165,6 +165,10 @@
 				      			<div><span class="number">61%</span><span class="number-txt">% of facilities without stockouts of IFA tablets</span></div>
 							  		<div><span class="number">69%</span><span class="number-txt">% of facilities with adequate anthropometric measuring tools</span></div>
 							  		<div><span class="number">64%</span><span class="number-txt">% of facilities without stockouts of Zinc and ORS</span></div>
+				      		</div>
+				      		<div class="spider-graph-div input-box input-training">
+				      			<h6 class="mb-0">SPIDER GRAPH</h6>
+				      			<div><img id="spider-graph-img" class="img" src="http://via.placeholder.com/350x250" alt=""></div>
 				      		</div>
 				      	</div>
 			      	</div> {{-- col-md-4 --}}
@@ -188,7 +192,7 @@
 									<li><a href="#" id="ancweight" class="maplinks inactive" onclick="getMapData('CcMrWeightInKgAnc', 'Weight Measured', '#ancweight', 'Pregnant women weighed during facility visits')">Pregnant women weighed during facility visits</a></li>
 									<li class="list-head">CHILD NUTRITION</li>
 									<li><a href="#" id="imcicounselling" class="maplinks inactive" onclick="getMapData('ImciCounselling', 'IMCI Counselling Given', '#imcicounselling', 'Caregivers counselled on IYCF')">Caregivers counselled on IYCF</a></li>
-									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements', 'Children 0-24 months weighed during facility visit')">Children 0-24 months weighed during facility visit</a></li>
+									<li><a href="#" id="supplements" class="maplinks inactive" onclick="getMapData('CcCrAdditionalFoodSupplimentation', 'Supplements Distributed', '#supplements', 'Children 0-23 months weighed during facility visit')">Children 0-23 months weighed during facility visit</a></li>
 
 							</ul>
 
@@ -199,7 +203,7 @@
 								{{-- <li class="list-head" id="stunting" class="maplinks inactive" onclick="getMapData('ImciStunting', 'STUNING', '#stunting')">STUNTING</li> --}}
 								<li><a href="#" id="wasting" class="maplinks inactive" onclick="getMapData('BdhsWasting', 'WASTING', '#wasting', 'WASTING')">WASTING</a></li>
 								<li><a href="#" id="anemia" class="maplinks inactive" onclick="getMapData('BdhsAnemia', 'Anemia', '#anemia', 'ANEMIA')">ANEMIA</a></li>
-								<li><a href="#" id="bmi" class="maplinks inactive" onclick="getMapData('BdhsBmi', 'WOMEN UNDERWEIGHED', '#bmi', 'WOMEN UNDERWEIGHED')">WOMEN UNDERWEIGHED</a></li>
+								<li><a href="#" id="bmi" class="maplinks inactive" onclick="getMapData('BdhsBmi', 'WOMEN UNDERWEIGHT', '#bmi', 'WOMEN UNDERWEIGHED')">WOMEN UNDERWEIGHT</a></li>
 	    				</ul>
 	    				<ul class="map-filter mb-0">
 								<li class="list-head">INTERMEDIATE OUTCOMES</li>
@@ -250,11 +254,19 @@
 @section('outjavascript')
 	<script src="{{ asset('js/Chart.PieceLabel.min.js') }}"></script>
 	<script src="{{asset('js/swiper.min.js')}}"></script>
+	<script src="{{asset('js/TweenMax.min.js')}}"></script>
 	<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkyw2RR6Cy0hsAOE4-um5lZg5TV6c8bbQ&callback=initMap">
 	</script>
 
 	<script>
+	  window.onload = function() {
+	  	var aniamteEl = $('.input-bars.current');
+  		var aniamteElChild = $('.input-bars.current span');
+
+  		TweenMax.from(aniamteEl, 1, {css: {width: '0%'}, delay:0.8});
+  		TweenMax.from(aniamteElChild, 0.5, {css: {opacity: '0', x: '-10px'}, delay:1.3});
+	  }
 		scoreColors = {"very high": "#0b495e", "high": "#137f91", "average": "#81ddc5", "low": "#b1eed5"};
 		districtScoreColor = {"very high": "#ea5c58", "high": "#eea039", "average": "#f7e15a", "low": "#f0c4b6"}
 		var barisalClicked = false;
@@ -276,6 +288,27 @@
 	})
 
   	$('#national_outcomes_filter_form').on('submit', function() {
+
+  		var aniamteEl = $('.input-bars.current');
+  		var aniamteElChild = $('.input-bars.current span');
+
+  		TweenMax.from(aniamteEl, 1, {css: {width: '0%'}, delay:0.7});
+  		TweenMax.from(aniamteElChild, 0.5, {css: {opacity: '0', x: '-10px'}, delay:1.2});
+
+  		// if($('.input-bars').hasClass('grow-h-animation')) {
+  		// 	$('.input-bars').removeClass('grow-h-animation');	
+  		// }
+  		// $('.input-bars').addClass('grow-h-animation');
+
+  		var imageDiction = {"bangladesh": "", "barisal division": "", "barisal district": "", "barguna": "", "bhola": "", "jhalokati": "","patuakhali": "", "pirojpur": "", "chittagong": "", "dhaka": "", "khulna": "", "mymensingh": "", "rajshahi": "", "rangpur": "", "sylhet": ""};
+  		var divisions_id = $('#division_id option:selected').text();
+  		for(var key in imageDiction) {
+  			if(divisions_id.toLowerCase().match(key) != null) {
+  				console.log(divisions_id, key);
+  			}
+  		}
+
+  		
   		$.ajax({
   			type: $(this).attr('method'),
   			url: $(this).attr('action'),
@@ -295,9 +328,12 @@
 			    	res[1].child_growth_monitoring,
 			    	res[1].minimum_acceptable_diet,
 			    );
+			    if($('.input-bars').hasClass('grow-h-animation')) {
+		  			$('.input-bars').removeClass('grow-h-animation');	
+		  		}
+
   			}
   		})
-
   		return false;
   	})
 
@@ -573,7 +609,7 @@
 						var stateLayer = new google.maps.Data();
 						
 						anotherLayer.loadGeoJson("{{asset('js/barisal.geojson')}}");
-						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+						stateLayer.loadGeoJson("{{asset('js/test_complete.json')}}");
 						var clicked = false;
 						stateLayer.setStyle(function(feature) {
 							var localColor = '#ededed';
@@ -582,27 +618,27 @@
 								var id = ids[0];
 								if(res['server'] == 'community')
 									id = ids[1];
-								var value = Math.ceil(res['minimalData'][id]);
+								var value = parseFloat(res['minimalData'][id]).toFixed(1);
 								var localColor = '';
 								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
-									if(value >= Math.ceil(res['ranges']['min']) && value < Math.ceil(res['ranges']['q1'])){
+									if(value >= parseFloat(res['ranges']['min']).toFixed(1) && value < parseFloat(res['ranges']['q1']).toFixed(1)){
 										localColor = scoreColors['low'];
-									} else if(value >= Math.ceil(res['ranges']['q1']) && value < Math.ceil(res['ranges']['q2'])) {
+									} else if(value >= parseFloat(res['ranges']['q1']).toFixed(1) && value < parseFloat(res['ranges']['q2']).toFixed(1)) {
 										localColor = scoreColors['average'];
-									} else if(value >= Math.ceil(res['ranges']['q2']) && value < Math.ceil(res['ranges']['q3'])) {
+									} else if(value >= parseFloat(res['ranges']['q2']).toFixed(1) && value < parseFloat(res['ranges']['q3']).toFixed(1)) {
 										localColor = scoreColors['high'];
-									} else if(value >= Math.ceil(res['ranges']['q3'])) {
+									} else if(value >= parseFloat(res['ranges']['q3']).toFixed(1)) {
 										localColor = scoreColors['very high'];
 									}
 								}else {
 									// console.log(res['ranges'], value);
-									if(value >= Math.ceil(res['ranges']['min']) && value < Math.ceil(res['ranges']['q1'])){
+									if(value >= parseFloat(res['ranges']['min']).toFixed(1) && value < parseFloat(res['ranges']['q1']).toFixed(1)){
 										localColor = scoreColors['very high'];
-									} else if(value >= Math.ceil(res['ranges']['q1']) && value < Math.ceil(res['ranges']['q2'])) {
+									} else if(value >= parseFloat(res['ranges']['q1']).toFixed(1) && value < parseFloat(res['ranges']['q2']).toFixed(1)) {
 										localColor = scoreColors['high'];
-									} else if(value >= Math.ceil(res['ranges']['q2']) && value < Math.ceil(res['ranges']['q3'])) {
+									} else if(value >= parseFloat(res['ranges']['q2']).toFixed(1) && value < parseFloat(res['ranges']['q3']).toFixed(1)) {
 										localColor = scoreColors['average'];
-									} else if(value >= Math.ceil(res['ranges']['q3'])) {
+									} else if(value >= parseFloat(res['ranges']['q3']).toFixed(1)) {
 										localColor = scoreColors['low'];
 									}
 								}	
@@ -624,18 +660,16 @@
 							var id = ids[0];
 							if(res['server'] == 'community')
 								id = ids[1];
-							var value = Math.ceil(res['minimalData'][id]);
+							var value = parseFloat(res['minimalData'][id]).toFixed(1);
 							localColor = districtScoreColor['low'];
 							if(!res['emptydistricts']) {
-								if(value >= Math.ceil(res['districtRanges']['min']) && value < Math.ceil(res['districtRanges']['q1'])) {
+								if(value >= parseFloat(res['districtRanges']['min']).toFixed(1) && value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
 									localColor = districtScoreColor['very high'];
-								} else if(value >= Math.ceil(res['districtRanges']['q1']) && value < Math.ceil(res['districtRanges']['q2'])) {
+								} else if(value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 									localColor = districtScoreColor['high'];
-								} else if(value >= Math.ceil(res['districtRanges']['q2']) && value <= Math.ceil(res['districtRanges']['q3'])) {
+								} else if(value >= parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 									localColor = districtScoreColor['average'];
-								} else if(value >= Math.ceil(res['districtRanges']['q3'])) {
-									localColor = districtScoreColor['low'];
-								}
+								} 
 							}
 															
 							return {
@@ -658,7 +692,7 @@
 									if(isNaN(value))
 										value = 'N/A';
 									else
-										value = Math.ceil(res['minimalData'][id]);
+										value = parseFloat(res['minimalData'][id]).toFixed(1);
 									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi')
 										value += '%';
 									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
@@ -677,7 +711,7 @@
 								if(res['server'] == 'community')
 									id = ids[1];
 								value = res['minimalData'][id];
-								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + Math.ceil(value) + '</span>' + '</div>');
+								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseFloat(value).toFixed(1) + '</span>' + '</div>');
 								var anchor = new google.maps.MVCObject();
 					    	anchor.set("position", e.latLng);
 					    	infoWindow.open(map, anchor);
@@ -700,7 +734,7 @@
 							if(isNaN(value))
 								value = 'N/A';
 							else
-								value = Math.ceil(value);
+								value = parseFloat(value).toFixed(1);
 
 							if(res['emptydistricts'] && value == 0) {
 								value = 'N/A';
@@ -726,10 +760,10 @@
 							    map.fitBounds(bounds);
 							    stateLayer.overrideStyle(e.feature, {
 										fillColor: '#ededed',
-										strokeColor: '#CCC',
+										strokeColor: '#ededed',
 										// strokeColor: e.feature.getProperty('color'),
 										strokeWeight: 1,
-										zIndex: 5
+										zIndex: 1
 									});
 									// console.log(res);
 									anotherLayer.setMap(map);
@@ -743,51 +777,147 @@
 										$('html,body').animate({
 							        scrollTop: $("#chartID").offset().top},
 							        'slow');
-
-										var labels = [];
-										var fillColors = [];
-										var dataValues = [];
+										var max = 0;
+										var dataCSV = [];
 										for(var key in res['minimalDistrict']) {
-											var value = res['minimalDistrict'][key];
-											labels.push(key);
-											if(value >= Math.ceil(res['districtRanges']['min']) && value < Math.ceil(res['districtRanges']['q1'])) {
-												fillColors.push('#ea5c58');
-											} else if(value >= Math.ceil(res['districtRanges']['q1']) && value < Math.ceil(res['districtRanges']['q2'])) {
-												fillColors.push('#eea039');
-											} else if(value >= Math.ceil(res['districtRanges']['q2']) && value <= Math.ceil(res['districtRanges']['q3'])) {
-												fillColors.push('#f7e15a');
-											} else if(value >= Math.ceil(res['districtRanges']['q3'])) {
-												fillColors.push('#f2b4a0');
-											}
+											temp = {};
+											temp.id = key;
+											temp.value = res['minimalDistrict'][key];
+											if(max < temp.value)
+												max = temp.value;
+											dataCSV.push(temp);
 										}
-
-										var chartData = {
-											labels: labels,
-											datasets: [{
-												fillColor: fillColors,
-												strokeColor: fillColors,
-												data: dataValues
-											}]
-										}
-										var ctx = document.getElementById("chartID").getContext("2d");
-										var myBar = new Chart(ctx).Bar(chartData, {
-									    showTooltips: false,
-									    onAnimationComplete: function () {
-								        var ctx = this.chart.ctx;
-								        ctx.font = this.scale.font;
-								        ctx.fillStyle = this.scale.textColor
-								        ctx.textAlign = "center";
-								        ctx.textBaseline = "bottom";
-
-								        this.datasets.forEach(function (dataset) {
-							            dataset.bars.forEach(function (bar) {
-						                ctx.fillText(bar.value, bar.x, bar.y - 5);
-							            });
-								        })
-									    }
-										});
-
 										
+										parentDiv = document.getElementById('chartID');
+									  var margin = {top:20, right:20, bottom:20, left:20};
+
+										var width = parentDiv.clientWidth - margin.left - margin.right;
+
+										var height = 185;
+										var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .03)
+
+										var yScale = d3.scale.linear()
+										      .range([height, 0]);
+
+
+										var xAxis = d3.svg.axis()
+												.scale(xScale)
+												.orient("bottom");
+										      
+										      
+										var yAxis = d3.svg.axis()
+												.scale(yScale)
+												.orient("left");
+
+										var svgContainer = d3.select("#chartID").append("svg")
+												.attr("width", width+margin.left + margin.right)
+												.attr("height",height+margin.top + margin.bottom)
+												.append("g").attr("class", "container")
+												.attr("transform", "translate("+ margin.left +","+ margin.top +")");
+
+										xScale.domain(dataCSV.map(function(d) { return d.id; }));
+										yScale.domain([0, d3.max(dataCSV, function(d) { return parseFloat(d.value).toFixed(1); })]);
+
+
+										//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
+										var xAxis_g = svgContainer.append("g")
+												.attr("class", "x axis")
+												.attr("transform", "translate(0," + (height) + ")")
+												.call(xAxis)
+												.selectAll("text");
+													
+										// Uncomment this block if you want the y axis
+										/*var yAxis_g = svgContainer.append("g")
+												.attr("class", "y axis")
+												.call(yAxis)
+												.append("text")
+												.attr("transform", "rotate(-90)")
+												.attr("y", 6).attr("dy", ".71em")
+												//.style("text-anchor", "end").text("Number of Applicatons"); 
+										*/
+										console.log(res);
+
+										svgContainer.selectAll(".bar")
+									  		.data(dataCSV)
+									  		.enter()
+									  		.append("rect")
+									  		.attr("class", function(d) {
+									  			if(d.value >= parseFloat(res['districtRanges']['min']).toFixed(1) && d.value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
+														return 'bar vhigh';
+													} else if(d.value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && d.value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
+														return 'bar high';
+													} else if(d.value > parseFloat(res['districtRanges']['q2']).toFixed(1)) {
+														return 'bar mid';
+													}
+									  		})
+									  		.attr("x", function(d) { return xScale(d.id); })
+									  		.attr("width", xScale.rangeBand())
+									  		.attr("y", function(d) { return yScale(d.value); })
+									  		.attr("height", function(d) { return height - yScale(d.value); });
+									  svgContainer.selectAll(".text")  		
+											  .data(dataCSV)
+											  .enter()
+											  .append("text")
+											  .attr("class","label")
+											  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
+											  .attr("y", function(d) { return yScale(d.value) - 15; })
+											  .attr("dy", ".75em")
+											  .text(function(d) { return parseFloat(d.value).toFixed(1); });
+
+										document.addEventListener("DOMContentLoaded", resize);
+										d3.select(window).on('resize', resize);
+										
+										function resize() {
+										  width = parseInt(d3.select('#chartID').style('width'), 10);
+										  width = parseInt(width - margin.left - margin.right);
+
+										  height = parseInt(d3.select("#chartID").style("height"));
+										  height = parseInt(height - margin.top - margin.bottom);
+										    xScale.range([0, width]);
+										    xScale.rangeRoundBands([0, width], .03);
+										    yScale.range([height, 0]);
+
+										    yAxis.ticks(Math.max(height/50, 2));
+										    xAxis.ticks(Math.max(width/50, 2));
+
+										    d3.select(svgContainer.node().parentNode)
+										        .style('width', (width + margin.left + margin.right) + 'px');
+
+										    svgContainer.selectAll('.bar')
+										    	.attr("x", function(d) { return xScale(d.id); })
+										      .attr("width", xScale.rangeBand());
+										      
+										   svgContainer.selectAll("text")  		
+											 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
+										      .attr("y", function(d) { if(isNaN(yScale(parseFloat(d.value).toFixed(1)) - 15)) return 0; return yScale(parseFloat(d.value).toFixed(1)) - 15; })
+										      .attr("dy", ".75em");   	      
+
+										    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
+										}
+
+										function wrap(text, width) {
+										  text.each(function() {
+										    var text = d3.select(this),
+										        words = text.text().split(/\s+/).reverse(),
+										        word,
+										        line = [],
+										        lineNumber = 0,
+										        lineHeight = 1.1, // ems
+										        y = text.attr("y"),
+										        dy = parseFloat(text.attr("dy")).toFixed(1),
+										        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+										    while (word = words.pop()) {
+										      line.push(word);
+										      tspan.text(line.join(" "));
+										      if (tspan.node().getComputedTextLength() > width) {
+										        line.pop();
+										        tspan.text(line.join(" "));
+										        line = [word];
+										        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+										      }
+										    }
+										  });
+										}
 									}
 								}
 							}
@@ -897,7 +1027,7 @@
 		    if (isFirefox || isSafari) {
 					var shadowWidth = 0.0001;
 		    }
-
+					
 
 			var mainChart = new RadialProgressChart('#maternal-health', {
 				diameter: 100,
@@ -1179,7 +1309,7 @@
 						var stateLayer = new google.maps.Data();
 						
 						anotherLayer.loadGeoJson("{{asset('js/barisal.geojson')}}");
-						stateLayer.loadGeoJson("{{asset('js/test.geojson')}}");
+						stateLayer.loadGeoJson("{{asset('js/test_complete.json')}}");
 						var clicked = false;
 						stateLayer.setStyle(function(feature) {
 							var localColor = '#ededed';
@@ -1188,27 +1318,27 @@
 								var id = ids[0];
 								if(res['server'] == 'community')
 									id = ids[1];
-								var value = Math.ceil(res['minimalData'][id]);
+								var value = parseFloat(res['minimalData'][id]).toFixed(1);
 								var localColor = '';
 								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
-									if(value >= Math.ceil(res['ranges']['min']) && value < Math.ceil(res['ranges']['q1'])){
+									if(value >= parseFloat(res['ranges']['min']).toFixed(1) && value < parseFloat(res['ranges']['q1']).toFixed(1)){
 										localColor = scoreColors['low'];
-									} else if(value >= Math.ceil(res['ranges']['q1']) && value < Math.ceil(res['ranges']['q2'])) {
+									} else if(value >= parseFloat(res['ranges']['q1']).toFixed(1) && value < parseFloat(res['ranges']['q2']).toFixed(1)) {
 										localColor = scoreColors['average'];
-									} else if(value >= Math.ceil(res['ranges']['q2']) && value < Math.ceil(res['ranges']['q3'])) {
+									} else if(value >= parseFloat(res['ranges']['q2']).toFixed(1) && value < parseFloat(res['ranges']['q3']).toFixed(1)) {
 										localColor = scoreColors['high'];
-									} else if(value >= Math.ceil(res['ranges']['q3'])) {
+									} else if(value >= parseFloat(res['ranges']['q3']).toFixed(1)) {
 										localColor = scoreColors['very high'];
 									}
 								}else {
 									// console.log(res['ranges'], value);
-									if(value >= Math.ceil(res['ranges']['min']) && value < Math.ceil(res['ranges']['q1'])){
+									if(value >= parseFloat(res['ranges']['min']).toFixed(1) && value < parseFloat(res['ranges']['q1']).toFixed(1)){
 										localColor = scoreColors['very high'];
-									} else if(value >= Math.ceil(res['ranges']['q1']) && value < Math.ceil(res['ranges']['q2'])) {
+									} else if(value >= parseFloat(res['ranges']['q1']).toFixed(1) && value < parseFloat(res['ranges']['q2']).toFixed(1)) {
 										localColor = scoreColors['high'];
-									} else if(value >= Math.ceil(res['ranges']['q2']) && value < Math.ceil(res['ranges']['q3'])) {
+									} else if(value >= parseFloat(res['ranges']['q2']).toFixed(1) && value < parseFloat(res['ranges']['q3']).toFixed(1)) {
 										localColor = scoreColors['average'];
-									} else if(value >= Math.ceil(res['ranges']['q3'])) {
+									} else if(value >= parseFloat(res['ranges']['q3']).toFixed(1)) {
 										localColor = scoreColors['low'];
 									}
 								}	
@@ -1230,17 +1360,15 @@
 							var id = ids[0];
 							if(res['server'] == 'community')
 								id = ids[1];
-							var value = Math.ceil(res['minimalData'][id]);
+							var value = parseFloat(res['minimalData'][id]).toFixed(1);
 							localColor = districtScoreColor['low'];
 							if(!res['emptydistricts']) {
-								if(value >= Math.ceil(res['districtRanges']['min']) && value < Math.ceil(res['districtRanges']['q1'])) {
+								if(value >= parseFloat(res['districtRanges']['min']).toFixed(1) && value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
 									localColor = districtScoreColor['very high'];
-								} else if(value >= Math.ceil(res['districtRanges']['q1']) && value < Math.ceil(res['districtRanges']['q2'])) {
+								} else if(value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 									localColor = districtScoreColor['high'];
-								} else if(value >= Math.ceil(res['districtRanges']['q2']) && value <= Math.ceil(res['districtRanges']['q3'])) {
+								} else if(value >= parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 									localColor = districtScoreColor['average'];
-								} else if(value >= Math.ceil(res['districtRanges']['q3'])) {
-									localColor = districtScoreColor['low'];
 								}
 							}
 															
@@ -1264,7 +1392,7 @@
 									if(isNaN(value))
 										value = 'N/A';
 									else
-										value = Math.ceil(res['minimalData'][id]);
+										value = parseFloat(res['minimalData'][id]).toFixed(1);
 									if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi')
 										value += '%';
 									infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
@@ -1283,7 +1411,7 @@
 								if(res['server'] == 'community')
 									id = ids[1];
 								value = res['minimalData'][id];
-								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + Math.ceil(value) + '</span>' + '</div>');
+								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + parseFloat(value).toFixed(1) + '</span>' + '</div>');
 								var anchor = new google.maps.MVCObject();
 					    	anchor.set("position", e.latLng);
 					    	infoWindow.open(map, anchor);
@@ -1306,7 +1434,7 @@
 							if(isNaN(value))
 								value = 'N/A';
 							else
-								value = Math.ceil(value);
+								value = parseFloat(value).toFixed(1);
 
 							if(res['emptydistricts'] && value == 0) {
 								value = 'N/A';
@@ -1332,10 +1460,10 @@
 							    map.fitBounds(bounds);
 							    stateLayer.overrideStyle(e.feature, {
 										fillColor: '#ededed',
-										strokeColor: '#CCC',
+										strokeColor: '#ededed',
 										// strokeColor: e.feature.getProperty('color'),
 										strokeWeight: 1,
-										zIndex: 5
+										zIndex: 1
 									});
 									// console.log(res);
 									anotherLayer.setMap(map);
@@ -1388,7 +1516,7 @@
 												.attr("transform", "translate("+ margin.left +","+ margin.top +")");
 
 										xScale.domain(dataCSV.map(function(d) { return d.id; }));
-										yScale.domain([0, d3.max(dataCSV, function(d) { return Math.ceil(d.value); })]);
+										yScale.domain([0, d3.max(dataCSV, function(d) { return parseFloat(d.value).toFixed(1); })]);
 
 
 										//xAxis. To put on the top, swap "(height)" with "-5" in the translate() statement. Then you'll have to change the margins above and the x,y attributes in the svgContainer.select('.x.axis') statement inside resize() below.
@@ -1414,14 +1542,12 @@
 									  		.enter()
 									  		.append("rect")
 									  		.attr("class", function(d) {
-									  			if(d.value >= Math.ceil(res['districtRanges']['min']) && d.value < Math.ceil(res['districtRanges']['q1'])) {
+									  			if(d.value >= parseFloat(res['districtRanges']['min']).toFixed(1) && d.value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
 														return 'bar vhigh';
-													} else if(d.value >= Math.ceil(res['districtRanges']['q1']) && d.value < Math.ceil(res['districtRanges']['q2'])) {
+													} else if(d.value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && d.value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 														return 'bar high';
-													} else if(d.value >= Math.ceil(res['districtRanges']['q2']) && d.value <= Math.ceil(res['districtRanges']['q3'])) {
+													} else if(d.value > parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 														return 'bar mid';
-													} else if(d.value >= Math.ceil(res['districtRanges']['q3'])) {
-														return 'bar low';
 													}
 									  		})
 									  		.attr("x", function(d) { return xScale(d.id); })
@@ -1436,17 +1562,17 @@
 											  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
 											  .attr("y", function(d) { return yScale(d.value) - 15; })
 											  .attr("dy", ".75em")
-											  .text(function(d) { return Math.ceil(d.value); });
+											  .text(function(d) { return parseFloat(d.value).toFixed(1); });
 
 										document.addEventListener("DOMContentLoaded", resize);
 										d3.select(window).on('resize', resize);
 										
 										function resize() {
-										  width = Math.ceil(d3.select('#chartID').style('width'), 10);
-										  width = Math.ceil(width - margin.left - margin.right);
+										  width = parseInt(d3.select('#chartID').style('width'), 10);
+										  width = parseInt(width - margin.left - margin.right);
 
-										  height = Math.ceil(d3.select("#chartID").style("height"));
-										  height = Math.ceil(height - margin.top - margin.bottom);
+										  height = parseInt(d3.select("#chartID").style("height"));
+										  height = parseInt(height - margin.top - margin.bottom);
 										    xScale.range([0, width]);
 										    xScale.rangeRoundBands([0, width], .03);
 										    yScale.range([height, 0]);
@@ -1463,7 +1589,7 @@
 										      
 										   svgContainer.selectAll("text")  		
 											 .attr("x", (function(d) { if(isNaN(xScale(d.id	) + xScale.rangeBand() / 2)) return 0; else return xScale(d.id	) + xScale.rangeBand() / 2 ; }  ))
-										      .attr("y", function(d) { if(isNaN(yScale(Math.ceil(d.value)) - 15)) return 0; return yScale(Math.ceil(d.value)) - 15; })
+										      .attr("y", function(d) { if(isNaN(yScale(parseFloat(d.value).toFixed(1)) - 15)) return 0; return yScale(parseFloat(d.value).toFixed(1)) - 15; })
 										      .attr("dy", ".75em");   	      
 
 										    svgContainer.select('.x.axis').call(xAxis.orient('bottom')).selectAll("text").attr("y",10).call(wrap, xScale.rangeBand());
@@ -1478,7 +1604,7 @@
 										        lineNumber = 0,
 										        lineHeight = 1.1, // ems
 										        y = text.attr("y"),
-										        dy = parseFloat(text.attr("dy")),
+										        dy = parseFloat(text.attr("dy")).toFixed(1),
 										        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
 										    while (word = words.pop()) {
 										      line.push(word);
