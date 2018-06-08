@@ -7097,14 +7097,13 @@ body {
   font-size: 12px;
   font-family: "Roboto", sans-serif; }
   .legend div {
-    padding-left: 30px; }
+    padding-left: 50px; }
     .legend div:before {
       content: "";
       width: 25px;
       height: 10px;
       display: inline-block;
       margin-right: 10px;
-      margin-left: -20px;
       position: absolute;
       left: 16px;
       top: 4px; }
