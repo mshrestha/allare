@@ -403,6 +403,12 @@
     margin-left: -10px;
     margin-top: -58px;
 	}
+	@include media-breakpoint-only(sm) {
+		width: 30px;
+    height: 60px;
+    margin-left: -11px;
+    margin-top: -58px;
+	}
 }
 #maternal-health:before{
     width: 53px;
@@ -412,6 +418,9 @@
 	    height: 54px;
 	    margin-left: -15px;
 	    margin-top: -58px;
+    }
+    @include media-breakpoint-only(sm) {
+    	margin-left: -25px;
     }
 }
 #child-health:before{
@@ -640,4 +649,10 @@ text.rbc-center-text {
 	@include media-breakpoint-down(md) {
 	  padding-top: 40px;
   }
+}
+.geo-filter-wrap{
+	@include media-breakpoint-down(xs) {
+		padding-bottom: 20px;
+		padding-top: 20px;
+	}
 }

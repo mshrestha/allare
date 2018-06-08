@@ -7391,6 +7391,12 @@ body {
       height: 60px;
       margin-left: -10px;
       margin-top: -58px; } }
+  @media (min-width: 576px) and (max-width: 767.98px) {
+    #maternal-health:before, #child-health:before {
+      width: 30px;
+      height: 60px;
+      margin-left: -11px;
+      margin-top: -58px; } }
 
 #maternal-health:before {
   width: 53px;
@@ -7401,6 +7407,9 @@ body {
       height: 54px;
       margin-left: -15px;
       margin-top: -58px; } }
+  @media (min-width: 576px) and (max-width: 767.98px) {
+    #maternal-health:before {
+      margin-left: -25px; } }
 
 #child-health:before {
   background: url("../images/baby.png") no-repeat center bottom;
@@ -7582,6 +7591,11 @@ text.rbc-center-text {
 @media (max-width: 991.98px) {
   .col-map {
     padding-top: 40px; } }
+
+@media (max-width: 575.98px) {
+  .geo-filter-wrap {
+    padding-bottom: 20px;
+    padding-top: 20px; } }
 
 .swiper-tab {
   background: #fff; }
