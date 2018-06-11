@@ -7153,6 +7153,13 @@ body {
   right: -10px;
   position: relative;
   z-index: 5; }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .view-on-map {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 122px;
+      left: auto; } }
 
 .output-col {
   background-color: #ededed; }
@@ -7563,12 +7570,19 @@ svg text.label {
   margin-bottom: 0px; }
 
 .map-title {
-  position: relative;
   text-align: center;
   z-index: 3;
-  top: -28px;
   color: #585858;
-  font-size: 16px; }
+  font-size: 16px;
+  padding: 7px;
+  position: absolute;
+  top: -27px;
+  left: 20px;
+  background: #eee;
+  width: 100%; }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .map-title {
+      text-align: left; } }
 
 text.rbc-center-text {
   font-weight: 500; }
@@ -7583,10 +7597,20 @@ text.rbc-center-text {
 
 .map-hint {
   opacity: 1;
-  transition: opacity 500ms; }
+  transition: opacity 500ms;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  background: #ededed;
+  width: 100%;
+  opacity: 1;
+  padding: 20px 0 0 0;
+  display: block; }
 
 .map-hint.slowhide {
-  opacity: 0; }
+  opacity: 0;
+  height: 0;
+  display: none; }
 
 @media (max-width: 991.98px) {
   .col-map {
@@ -7838,5 +7862,8 @@ footer {
 @media (max-width: 991.98px) {
   .report-col {
     margin-top: 60px; } }
+
+body .custom-select {
+  -moz-appearance: none; }
 
 /*# sourceMappingURL=style.css.map */
