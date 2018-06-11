@@ -669,7 +669,7 @@
 									localColor = districtScoreColor['high'];
 								} else if(value >= parseInt(res['districtRanges']['q2'])) {
 									localColor = districtScoreColor['average'];
-								}
+								} 
 							}
 															
 							return {
