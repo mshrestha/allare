@@ -633,7 +633,7 @@ svg text.label {
     left: 20px;
     background: #eee;
     width: 100%;
-    @include media-breakpoint-only(md) {
+     @include media-breakpoint-only(md) {
 				text-align: left;
     }
 }
@@ -649,6 +649,11 @@ text.rbc-center-text {
     font-size: 14px;
     top: -10px;
 }
+.map-hint.slowhide {
+    opacity:0;
+    height: 0;
+    display: none;
+}
 
 .map-hint {
     opacity:1;
@@ -661,11 +666,14 @@ text.rbc-center-text {
     opacity: 1;
     padding: 20px 0 0 0;
     display: block;
-}
-.map-hint.slowhide {
-    opacity:0;
-    height: 0;
-    display: none;
+    @include media-breakpoint-down(xs) {
+    	position: relative !important;
+    	padding-top: 0;
+    	top: -25px;
+    	height: auto; 
+    	opacity: 1;
+    	display: block;
+    }
 }
 
 .col-map {
@@ -680,4 +688,9 @@ text.rbc-center-text {
 	}
 }
 
-
+body .map-title {
+	@include media-breakpoint-down(sm) {
+    position: relative !important;
+    left: 0;
+	}
+}

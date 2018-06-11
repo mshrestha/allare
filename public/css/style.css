@@ -7595,6 +7595,11 @@ text.rbc-center-text {
   font-size: 14px;
   top: -10px; }
 
+.map-hint.slowhide {
+  opacity: 0;
+  height: 0;
+  display: none; }
+
 .map-hint {
   opacity: 1;
   transition: opacity 500ms;
@@ -7606,11 +7611,14 @@ text.rbc-center-text {
   opacity: 1;
   padding: 20px 0 0 0;
   display: block; }
-
-.map-hint.slowhide {
-  opacity: 0;
-  height: 0;
-  display: none; }
+  @media (max-width: 575.98px) {
+    .map-hint {
+      position: relative !important;
+      padding-top: 0;
+      top: -25px;
+      height: auto;
+      opacity: 1;
+      display: block; } }
 
 @media (max-width: 991.98px) {
   .col-map {
@@ -7620,6 +7628,11 @@ text.rbc-center-text {
   .geo-filter-wrap {
     padding-bottom: 20px;
     padding-top: 20px; } }
+
+@media (max-width: 767.98px) {
+  body .map-title {
+    position: relative !important;
+    left: 0; } }
 
 .swiper-tab {
   background: #fff; }
