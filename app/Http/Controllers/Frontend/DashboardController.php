@@ -936,9 +936,12 @@ class DashboardController extends Controller
 			array_push($foundArr, $centralDistricts[$i]);
 		}
 		
-		$districtMinimal = array_flip($districtMinimal);
-		ksort($districtMinimal);
-		$districtMinimal = array_flip($districtMinimal);
+		asort($districtMinimal);
+		// $districtMinimal = array_flip($districtMinimal);
+
+		// ksort($districtMinimal);
+		// $districtMinimal = array_flip($districtMinimal);
+
 		$dataArr = [];
 		$valueArr = [];
 		$val = 0;
@@ -1005,6 +1008,7 @@ class DashboardController extends Controller
 		}
 
 		// dd($districtRanges);
+		// dd($districtMinimal);
 		if(count($valueArr) <= 0){
 			return array(
 				'dataExists' => false,

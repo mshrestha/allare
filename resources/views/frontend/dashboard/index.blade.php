@@ -618,7 +618,7 @@
 								var id = ids[0];
 								if(res['server'] == 'community')
 									id = ids[1];
-								var value = parseFloat(res['minimalData'][id]).toFixed(1);
+								var value = parseInt(res['minimalData'][id]).toFixed(1);
 								var localColor = '';
 								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 									if(value >= parseFloat(res['ranges']['min']).toFixed(1) && value < parseFloat(res['ranges']['q1']).toFixed(1)){
@@ -632,13 +632,13 @@
 									}
 								}else {
 									// console.log(res['ranges'], value);
-									if(value >= parseFloat(res['ranges']['min']).toFixed(1) && value < parseFloat(res['ranges']['q1']).toFixed(1)){
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])){
 										localColor = scoreColors['very high'];
-									} else if(value >= parseFloat(res['ranges']['q1']).toFixed(1) && value < parseFloat(res['ranges']['q2']).toFixed(1)) {
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
 										localColor = scoreColors['high'];
-									} else if(value >= parseFloat(res['ranges']['q2']).toFixed(1) && value < parseFloat(res['ranges']['q3']).toFixed(1)) {
+									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
 										localColor = scoreColors['average'];
-									} else if(value >= parseFloat(res['ranges']['q3']).toFixed(1)) {
+									} else if(value >= parseInt(res['ranges']['q3'])) {
 										localColor = scoreColors['low'];
 									}
 								}	
@@ -661,13 +661,14 @@
 							if(res['server'] == 'community')
 								id = ids[1];
 							var value = parseInt(res['minimalData'][id]);
+							// console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2']);
 							localColor = districtScoreColor['low'];
 							if(!res['emptydistricts']) {
-								if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
+								if(value >= parseFloat(res['districtRanges']['min']).toFixed(1) && value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
 									localColor = districtScoreColor['very high'];
-								} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
+								} else if(value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 									localColor = districtScoreColor['high'];
-								} else if(value >= parseInt(res['districtRanges']['q2'])) {
+								} else if(value >= parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 									localColor = districtScoreColor['average'];
 								} 
 							}
@@ -857,11 +858,11 @@
 									  		.enter()
 									  		.append("rect")
 									  		.attr("class", function(d) {
-									  			if(d.value >= parseFloat(res['districtRanges']['min']).toFixed(1) && d.value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
+									  			if(parseInt(d.value) >= parseFloat(res['districtRanges']['min']).toFixed(1) && parseInt(d.value) < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
 														return 'bar vhigh';
-													} else if(d.value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && d.value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
+													} else if(parseInt(d.value) >= parseFloat(res['districtRanges']['q1']).toFixed(1) && parseInt(d.value) < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 														return 'bar high';
-													} else if(d.value > parseFloat(res['districtRanges']['q2']).toFixed(1)) {
+													} else if(parseInt(d.value) > parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 														return 'bar mid';
 													}
 									  		})
@@ -1335,7 +1336,7 @@
 								var id = ids[0];
 								if(res['server'] == 'community')
 									id = ids[1];
-								var value = parseFloat(res['minimalData'][id]).toFixed(1);
+								var value = parseInt(res['minimalData'][id]).toFixed(1);
 								var localColor = '';
 								if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 									if(value >= parseFloat(res['ranges']['min']).toFixed(1) && value < parseFloat(res['ranges']['q1']).toFixed(1)){
@@ -1349,13 +1350,13 @@
 									}
 								}else {
 									// console.log(res['ranges'], value);
-									if(value >= parseFloat(res['ranges']['min']).toFixed(1) && value < parseFloat(res['ranges']['q1']).toFixed(1)){
+									if(value >= parseInt(res['ranges']['min']) && value < parseInt(res['ranges']['q1'])){
 										localColor = scoreColors['very high'];
-									} else if(value >= parseFloat(res['ranges']['q1']).toFixed(1) && value < parseFloat(res['ranges']['q2']).toFixed(1)) {
+									} else if(value >= parseInt(res['ranges']['q1']) && value < parseInt(res['ranges']['q2'])) {
 										localColor = scoreColors['high'];
-									} else if(value >= parseFloat(res['ranges']['q2']).toFixed(1) && value < parseFloat(res['ranges']['q3']).toFixed(1)) {
+									} else if(value >= parseInt(res['ranges']['q2']) && value < parseInt(res['ranges']['q3'])) {
 										localColor = scoreColors['average'];
-									} else if(value >= parseFloat(res['ranges']['q3']).toFixed(1)) {
+									} else if(value >= parseInt(res['ranges']['q3'])) {
 										localColor = scoreColors['low'];
 									}
 								}	
@@ -1378,13 +1379,14 @@
 							if(res['server'] == 'community')
 								id = ids[1];
 							var value = parseInt(res['minimalData'][id]);
+							// console.log(value, res['districtRanges']['min'], res['districtRanges']['q1'], res['districtRanges']['q2']);
 							localColor = districtScoreColor['low'];
 							if(!res['emptydistricts']) {
-								if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
+								if(value >= parseFloat(res['districtRanges']['min']).toFixed(1) && value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
 									localColor = districtScoreColor['very high'];
-								} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
+								} else if(value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 									localColor = districtScoreColor['high'];
-								} else if(value >= parseInt(res['districtRanges']['q2'])) {
+								} else if(value >= parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 									localColor = districtScoreColor['average'];
 								} 
 							}
@@ -1463,7 +1465,12 @@
 								value = 'N/A';
 							else {
 								value = parseFloat(value).toFixed(1);
-								value += '%';
+							}
+
+							if(model == 'CcMrAncNutriCounsel' || model == 'CcMrAncIfaDistribution' || model == 'ImciCounselling' || model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
+								if(value != 'N/A') {
+									value += "%";
+								}
 							}
 
 							if(res['emptydistricts'] && value == 0) {
@@ -1485,18 +1492,19 @@
 							if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
 							} else {
 								if(e.feature.getProperty('name') == 'Barisal Division') {
-									var bounds = new google.maps.LatLngBounds();
-							    processPoints(e.feature.getGeometry(), bounds.extend, bounds);
-							    map.fitBounds(bounds);
-							    stateLayer.overrideStyle(e.feature, {
-										fillColor: '#ededed',
-										strokeColor: '#ededed',
-										// strokeColor: e.feature.getProperty('color'),
-										strokeWeight: 1,
-										zIndex: 1
-									});
-									// console.log(res);
-									anotherLayer.setMap(map);
+
+										var bounds = new google.maps.LatLngBounds();
+								    processPoints(e.feature.getGeometry(), bounds.extend, bounds);
+								    map.fitBounds(bounds);
+								    stateLayer.overrideStyle(e.feature, {
+											fillColor: '#ededed',
+											strokeColor: '#ededed',
+											// strokeColor: e.feature.getProperty('color'),
+											strokeWeight: 1,
+											zIndex: 1
+										});
+										// console.log(res);
+										anotherLayer.setMap(map);
 
 									if(model == 'CcMrAncIfaDistribution' || model == 'CcMrAncNutriCounsel' || model == 'ImciCounselling') {
 										$('#barchart-title-id').html(text);
@@ -1509,6 +1517,7 @@
 							        'slow');
 										var max = 0;
 										var dataCSV = [];
+										console.log(res['minimalDistrict']);
 										for(var key in res['minimalDistrict']) {
 											temp = {};
 											temp.id = key;
@@ -1572,11 +1581,11 @@
 									  		.enter()
 									  		.append("rect")
 									  		.attr("class", function(d) {
-									  			if(d.value >= parseFloat(res['districtRanges']['min']).toFixed(1) && d.value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
+									  			if(parseInt(d.value) >= parseFloat(res['districtRanges']['min']).toFixed(1) && parseInt(d.value) < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
 														return 'bar vhigh';
-													} else if(d.value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && d.value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
+													} else if(parseInt(d.value) >= parseFloat(res['districtRanges']['q1']).toFixed(1) && parseInt(d.value) < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 														return 'bar high';
-													} else if(d.value > parseFloat(res['districtRanges']['q2']).toFixed(1)) {
+													} else if(parseInt(d.value) > parseFloat(res['districtRanges']['q2']).toFixed(1)) {
 														return 'bar mid';
 													}
 									  		})
