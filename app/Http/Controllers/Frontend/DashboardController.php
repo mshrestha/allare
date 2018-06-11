@@ -1004,7 +1004,7 @@ class DashboardController extends Controller
 			$reverse = true;
 		}
 
-		// dd($dataArr);
+		// dd($districtRanges);
 		if(count($valueArr) <= 0){
 			return array(
 				'dataExists' => false,

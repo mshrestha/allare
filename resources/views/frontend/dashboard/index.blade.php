@@ -660,16 +660,16 @@
 							var id = ids[0];
 							if(res['server'] == 'community')
 								id = ids[1];
-							var value = parseFloat(res['minimalData'][id]).toFixed(1);
+							var value = parseInt(res['minimalData'][id]);
 							localColor = districtScoreColor['low'];
 							if(!res['emptydistricts']) {
-								if(value >= parseFloat(res['districtRanges']['min']).toFixed(1) && value < parseFloat(res['districtRanges']['q1']).toFixed(1)) {
+								if(value >= parseInt(res['districtRanges']['min']) && value < parseInt(res['districtRanges']['q1'])) {
 									localColor = districtScoreColor['very high'];
-								} else if(value >= parseFloat(res['districtRanges']['q1']).toFixed(1) && value < parseFloat(res['districtRanges']['q2']).toFixed(1)) {
+								} else if(value >= parseInt(res['districtRanges']['q1']) && value < parseInt(res['districtRanges']['q2'])) {
 									localColor = districtScoreColor['high'];
-								} else if(value >= parseFloat(res['districtRanges']['q2']).toFixed(1)) {
+								} else if(value >= parseInt(res['districtRanges']['q2'])) {
 									localColor = districtScoreColor['average'];
-								} 
+								}
 							}
 															
 							return {
