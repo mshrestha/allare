@@ -1517,7 +1517,7 @@
 							        'slow');
 										var max = 0;
 										var dataCSV = [];
-										console.log(res['minimalDistrict']);
+										// console.log(res['minimalDistrict']);
 										for(var key in res['minimalDistrict']) {
 											temp = {};
 											temp.id = key;
