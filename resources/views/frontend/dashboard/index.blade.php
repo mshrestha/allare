@@ -716,6 +716,12 @@
 									value = 'N/A';
 								else
 									value = parseFloat(res['minimalData'][id]).toFixed(1);
+
+								if(model == 'CcMrAncNutriCounsel' || model == 'CcMrAncIfaDistribution' || model == 'ImciCounselling' || model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
+									if(value != 'N/A') {
+										value += "%";
+									}
+								}
 								// value = res['minimalData'][id];
 								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 								var anchor = new google.maps.MVCObject();
@@ -739,12 +745,15 @@
 							value = res['minimalData'][id];
 							if(isNaN(value))
 								value = 'N/A';
-							else
+							else {
 								value = parseFloat(value).toFixed(1);
+								value += "%";
+							}
 
 							if(res['emptydistricts'] && value == 0) {
 								value = 'N/A';
 							}
+
 							infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 							var anchor = new google.maps.MVCObject();
 				    	anchor.set("position", e.latLng);
@@ -868,7 +877,7 @@
 											  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
 											  .attr("y", function(d) { return yScale(d.value) - 15; })
 											  .attr("dy", ".75em")
-											  .text(function(d) { return parseFloat(d.value).toFixed(1); });
+											  .text(function(d) { return parseFloat(d.value).toFixed(1)+"%"; });
 
 										document.addEventListener("DOMContentLoaded", resize);
 										d3.select(window).on('resize', resize);
@@ -1425,6 +1434,11 @@
 										value = 'N/A';
 								else
 									value = parseFloat(res['minimalData'][id]).toFixed(1);
+								if(model == 'CcMrAncNutriCounsel' || model == 'CcMrAncIfaDistribution' || model == 'ImciCounselling' || model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {
+									if(value != 'N/A') {
+										value += "%";
+									}
+								}
 								infoWindow.setContent('<div style="line-height:1.00;overflow:hidden;white-space:nowrap;">' + e.feature.getProperty('name') + '<br />' + res['text'] + '<span class="map-text">' + value + '</span>' + '</div>');
 								var anchor = new google.maps.MVCObject();
 					    	anchor.set("position", e.latLng);
@@ -1447,8 +1461,10 @@
 							value = res['minimalData'][id];
 							if(isNaN(value))
 								value = 'N/A';
-							else
+							else {
 								value = parseFloat(value).toFixed(1);
+								value += '%';
+							}
 
 							if(res['emptydistricts'] && value == 0) {
 								value = 'N/A';
@@ -1576,7 +1592,7 @@
 											  .attr("x", (function(d) { return xScale(d.id) + xScale.rangeBand() / 2 ; }  ))
 											  .attr("y", function(d) { return yScale(d.value) - 15; })
 											  .attr("dy", ".75em")
-											  .text(function(d) { return parseFloat(d.value).toFixed(1); });
+											  .text(function(d) { return parseFloat(d.value).toFixed(1)+"%"; });
 
 										document.addEventListener("DOMContentLoaded", resize);
 										d3.select(window).on('resize', resize);
