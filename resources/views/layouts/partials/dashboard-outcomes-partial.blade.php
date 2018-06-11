@@ -17,6 +17,8 @@
 				@elseif (strpos(strtolower($key), 'supplements') !== false)
 				<span class="icon-ifa-tablets icon"></span>
 				{{-- <img src="{{ asset('images\supplement.svg') }}" alt=""> --}}
+				@elseif (strpos(strtolower($key), 'underweight') !== false)
+				<span class="icon-underweight icon"></span>
 				@endif
 				
 			</div>

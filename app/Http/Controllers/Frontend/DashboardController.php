@@ -254,7 +254,7 @@ class DashboardController extends Controller
 	}
 
 	public function calculate_Maternal_nutrition_counseling_pergentage($organisation_unit, $period) {
-		//Dhis formula
+		// Dhis formula
 		// Numerator: kazi->comm->cc_MR_ANC_Nutri_counsel
 		// Denominator : Kazi->comm-> cc_MR_ANC_1+2+3+4
 		
@@ -283,9 +283,63 @@ class DashboardController extends Controller
 					->where('period', $period)
 					->whereNull('category_option_combo')
 					->first();
+
 		$dhis_calculate = ($cc_mr_anc_nutri_counsel->value / ($anc1_dghs->value + $anc2_dghs->value + $anc3_dghs->value + $anc4_dghs->value)) * 100;
 
-		return $dhis_calculate;
+		$dhis_numerator = $cc_mr_anc_nutri_counsel->value;
+		$dhis_denominator = $anc1_dghs->value + $anc2_dghs->value + $anc3_dghs->value + $anc4_dghs->value;
+
+		// numerator = 0
+		// denominator = ANC1+ANC2+ANC3+ANC4+PNC1+PNC2+PNC3+PNC4
+
+		$period = $this->yearly_months($period);
+		$anc1_dgfp = ANC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc2_dgfp = ANC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc3_dgfp = ANC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc4_dgfp = ANC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc1_dgfp = PNC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc2_dgfp = PNC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc3_dgfp = PNC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc4_dgfp = PNC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$dgfp_numerator = 0;
+		$dgfp_denominator = $anc1_dgfp + $anc2_dgfp + $anc3_dgfp + $anc4_dgfp + $pnc1_dgfp + $pnc2_dgfp + $pnc3_dgfp + $pnc4_dgfp;
+
+		$maternal_nutrition_counselling_percent = (($dhis_numerator + $dgfp_numerator) / ($dhis_denominator + $dgfp_denominator)) * 100;
+
+		return floor($maternal_nutrition_counselling_percent);
 	}
 
 	public function calculateMonthlyPercentage($data, $periodData, $ou) {
@@ -377,11 +431,11 @@ class DashboardController extends Controller
 					$dataSet[$indicator]['id'] = 'VitaminA';
 					$dataSet[$indicator]['incomplete'] = 100 - $dataSet[$indicator]['goal_values'];
 				}else if($indicators[$indicator] == 'BdhsBmi') {
-					$dataSet[$indicator]['goal'] = 'Target goal < 19% by 2021';
+					$dataSet[$indicator]['goal'] = 'Target goal 15% by 2021';
 					$dataSet[$indicator]['limit'] = 100;
 					$dataSet[$indicator]['target'] = 19;
 					$dataSet[$indicator]['direction'] = 1;
-					$dataSet[$indicator]['goal_text'] = "Prevalence of Underweight in Woman of Reproductive age";
+					$dataSet[$indicator]['goal_text'] = "Prevalence of Women of Reproductive Age with BMI < 18.5";
 					$dataSet[$indicator]['min'] = 100;//$goal_model::min('value');
 					$dataSet[$indicator]['max'] = 0;//m$goal_model::max('value');
 					$dataSet[$indicator]['id'] = 'Women-Underweighed';
@@ -559,8 +613,63 @@ class DashboardController extends Controller
 		if($anc4_dghs != null)
 			$anc4_val = $anc4_dghs->value;
 		$dhis_calculate = ($cc_val / ($anc1_val + $anc2_val + $anc3_val + $anc4_val)) * 100;
+		$dhis_numerator = $cc_val;
+		$dhis_denominator = ($anc1_val + $anc2_val + $anc3_val + $anc4_val);
+		
+		$period = $this->yearly_months('2018');
+		$anc1_dgfp = ANC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
 
-		return $dhis_calculate;
+		$anc2_dgfp = ANC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$anc3_dgfp = ANC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$anc4_dgfp = ANC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[0])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$pnc1_dgfp = PNC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc2_dgfp = PNC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$pnc3_dgfp = PNC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$pnc4_dgfp = PNC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->whereIn('period', $period)
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$dgfp_numerator = 0;
+		$dgfp_denominator = $anc1_dgfp + $anc2_dgfp + $anc3_dgfp + $anc4_dgfp + $pnc1_dgfp + $pnc2_dgfp + $pnc3_dgfp + $pnc4_dgfp;
+
+		$maternal_nutrition_counselling_percent = (($dhis_numerator + $dgfp_numerator) / ($dhis_denominator + $dgfp_denominator)) * 100;
+
+		return floor($maternal_nutrition_counselling_percent);
 	}
 
 	public function calculate_IFA_distribution_proportion_percentage($organisation_unit, $period) {
@@ -649,6 +758,84 @@ class DashboardController extends Controller
 		return $ifa_distribution_percent;
 	}
 
+	public function calculate_IYCF_counselling_proportion_percentage($organisation_unit, $period) {
+		//DHIS iycf counselling calculation
+		//Numerator : Kazi-Central -> IMCI Counseling
+		//Denominator : Kazi-Central->IMCI Male + IMCI Female
+		
+		$imci_male = ImciMale::where('organisation_unit', $organisation_unit[1])
+						->whereNull('category_option_combo')
+						->where('source', 'DGHS')
+						->where('period', $period)->first();
+		$imci_female = ImciFemale::where('organisation_unit', $organisation_unit[1])
+						->whereNull('category_option_combo')
+						->where('source', 'DGHS')
+						->where('period', $period)->first();
+		$imci_counselling = ImciCounselling::where('organisation_unit', $organisation_unit[1])
+						->whereNull('category_option_combo')
+						->where('source', 'DGHS')
+						->where('period', $period)->first();
+		$dhis_numerator = $imci_counselling->value;
+		$dhis_denominator = $imci_male->value + $imci_female->value;
+
+		//DGFP IYCF counselling calculation
+		//Numerator -> Counseling on IYCF, IFA,Vitamin-A & Hand washing
+		//Denominator -> ANC1+ANC2+ANC3+ANC4 + PNC 1+ PNC 2+ PNC 3 + PNC4
+		$period = '2018';
+		$iycf_counselling = ImciCounselling::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc1 = ANC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc2 = ANC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc3 = ANC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$anc4 = ANC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc1 = PNC1::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc2 = PNC2::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc3 = PNC3::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+		$pnc4 = PNC4::where('source', 'DGFP')
+					->where('organisation_unit', $organisation_unit[1])
+					->where('period', 'LIKE', '%' . $period . '%')
+					->whereNull('category_option_combo')
+					->sum('value');
+
+		$dgfp_numerator = $iycf_counselling;
+		$dgfp_denominator = $anc1+$anc2+$anc3+$anc4+$pnc1+$pnc2+$pnc3+$pnc4;
+
+		$iycf_counselling_percent = (($dhis_numerator + $dgfp_numerator) / ($dhis_denominator + $dgfp_denominator)) * 100;
+
+		return $iycf_counselling_percent;
+	}
+
 	public function getMapData(Request $request) {
 		$districts = ['xNcsJeRMUCM' => 'Barguna' , 'uOU0jtyD1PZ' => 'Barisal' , 'EdOWA8sKh2p' => 'Bhola' , 'WNCBZLbFD70' => 'Jhalokati', 'bEiL5HnmKZO' => 'Patuakhali', 'aLbPgj33QnT' => 'Pirojpur'];
 		$data = $request->all();
@@ -677,7 +864,7 @@ class DashboardController extends Controller
 		} else {
 			$organisations = $this->getOrganisations($server);
 		}
-
+		// dd($organisations);
 		$category = NULL;
 		if($data['model'] == 'CcMrWeightInKgAnc')
 			$category = 'OJd05AWCFTk';
@@ -710,7 +897,25 @@ class DashboardController extends Controller
 					$responseData[$i]['value'] = (string)$response;
 				}
 			}
-		} else {
+		} 
+		else if($data['model'] == 'ImciCounselling') {
+			// dd(count($organisations['organisation_unit_array']));
+			for ($i=0; $i < count($organisations['organisation_unit_array']); $i++) { 
+				if($organisations['organisation_unit_array'][$i] == 'op5gbhjVCRk') {
+					$organisations['organisation_unit_array'] = 'R1GAfTe6Mkb';
+				}
+				$response = $this->calculate_IYCF_counselling_proportion_percentage([$organisations['organisation_unit_array'][$i], $organisations['organisation_unit_array'][$i]], '201804');
+				if($response == '' || $response == null) {
+					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
+					$responseData[$i]['value'] = 0;
+				}
+				else {
+					$responseData[$i]['organisation_unit'] = $organisations['organisation_unit_array'][$i];
+					$responseData[$i]['value'] = (string)$response;
+				}
+			}
+		}
+		else {
 			$responseData = $model::whereIn('organisation_unit', $organisations['organisation_unit_array'])->where('period', $pe)->where('category_option_combo', $category)->get();
 		}
 		// dd($responseData);
@@ -772,7 +977,11 @@ class DashboardController extends Controller
 
 		$districtRanges = [];
 		if($data['model'] != 'BdhsStunting' && $data['model'] != 'BdhsWasting' && $data['model'] != 'BdhsAnemia') {
-			$districtRanges = $this->getFourRanges($centArr);
+			if($data['model'] == 'CcMrAncNutriCounsel' || $data['model'] == 'CcMrAncIfaDistribution') {
+				$districtRanges = array('min'=>0, 'q1' => 39.9, 'q2' => 59.9, 'q3' => 80, 'max' => 100);
+			} else {
+				$districtRanges = $this->getFourRanges($centArr);
+			}
 		}
 		$emptydistricts = false;
 		// dd($districtRanges);
@@ -795,7 +1004,7 @@ class DashboardController extends Controller
 			$reverse = true;
 		}
 
-		// dd($valueArr);
+		// dd($dataArr);
 		if(count($valueArr) <= 0){
 			return array(
 				'dataExists' => false,
@@ -815,8 +1024,6 @@ class DashboardController extends Controller
 			);
 		}
 	}
-
-	
 
 	private function getChildPercent($periodData, $central_api_id, $community_api_id) {
 
