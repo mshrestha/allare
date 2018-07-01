@@ -86,7 +86,8 @@ class OutcomeController extends Controller
 		//Pregnant women weighed
 		$exclusive_breastfeeding_data = $data['exclusive_breastfeeding'][0];
 		$exclusive_breastfeeding_model = 'App\Models\Data\\' . $exclusive_breastfeeding_data['model'];
-		$exclusive_breastfeeding_last_month = $exclusive_breastfeeding_model::where('period', $total_patient_last_month->period)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'desc')->first();
+
+		$exclusive_breastfeeding_last_month = $exclusive_breastfeeding_model::where('period', 201804)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'desc')->first();
 		$exclusive_breastfeeding_yearly = $exclusive_breastfeeding_model::where('period', date('Y'))->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'desc')->first();
 		$exclusive_breastfeeding_percent = ($exclusive_breastfeeding_last_month->value/$exclusive_breastfeeding_yearly->value) * 100;
 		$exclusive_breastfeeding_all_periods = $exclusive_breastfeeding_model::whereIn('period', $periodData)->where('organisation_unit', 'dNLjKwsVjod')->whereNull('category_option_combo')->where('source', 'DGHS')->orderBy('period', 'asc')->pluck('period_name');
