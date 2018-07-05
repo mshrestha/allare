@@ -399,7 +399,7 @@ class ImporterController extends Controller
     }
 
     public function importDGFPCsv() {
-        $address = 'FPMIS.xlsx';
+        $address = 'dgfp_data/dgfp_may_districts.xlsx';
         Excel::load($address, function($reader) {
             $results = $reader->get();
             // dd($results);
@@ -423,9 +423,14 @@ class ImporterController extends Controller
                 // dd($result);
                 
                 $unit = [];
+                // $orgName = $result['division'];
+                // if(strcasecmp('bangladesh', strtolower($result['division'])) !== 0)
+                //     $orgName = $orgName.' division';
+
                 $orgName = $result['district'];
                 if(strcasecmp('bangladesh', strtolower($result['district'])) !== 0)
                     $orgName = $orgName.' district';
+
                 $orgName = ucwords($orgName);
                 $organization = OrganisationUnit::where('name', $orgName)->first();
                 $ou = $organization->central_api_id;
