@@ -9420,6 +9420,8 @@ body {
 /* ie fixes */
 html.ie10-11 #maternal-health, html.ie10-11 #child-health {
   height: 280px;
+  margin-top: 5px;
+  margin-bottom: 15px;
 }
 @media (min-width: 576px) {
   html.ie10-11 #maternal-health, html.ie10-11 #child-health {
@@ -9441,6 +9443,11 @@ html.ie10-11 #maternal-health, html.ie10-11 #child-health {
     height: 360px;
   }
 }
+@media (min-width: 1200px) and (max-height: 900px) {
+  html.ie10-11 #maternal-health, html.ie10-11 #child-health {
+    height: 298px;
+  }
+}
 
 div#zoomctrl div {
   background-color: transparent !important;
@@ -9450,7 +9457,10 @@ div#zoomctrl div {
   fill: #FFF;
   font-weight: normal;
   font-size: 7px;
-  transform: translateX(-6px) translateY(0.2px);
+  -webkit-transform: translate(-6px, 0.2px);
+  -ms-transform: translate(-6px, 0.2px);
+  -o-transform: translate(-6px, 0.2px);
+  transform: translate(-6px, 0.2px);
 }
 
 .center-icon-animation, #maternal-health:before, #child-health:before {

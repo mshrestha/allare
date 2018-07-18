@@ -439,9 +439,8 @@
 html.ie10-11{
 	#maternal-health, #child-health{
 		height: 280px;
-		@media(min-height: 900px){
-		
-		}
+		margin-top: 5px;
+		margin-bottom: 15px;
 		@media(min-width: 576px){
 			height: 230px;
 		}
@@ -453,6 +452,9 @@ html.ie10-11{
 		}
 		@media(min-width: 1200px){
 			height: 360px;
+			@media(max-height: 900px){
+				height: 298px;
+			}
 		}
 	}
 
@@ -462,10 +464,13 @@ div#zoomctrl div{
 	background-color: transparent !important;
 }
 .rbc-label-start{
-  fill: #FFF;
-  font-weight: normal;
-  font-size: 7px;
-  transform: translateX(-6px) translateY(0.2px);
+	fill: #FFF;
+	font-weight: normal;
+	font-size: 7px;
+	-webkit-transform: translate(-6px, 0.2px);
+	-ms-transform: translate(-6px, 0.2px);
+	-o-transform: translate(-6px, 0.2px);
+	transform: translate(-6px, 0.2px);
 }
 
 
