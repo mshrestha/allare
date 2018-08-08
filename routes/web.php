@@ -29,14 +29,16 @@ Route::group(['prefix' => 'import-data', 'namespace' => 'ImportData', 'as' => 'i
 	Route::get('/cc-cr-additional-food-supplimentation', 'CcCrAdditionalFoodSupplimentationController@import');
 	Route::get('/imci-wasting', 'ImciWastingController@import');
 	Route::get('/imci-stunting', 'ImciStuntingController@import');
-	Route::get('/importer', 'ImporterController@import');
-	Route::get('/csvimport', 'ImporterController@importDGFPCsv');
 	Route::get('/scheduleImport', 'ImporterController@scheduleImport');
 	Route::get('/mapImport', 'ImporterController@mapImport');
 	Route::get('/organisation-unit-importer', 'OrganisationUnitImporterController@import');
 	Route::get('/category-option-combo-importer', 'CategoryOptionComboImporterController@import');
+	
+	Route::get('/importer', 'ImporterController@import');
+	Route::get('/csvimport', 'ImporterController@importDGFPCsv');
 	Route::get('/getDistrict', 'ImporterController@importDistrict');
-	Route::get('/truncate-import-tables', 'ImporterController@truncateImportTables')
+
+	// Route::get('/truncate-import-tables', 'ImporterController@truncateImportTables');
 });
 
 

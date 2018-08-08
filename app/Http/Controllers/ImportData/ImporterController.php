@@ -8,6 +8,7 @@ use App\Traits\CurlHelper;
 use App\Traits\PeriodHelper;
 
 use App\Models\Data\ImciWasting;
+use App\Models\Data\ImciAnemia;
 use App\Models\Data\ImciStunting;
 use App\Models\Data\ImciCounselling;
 use App\Models\Data\ImciMale;
@@ -16,14 +17,23 @@ use App\Models\Data\ImciWastingPercent;
 use App\Models\Data\ImciStuntingPercent;
 use App\Models\Data\ImciTotalChild;
 use App\Models\Data\ImciExclusiveBreastFeeding;
-use App\Models\Data\CcCrAdditionalFoodSuppliment;
+use App\Models\Data\CcCrAdditionalFoodSupplimentation;
 use App\Models\Data\CcMrAncIfaDistribution;
 use App\Models\Data\CcMrAncNutriCounsel;
+use App\Models\Data\CcMrTotalPatient;
 use App\Models\Data\CcMrCounsellingAnc;
 use App\Models\Data\CcMrWeightInKgAnc;
 use App\Models\Data\CcCrExclusiveBreastFeeding;
 use App\Models\Data\CcCrTotalMale;
 use App\Models\Data\CcCrTotalFemale;
+use App\Models\Data\ANC1;
+use App\Models\Data\ANC2;
+use App\Models\Data\ANC3;
+use App\Models\Data\ANC4;
+use App\Models\Data\PNC1;
+use App\Models\Data\PNC2;
+use App\Models\Data\PNC3;
+use App\Models\Data\PNC4;
 use App\Models\Data\GeoJson;
 
 use App\Models\OrganisationUnit;
@@ -139,7 +149,7 @@ class ImporterController extends Controller
                 //     }
                 // }
             }
-            dd($save_array);
+            // dd($save_array);
             $model = 'App\Models\Data\\'.$currData['model'];
             $model::insert($save_array);
             echo 'ok';
@@ -399,7 +409,7 @@ class ImporterController extends Controller
     }
 
     public function importDGFPCsv() {
-        $address = 'dgfp_data/dgfp_may_districts.xlsx';
+        $address = 'dgfp_data/monthly/dgfp_june_districts.xlsx';
         Excel::load($address, function($reader) {
             $results = $reader->get();
             // dd($results);
@@ -434,7 +444,6 @@ class ImporterController extends Controller
                 $orgName = ucwords($orgName);
                 $organization = OrganisationUnit::where('name', $orgName)->first();
                 $ou = $organization->central_api_id;
-                // array_push($orgs, $ou);
                 $pe = (int)$result['date'];
                 // $periods = explode(' ', $result['month']);
                 // $pe = $periods[1].$this->getMonth($periods[0]);
@@ -495,6 +504,7 @@ class ImporterController extends Controller
                 array_push($dataArray['imci_counselling'], $unit);
                 array_push($orgs, $unit['period_name']);
             }
+            
             // dd($orgs);
             foreach ($dataArray as $key => $value) {
                 for ($i=0; $i < count($data); $i++) { 
@@ -509,23 +519,33 @@ class ImporterController extends Controller
     }
 
     public function truncateImportTables() {
-        ImciWasting::truncate();
-        ImciStunting::truncate();
-        ImciCounselling::truncate();
-        ImciMale::truncate();
-        ImciFemale::truncate();
-        ImciWastingPercent::truncate();
-        ImciStuntingPercent::truncate();
-        ImciTotalChild::truncate();
-        ImciExclusiveBreastFeeding::truncate();
-        CcCrAdditionalFoodSuppliment::truncate();
-        CcMrAncIfaDistribution::truncate();
-        CcMrAncNutriCounsel::truncate();
-        CcMrCounsellingAnc::truncate();
-        CcMrWeightInKgAnc::truncate();
-        CcCrExclusiveBreastFeeding::truncate();
-        CcCrTotalMale::truncate();
-        CcCrTotalFemale::truncate();
+        // ImciWasting::truncate();
+        // ImciStunting::truncate();
+        // ImciCounselling::truncate();
+        // ImciMale::truncate();
+        // ImciFemale::truncate();
+        // ImciAnemia::truncate();
+        // ImciWastingPercent::truncate();
+        // ImciStuntingPercent::truncate();
+        // ImciTotalChild::truncate();
+        // ImciExclusiveBreastFeeding::truncate();
+        // CcCrAdditionalFoodSupplimentation::truncate();
+        // CcMrAncIfaDistribution::truncate();
+        // CcMrAncNutriCounsel::truncate();
+        // CcMrCounsellingAnc::truncate();
+        // CcMrTotalPatient::truncate();
+        // CcMrWeightInKgAnc::truncate();
+        // CcCrExclusiveBreastFeeding::truncate();
+        // CcCrTotalMale::truncate();
+        // CcCrTotalFemale::truncate();
+        // ANC1::truncate();
+        // ANC2::truncate();
+        // ANC3::truncate();
+        // ANC4::truncate();
+        // PNC1::truncate();
+        // PNC2::truncate();
+        // PNC3::truncate();
+        // PNC4::truncate();
 
         dd('All data tables truncated');
     }
