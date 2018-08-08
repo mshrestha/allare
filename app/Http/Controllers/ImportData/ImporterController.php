@@ -508,6 +508,28 @@ class ImporterController extends Controller
         });
     }
 
+    public function truncateImportTables() {
+        ImciWasting::truncate();
+        ImciStunting::truncate();
+        ImciCounselling::truncate();
+        ImciMale::truncate();
+        ImciFemale::truncate();
+        ImciWastingPercent::truncate();
+        ImciStuntingPercent::truncate();
+        ImciTotalChild::truncate();
+        ImciExclusiveBreastFeeding::truncate();
+        CcCrAdditionalFoodSuppliment::truncate();
+        CcMrAncIfaDistribution::truncate();
+        CcMrAncNutriCounsel::truncate();
+        CcMrCounsellingAnc::truncate();
+        CcMrWeightInKgAnc::truncate();
+        CcCrExclusiveBreastFeeding::truncate();
+        CcCrTotalMale::truncate();
+        CcCrTotalFemale::truncate();
+
+        dd('All data tables truncated');
+    }
+
     private function getPeriodName($month, $year) {
         switch ($month) {
             case '01':
