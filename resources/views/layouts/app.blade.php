@@ -17,6 +17,9 @@
 
     <link rel="stylesheet" href="{{asset('css\style.css')}}">
     <link rel="stylesheet" href="{{asset('css\unicef.css') }}">
+    
+    <link rel="stylesheet" type="text/css" href="{{asset('css\all-ie-only.css') }}" />
+    
 
   <script>
     // console.log = function() {}
@@ -29,6 +32,7 @@
     }
     
   </script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -135,11 +139,23 @@
 
     <script type="text/javascript" src="{{asset('js\hammer.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js\chart-plugin-zoom.min.js')}}"></script>
+    <script>
+        if (Function('/*@cc_on return document.documentMode===10@*/')()){
+          document.documentElement.className+=' ie10-11';
+        }
+
+        if(navigator.userAgent.match(/Trident.*rv:11\./)) {
+          document.documentElement.className+=' ie10-11';
+        }
+
+
+    </script>
 
     <script>
       @yield('injavascript')
     </script>
 
     @yield('outjavascript')
+    
   </body>
 </html>

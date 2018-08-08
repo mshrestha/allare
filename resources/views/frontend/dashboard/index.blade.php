@@ -247,7 +247,6 @@
 			<div class="swiper-button-next swiper-button-white"></div>
 		</div> {{-- swiper-container --}}
 	</div> {{-- container --}}
-</div>
 @endsection
 
 
@@ -326,7 +325,7 @@
 			    	res[1].iycf_counselling,
 			    	res[1].supplements_distributed,
 			    	res[1].child_growth_monitoring,
-			    	res[1].minimum_acceptable_diet,
+			    	res[1].minimum_acceptable_diet
 			    );
 			    if($('.input-bars').hasClass('grow-h-animation')) {
 		  			$('.input-bars').removeClass('grow-h-animation');	
@@ -1031,7 +1030,7 @@
 	    	{{ $child_nutrition_data['iycf_counselling'] }},
 	    	{{ $child_nutrition_data['supplements_distributed'] }},
 	    	{{ $child_nutrition_data['child_growth_monitoring'] }},
-	    	{{ $child_nutrition_data['minimum_acceptable_diet'] }},
+	    	{{ $child_nutrition_data['minimum_acceptable_diet'] }}
 	    );
 
 	    function curcularCharts(maternal_nutrition_counseling, ifa_distribution, weight_measured, exclusive_breastfeeding, iycf_counselling, supplements_distributed, child_growth_monitoring, minimum_acceptable_diet) {
@@ -1187,7 +1186,7 @@
   </script>
 
   <script>
-  	const getMapData = (model, item, id, text) => {
+  	function getMapData(model, item, id, text){
   		clicked = false;
   		$('#chartID').html('');
   		if(model == 'BdhsStunting' || model == 'BdhsWasting' || model == 'BdhsAnemia' || model == 'BdhsBmi') {

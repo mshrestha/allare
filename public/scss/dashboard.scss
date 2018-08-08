@@ -383,14 +383,14 @@
 }
 #maternal-health, #child-health{
 	font-size: 10px !important;
-  width: 100%;
-  max-width: 285px; 
-  margin: 7px auto;
-  position: relative;
-  @media(min-height: 900px){
+	width: 100%;
+	max-width: 285px; 
+	margin: 7px auto;
+	position: relative;
+	@media(min-height: 900px){
 		margin-top: 5px;
 		margin-bottom: 15px;
-  }
+	}
 }
 #maternal-health:before, #child-health:before{
   background: url('../images/maternal.png') no-repeat center bottom;
@@ -435,14 +435,42 @@
   background-size: contain;
   background-position: center bottom;
 }
+/* ie fixes */
+html.ie10-11{
+	#maternal-health, #child-health{
+		height: 280px;
+		margin-top: 5px;
+		margin-bottom: 15px;
+		@media(min-width: 576px){
+			height: 230px;
+		}
+		@media(min-width: 768px){
+			height: 175px;
+		}
+		@media(min-width: 992px){
+			height: 290px;
+		}
+		@media(min-width: 1200px){
+			height: 360px;
+			@media(max-height: 900px){
+				height: 298px;
+			}
+		}
+	}
+
+}
+
 div#zoomctrl div{
 	background-color: transparent !important;
 }
 .rbc-label-start{
-  fill: #FFF;
-  font-weight: normal;
-  font-size: 7px;
-  transform: translateX(-6px) translateY(0.2px);
+	fill: #FFF;
+	font-weight: normal;
+	font-size: 7px;
+	-webkit-transform: translate(-6px, 0.2px);
+	-ms-transform: translate(-6px, 0.2px);
+	-o-transform: translate(-6px, 0.2px);
+	transform: translate(-6px, 0.2px);
 }
 
 
